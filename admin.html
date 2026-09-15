@@ -837,7 +837,7 @@ async function loadVideos(){
     </div>
   </div>`).join(''):'<div class="empty"><div class="e">🎬</div><p>لا فيديوهات</p></div>';
 
-  $('adminVidList').querySelectorAll('[data-vid]').forEach(b=>b.onclick=()=>delVid(+b.dataset.vid));
+  $('adminVidList').querySelectorAll('[data-vid]').forEach(b=>b.onclick=()=>delVid(b.dataset.vid));
 }
 
 $('addVidBtn').onclick=async()=>{
@@ -906,8 +906,8 @@ async function loadCodes(){
       </div>
     </div>`).join(''):'<div class="empty"><div class="e">🎟️</div><p>لا أكواد</p></div>';
 
-    $('codesList').querySelectorAll('[data-code-toggle]').forEach(b=>b.onclick=()=>toggleCode(+b.dataset.codeToggle));
-    $('codesList').querySelectorAll('[data-code-del]').forEach(b=>b.onclick=()=>delCode(+b.dataset.codeDel));
+    $('codesList').querySelectorAll('[data-code-toggle]').forEach(b=>b.onclick=()=>toggleCode(b.dataset.codeToggle));
+$('codesList').querySelectorAll('[data-code-del]').forEach(b=>b.onclick=()=>delCode(b.dataset.codeDel));
   }catch(e){$('codesList').innerHTML='<div class="empty"><div class="e">⚠️</div><p>تعذّر التحميل</p></div>';}
 }
 
@@ -1005,9 +1005,9 @@ async function loadForum(){
       </div>
     </div>`).join(''):'<div class="empty"><div class="e">💬</div><p>لا مواضيع</p></div>';
 
-    $('adminForumList').querySelectorAll('[data-topic-pin]').forEach(b=>b.onclick=()=>pinTopic(+b.dataset.topicPin));
-    $('adminForumList').querySelectorAll('[data-topic-close]').forEach(b=>b.onclick=()=>closeTopic(+b.dataset.topicClose));
-    $('adminForumList').querySelectorAll('[data-topic-del]').forEach(b=>b.onclick=()=>delTopic(+b.dataset.topicDel));
+    $('adminForumList').querySelectorAll('[data-topic-pin]').forEach(b=>b.onclick=()=>pinTopic(b.dataset.topicPin));
+$('adminForumList').querySelectorAll('[data-topic-close]').forEach(b=>b.onclick=()=>closeTopic(b.dataset.topicClose));
+$('adminForumList').querySelectorAll('[data-topic-del]').forEach(b=>b.onclick=()=>delTopic(b.dataset.topicDel));
   }catch(e){$('adminForumList').innerHTML='<div class="empty"><div class="e">⚠️</div><p>تعذّر التحميل</p></div>';}
 }
 
