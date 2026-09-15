@@ -1209,9 +1209,10 @@ $('unlockBtn').onclick=async()=>{
     if(error)throw error;
     
     let res=Array.isArray(data)?data[0]:data;
-    const ok=res===true||(res&&(res.success||res.ok||res.status==='ok'||Array.isArray(res.videos)));
-    
-    if(ok||res){
+    /* ✅ تحقق صريح */
+const ok = res && res.ok === true;
+
+if(ok){
       /* ✅ إعادة جلب بيانات المستخدم */
       const {data:uList, error:uErr}=await sb.from('users')
         .select('unlocked_videos,videos_locked')
@@ -1253,8 +1254,13 @@ $('unlockBtn').onclick=async()=>{
       setTimeout(()=>go('videos'), 500);
       
     }else{
-      toast('كود غير صالح أو منتهي','err');
-    }
+  const errCode = res && res.error;
+  let errMsg = 'كود غير صالح أو منتهي';
+  if(errCode === 'max_uses') errMsg = 'الكود انتهت استخداماته';
+  else if(errCode === 'invalid') errMsg = 'الكود غير موجود أو معطّل';
+  else if(errCode === 'user_not_found') errMsg = 'المستخدم غير موجود';
+  toast(errMsg,'err');
+}
   }catch(e){
     console.error('❌ Unlock error:', e);
     toast('كود غير صالح أو منتهي الصلاحية','err');
