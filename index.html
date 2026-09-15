@@ -145,7 +145,8 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px}
 .vid-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:.28s;position:relative;cursor:pointer}
 .vid-card:hover{transform:translateY(-4px);border-color:var(--blue);box-shadow:0 16px 36px rgba(0,0,0,.4)}
 .vid-thumb{position:relative;aspect-ratio:16/9;background:var(--bg-3);overflow:hidden}
-.vid-thumb img{width:100%;height:100%;object-fit:cover;pointer-events:none}
+.vid-thumb img{width:100%;height:100%;object-fit:cover;pointer-events:none;filter:blur(8px);transition:filter .3s}
+.vid-card.unlocked .vid-thumb img{filter:none}
 .vid-thumb .play{position:absolute;inset:0;display:grid;place-items:center;background:rgba(2,8,18,.35);opacity:0;transition:.25s}
 .vid-card:hover .play{opacity:1}
 .vid-thumb .play .p{width:50px;height:50px;border-radius:50%;background:var(--blue);display:grid;place-items:center;box-shadow:0 0 24px rgba(25,170,255,.6)}
@@ -210,21 +211,6 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px}
 .cm-input input{flex:1;padding:11px 12px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--txt);outline:none;font-size:14px}
 .cm-input input:focus{border-color:var(--blue)}
 
-.fr-new{width:100%;padding:12px;border-radius:14px;border:1px dashed var(--blue);background:var(--blue-soft);
-  color:var(--blue);font-weight:800;font-size:14px;margin-bottom:14px}
-.topic{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px;transition:.2s;cursor:pointer}
-.topic:hover{border-color:var(--blue)}
-.topic .th{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
-.topic h3{font-size:15px;font-weight:800}
-.topic .badges2{display:flex;gap:5px;flex-shrink:0}
-.tag{font-size:10px;padding:3px 8px;border-radius:10px;font-weight:800}
-.tag.pin{background:rgba(255,213,74,.18);color:var(--gold)}
-.tag.closed{background:rgba(255,77,109,.18);color:var(--danger)}
-.topic p{color:var(--muted);font-size:13px;margin:6px 0;line-height:1.6}
-.topic .tf{display:flex;gap:12px;font-size:11px;color:var(--muted);font-weight:700;flex-wrap:wrap}
-.reply{padding:10px 12px;border-radius:12px;background:var(--bg-3);margin-bottom:8px;font-size:13px}
-.reply b{color:var(--blue)}
-
 .unlock-box{text-align:center;padding:24px 16px}
 .unlock-box .big{font-size:52px;margin-bottom:10px}
 .code-input{display:flex;gap:8px;max-width:400px;margin:16px auto 0}
@@ -246,6 +232,9 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px}
 .btn-primary{padding:12px 20px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--blue-2));
   color:#021226;font-weight:900;font-size:14px;box-shadow:0 10px 26px rgba(25,170,255,.32);transition:.2s}
 .btn-primary:hover{transform:translateY(-2px)}
+.btn-ghost{padding:12px 20px;border:1px solid var(--border);border-radius:12px;background:transparent;
+  color:var(--txt);font-weight:800;font-size:14px;cursor:pointer;transition:.2s}
+.btn-ghost:hover{background:var(--blue-soft);border-color:var(--blue)}
 
 .skel{background:linear-gradient(90deg,var(--bg-3) 25%,rgba(25,170,255,.08) 50%,var(--bg-3) 75%);
   background-size:200% 100%;animation:shimmer 1.3s infinite;border-radius:12px}
@@ -378,13 +367,6 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
     <div id="lbList"></div>
   </section>
 
-  <section class="page" id="page-forum">
-    <div class="sec-title">💬 المنتدى</div>
-    <div class="sec-sub">شارك أفكارك واطرح أسئلتك مع المجتمع</div>
-    <button class="fr-new" id="newTopicBtn">➕ موضوع جديد</button>
-    <div id="forumList"></div>
-  </section>
-
   <section class="page" id="page-videos">
     <div class="sec-title">🎬 مكتبة الفيديوهات</div>
     <div class="sec-sub">تعلّم الأمن السيبراني خطوة بخطوة</div>
@@ -398,10 +380,16 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
     <div class="card unlock-box">
       <div class="big">🔐</div>
       <h3 style="font-size:18px">هل لديك كود فتح؟</h3>
-      <p style="color:var(--muted);margin-top:6px;font-size:13px">أدخل الكود الذي حصلت عليه من الإدارة لفتح فيديوهات إضافية</p>
+      <p style="color:var(--muted);margin-top:6px;font-size:13px">أدخل الكود الذي حصلت عليه من الإدارة لفتح الفيديوهات</p>
       <div class="code-input">
         <input type="text" id="unlockInput" placeholder="XXXX-XXXX" maxlength="20" />
         <button class="btn-primary" id="unlockBtn">فتح</button>
+      </div>
+      <div style="margin-top:20px;padding-top:20px;border-top:1px dashed var(--border)">
+        <p style="color:var(--muted);font-size:13px;margin-bottom:12px">مش عندك كود؟ اطلب من الإدارة</p>
+        <a href="https://wa.me/201041254010?text=السلام%20عليكم%20👋%0A%0Aعايز%20أفتح%20الفيديوهات%20في%20منصة%20SAYODA%20CYBER%20FORCE" target="_blank" rel="noopener" class="btn-primary" style="display:inline-block;text-decoration:none">
+          📱 اطلب كود على واتساب
+        </a>
       </div>
     </div>
   </section>
@@ -419,7 +407,7 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
     </div>
     <div class="info-card">
       <h3>⭐ لماذا نحن؟</h3>
-      <p>• محتوى منظّم ومتدرّج<br>• نظام نقاط ومستويات محفّز<br>• شهادات وإنجازات<br>• مجتمع تفاعلي ودعم مستمر<br>• متاح على جميع الأجهزة (PWA)</p>
+      <p>• محتوى منظّم ومتدرّج<br>• نظام نقاط ومستويات محفّز<br>• شهادات وإنجازات<br>• دعم مستمر<br>• متاح على جميع الأجهزة (PWA)</p>
     </div>
     <div class="info-card">
       <h3>📢 تابعنا</h3>
@@ -433,7 +421,7 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
     <div id="supportBtns"></div>
     <div class="info-card" style="margin-top:8px">
       <h3>❓ الأسئلة الشائعة</h3>
-      <p><b>كيف أفتح فيديو مقفل؟</b><br>شاهد 30% من الفيديو السابق أو استخدم كود فتح من الإدارة.</p>
+      <p><b>كيف أفتح الفيديوهات؟</b><br>تواصل مع الإدارة على واتساب، أو استخدم كود فتح من صفحة "🔓 فتح".</p>
       <p style="margin-top:10px"><b>كيف أحصل على نقاط XP؟</b><br>+10 XP لكل فيديو تكمله، و+50 XP لكل صديق يستخدم كود دعوتك.</p>
     </div>
   </section>
@@ -494,22 +482,13 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
   </div>
 </div>
 
-<div class="modal" id="forumModal">
-  <div class="modal-inner" style="max-width:640px">
-    <div class="modal-pad" style="position:relative">
-      <button class="modal-close" style="position:absolute;top:12px;left:12px" id="closeForum">✕</button>
-      <div id="forumModalBody"></div>
-    </div>
-  </div>
-</div>
-
 <nav class="bottom-nav" id="bottomNav"></nav>
 <div id="toasts"></div>
 <canvas id="confetti"></canvas>
 
 <script>
 /* ============================================
-   SAYODA CYBER FORCE — JavaScript (مصحّح)
+   SAYODA CYBER FORCE — JavaScript
    ============================================ */
 const SUPABASE_URL="https://brawrhpvtnzvvrzkguic.supabase.co";
 const SUPABASE_KEY="sb_publishable_Q8fBS3nVZqgvfd6diaul8A_cMvHUFtN";
@@ -532,13 +511,12 @@ document.addEventListener('keydown',e=>{
   if(e.key==='PrintScreen'){e.preventDefault();try{navigator.clipboard.writeText('');}catch(err){}}
 });
 
-/* ============ الحالة العامة ============ */
+/* ============ STATE ============ */
 let USER=null;
 let ALL_VIDEOS=[];
 let CURRENT_VIDEO=null;
 let ACTIVE_CAT='all';
 let NOTIFS=[];
-/* ⚠️ مش بنستخدم YT عشان ميتعارضش مع مكتبة يوتيوب */
 let ytPlayer=null;
 let ytApiReady=false;
 let ytReadyQueue=[];
@@ -632,7 +610,6 @@ function celebrate(msg){playChime();confetti();toast(msg,'ok','🎉');}
 const SECTIONS=[
   {id:'profile',ic:'👤',t:'ملفي'},
   {id:'leaderboard',ic:'🏆',t:'المتصدرين'},
-  {id:'forum',ic:'💬',t:'المنتدى'},
   {id:'videos',ic:'🎬',t:'الفيديوهات'},
   {id:'unlock',ic:'🔓',t:'فتح'},
   {id:'about',ic:'ℹ️',t:'عن المنصة'},
@@ -640,7 +617,7 @@ const SECTIONS=[
 ];
 function buildNav(){
   $('sideNav').innerHTML=SECTIONS.map(s=>`<div class="nav-item" data-nav="${s.id}"><span class="ic">${s.ic}</span>${s.t}</div>`).join('');
-  const bn=[SECTIONS[0],SECTIONS[3],SECTIONS[1],SECTIONS[2],SECTIONS[6]];
+  const bn=[SECTIONS[0],SECTIONS[2],SECTIONS[1],SECTIONS[3],SECTIONS[5]];
   $('bottomNav').innerHTML=bn.map(s=>`<div class="bn" data-nav="${s.id}"><span class="ic">${s.ic}</span>${s.t}</div>`).join('');
   document.querySelectorAll('[data-nav]').forEach(el=>el.onclick=()=>go(el.dataset.nav));
 }
@@ -650,7 +627,6 @@ function go(id){
   document.querySelectorAll('[data-nav]').forEach(el=>el.classList.toggle('active',el.dataset.nav===id));
   closeSidebar();window.scrollTo({top:0,behavior:'smooth'});
   if(id==='leaderboard')loadLeaderboard();
-  if(id==='forum')loadForum();
   if(id==='videos')renderVideos();
 }
 function openSidebar(){$('sidebar').classList.add('open');$('overlay').classList.add('open');}
@@ -702,7 +678,7 @@ async function updateStreak(){
   try{await sb.rpc('client_log_activity',{p_username:USER.username,p_activity_type:'visit',p_details:'{}',p_user_agent:navigator.userAgent.slice(0,200)});}catch(e){}
 }
 
-/* ============ PROFILE + BADGES (مصحّح) ============ */
+/* ============ PROFILE ============ */
 function renderProfile(){
   const xp=USER.xp||0;
   const {cur,nx}=levelOf(xp);
@@ -716,18 +692,14 @@ function renderProfile(){
   $('sXp').textContent=xp;
   $('sStreak').textContent=USER.streak||0;
 
-  /* ✅ الإصلاح: دمج الشارات المحفوظة + المحسوبة */
   const savedBadges = Array.isArray(USER.badges) ? USER.badges : [];
   const computedBadges = BADGES.filter(b => b.ck(USER)).map(b => b.id);
   const allEarned = [...new Set([...savedBadges, ...computedBadges])];
 
-  /* حفظ الجديد في DB */
   const newlyEarned = computedBadges.filter(b => !savedBadges.includes(b));
   if(newlyEarned.length){
     USER.badges = allEarned;
-    sb.from('users').update({badges: allEarned}).eq('username', USER.username).then(()=>{
-      console.log('🏅 شارات جديدة اتحفظت:', newlyEarned);
-    }).catch(()=>{});
+    sb.from('users').update({badges: allEarned}).eq('username', USER.username).catch(()=>{});
   }
 
   $('sBadges').textContent = allEarned.length;
@@ -811,12 +783,16 @@ async function awardXp(amount,reason){
 /* ============ VIDEOS ============ */
 function progressMap(){try{return USER.video_progress&&typeof USER.video_progress==='object'?USER.video_progress:{};}catch(e){return{};}}
 function unlockedList(){return Array.isArray(USER.unlocked_videos)?USER.unlocked_videos.map(String):[];}
+
+/* 🔒 كل الفيديوهات مقفولة إلا لو المستخدم استخدم كود فتح */
 function isAccessible(idx){
-  const v=ALL_VIDEOS[idx];const un=unlockedList();
-  if(un.includes(String(v.id)))return true;
-  if(!v.locked)return idx===0?true:(prevWatched(idx));
-  return idx===0?true:prevWatched(idx);
+  const v=ALL_VIDEOS[idx];
+  const un=unlockedList();
+  if(un.includes(String(v.id))) return true;
+  if(un.length > 0) return true;
+  return false;
 }
+
 function prevWatched(idx){
   if(idx<=0)return true;
   const pv=ALL_VIDEOS[idx-1];
@@ -865,10 +841,10 @@ function renderVideos(){
     const acc=isAccessible(idx);
     const p=pm[v.id];
     const prog=p?(p.done?100:(p.p||0)):0;
-    return `<div class="vid-card" data-idx="${idx}">
+    return `<div class="vid-card ${acc?'unlocked':''}" data-idx="${idx}">
       <div class="vid-thumb">
         <img src="${esc(thumbOf(v))}" onerror="this.src='./sayed.png'" alt="">
-        ${acc?`<div class="play"><div class="p">▶</div></div>`:`<div class="vid-lock">🔒<span>مقفل — شاهد السابق 30%</span></div>`}
+        ${acc?`<div class="play"><div class="p">▶</div></div>`:`<div class="vid-lock">🔒<span>مقفل — اطلب كود فتح</span></div>`}
         ${prog>0?`<div class="vid-prog"><i style="width:${prog}%"></i></div>`:''}
       </div>
       <div class="vid-body">
@@ -882,12 +858,56 @@ function renderVideos(){
   }).join('');
   document.querySelectorAll('#vidGrid .vid-card').forEach(c=>c.onclick=()=>{
     const idx=+c.dataset.idx;
-    if(!isAccessible(idx)){toast('هذا الفيديو مقفل — أكمل الفيديو السابق أو استخدم كود فتح','err','🔒');return;}
+    if(!isAccessible(idx)){ showUnlockRequest(); return; }
     openVideo(idx);
   });
 }
 
-/* ============ YOUTUBE PLAYER (مصحّح - بدون تعارض YT) ============ */
+/* ============ REQUEST UNLOCK ============ */
+function showUnlockRequest(){
+  const phone = '201041254010';
+  const msg = encodeURIComponent(
+    'السلام عليكم 👋\n\n' +
+    'أنا المستخدم: ' + (USER?.username||'') + '\n' +
+    'عايز أفتح الفيديوهات في منصة SAYODA CYBER FORCE\n\n' +
+    'منتظر ردكم 🙏'
+  );
+  const url = 'https://wa.me/' + phone + '?text=' + msg;
+
+  const existing = document.getElementById('unlockRequestModal');
+  if(existing) existing.remove();
+
+  const modal = document.createElement('div');
+  modal.id = 'unlockRequestModal';
+  modal.className = 'modal open';
+  modal.style.cssText = 'display:flex;align-items:center;justify-content:center;padding:20px;z-index:200';
+  modal.innerHTML = `
+    <div class="modal-inner" style="max-width:420px;padding:0;overflow:hidden">
+      <div style="padding:32px 24px;text-align:center">
+        <div style="font-size:56px;margin-bottom:14px">🔒</div>
+        <h2 style="font-size:20px;font-weight:900;margin-bottom:10px">الفيديوهات مقفولة</h2>
+        <p style="color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:20px">
+          عشان تفتح الفيديوهات، اطلب من الإدارة إرسال كود فتح لك على واتساب.
+        </p>
+        <a href="${url}" target="_blank" rel="noopener"
+           class="btn-primary"
+           style="display:block;width:100%;padding:15px;font-size:15px;text-decoration:none;margin-bottom:10px;text-align:center;box-sizing:border-box">
+          📱 اطلب فتح الفيديوهات
+        </a>
+        <button class="btn-ghost" id="closeUnlockReq" style="width:100%">إغلاق</button>
+        <div style="margin-top:16px;font-size:12px;color:var(--muted);line-height:1.6">
+          أو استخدم كود فتح من صفحة "🔓 فتح"
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  document.getElementById('closeUnlockReq').onclick = () => modal.remove();
+  modal.onclick = (e) => { if(e.target === modal) modal.remove(); };
+}
+
+/* ============ YOUTUBE PLAYER ============ */
 function loadYtApi(){
   if(window.YT && window.YT.Player){ytApiReady=true;return;}
   if(document.querySelector('script[src*="iframe_api"]')) return;
@@ -1159,66 +1179,6 @@ async function loadLeaderboard(){
     }).join('')||'<div class="empty"><div class="e">🏆</div><p>لا يوجد متصدرين بعد</p></div>';
   }catch(e){$('lbList').innerHTML='<div class="empty">تعذّر تحميل المتصدرين</div>';}
 }
-
-/* ============ FORUM ============ */
-async function loadForum(){
-  $('forumList').innerHTML=Array.from({length:4}).map(()=>'<div class="skel" style="height:100px;margin-bottom:10px"></div>').join('');
-  try{
-    const {data}=await sb.from('forum_topics').select('*').order('pinned',{ascending:false}).order('created_at',{ascending:false}).limit(50);
-    const rows=data||[];
-    $('forumList').innerHTML=rows.length?rows.map(t=>`<div class="topic" data-id="${t.id}">
-      <div class="th"><h3>${esc(t.title)}</h3><div class="badges2">
-        ${t.pinned?'<span class="tag pin">📌</span>':''}${t.closed?'<span class="tag closed">🔒</span>':''}</div></div>
-      <p>${esc((t.body||'').slice(0,140))}${(t.body||'').length>140?'…':''}</p>
-      <div class="tf"><span>✍️ ${esc(t.author)}</span><span>❤️ ${t.likes||0}</span><span>💬 ${t.replies_count||0}</span><span>${fmtTime(t.created_at)}</span></div>
-    </div>`).join(''):'<div class="empty"><div class="e">💬</div><p>لا مواضيع بعد — ابدأ نقاشاً!</p></div>';
-    document.querySelectorAll('#forumList .topic').forEach(el=>el.onclick=()=>openTopic(+el.dataset.id,rows.find(r=>r.id==el.dataset.id)));
-  }catch(e){$('forumList').innerHTML='<div class="empty">تعذّر تحميل المنتدى</div>';}
-}
-
-async function openTopic(id,t){
-  $('forumModal').classList.add('open');document.body.style.overflow='hidden';
-  $('forumModalBody').innerHTML='<div class="skel" style="height:120px"></div>';
-  let replies=[];
-  try{const {data}=await sb.from('forum_replies').select('*').eq('topic_id',id).order('created_at',{ascending:true});replies=data||[];}catch(e){}
-  $('forumModalBody').innerHTML=`
-    <h2 style="font-size:18px;font-weight:900;margin-bottom:6px">${esc(t.title)}</h2>
-    <div style="display:flex;gap:12px;font-size:11px;color:var(--muted);margin-bottom:12px;flex-wrap:wrap">
-      <span>✍️ ${esc(t.author)}</span><span>${fmtTime(t.created_at)}</span>${t.closed?'<span class="tag closed">🔒 مغلق</span>':''}</div>
-    <p style="line-height:1.8;margin-bottom:14px;font-size:14px">${esc(t.body||'')}</p>
-    <div style="font-weight:800;margin-bottom:8px;font-size:14px">💬 الردود (${replies.length})</div>
-    <div id="repliesBox">${replies.length?replies.map(r=>`<div class="reply"><b>${esc(r.author)}</b> <small style="color:var(--muted)">${fmtTime(r.created_at)}</small><div style="margin-top:5px">${esc(r.body)}</div></div>`).join(''):'<div class="empty" style="padding:20px"><div class="e">💭</div><p>لا ردود بعد</p></div>'}</div>
-    ${t.closed?'<div style="text-align:center;color:var(--muted);margin-top:12px;font-size:13px">🔒 الموضوع مغلق للردود</div>':
-    `<div class="cm-input" style="margin-top:12px"><input id="replyInput" placeholder="اكتب رداً..." maxlength="500"><button class="btn-primary" id="replySend">رد</button></div>`}`;
-  if(!t.closed)$('replySend').onclick=async()=>{
-    const body=clean($('replyInput').value);if(!body)return;
-    try{
-      await sb.from('forum_replies').insert({topic_id:id,body,author:USER.username,created_at:new Date().toISOString()});
-      try{await sb.from('forum_topics').update({replies_count:(t.replies_count||0)+1}).eq('id',id);}catch(e){}
-      toast('تم إضافة ردك','ok');
-      try{await sb.rpc('client_log_activity',{p_username:USER.username,p_activity_type:'forum_reply',p_details:JSON.stringify({topic:t.title,body:body.slice(0,50)}),p_user_agent:navigator.userAgent.slice(0,200)});}catch(e){}
-      openTopic(id,{...t,replies_count:(t.replies_count||0)+1});
-    }catch(e){toast('تعذّر إرسال الرد','err');}
-  };
-}
-$('closeForum').onclick=()=>{$('forumModal').classList.remove('open');document.body.style.overflow='';loadForum();};
-$('newTopicBtn').onclick=()=>{
-  $('forumModal').classList.add('open');document.body.style.overflow='hidden';
-  $('forumModalBody').innerHTML=`<h2 style="font-size:18px;font-weight:900;margin-bottom:12px">➕ موضوع جديد</h2>
-    <input id="ntTitle" placeholder="عنوان الموضوع" maxlength="120" style="width:100%;padding:12px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--txt);outline:none;margin-bottom:10px;font-size:14px">
-    <textarea id="ntBody" placeholder="اكتب تفاصيل موضوعك..." maxlength="2000" style="width:100%;min-height:120px;padding:12px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--txt);outline:none;resize:vertical;font-family:inherit;font-size:14px"></textarea>
-    <button class="btn-primary" id="ntSubmit" style="width:100%;margin-top:12px">نشر الموضوع</button>`;
-  $('ntSubmit').onclick=async()=>{
-    const title=clean($('ntTitle').value),body=clean($('ntBody').value);
-    if(!title||!body)return toast('املأ العنوان والمحتوى','err');
-    try{
-      await sb.from('forum_topics').insert({title,body,author:USER.username,pinned:false,closed:false,likes:0,replies_count:0,created_at:new Date().toISOString()});
-      toast('تم نشر الموضوع','ok');
-      try{await sb.rpc('client_log_activity',{p_username:USER.username,p_activity_type:'forum_topic',p_details:JSON.stringify({title}),p_user_agent:navigator.userAgent.slice(0,200)});}catch(e){}
-      $('forumModal').classList.remove('open');document.body.style.overflow='';loadForum();
-    }catch(e){toast('تعذّر نشر الموضوع','err');}
-  };
-};
 
 /* ============ UNLOCK ============ */
 $('unlockBtn').onclick=async()=>{
