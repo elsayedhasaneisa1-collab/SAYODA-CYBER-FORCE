@@ -1221,6 +1221,7 @@ $('unlockBtn').onclick=async()=>{
       console.log('👤 user refresh:', {uList, uErr});
       
       if(uList && uList[0]){
+        USER.unlocked_videos = uList[0].unlocked_videos;
         USER.unlocked_videos = uList[0].unlocked_videos || [];
         USER.videos_locked = uList[0].videos_locked || [];
         console.log('✅ unlocked_videos:', USER.unlocked_videos);
