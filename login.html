@@ -18,7 +18,7 @@
   --card:rgba(12,22,44,.72); --border:rgba(25,170,255,.22);
   --txt:#eaf4ff; --muted:#9fb3cc; --danger:#ff4d6d; --ok:#28d17c;
 }
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif;-webkit-user-select:none;-moz-user-select:none;user-select:none;-webkit-touch-callout:none}
 html,body{height:100%}
 body{
   background:var(--bg); color:var(--txt); min-height:100vh;
@@ -27,11 +27,11 @@ body{
 }
 .bg-layer{position:fixed;inset:0;z-index:0;
   background:url('./bg.png') center/cover no-repeat;
-  filter:brightness(.42) saturate(1.1);}
-.bg-overlay{position:fixed;inset:0;z-index:1;
+  filter:brightness(.42) saturate(1.1);pointer-events:none}
+.bg-overlay{position:fixed;inset:0;z-index:1;pointer-events:none;
   background:radial-gradient(circle at 50% 20%,rgba(25,170,255,.18),transparent 55%),
              linear-gradient(180deg,rgba(2,8,18,.55),rgba(2,8,18,.92));}
-.grid-fx{position:fixed;inset:0;z-index:1;opacity:.25;
+.grid-fx{position:fixed;inset:0;z-index:1;opacity:.25;pointer-events:none;
   background-image:linear-gradient(rgba(25,170,255,.12) 1px,transparent 1px),
                    linear-gradient(90deg,rgba(25,170,255,.12) 1px,transparent 1px);
   background-size:44px 44px;
@@ -45,7 +45,7 @@ body{
 @keyframes pop{from{opacity:0;transform:translateY(30px) scale(.96)}to{opacity:1;transform:none}}
 
 .logo-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:24px}
-.logo-wrap img{width:92px;height:92px;object-fit:contain;
+.logo-wrap img{width:92px;height:92px;object-fit:contain;pointer-events:none;
   filter:drop-shadow(0 0 22px rgba(25,170,255,.6));animation:float 4s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .brand{font-size:22px;font-weight:900;letter-spacing:1px;text-align:center}
@@ -55,10 +55,10 @@ body{
 .field{margin-bottom:16px}
 .field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px;color:#cfe3fb}
 .input-box{position:relative}
-.input-box svg{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--blue);opacity:.8}
+.input-box svg{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--blue);opacity:.8;pointer-events:none}
 .field input{width:100%;padding:14px 44px 14px 44px;border-radius:14px;
   background:rgba(3,10,22,.7);border:1px solid var(--border);color:var(--txt);
-  font-size:15px;transition:.25s;outline:none}
+  font-size:15px;transition:.25s;outline:none;-webkit-user-select:text;user-select:text}
 .field input:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(25,170,255,.15)}
 .toggle-eye{position:absolute;left:12px;top:50%;transform:translateY(-50%);
   background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;display:flex}
@@ -82,9 +82,6 @@ body{
   display:none;text-align:center;animation:pop .3s}
 .msg.err{display:block;background:rgba(255,77,109,.14);border:1px solid rgba(255,77,109,.4);color:#ff9db0}
 .msg.ok{display:block;background:rgba(40,209,124,.14);border:1px solid rgba(40,209,124,.4);color:#7ff0b8}
-
-.divider{display:flex;align-items:center;gap:12px;margin:20px 0 14px;color:var(--muted);font-size:12px}
-.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
 
 .foot{margin-top:22px;text-align:center;font-size:12px;color:var(--muted)}
 .foot b{color:var(--blue)}
@@ -131,8 +128,6 @@ body{
 </div>
 
 <script>
-const SUPABASE_URL="https://brawrhpvtnzvvrzkguic.supabase.co"; 
-<script>
 /* ============ الحمايات ============ */
 document.addEventListener('contextmenu',e=>e.preventDefault());
 document.addEventListener('dragstart',e=>e.preventDefault());
@@ -147,6 +142,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='PrintScreen'){e.preventDefault();try{navigator.clipboard.writeText('');}catch(err){}}
 });
 
+/* ============ CONFIG ============ */
 const SUPABASE_URL="https://brawrhpvtnzvvrzkguic.supabase.co";
 const SUPABASE_KEY="sb_publishable_Q8fBS3nVZqgvfd6diaul8A_cMvHUFtN";
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -157,6 +153,7 @@ const LOCK_MS = 5 * 60 * 1000;
 const $ = id => document.getElementById(id);
 const clean = s => String(s||'').replace(/[<>]/g,'').trim();
 
+/* ============ SESSION CHECK ============ */
 try{
   const s = JSON.parse(localStorage.getItem('sayoda_session')||'null');
   if(s && s.username && s.token){
@@ -192,6 +189,7 @@ document.querySelectorAll('.btn, .btn-ghost').forEach(b => b.addEventListener('c
   setTimeout(()=>c.remove(), 600);
 }));
 
+/* ============ LOGIN ============ */
 $('loginForm').addEventListener('submit', async e => {
   e.preventDefault();
 
@@ -229,7 +227,6 @@ $('loginForm').addEventListener('submit', async e => {
         showMsg('⛔ حسابك موقوف. تواصل مع الإدارة.', 'err');
         throw new Error('inactive');
       }
-
       if(code === 'not_found'){
         showMsg('❌ اسم المستخدم غير موجود. أنشئ حساباً جديداً.', 'err');
         throw new Error('not_found');
@@ -257,7 +254,16 @@ $('loginForm').addEventListener('submit', async e => {
     }));
 
     try{ await sb.rpc('update_last_login', { p_username: res.username }); }catch(e){}
-    try{ await sb.rpc('log_user_activity', { p_username: res.username, p_activity_type: 'login' }); }catch(e){}
+
+    /* تسجيل النشاط */
+    try{
+      await sb.rpc('client_log_activity', {
+        p_username: res.username,
+        p_activity_type: 'login',
+        p_details: JSON.stringify({}),
+        p_user_agent: navigator.userAgent.slice(0,200)
+      });
+    }catch(e){}
 
     showMsg('✅ تم الدخول بنجاح! جاري التحويل...', 'ok');
     setTimeout(() => {
