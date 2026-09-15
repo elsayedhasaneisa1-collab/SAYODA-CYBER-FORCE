@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0a0600" />
 <title>لوحة التحكم الذهبية | SAYODA ADMIN</title>
 <link rel="manifest" href="./manifest.json" />
-<link rel="icon" href="./logog.png" />
+<link rel="icon" href="./logo.png" />
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -222,7 +222,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 
 <div class="gate" id="gate">
   <div class="box">
-    <img src="./logog.png" onerror="this.style.display='none'">
+    <img src="./logo.png" onerror="this.style.display='none'">
     <h2>🔐 لوحة التحكم الذهبية</h2>
     <p>أدخل كلمة مرور المدير للوصول إلى اللوحة</p>
     <input type="password" id="gatePass" placeholder="كلمة المرور" autocomplete="current-password" />
@@ -235,7 +235,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 
 <header>
   <div class="hl">
-    <img src="./logog.png" onerror="this.style.display='none'">
+    <img src="./logo.png" onerror="this.style.display='none'">
     <div class="ht">
       SAYODA <span>ADMIN</span>
       <small>✨ لوحة التحكم الذهبية</small>
@@ -251,7 +251,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 
   <div class="tabs" id="tabs"></div>
 
-  <!-- DASHBOARD -->
   <div class="panel active" id="p-dash">
     <div class="sec-title">📊 لوحة الإحصائيات المباشرة</div>
     <div class="sec-sub">
@@ -300,7 +299,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     </div>
   </div>
 
-  <!-- USERS -->
   <div class="panel" id="p-users">
     <div class="sec-title">👥 إدارة الحسابات</div>
     <div class="sec-sub">تحكم كامل بالمستخدمين — تفعيل / إيقاف / حذف</div>
@@ -308,7 +306,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     <div id="usersList"></div>
   </div>
 
-  <!-- VIDEOS -->
   <div class="panel" id="p-videos">
     <div class="sec-title">🎬 إدارة الفيديوهات</div>
     <div class="card">
@@ -330,7 +327,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     </div>
   </div>
 
-  <!-- CODES -->
   <div class="panel" id="p-codes">
     <div class="sec-title">🔓 أكواد الفتح</div>
     <div class="card">
@@ -355,7 +351,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     </div>
   </div>
 
-  <!-- NOTIFS -->
   <div class="panel" id="p-notifs">
     <div class="sec-title">📢 الإشعارات</div>
     <div class="card">
@@ -369,14 +364,12 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     </div>
   </div>
 
-  <!-- FORUM -->
   <div class="panel" id="p-forum">
     <div class="sec-title">💬 إدارة المنتدى</div>
     <div class="sec-sub">تثبيت / إغلاق / حذف المواضيع</div>
     <div id="adminForumList"></div>
   </div>
 
-  <!-- BANS -->
   <div class="panel" id="p-bans">
     <div class="sec-title">🚫 نظام الحظر</div>
     <div class="sec-sub">اختر مستخدماً وحدّد الميزات المحظورة عنه</div>
@@ -384,7 +377,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     <div id="bansList"></div>
   </div>
 
-  <!-- SETTINGS -->
   <div class="panel" id="p-settings">
     <div class="sec-title">⚙️ إعدادات المنصة</div>
     <div class="card">
@@ -410,9 +402,10 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 </div>
 
 <div id="toasts"></div>
+
 <script>
 /* ============================================
-   SAYODA ADMIN — JavaScript (مصحّح)
+   SAYODA ADMIN — JavaScript (مصحّح نهائياً)
    ============================================ */
 const SUPABASE_URL="https://brawrhpvtnzvvrzkguic.supabase.co";
 const SUPABASE_KEY="sb_publishable_Q8fBS3nVZqgvfd6diaul8A_cMvHUFtN";
@@ -622,7 +615,6 @@ async function loadStats(){
     });
     if(error){ console.error('Stats RPC error:',error); throw error; }
     const s=Array.isArray(data)?data[0]:data || {};
-    console.log('Stats data:',s);
 
     const stats=[
       {ic:'👥',n:s.users||0,l:'إجمالي المستخدمين'},
@@ -660,7 +652,6 @@ async function loadOnlineUsers(){
     if(error){ console.error('Online RPC error:',error); throw error; }
     const res=Array.isArray(data)?data[0]:data || {};
     const list=res.list||[];
-    console.log('Online users:',res);
 
     if(!list.length){
       $('onlineUsers').innerHTML='<div class="empty"><div class="e">😴</div><p>لا يوجد مستخدمون أونلاين حالياً</p></div>';
@@ -757,7 +748,6 @@ async function loadUsers(){
 function renderUsers(q=''){
   const list=USERS.filter(u=>!q||u.username.toLowerCase().includes(q.toLowerCase()));
   $('usersList').innerHTML=list.length?list.map(u=>{
-    /* ⚠️ إخفاء الإيميل والـ video id نهائياً */
     const safePhone=u.phone?esc(u.phone):'—';
     return `<div class="list-item">
       <div class="li-main">
@@ -907,7 +897,7 @@ async function loadCodes(){
     </div>`).join(''):'<div class="empty"><div class="e">🎟️</div><p>لا أكواد</p></div>';
 
     $('codesList').querySelectorAll('[data-code-toggle]').forEach(b=>b.onclick=()=>toggleCode(b.dataset.codeToggle));
-$('codesList').querySelectorAll('[data-code-del]').forEach(b=>b.onclick=()=>delCode(b.dataset.codeDel));
+    $('codesList').querySelectorAll('[data-code-del]').forEach(b=>b.onclick=()=>delCode(b.dataset.codeDel));
   }catch(e){$('codesList').innerHTML='<div class="empty"><div class="e">⚠️</div><p>تعذّر التحميل</p></div>';}
 }
 
@@ -987,11 +977,12 @@ $('sendNotifBtn').onclick=async()=>{
   finally{btn.disabled=false;btn.textContent='📨 إرسال الإشعار';}
 };
 
-/* ============ FORUM ============ */
+/* ============ FORUM (مصحّح) ============ */
 async function loadForum(){
   $('adminForumList').innerHTML='<div class="skel"></div><div class="skel"></div>';
   try{
-    const {data}=await sb.from('forum_topics').select('*').order('created_at',{ascending:false}).limit(100);
+    const {data,error}=await sb.from('forum_topics').select('*').order('created_at',{ascending:false}).limit(100);
+    if(error){ console.error('Load forum error:',error); throw error; }
     const rows=data||[];
     $('adminForumList').innerHTML=rows.length?rows.map(t=>`<div class="list-item">
       <div class="li-main">
@@ -1006,35 +997,67 @@ async function loadForum(){
     </div>`).join(''):'<div class="empty"><div class="e">💬</div><p>لا مواضيع</p></div>';
 
     $('adminForumList').querySelectorAll('[data-topic-pin]').forEach(b=>b.onclick=()=>pinTopic(b.dataset.topicPin));
-$('adminForumList').querySelectorAll('[data-topic-close]').forEach(b=>b.onclick=()=>closeTopic(b.dataset.topicClose));
-$('adminForumList').querySelectorAll('[data-topic-del]').forEach(b=>b.onclick=()=>delTopic(b.dataset.topicDel));
-  }catch(e){$('adminForumList').innerHTML='<div class="empty"><div class="e">⚠️</div><p>تعذّر التحميل</p></div>';}
+    $('adminForumList').querySelectorAll('[data-topic-close]').forEach(b=>b.onclick=()=>closeTopic(b.dataset.topicClose));
+    $('adminForumList').querySelectorAll('[data-topic-del]').forEach(b=>b.onclick=()=>delTopic(b.dataset.topicDel));
+  }catch(e){
+    console.error('Load forum error:',e);
+    $('adminForumList').innerHTML='<div class="empty"><div class="e">⚠️</div><p>تعذّر التحميل<br><small style="color:#ff9db0;font-size:11px">'+(e.message||'')+'</small></p></div>';
+  }
 }
 
 async function pinTopic(id){
   if(!ensurePass()) return;
   try{
-    const {error}=await sb.rpc('admin_toggle_pin_topic',{p_username:ADMIN.username,p_password:PASS,p_topic_id:id});
-    if(error)throw error;
+    console.log('📌 pinTopic called with id:', id);
+    const {data,error}=await sb.rpc('admin_toggle_pin_topic',{
+      p_username:ADMIN.username,
+      p_password:PASS,
+      p_topic_id:id
+    });
+    console.log('📌 pinTopic result:', {data,error});
+    if(error) throw error;
     toast('تم');loadForum();
-  }catch(e){toast('فشل','err');}
+  }catch(e){
+    console.error('❌ pinTopic error:',e);
+    toast('فشل: '+(e.message||''),'err');
+  }
 }
+
 async function closeTopic(id){
   if(!ensurePass()) return;
   try{
-    const {error}=await sb.rpc('admin_toggle_close_topic',{p_username:ADMIN.username,p_password:PASS,p_topic_id:id});
-    if(error)throw error;
+    console.log('🔒 closeTopic called with id:', id);
+    const {data,error}=await sb.rpc('admin_toggle_close_topic',{
+      p_username:ADMIN.username,
+      p_password:PASS,
+      p_topic_id:id
+    });
+    console.log('🔒 closeTopic result:', {data,error});
+    if(error) throw error;
     toast('تم');loadForum();
-  }catch(e){toast('فشل','err');}
+  }catch(e){
+    console.error('❌ closeTopic error:',e);
+    toast('فشل: '+(e.message||''),'err');
+  }
 }
+
 async function delTopic(id){
   if(!ensurePass()) return;
   if(!confirm('حذف الموضوع؟'))return;
   try{
-    const {error}=await sb.rpc('admin_delete_topic',{p_username:ADMIN.username,p_password:PASS,p_topic_id:id});
-    if(error)throw error;
+    console.log('🗑 delTopic called with id:', id);
+    const {data,error}=await sb.rpc('admin_delete_topic',{
+      p_username:ADMIN.username,
+      p_password:PASS,
+      p_topic_id:id
+    });
+    console.log('🗑 delTopic result:', {data,error});
+    if(error) throw error;
     toast('تم الحذف');loadForum();
-  }catch(e){toast('فشل','err');}
+  }catch(e){
+    console.error('❌ delTopic error:',e);
+    toast('فشل: '+(e.message||''),'err');
+  }
 }
 
 /* ============ BANS ============ */
