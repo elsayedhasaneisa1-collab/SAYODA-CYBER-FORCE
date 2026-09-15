@@ -654,9 +654,32 @@ function renderProfile(){
   $('pXpTxt').textContent=nx?`${xp} / ${target} XP — باقي ${target-xp} للمستوى التالي`:`${xp} XP — أعلى مستوى! 👑`;
   $('sXp').textContent=xp;
   $('sStreak').textContent=USER.streak||0;
-  const earned=BADGES.filter(b=>b.ck(USER)).length;$('sBadges').textContent=earned;
-  $('badgesGrid').innerHTML=BADGES.map(b=>{const on=b.ck(USER);
-    return `<div class="badge ${on?'earned':'locked'}"><div class="e">${b.e}</div><div class="t">${b.t}</div></div>`;}).join('');
+
+  /* ✅ الإصلاح: ادمج الشارات المحفوظة + المحسوبة */
+  const savedBadges = Array.isArray(USER.badges) ? USER.badges : [];
+  const computedBadges = BADGES.filter(b => b.ck(USER)).map(b => b.id);
+  const allEarned = [...new Set([...savedBadges, ...computedBadges])];
+
+  /* ✅ الإصلاح: احفظ التحديث في DB لو فيه جديد */
+  const newlyEarned = computedBadges.filter(b => !savedBadges.includes(b));
+  if(newlyEarned.length){
+    USER.badges = allEarned;
+    sb.from('users').update({badges: allEarned}).eq('username', USER.username).catch(()=>{});
+    console.log('🏅 شارات جديدة اتحفظت:', newlyEarned);
+  }
+
+  /* عرض العدد */
+  $('sBadges').textContent = allEarned.length;
+
+  /* عرض الشارات */
+  $('badgesGrid').innerHTML = BADGES.map(b => {
+    const on = allEarned.includes(b.id);
+    return `<div class="badge ${on?'earned':'locked'}" title="${b.t}">
+      <div class="e">${b.e}</div>
+      <div class="t">${b.t}</div>
+    </div>`;
+  }).join('');
+
   loadActivityChart();loadReferral();
 }
 
