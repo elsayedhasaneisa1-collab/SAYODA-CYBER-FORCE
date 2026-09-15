@@ -1,17 +1,17 @@
 /* ============================================
    SAYODA CYBER FORCE — Service Worker
-   Version: v3 (2026-09)
+   Version: v4 (2026-09) — Relative paths
    ============================================ */
 
-const CACHE = "sayoda-cyber-v3";
+const CACHE = "sayoda-cyber-v4";
 const ASSETS = [
-  "/login.html",
-  "/index.html",
-  "/admin.html",
-  "/manifest.json",
-  "/logo.png",
-  "/bg.png",
-  "/sayed.png"
+  "./login.html",
+  "./index.html",
+  "./admin.html",
+  "./manifest.json",
+  "./logo.png",
+  "./bg.png",
+  "./sayed.png"
 ];
 
 /* ============ INSTALL ============ */
@@ -42,10 +42,8 @@ self.addEventListener("fetch", (e) => {
 
   const url = new URL(req.url);
 
-  /* تجاهل كل الطلبات الخارجية (Supabase / YouTube / Google Fonts) */
   if (url.origin !== self.location.origin) return;
 
-  /* --- صفحات HTML: network-first + fallback للـ cache --- */
   if (req.mode === "navigate" || req.destination === "document") {
     e.respondWith(
       fetch(req)
@@ -55,13 +53,12 @@ self.addEventListener("fetch", (e) => {
           return res;
         })
         .catch(() =>
-          caches.match(req).then((r) => r || caches.match("/login.html"))
+          caches.match(req).then((r) => r || caches.match("./login.html"))
         )
     );
     return;
   }
 
-  /* --- ملفات ثابتة: cache-first + تحديث بالخلفية --- */
   e.respondWith(
     caches.match(req).then((cached) => {
       const networkFetch = fetch(req)
@@ -76,7 +73,6 @@ self.addEventListener("fetch", (e) => {
   );
 });
 
-/* ============ MESSAGE (SKIP WAITING) ============ */
 self.addEventListener("message", (e) => {
   if (e.data === "SKIP_WAITING") self.skipWaiting();
 });

@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#020812" />
 <title>SAYODA | CYBER FORCE</title>
-<link rel="manifest" href="/manifest.json" />
-<link rel="icon" href="/logo.png" />
-<link rel="apple-touch-icon" href="/logo.png" />
+<link rel="manifest" href="./manifest.json" />
+<link rel="icon" href="./logo.png" />
+<link rel="apple-touch-icon" href="./logo.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -255,7 +255,7 @@ footer.site-footer{text-align:center;padding:30px 16px 20px;color:var(--muted);f
     <button class="icon-btn" id="menuBtn" aria-label="menu">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
-    <img src="/logo.png" alt="logo" onerror="this.style.display='none'" />
+    <img src="./logo.png" alt="logo" onerror="this.style.display='none'" />
     <div class="hd-title">SAYODA <span>FORCE</span><small>CYBER LEARNING</small></div>
   </div>
   <div class="hd-right">
@@ -285,7 +285,6 @@ footer.site-footer{text-align:center;padding:30px 16px 20px;color:var(--muted);f
 </aside>
 
 <main>
-  <!-- PROFILE -->
   <section class="page active" id="page-profile">
     <div class="prof-hero">
       <div class="prof-av" id="pAv">?</div>
@@ -318,14 +317,12 @@ footer.site-footer{text-align:center;padding:30px 16px 20px;color:var(--muted);f
     </div>
   </section>
 
-  <!-- LEADERBOARD -->
   <section class="page" id="page-leaderboard">
     <div class="sec-title">🏆 المتصدرين</div>
     <div class="sec-sub">أفضل 20 محارب سيبراني في المنصة</div>
     <div id="lbList"></div>
   </section>
 
-  <!-- FORUM -->
   <section class="page" id="page-forum">
     <div class="sec-title">💬 المنتدى</div>
     <div class="sec-sub">شارك أفكارك واطرح أسئلتك مع المجتمع</div>
@@ -333,7 +330,6 @@ footer.site-footer{text-align:center;padding:30px 16px 20px;color:var(--muted);f
     <div id="forumList"></div>
   </section>
 
-  <!-- VIDEOS -->
   <section class="page" id="page-videos">
     <div class="sec-title">🎬 مكتبة الفيديوهات</div>
     <div class="sec-sub">تعلّم الأمن السيبراني خطوة بخطوة</div>
@@ -341,7 +337,6 @@ footer.site-footer{text-align:center;padding:30px 16px 20px;color:var(--muted);f
     <div class="vid-grid" id="vidGrid"></div>
   </section>
 
-  <!-- UNLOCK -->
   <section class="page" id="page-unlock">
     <div class="sec-title">🔓 فتح الفيديوهات</div>
     <div class="sec-sub">أدخل كود الفتح للوصول للمحتوى المقفل</div>
@@ -356,7 +351,6 @@ footer.site-footer{text-align:center;padding:30px 16px 20px;color:var(--muted);f
     </div>
   </section>
 
-  <!-- ABOUT -->
   <section class="page" id="page-about">
     <div class="sec-title">ℹ️ عن المنصة</div>
     <div class="sec-sub">تعرّف على SAYODA CYBER FORCE</div>
@@ -378,7 +372,6 @@ footer.site-footer{text-align:center;padding:30px 16px 20px;color:var(--muted);f
     </div>
   </section>
 
-  <!-- SUPPORT -->
   <section class="page" id="page-support">
     <div class="sec-title">💬 الدعم الفني</div>
     <div class="sec-sub">نحن هنا لمساعدتك في أي وقت</div>
@@ -396,7 +389,6 @@ footer.site-footer{text-align:center;padding:30px 16px 20px;color:var(--muted);f
   <div>© 2026 SAYODA <b style="color:var(--blue)">CYBER FORCE</b> — جميع الحقوق محفوظة</div>
 </footer>
 
-<!-- VIDEO MODAL -->
 <div class="modal" id="vidModal">
   <div class="modal-inner">
     <div class="player-box">
@@ -426,7 +418,6 @@ footer.site-footer{text-align:center;padding:30px 16px 20px;color:var(--muted);f
   </div>
 </div>
 
-<!-- FORUM MODAL -->
 <div class="modal" id="forumModal">
   <div class="modal-inner" style="max-width:640px">
     <div class="modal-pad" style="position:relative">
@@ -441,7 +432,6 @@ footer.site-footer{text-align:center;padding:30px 16px 20px;color:var(--muted);f
 <canvas id="confetti"></canvas>
 
 <script>
-/* ============ CONFIG ============ */
 const SUPABASE_URL="https://brawrhpvtnzvvrzkguic.supabase.co";
 const SUPABASE_KEY="sb_publishable_Q8fBS3nVZqgvfd6diaul8A_cMvHUFtN";
 const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
@@ -472,12 +462,10 @@ const BADGES=[
 
 let USER=null, ALL_VIDEOS=[], CURRENT_VIDEO=null, YT=null, PROGRESS_TIMER=null, ACTIVE_CAT='all', NOTIFS=[];
 
-/* ============ SESSION ============ */
 function getSession(){try{return JSON.parse(localStorage.getItem('sayoda_session')||'null')}catch(e){return null}}
 const SESSION=getSession();
-if(!SESSION||!SESSION.username||!SESSION.token){location.replace('/login.html');}
+if(!SESSION||!SESSION.username||!SESSION.token){location.replace('./login.html');}
 
-/* ============ THEME ============ */
 (function(){const t=localStorage.getItem('sayoda_theme')||'dark';document.documentElement.setAttribute('data-theme',t);updThemeIcon(t);})();
 function updThemeIcon(t){$('themeIcon').innerHTML=t==='light'
   ?'<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"/><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"/><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"/>'
@@ -486,13 +474,11 @@ $('themeBtn').onclick=()=>{const cur=document.documentElement.getAttribute('data
   document.documentElement.setAttribute('data-theme',nx);localStorage.setItem('sayoda_theme',nx);updThemeIcon(nx);
   const mt=document.querySelector('meta[name=theme-color]');if(mt)mt.content=nx==='light'?'#eef4fc':'#020812';};
 
-/* ============ TOAST ============ */
 function toast(msg,type='info',icon){const el=document.createElement('div');el.className='toast '+type;
   const ic=icon||(type==='ok'?'✅':type==='err'?'⚠️':'ℹ️');
   el.innerHTML=`<span class="tic">${ic}</span><span>${esc(msg)}</span>`;
   $('toasts').appendChild(el);setTimeout(()=>{el.style.opacity='0';el.style.transform='translateY(20px)';setTimeout(()=>el.remove(),300)},3400);}
 
-/* ============ CONFETTI + SOUND ============ */
 function playChime(){try{const a=new(window.AudioContext||window.webkitAudioContext)();
   [0,0.12,0.24].forEach((d,i)=>{const o=a.createGain(),s=a.createOscillator();s.type='sine';
   s.frequency.value=[523,659,784][i];s.connect(o);o.connect(a.destination);
@@ -508,7 +494,6 @@ function confetti(){const cv=$('confetti');cv.style.display='block';const ctx=cv
     t++;if(t<160)requestAnimationFrame(loop);else{cv.style.display='none';ctx.clearRect(0,0,cv.width,cv.height);}})();}
 function celebrate(msg){playChime();confetti();toast(msg,'ok','🎉');}
 
-/* ============ SIDEBAR / NAV ============ */
 const SECTIONS=[
   {id:'profile',ic:'👤',t:'ملفي الشخصي'},
   {id:'leaderboard',ic:'🏆',t:'المتصدرين'},
@@ -537,20 +522,18 @@ function openSidebar(){$('sidebar').classList.add('open');$('overlay').classList
 function closeSidebar(){$('sidebar').classList.remove('open');$('overlay').classList.remove('open');}
 $('menuBtn').onclick=openSidebar;$('overlay').onclick=()=>{closeSidebar();$('notifPanel').classList.remove('open');};
 
-/* ============ LOGOUT (with token) ============ */
 $('logoutBtn').onclick=async()=>{
   try{ if(SESSION.token) await sb.rpc('secure_logout',{p_token:SESSION.token}); }catch(e){}
   localStorage.removeItem('sayoda_session');
-  location.replace('/login.html');
+  location.replace('./login.html');
 };
 
-/* ============ LOAD USER ============ */
 async function loadUser(){
   const {data,error}=await sb.from('users').select('*').eq('username',SESSION.username).limit(1);
   if(error||!data||!data[0]){toast('تعذّر تحميل البيانات','err');return;}
   USER=data[0];
   if(USER.active===false){toast('حسابك موقوف','err');setTimeout(()=>{
-    localStorage.removeItem('sayoda_session');location.replace('/login.html');},1500);return;}
+    localStorage.removeItem('sayoda_session');location.replace('./login.html');},1500);return;}
   await updateStreak();
   renderProfile();updateMiniXp();
   $('sideAv').textContent=(USER.username||'?')[0].toUpperCase();
@@ -572,7 +555,6 @@ async function updateStreak(){
   try{await sb.rpc('log_user_activity',{p_username:USER.username,p_activity_type:'visit'});}catch(e){}
 }
 
-/* ============ PROFILE ============ */
 function renderProfile(){
   const xp=USER.xp||0;const {cur,nx}=levelOf(xp);
   $('pAv').textContent=(USER.username||'?')[0].toUpperCase();
@@ -608,7 +590,6 @@ async function loadReferral(){
 $('copyRefBtn').onclick=()=>{const c=USER._refcode||$('refCode').textContent;
   navigator.clipboard.writeText(c).then(()=>toast('تم نسخ كود الدعوة','ok')).catch(()=>toast('انسخ يدوياً: '+c,'info'));};
 
-/* ============ XP / BADGES ============ */
 async function awardXp(amount,reason){
   const before=USER.xp||0;const beforeBadges=BADGES.filter(b=>b.ck(USER)).map(b=>b.id);
   USER.xp=before+amount;
@@ -625,7 +606,6 @@ async function awardXp(amount,reason){
       await sb.from('users').update({badges:merged}).eq('username',USER.username);}catch(e){}}
 }
 
-/* ============ VIDEOS ============ */
 function progressMap(){try{return USER.video_progress&&typeof USER.video_progress==='object'?USER.video_progress:{};}catch(e){return{};}}
 function unlockedList(){return Array.isArray(USER.unlocked_videos)?USER.unlocked_videos.map(String):[];}
 function isAccessible(idx){
@@ -637,7 +617,7 @@ function isAccessible(idx){
 function prevWatched(idx){if(idx<=0)return true;const pv=ALL_VIDEOS[idx-1];const pm=progressMap();const p=pm[pv.id];
   return !!(p&&(p.done||(p.p||0)>=30));}
 function ytIdOf(v){if(v.youtube_id)return v.youtube_id;const u=v.youtube_url||'';const m=u.match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);return m?m[1]:'';}
-function thumbOf(v){return v.thumbnail||(ytIdOf(v)?`https://i.ytimg.com/vi/${ytIdOf(v)}/hqdefault.jpg`:'/sayed.png');}
+function thumbOf(v){return v.thumbnail||(ytIdOf(v)?`https://i.ytimg.com/vi/${ytIdOf(v)}/hqdefault.jpg`:'./sayed.png');}
 
 async function loadVideos(){
   $('vidGrid').innerHTML=Array.from({length:6}).map(()=>'<div class="skel skel-card"></div>').join('');
@@ -659,7 +639,7 @@ function renderVideos(){
     const p=pm[v.id];const prog=p?(p.done?100:(p.p||0)):0;
     return `<div class="vid-card" data-idx="${idx}">
       <div class="vid-thumb">
-        <img src="${esc(thumbOf(v))}" onerror="this.src='/sayed.png'" alt="">
+        <img src="${esc(thumbOf(v))}" onerror="this.src='./sayed.png'" alt="">
         ${acc?`<div class="play"><div class="p">▶</div></div>`:`<div class="vid-lock">🔒<span>مقفل — شاهد السابق 30%</span></div>`}
         ${prog>0?`<div class="vid-prog"><i style="width:${prog}%"></i></div>`:''}
       </div>
@@ -676,7 +656,6 @@ function renderVideos(){
     openVideo(idx);});
 }
 
-/* ============ YOUTUBE ============ */
 let ytApiReady=false, ytReadyQueue=[];
 function loadYtApi(){if(window.YT&&window.YT.Player){ytApiReady=true;return;}const s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';document.head.appendChild(s);}
 window.onYouTubeIframeAPIReady=function(){ytApiReady=true;ytReadyQueue.forEach(f=>f());ytReadyQueue=[];};
@@ -720,7 +699,6 @@ function closeVideo(){$('vidModal').classList.remove('open');document.body.style
   if(YT&&YT.stopVideo)try{YT.stopVideo()}catch(e){}renderVideos();}
 $('closeVid').onclick=closeVideo;
 
-/* ============ RATING ============ */
 function renderStars(v){const my=(USER.ratings&&USER.ratings[v.id])||0;
   $('starRate').innerHTML=[1,2,3,4,5].map(n=>`<button data-n="${n}" class="${n<=my?'on':''}">★</button>`).join('');
   document.querySelectorAll('#starRate button').forEach(b=>{
@@ -741,7 +719,6 @@ async function rateVideo(v,n){
   try{await sb.from('videos').update({total_rating:tr,rating_count:rc}).eq('id',v.id);}catch(e){}
   renderStars(v);loadRating(v);toast(`قيّمت الفيديو ${n} نجوم`,'ok','⭐');}
 
-/* ============ COMMENTS ============ */
 async function loadComments(v){$('cmList').innerHTML='<div class="skel" style="height:60px;margin-bottom:8px"></div><div class="skel" style="height:60px"></div>';
   try{const {data}=await sb.from('comments').select('*').eq('video_id',v.id).order('time',{ascending:false}).limit(50);
     const rows=data||[];
@@ -758,7 +735,6 @@ $('cmSend').onclick=async()=>{const txt=clean($('cmInput').value);if(!txt)return
     toast('تم إضافة تعليقك','ok');loadComments(v);
   }catch(e){toast('تعذّر إرسال التعليق','err');}};
 
-/* ============ LEADERBOARD ============ */
 async function loadLeaderboard(){
   $('lbList').innerHTML=Array.from({length:6}).map(()=>'<div class="skel" style="height:68px;margin-bottom:10px"></div>').join('');
   try{const {data}=await sb.from('users').select('username,xp,level,level_emoji,videos_watched').order('xp',{ascending:false}).limit(20);
@@ -771,7 +747,6 @@ async function loadLeaderboard(){
         <div class="lb-xp">${u.xp||0} XP</div></div>`;}).join('')||'<div class="empty"><div class="e">🏆</div>لا يوجد متصدرين بعد</div>';
   }catch(e){$('lbList').innerHTML='<div class="empty">تعذّر تحميل المتصدرين</div>';}}
 
-/* ============ FORUM ============ */
 async function loadForum(){
   $('forumList').innerHTML=Array.from({length:4}).map(()=>'<div class="skel" style="height:110px;margin-bottom:12px"></div>').join('');
   try{const {data}=await sb.from('forum_topics').select('*').order('pinned',{ascending:false}).order('created_at',{ascending:false}).limit(50);
@@ -816,7 +791,6 @@ $('newTopicBtn').onclick=()=>{
       toast('تم نشر الموضوع','ok');$('forumModal').classList.remove('open');document.body.style.overflow='';loadForum();
     }catch(e){toast('تعذّر نشر الموضوع','err');}};};
 
-/* ============ UNLOCK ============ */
 $('unlockBtn').onclick=async()=>{const code=clean($('unlockInput').value).toUpperCase();if(!code)return toast('أدخل الكود','err');
   const btn=$('unlockBtn');btn.disabled=true;btn.textContent='...';
   try{const {data,error}=await sb.rpc('use_unlock_code',{p_username:USER.username,p_code:code});
@@ -831,7 +805,6 @@ $('unlockBtn').onclick=async()=>{const code=clean($('unlockInput').value).toUppe
   }catch(e){toast('كود غير صالح أو منتهي الصلاحية','err');}
   finally{btn.disabled=false;btn.textContent='فتح';}};
 
-/* ============ NOTIFICATIONS ============ */
 async function loadNotifs(){
   try{const {data}=await sb.from('notifications').select('*').or(`target.eq.all,target.eq.${USER.username}`).order('created_at',{ascending:false}).limit(30);
     NOTIFS=data||[];}catch(e){NOTIFS=[];}
@@ -850,7 +823,6 @@ $('notifBtn').onclick=async()=>{const p=$('notifPanel');const willOpen=!p.classL
     USER._notifReads=NOTIFS.map(n=>n.id);}};
 document.addEventListener('click',e=>{if(!$('notifPanel').contains(e.target)&&e.target.closest('#notifBtn')===null)$('notifPanel').classList.remove('open');});
 
-/* ============ SOCIAL LINKS ============ */
 const SOCIAL_META = {
   facebook:         {icon:'📘', name:'فيسبوك'},
   instagram:        {icon:'📷', name:'انستجرام'},
@@ -869,7 +841,6 @@ async function loadSocial(){
     if(!error) cfg = (Array.isArray(data)?data[0]:data) || {};
   }catch(e){}
 
-  /* fallbacks */
   cfg = Object.assign({
     facebook:'https://www.facebook.com/share/1BwVV1hoks/',
     instagram:'https://www.instagram.com/sayedhassan.2009',
@@ -877,11 +848,10 @@ async function loadSocial(){
     tiktok:'https://www.tiktok.com/@sayedhasaneisa',
     telegram:'https://t.me/sayedhasan_R',
     telegram_channel:'https://t.me/sayoda_elgadar',
-    website:'https://elsayedhasaneisa1-collab.github.io/-SAYODA-CYBER-FORCE/',
+    website:'https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/',
     phone:'01041254010'
   }, cfg || {});
 
-  /* --- Support page: big buttons --- */
   const order=['telegram','telegram_channel','whatsapp','facebook','instagram','tiktok','website'];
   if($('supportBtns')){
     $('supportBtns').innerHTML = order.filter(k=>cfg[k]).map(k=>{
@@ -893,7 +863,6 @@ async function loadSocial(){
     }).join('') || '<div class="empty">لا قنوات متاحة</div>';
   }
 
-  /* --- About page: inline social --- */
   if($('socialBtns')){
     $('socialBtns').innerHTML = order.filter(k=>cfg[k]).map(k=>{
       const m = SOCIAL_META[k]||{icon:'🔗',name:k};
@@ -904,7 +873,6 @@ async function loadSocial(){
     }).join('') || '<div class="empty">لا قنوات متاحة</div>';
   }
 
-  /* --- Footer: icons only --- */
   if($('socialFooter')){
     const icons = order.filter(k=>cfg[k]).map(k=>{
       const m = SOCIAL_META[k]||{icon:'🔗',name:k};
@@ -914,13 +882,11 @@ async function loadSocial(){
   }
 }
 
-/* ============ SECURITY ============ */
 document.addEventListener('contextmenu',e=>{if(e.target.closest('.player-box,.vid-card'))e.preventDefault();});
 document.addEventListener('keydown',e=>{
   if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['I','J','C'].includes(e.key.toUpperCase()))||(e.ctrlKey&&['U','S'].includes(e.key.toUpperCase()))){e.preventDefault();}
 });
 
-/* ============ INIT ============ */
 async function init(){
   buildNav();
   await loadUser();
@@ -928,7 +894,7 @@ async function init(){
   loadYtApi();
 }
 init();
-if('serviceWorker' in navigator){navigator.serviceWorker.register('/service-worker.js').catch(()=>{});}
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./service-worker.js').catch(()=>{});}
 </script>
 </body>
 </html>

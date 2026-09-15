@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#020812" />
 <title>لوحة التحكم | SAYODA CYBER FORCE</title>
-<link rel="manifest" href="/manifest.json" />
-<link rel="icon" href="/logo.png" />
+<link rel="manifest" href="./manifest.json" />
+<link rel="icon" href="./logo.png" />
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -93,20 +93,20 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 
 <div class="gate" id="gate">
   <div class="box">
-    <img src="/logo.png" onerror="this.style.display='none'">
+    <img src="./logo.png" onerror="this.style.display='none'">
     <h2>🔐 لوحة تحكم الأدمن</h2>
     <p>أدخل كلمة مرور المدير للمتابعة</p>
     <input type="password" id="gatePass" placeholder="كلمة المرور" autocomplete="current-password" />
     <button class="btn" style="width:100%" id="gateBtn">دخول</button>
-    <button class="btn ghost" style="width:100%;margin-top:8px" onclick="location.href='/index.html'">رجوع للمنصة</button>
+    <button class="btn ghost" style="width:100%;margin-top:8px" onclick="location.href='./index.html'">رجوع للمنصة</button>
   </div>
 </div>
 
 <div id="app" style="display:none">
 <header>
-  <div class="hl"><img src="/logo.png" onerror="this.style.display='none'"><div class="ht">لوحة <span>التحكم</span><small>SAYODA ADMIN</small></div></div>
+  <div class="hl"><img src="./logo.png" onerror="this.style.display='none'"><div class="ht">لوحة <span>التحكم</span><small>SAYODA ADMIN</small></div></div>
   <div class="hr">
-    <button class="icon-btn" onclick="location.href='/index.html'" title="المنصة">🏠</button>
+    <button class="icon-btn" onclick="location.href='./index.html'" title="المنصة">🏠</button>
     <button class="icon-btn" id="themeBtn">🌙</button>
     <button class="icon-btn" id="logoutBtn" title="خروج">🚪</button>
   </div>
@@ -115,21 +115,18 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 <div class="wrap">
   <div class="tabs" id="tabs"></div>
 
-  <!-- DASHBOARD -->
   <div class="panel active" id="p-dash">
     <div class="sec-title">📊 لوحة الإحصائيات</div>
     <div class="stats" id="statsGrid"></div>
     <div class="card"><h3>👥 آخر المستخدمين</h3><div id="recentUsers"></div></div>
   </div>
 
-  <!-- USERS -->
   <div class="panel" id="p-users">
     <div class="sec-title">👥 إدارة الحسابات</div>
     <input class="search" id="userSearch" placeholder="🔍 ابحث عن مستخدم..." />
     <div id="usersList"></div>
   </div>
 
-  <!-- VIDEOS -->
   <div class="panel" id="p-videos">
     <div class="sec-title">🎬 إدارة الفيديوهات</div>
     <div class="card"><h3>➕ إضافة فيديو</h3>
@@ -144,7 +141,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     <div class="card"><h3>📼 الفيديوهات الحالية</h3><div id="adminVidList"></div></div>
   </div>
 
-  <!-- CODES -->
   <div class="panel" id="p-codes">
     <div class="sec-title">🔓 أكواد الفتح</div>
     <div class="card"><h3>➕ إنشاء كود فتح</h3>
@@ -157,7 +153,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     <div class="card"><h3>🎟️ الأكواد الحالية <button class="btn sm ghost" id="exportCsv" style="float:left">⬇ تصدير CSV</button></h3><div id="codesList"></div></div>
   </div>
 
-  <!-- NOTIFS -->
   <div class="panel" id="p-notifs">
     <div class="sec-title">📢 الإشعارات</div>
     <div class="card"><h3>✉️ إرسال إشعار</h3>
@@ -170,13 +165,11 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     </div>
   </div>
 
-  <!-- FORUM -->
   <div class="panel" id="p-forum">
     <div class="sec-title">💬 إدارة المنتدى</div>
     <div id="adminForumList"></div>
   </div>
 
-  <!-- BANS -->
   <div class="panel" id="p-bans">
     <div class="sec-title">🚫 نظام الحظر</div>
     <p style="color:var(--muted);margin-bottom:14px;font-size:14px">اختر مستخدماً وحدّد الميزات المحظورة عنه</p>
@@ -184,7 +177,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     <div id="bansList"></div>
   </div>
 
-  <!-- SETTINGS -->
   <div class="panel" id="p-settings">
     <div class="sec-title">⚙️ إعدادات المنصة</div>
     <div class="card">
@@ -218,13 +210,12 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 let ADMIN=null, PASS=null, USERS=[], VIDEOS=[];
 const BAN_FEATURES=[{k:'comments',t:'التعليقات'},{k:'forum',t:'المنتدى'},{k:'rating',t:'التقييم'},{k:'unlock',t:'فتح الأكواد'},{k:'videos',t:'الفيديوهات'}];
 
-/* ============ SESSION ============ */
 function getSession(){try{return JSON.parse(localStorage.getItem('sayoda_session')||'null')}catch(e){return null}}
 const SESSION=getSession();
-if(!SESSION||!SESSION.username){location.replace('/login.html');}
-else if(SESSION.role!=='admin'){location.replace('/index.html');}
+if(!SESSION||!SESSION.username){location.replace('./login.html');}
+else if(SESSION.role!=='admin'){location.replace('./index.html');}
 
-/* ============ AUTO LOGOUT (30 دقيقة) ============ */
+/* AUTO LOGOUT */
 let IDLE_TIMER=null;
 const IDLE_MS=30*60*1000;
 function resetIdle(){
@@ -240,10 +231,9 @@ function resetIdle(){
 async function logoutAdmin(){
   try{ if(SESSION && SESSION.token) await sb.rpc('secure_logout',{p_token:SESSION.token}); }catch(e){}
   localStorage.removeItem('sayoda_session');
-  location.replace('/login.html');
+  location.replace('./login.html');
 }
 
-/* ============ THEME ============ */
 (function(){const t=localStorage.getItem('sayoda_theme')||'dark';document.documentElement.setAttribute('data-theme',t);$('themeBtn').textContent=t==='light'?'☀️':'🌙';})();
 $('themeBtn').onclick=()=>{const c=document.documentElement.getAttribute('data-theme');const n=c==='light'?'dark':'light';
   document.documentElement.setAttribute('data-theme',n);localStorage.setItem('sayoda_theme',n);$('themeBtn').textContent=n==='light'?'☀️':'🌙';};
@@ -253,7 +243,7 @@ function toast(m,t='ok'){const e=document.createElement('div');e.className='toas
   e.innerHTML=`<span>${t==='ok'?'✅':'⚠️'}</span><span>${esc(m)}</span>`;$('toasts').appendChild(e);
   setTimeout(()=>{e.style.opacity='0';setTimeout(()=>e.remove(),300)},3200);}
 
-/* ============ GATE (RPC آمن) ============ */
+/* GATE */
 $('gateBtn').onclick=async()=>{
   const p=$('gatePass').value;
   if(!p) return toast('أدخل كلمة المرور','err');
@@ -282,7 +272,7 @@ $('gateBtn').onclick=async()=>{
 };
 $('gatePass').addEventListener('keydown',e=>{if(e.key==='Enter')$('gateBtn').click();});
 
-/* ============ TABS ============ */
+/* TABS */
 const TABS=[
   {id:'dash',t:'📊 الإحصائيات'},
   {id:'users',t:'👥 الحسابات'},
@@ -304,7 +294,6 @@ document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{
   if(b.dataset.t==='settings') loadSettings();
 });
 
-/* ============ INIT ============ */
 async function init(){await Promise.all([loadUsers(),loadVideos(),loadStats()]);}
 
 async function loadStats(){
@@ -320,7 +309,6 @@ async function loadStats(){
   $('recentUsers').innerHTML=recent.length?recent.map(u=>`<div class="list-item"><div class="li-main"><b>${esc(u.username)}</b><small>${esc(u.level||'مبتدئ')} · ${u.xp||0} XP · آخر دخول ${u.last_login?new Date(u.last_login).toLocaleDateString('ar-EG'):'—'}</small></div><span class="pill ${u.active!==false?'on':'off'}">${u.active!==false?'نشط':'موقوف'}</span></div>`).join(''):'<div class="empty">لا مستخدمين</div>';
 }
 
-/* ============ USERS ============ */
 async function loadUsers(){
   $('usersList').innerHTML='<div class="skel"></div><div class="skel"></div>';
   try{const{data}=await sb.from('users').select('*').order('xp',{ascending:false}).limit(500);USERS=data||[];}catch(e){USERS=[];}
@@ -336,7 +324,6 @@ function renderUsers(q=''){
       <button class="btn sm ${u.active!==false?'warn':'ghost'}" data-act="toggle" data-user="${esc(u.username)}">${u.active!==false?'إيقاف':'تفعيل'}</button>
       <button class="btn sm danger" data-act="del" data-user="${esc(u.username)}">حذف</button>
     </div></div>`).join(''):'<div class="empty"><div class="e">👥</div>لا نتائج</div>';
-  /* event delegation */
   $('usersList').querySelectorAll('[data-act]').forEach(b=>{
     b.onclick=()=>{const un=b.dataset.user;
       if(b.dataset.act==='toggle') toggleActive(un);
@@ -349,7 +336,6 @@ async function toggleActive(un){const u=USERS.find(x=>x.username===un);if(!u)ret
 async function delUser(un){if(!confirm('حذف المستخدم '+un+' نهائياً؟'))return;
   try{await sb.from('users').delete().eq('username',un);USERS=USERS.filter(x=>x.username!==un);renderUsers($('userSearch').value);toast('تم الحذف');}catch(e){toast('فشل الحذف','err');}}
 
-/* ============ VIDEOS ============ */
 async function loadVideos(){
   try{const{data}=await sb.from('videos').select('*').order('created_at',{ascending:false});VIDEOS=data||[];}catch(e){VIDEOS=[];}
   $('adminVidList').innerHTML=VIDEOS.length?VIDEOS.map(v=>`<div class="list-item">
@@ -368,7 +354,6 @@ async function delVid(id){if(!confirm('حذف الفيديو؟'))return;
   try{const{error}=await sb.rpc('admin_delete_video',{p_username:ADMIN.username,p_password:PASS,p_video_id:id});if(error)throw error;toast('تم الحذف');loadVideos();
   }catch(e){toast('فشل الحذف','err');}}
 
-/* ============ CODES ============ */
 async function loadCodes(){
   $('codesList').innerHTML='<div class="skel"></div>';
   try{const{data,error}=await sb.rpc('admin_get_unlock_codes',{p_username:ADMIN.username,p_password:PASS});
@@ -398,7 +383,6 @@ $('exportCsv').onclick=()=>{const rows=window._codes||[];if(!rows.length)return 
   const csv=[head.join(',')].concat(rows.map(c=>head.map(h=>{let v=c[h];if(Array.isArray(v))v=v.join('|');return '"'+String(v==null?'':v).replace(/"/g,'""')+'"';}).join(','))).join('\n');
   const blob=new Blob(['\uFEFF'+csv],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='unlock_codes.csv';a.click();toast('تم التصدير');};
 
-/* ============ NOTIFS ============ */
 $('sendNotifBtn').onclick=async()=>{
   const title=clean($('nTitle').value),body=clean($('nBody').value),target=clean($('nTarget').value)||'all';
   if(!title||!body)return toast('العنوان والنص مطلوبان','err');
@@ -407,7 +391,6 @@ $('sendNotifBtn').onclick=async()=>{
     if(error)throw error;toast('تم إرسال الإشعار');$('nTitle').value='';$('nBody').value='';
   }catch(e){toast('فشل الإرسال: '+(e.message||''),'err');}finally{btn.disabled=false;btn.textContent='إرسال';}};
 
-/* ============ FORUM ============ */
 async function loadForum(){
   $('adminForumList').innerHTML='<div class="skel"></div><div class="skel"></div>';
   try{const{data}=await sb.from('forum_topics').select('*').order('created_at',{ascending:false}).limit(100);const rows=data||[];
@@ -426,7 +409,6 @@ async function pinTopic(id){try{const{error}=await sb.rpc('admin_toggle_pin_topi
 async function closeTopic(id){try{const{error}=await sb.rpc('admin_toggle_close_topic',{p_username:ADMIN.username,p_password:PASS,p_topic_id:id});if(error)throw error;toast('تم');loadForum();}catch(e){toast('فشل','err');}}
 async function delTopic(id){if(!confirm('حذف الموضوع؟'))return;try{const{error}=await sb.rpc('admin_delete_topic',{p_username:ADMIN.username,p_password:PASS,p_topic_id:id});if(error)throw error;toast('تم الحذف');loadForum();}catch(e){toast('فشل','err');}}
 
-/* ============ BANS ============ */
 function renderBans(q=''){
   const list=USERS.filter(u=>u.role!=='admin'&&(!q||u.username.toLowerCase().includes(q.toLowerCase())));
   $('bansList').innerHTML=list.length?list.map(u=>{const banned=Array.isArray(u.banned_features)?u.banned_features:[];
@@ -449,7 +431,6 @@ async function toggleBan(un,feature){
   }catch(e){toast('فشل: '+(e.message||''),'err');}
 }
 
-/* ============ SETTINGS ============ */
 const SOCIAL_KEYS = ['facebook','instagram','whatsapp','tiktok','telegram','telegram_channel','website','phone'];
 
 async function loadSettings(){
