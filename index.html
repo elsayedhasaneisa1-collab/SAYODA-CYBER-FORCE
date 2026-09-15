@@ -163,7 +163,6 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px}
 .modal.open{display:flex;animation:fade .25s}
 .modal-inner{background:var(--card-solid);border:1px solid var(--border);border-radius:18px;width:100%;max-width:800px;margin:16px 0;overflow:hidden;box-shadow:var(--shadow)}
 
-/* ============ YOUTUBE PLAYER ============ */
 .player-box{position:relative;aspect-ratio:16/9;background:#000;overflow:hidden}
 .player-box iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
 .player-shield{position:absolute;inset:0;z-index:3;background:transparent}
@@ -507,8 +506,11 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
 <nav class="bottom-nav" id="bottomNav"></nav>
 <div id="toasts"></div>
 <canvas id="confetti"></canvas>
+
 <script>
-/* ============ CONFIG ============ */
+/* ============================================
+   SAYODA CYBER FORCE — JavaScript (مصحّح)
+   ============================================ */
 const SUPABASE_URL="https://brawrhpvtnzvvrzkguic.supabase.co";
 const SUPABASE_KEY="sb_publishable_Q8fBS3nVZqgvfd6diaul8A_cMvHUFtN";
 const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
@@ -516,30 +518,58 @@ const $=id=>document.getElementById(id);
 const clean=s=>String(s==null?'':s).replace(/[<>]/g,'').trim();
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
+/* ============ الحمايات ============ */
+document.addEventListener('contextmenu',e=>e.preventDefault());
+document.addEventListener('dragstart',e=>e.preventDefault());
+document.addEventListener('selectstart',e=>{if(!e.target.closest('input,textarea,select'))e.preventDefault();});
+document.addEventListener('copy',e=>{if(!e.target.closest('input,textarea'))e.preventDefault();});
+document.addEventListener('cut',e=>{if(!e.target.closest('input,textarea'))e.preventDefault();});
+document.addEventListener('keydown',e=>{
+  if(e.key==='F12'){e.preventDefault();e.stopPropagation();return false;}
+  if(e.ctrlKey&&e.shiftKey&&['I','J','C','K'].includes(e.key.toUpperCase())){e.preventDefault();e.stopPropagation();return false;}
+  if(e.ctrlKey&&['U','S','P'].includes(e.key.toUpperCase())){e.preventDefault();e.stopPropagation();return false;}
+  if(e.metaKey&&e.altKey&&['I','J','C','U'].includes(e.key.toUpperCase())){e.preventDefault();e.stopPropagation();return false;}
+  if(e.key==='PrintScreen'){e.preventDefault();try{navigator.clipboard.writeText('');}catch(err){}}
+});
+
+/* ============ الحالة العامة ============ */
+let USER=null;
+let ALL_VIDEOS=[];
+let CURRENT_VIDEO=null;
+let ACTIVE_CAT='all';
+let NOTIFS=[];
+/* ⚠️ مش بنستخدم YT عشان ميتعارضش مع مكتبة يوتيوب */
+let ytPlayer=null;
+let ytApiReady=false;
+let ytReadyQueue=[];
+let ytPlayerReady=false;
+let ytTimeTimer=null;
+let ytControlsTimer=null;
+let ytCurrentVolume=100;
+let ytMuted=false;
+let ytIsPlaying=false;
+
 const LEVELS=[
   {min:0,name:'مبتدئ',emoji:'🌱'},
   {min:100,name:'متعلم',emoji:'📘'},
   {min:300,name:'خبير',emoji:'⚡'},
   {min:600,name:'محترف',emoji:'🎯'},
-  {min:1000,name:'أسطورة',emoji:'👑'},
-];
-const BADGES=[
-  {id:'first_video',e:'🎬',t:'أول فيديو',ck:u=>u.videos_watched>=1},
-  {id:'five_videos',e:'📚',t:'5 فيديوهات',ck:u=>u.videos_watched>=5},
-  {id:'ten_videos',e:'🎓',t:'10 فيديوهات',ck:u=>u.videos_watched>=10},
-  {id:'streak3',e:'🔥',t:'3 أيام',ck:u=>u.streak>=3},
-  {id:'streak7',e:'⚡',t:'أسبوع كامل',ck:u=>u.streak>=7},
-  {id:'streak30',e:'🌟',t:'30 يوم',ck:u=>u.streak>=30},
-  {id:'xp100',e:'💯',t:'100 XP',ck:u=>u.xp>=100},
-  {id:'xp500',e:'💎',t:'500 XP',ck:u=>u.xp>=500},
-  {id:'legend',e:'👑',t:'أسطورة',ck:u=>u.xp>=1000},
-  {id:'social',e:'🤝',t:'داعية',ck:u=>u.referral_count>=1},
-  {id:'commenter',e:'✍️',t:'مُعلّق',ck:u=>(u._commented||0)>=1},
+  {min:1000,name:'أسطورة',emoji:'👑'}
 ];
 
-let USER=null, ALL_VIDEOS=[], CURRENT_VIDEO=null, YT=null, ACTIVE_CAT='all', NOTIFS=[];
-let ytApiReady=false, ytReadyQueue=[], ytPlayerReady=false;
-let ytTimeTimer=null, ytControlsTimer=null, ytCurrentVolume=100, ytMuted=false, ytIsPlaying=false;
+const BADGES=[
+  {id:'first_video',e:'🎬',t:'أول فيديو',ck:u=>(u.videos_watched||0)>=1},
+  {id:'five_videos',e:'📚',t:'5 فيديوهات',ck:u=>(u.videos_watched||0)>=5},
+  {id:'ten_videos',e:'🎓',t:'10 فيديوهات',ck:u=>(u.videos_watched||0)>=10},
+  {id:'streak3',e:'🔥',t:'3 أيام',ck:u=>(u.streak||0)>=3},
+  {id:'streak7',e:'⚡',t:'أسبوع كامل',ck:u=>(u.streak||0)>=7},
+  {id:'streak30',e:'🌟',t:'30 يوم',ck:u=>(u.streak||0)>=30},
+  {id:'xp100',e:'💯',t:'100 XP',ck:u=>(u.xp||0)>=100},
+  {id:'xp500',e:'💎',t:'500 XP',ck:u=>(u.xp||0)>=500},
+  {id:'legend',e:'👑',t:'أسطورة',ck:u=>(u.xp||0)>=1000},
+  {id:'social',e:'🤝',t:'داعية',ck:u=>(u.referral_count||0)>=1},
+  {id:'commenter',e:'✍️',t:'مُعلّق',ck:u=>(u._commented||0)>=1}
+];
 
 /* ============ SESSION ============ */
 function getSession(){try{return JSON.parse(localStorage.getItem('sayoda_session')||'null')}catch(e){return null}}
@@ -556,25 +586,46 @@ $('themeBtn').onclick=()=>{const cur=document.documentElement.getAttribute('data
   const mt=document.querySelector('meta[name=theme-color]');if(mt)mt.content=nx==='light'?'#eef4fc':'#020812';};
 
 /* ============ TOAST ============ */
-function toast(msg,type='info',icon){const el=document.createElement('div');el.className='toast '+type;
+function toast(msg,type='info',icon){
+  const el=document.createElement('div');
+  el.className='toast '+type;
   const ic=icon||(type==='ok'?'✅':type==='err'?'⚠️':'ℹ️');
   el.innerHTML=`<span class="tic">${ic}</span><span>${esc(msg)}</span>`;
-  $('toasts').appendChild(el);setTimeout(()=>{el.style.opacity='0';el.style.transform='translateY(20px)';setTimeout(()=>el.remove(),300)},3400);}
+  $('toasts').appendChild(el);
+  setTimeout(()=>{el.style.opacity='0';el.style.transform='translateY(20px)';setTimeout(()=>el.remove(),300)},3400);
+}
 
 /* ============ CONFETTI ============ */
-function playChime(){try{const a=new(window.AudioContext||window.webkitAudioContext)();
-  [0,0.12,0.24].forEach((d,i)=>{const o=a.createGain(),s=a.createOscillator();s.type='sine';
-  s.frequency.value=[523,659,784][i];s.connect(o);o.connect(a.destination);
-  o.gain.setValueAtTime(0.0001,a.currentTime+d);o.gain.exponentialRampToValueAtTime(0.25,a.currentTime+d+0.02);
-  o.gain.exponentialRampToValueAtTime(0.0001,a.currentTime+d+0.4);s.start(a.currentTime+d);s.stop(a.currentTime+d+0.42);});
+function playChime(){try{
+  const a=new(window.AudioContext||window.webkitAudioContext)();
+  [0,0.12,0.24].forEach((d,i)=>{
+    const o=a.createGain(),s=a.createOscillator();
+    s.type='sine';s.frequency.value=[523,659,784][i];
+    s.connect(o);o.connect(a.destination);
+    o.gain.setValueAtTime(0.0001,a.currentTime+d);
+    o.gain.exponentialRampToValueAtTime(0.25,a.currentTime+d+0.02);
+    o.gain.exponentialRampToValueAtTime(0.0001,a.currentTime+d+0.4);
+    s.start(a.currentTime+d);s.stop(a.currentTime+d+0.42);
+  });
 }catch(e){}}
-function confetti(){const cv=$('confetti');cv.style.display='block';const ctx=cv.getContext('2d');
-  cv.width=innerWidth;cv.height=innerHeight;const cols=['#19aaff','#ffd54a','#28d17c','#ff4d6d','#0b7fd4','#fff'];
+function confetti(){
+  const cv=$('confetti');cv.style.display='block';
+  const ctx=cv.getContext('2d');
+  cv.width=innerWidth;cv.height=innerHeight;
+  const cols=['#19aaff','#ffd54a','#28d17c','#ff4d6d','#0b7fd4','#fff'];
   const P=Array.from({length:130},()=>({x:Math.random()*cv.width,y:-20-Math.random()*cv.height,r:4+Math.random()*6,
     c:cols[Math.floor(Math.random()*cols.length)],vy:2+Math.random()*4,vx:-2+Math.random()*4,a:Math.random()*Math.PI}));
-  let t=0;(function loop(){ctx.clearRect(0,0,cv.width,cv.height);P.forEach(p=>{p.y+=p.vy;p.x+=p.vx;p.a+=0.1;
-    ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.fillStyle=p.c;ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.6);ctx.restore();});
-    t++;if(t<160)requestAnimationFrame(loop);else{cv.style.display='none';ctx.clearRect(0,0,cv.width,cv.height);}})();}
+  let t=0;
+  (function loop(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    P.forEach(p=>{p.y+=p.vy;p.x+=p.vx;p.a+=0.1;
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);
+      ctx.fillStyle=p.c;ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.6);ctx.restore();});
+    t++;
+    if(t<160)requestAnimationFrame(loop);
+    else{cv.style.display='none';ctx.clearRect(0,0,cv.width,cv.height);}
+  })();
+}
 function celebrate(msg){playChime();confetti();toast(msg,'ok','🎉');}
 
 /* ============ NAV ============ */
@@ -585,7 +636,7 @@ const SECTIONS=[
   {id:'videos',ic:'🎬',t:'الفيديوهات'},
   {id:'unlock',ic:'🔓',t:'فتح'},
   {id:'about',ic:'ℹ️',t:'عن المنصة'},
-  {id:'support',ic:'🛟',t:'الدعم'},
+  {id:'support',ic:'🛟',t:'الدعم'}
 ];
 function buildNav(){
   $('sideNav').innerHTML=SECTIONS.map(s=>`<div class="nav-item" data-nav="${s.id}"><span class="ic">${s.ic}</span>${s.t}</div>`).join('');
@@ -609,7 +660,15 @@ $('overlay').onclick=()=>{closeSidebar();$('notifPanel').classList.remove('open'
 
 /* ============ LOGOUT ============ */
 $('logoutBtn').onclick=async()=>{
-  try{ if(SESSION.token) await sb.rpc('secure_logout',{p_token:SESSION.token}); }catch(e){}
+  try{
+    if(SESSION.token) await sb.rpc('secure_logout',{p_token:SESSION.token});
+    if(USER) await sb.rpc('client_log_activity',{
+      p_username:USER.username,
+      p_activity_type:'logout',
+      p_details:'{}',
+      p_user_agent:navigator.userAgent.slice(0,200)
+    });
+  }catch(e){}
   localStorage.removeItem('sayoda_session');
   location.replace('./login.html');
 };
@@ -627,6 +686,7 @@ async function loadUser(){
   $('sideName').textContent=USER.username;
   $('sideRole').textContent=USER.role==='admin'?'مدير':'عضو';
 }
+
 function levelOf(xp){let cur=LEVELS[0],nx=null;for(let i=0;i<LEVELS.length;i++){if(xp>=LEVELS[i].min){cur=LEVELS[i];nx=LEVELS[i+1]||null;}}return{cur,nx};}
 function updateMiniXp(){const {cur}=levelOf(USER.xp||0);$('miniLvl').textContent=cur.emoji;$('miniXp').textContent=(USER.xp||0)+' XP';}
 
@@ -639,12 +699,13 @@ async function updateStreak(){
   streak=(last===y)?streak+1:1;
   USER.streak=streak;
   try{await sb.from('users').update({streak,last_visit:new Date().toISOString()}).eq('username',USER.username);}catch(e){}
-  try{await sb.rpc('log_user_activity',{p_username:USER.username,p_activity_type:'visit'});}catch(e){}
+  try{await sb.rpc('client_log_activity',{p_username:USER.username,p_activity_type:'visit',p_details:'{}',p_user_agent:navigator.userAgent.slice(0,200)});}catch(e){}
 }
 
-/* ============ PROFILE ============ */
+/* ============ PROFILE + BADGES (مصحّح) ============ */
 function renderProfile(){
-  const xp=USER.xp||0;const {cur,nx}=levelOf(xp);
+  const xp=USER.xp||0;
+  const {cur,nx}=levelOf(xp);
   $('pAv').textContent=(USER.username||'?')[0].toUpperCase();
   $('pName').textContent=USER.username;
   $('pEmoji').textContent=cur.emoji;$('pLevel').textContent=cur.name;
@@ -655,23 +716,22 @@ function renderProfile(){
   $('sXp').textContent=xp;
   $('sStreak').textContent=USER.streak||0;
 
-  /* ✅ الإصلاح: ادمج الشارات المحفوظة + المحسوبة */
+  /* ✅ الإصلاح: دمج الشارات المحفوظة + المحسوبة */
   const savedBadges = Array.isArray(USER.badges) ? USER.badges : [];
   const computedBadges = BADGES.filter(b => b.ck(USER)).map(b => b.id);
   const allEarned = [...new Set([...savedBadges, ...computedBadges])];
 
-  /* ✅ الإصلاح: احفظ التحديث في DB لو فيه جديد */
+  /* حفظ الجديد في DB */
   const newlyEarned = computedBadges.filter(b => !savedBadges.includes(b));
   if(newlyEarned.length){
     USER.badges = allEarned;
-    sb.from('users').update({badges: allEarned}).eq('username', USER.username).catch(()=>{});
-    console.log('🏅 شارات جديدة اتحفظت:', newlyEarned);
+    sb.from('users').update({badges: allEarned}).eq('username', USER.username).then(()=>{
+      console.log('🏅 شارات جديدة اتحفظت:', newlyEarned);
+    }).catch(()=>{});
   }
 
-  /* عرض العدد */
   $('sBadges').textContent = allEarned.length;
 
-  /* عرض الشارات */
   $('badgesGrid').innerHTML = BADGES.map(b => {
     const on = allEarned.includes(b.id);
     return `<div class="badge ${on?'earned':'locked'}" title="${b.t}">
@@ -680,11 +740,16 @@ function renderProfile(){
     </div>`;
   }).join('');
 
-  loadActivityChart();loadReferral();
+  loadActivityChart();
+  loadReferral();
 }
 
 async function loadActivityChart(){
-  const days=[];for(let i=6;i>=0;i--){const d=new Date(Date.now()-i*864e5);days.push({key:d.toISOString().slice(0,10),lbl:['أحد','إثن','ثلا','أرب','خمي','جمع','سبت'][d.getDay()]});}
+  const days=[];
+  for(let i=6;i>=0;i--){
+    const d=new Date(Date.now()-i*864e5);
+    days.push({key:d.toISOString().slice(0,10),lbl:['أحد','إثن','ثلا','أرب','خمي','جمع','سبت'][d.getDay()]});
+  }
   let counts={};
   try{
     const from=days[0].key;
@@ -704,19 +769,26 @@ async function loadActivityChart(){
 }
 
 async function loadReferral(){
-  try{const {data}=await sb.rpc('get_my_referral_code',{p_username:USER.username});
+  try{
+    const {data}=await sb.rpc('get_my_referral_code',{p_username:USER.username});
     let code=Array.isArray(data)?(data[0]&&(data[0].code||data[0])):data;
     if(code&&typeof code==='object')code=code.code;
-    $('refCode').textContent=code||'------';USER._refcode=code||'';}catch(e){$('refCode').textContent='------';}
+    $('refCode').textContent=code||'------';
+    USER._refcode=code||'';
+  }catch(e){$('refCode').textContent='------';}
 }
-$('copyRefBtn').onclick=()=>{const c=USER._refcode||$('refCode').textContent;
-  navigator.clipboard.writeText(c).then(()=>toast('تم نسخ كود الدعوة','ok')).catch(()=>toast('انسخ يدوياً: '+c,'info'));};
+$('copyRefBtn').onclick=()=>{
+  const c=USER._refcode||$('refCode').textContent;
+  navigator.clipboard.writeText(c).then(()=>toast('تم نسخ كود الدعوة','ok')).catch(()=>toast('انسخ يدوياً: '+c,'info'));
+};
 
 /* ============ XP ============ */
 async function awardXp(amount,reason){
-  const before=USER.xp||0;const beforeBadges=BADGES.filter(b=>b.ck(USER)).map(b=>b.id);
+  const before=USER.xp||0;
+  const beforeBadges=BADGES.filter(b=>b.ck(USER)).map(b=>b.id);
   USER.xp=before+amount;
-  const {cur}=levelOf(USER.xp);USER.level=cur.name;USER.level_emoji=cur.emoji;
+  const {cur}=levelOf(USER.xp);
+  USER.level=cur.name;USER.level_emoji=cur.emoji;
   const beforeLvl=levelOf(before).cur.name;
   try{await sb.from('users').update({xp:USER.xp,level:cur.name,level_emoji:cur.emoji}).eq('username',USER.username);}catch(e){}
   updateMiniXp();renderProfile();
@@ -724,9 +796,16 @@ async function awardXp(amount,reason){
   if(cur.name!==beforeLvl){celebrate(`🎉 مستوى جديد: ${cur.emoji} ${cur.name}!`);}
   const nowBadges=BADGES.filter(b=>b.ck(USER)).map(b=>b.id);
   const gained=nowBadges.filter(b=>!beforeBadges.includes(b));
-  if(gained.length){const bd=BADGES.find(b=>b.id===gained[0]);celebrate(`🏅 شارة جديدة: ${bd.e} ${bd.t}!`);
-    try{const arr=Array.isArray(USER.badges)?USER.badges:[];const merged=[...new Set([...arr,...gained])];USER.badges=merged;
-      await sb.from('users').update({badges:merged}).eq('username',USER.username);}catch(e){}}
+  if(gained.length){
+    const bd=BADGES.find(b=>b.id===gained[0]);
+    celebrate(`🏅 شارة جديدة: ${bd.e} ${bd.t}!`);
+    try{
+      const arr=Array.isArray(USER.badges)?USER.badges:[];
+      const merged=[...new Set([...arr,...gained])];
+      USER.badges=merged;
+      await sb.from('users').update({badges:merged}).eq('username',USER.username);
+    }catch(e){}
+  }
 }
 
 /* ============ VIDEOS ============ */
@@ -738,29 +817,54 @@ function isAccessible(idx){
   if(!v.locked)return idx===0?true:(prevWatched(idx));
   return idx===0?true:prevWatched(idx);
 }
-function prevWatched(idx){if(idx<=0)return true;const pv=ALL_VIDEOS[idx-1];const pm=progressMap();const p=pm[pv.id];
-  return !!(p&&(p.done||(p.p||0)>=30));}
-function ytIdOf(v){if(v.youtube_id)return v.youtube_id;const u=v.youtube_url||'';const m=u.match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);return m?m[1]:'';}
-function thumbOf(v){return v.thumbnail||(ytIdOf(v)?`https://i.ytimg.com/vi/${ytIdOf(v)}/hqdefault.jpg`:'./sayed.png');}
+function prevWatched(idx){
+  if(idx<=0)return true;
+  const pv=ALL_VIDEOS[idx-1];
+  const pm=progressMap();
+  const p=pm[pv.id];
+  return !!(p&&(p.done||(p.p||0)>=30));
+}
+function ytIdOf(v){
+  if(v.youtube_id)return v.youtube_id;
+  const u=v.youtube_url||'';
+  const m=u.match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
+  return m?m[1]:'';
+}
+function thumbOf(v){
+  return v.thumbnail||(ytIdOf(v)?`https://i.ytimg.com/vi/${ytIdOf(v)}/hqdefault.jpg`:'./sayed.png');
+}
 
 async function loadVideos(){
   $('vidGrid').innerHTML=Array.from({length:6}).map(()=>'<div class="skel skel-card"></div>').join('');
-  try{const {data,error}=await sb.from('videos').select('*').order('created_at',{ascending:true});
-    if(error)throw error;ALL_VIDEOS=data||[];
-  }catch(e){ALL_VIDEOS=[];}
+  try{
+    const {data,error}=await sb.from('videos').select('*').order('created_at',{ascending:true});
+    if(error)throw error;
+    ALL_VIDEOS=data||[];
+  }catch(e){
+    console.error('Videos error:',e);
+    ALL_VIDEOS=[];
+  }
   buildCatFilters();renderVideos();
 }
+
 function buildCatFilters(){
   const cats=['all',...new Set(ALL_VIDEOS.map(v=>v.category).filter(Boolean))];
   $('catFilters').innerHTML=cats.map(c=>`<div class="chip ${c===ACTIVE_CAT?'active':''}" data-cat="${esc(c)}">${c==='all'?'الكل':esc(c)}</div>`).join('');
   document.querySelectorAll('#catFilters .chip').forEach(ch=>ch.onclick=()=>{ACTIVE_CAT=ch.dataset.cat;buildCatFilters();renderVideos();});
 }
+
 function renderVideos(){
   const list=ALL_VIDEOS.filter(v=>ACTIVE_CAT==='all'||v.category===ACTIVE_CAT);
-  if(!list.length){$('vidGrid').innerHTML='<div class="empty" style="grid-column:1/-1"><div class="e">🎬</div>لا توجد فيديوهات بعد</div>';return;}
+  if(!list.length){
+    $('vidGrid').innerHTML='<div class="empty" style="grid-column:1/-1"><div class="e">🎬</div><p>لا توجد فيديوهات بعد</p></div>';
+    return;
+  }
   const pm=progressMap();
-  $('vidGrid').innerHTML=list.map(v=>{const idx=ALL_VIDEOS.indexOf(v);const acc=isAccessible(idx);
-    const p=pm[v.id];const prog=p?(p.done?100:(p.p||0)):0;
+  $('vidGrid').innerHTML=list.map(v=>{
+    const idx=ALL_VIDEOS.indexOf(v);
+    const acc=isAccessible(idx);
+    const p=pm[v.id];
+    const prog=p?(p.done?100:(p.p||0)):0;
     return `<div class="vid-card" data-idx="${idx}">
       <div class="vid-thumb">
         <img src="${esc(thumbOf(v))}" onerror="this.src='./sayed.png'" alt="">
@@ -774,15 +878,28 @@ function renderVideos(){
           <span class="cat-tag">${esc(v.category||'عام')}</span>
           <span>👁 ${v.views||0} ${p&&p.done?'· ✅':''}</span>
         </div>
-      </div></div>`;}).join('');
-  document.querySelectorAll('#vidGrid .vid-card').forEach(c=>c.onclick=()=>{const idx=+c.dataset.idx;
+      </div></div>`;
+  }).join('');
+  document.querySelectorAll('#vidGrid .vid-card').forEach(c=>c.onclick=()=>{
+    const idx=+c.dataset.idx;
     if(!isAccessible(idx)){toast('هذا الفيديو مقفل — أكمل الفيديو السابق أو استخدم كود فتح','err','🔒');return;}
-    openVideo(idx);});
+    openVideo(idx);
+  });
 }
 
-/* ============ YOUTUBE PLAYER ============ */
-function loadYtApi(){if(window.YT&&window.YT.Player){ytApiReady=true;return;}const s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';document.head.appendChild(s);}
-window.onYouTubeIframeAPIReady=function(){ytApiReady=true;ytReadyQueue.forEach(f=>f());ytReadyQueue=[];};
+/* ============ YOUTUBE PLAYER (مصحّح - بدون تعارض YT) ============ */
+function loadYtApi(){
+  if(window.YT && window.YT.Player){ytApiReady=true;return;}
+  if(document.querySelector('script[src*="iframe_api"]')) return;
+  const s=document.createElement('script');
+  s.src='https://www.youtube.com/iframe_api';
+  document.head.appendChild(s);
+}
+window.onYouTubeIframeAPIReady=function(){
+  ytApiReady=true;
+  ytReadyQueue.forEach(f=>f());
+  ytReadyQueue=[];
+};
 
 function fmtSec(s){s=Math.max(0,Math.floor(s||0));const m=Math.floor(s/60);const ss=s%60;return String(m).padStart(2,'0')+':'+String(ss).padStart(2,'0');}
 
@@ -790,15 +907,16 @@ function showYtControls(){
   const c=$('ytControls'); if(!c) return;
   c.classList.remove('hidden');
   clearTimeout(ytControlsTimer);
-  ytControlsTimer=setTimeout(()=>{
-    if(ytIsPlaying) c.classList.add('hidden');
-  },3000);
+  ytControlsTimer=setTimeout(()=>{if(ytIsPlaying) c.classList.add('hidden');},3000);
 }
 
 async function openVideo(idx){
-  CURRENT_VIDEO=ALL_VIDEOS[idx];const v=CURRENT_VIDEO;
-  $('mTitle').textContent=v.title||'';$('mDesc').textContent=v.description||'';
-  $('vidModal').classList.add('open');document.body.style.overflow='hidden';
+  CURRENT_VIDEO=ALL_VIDEOS[idx];
+  const v=CURRENT_VIDEO;
+  $('mTitle').textContent=v.title||'';
+  $('mDesc').textContent=v.description||'';
+  $('vidModal').classList.add('open');
+  document.body.style.overflow='hidden';
   $('ytBigPlay').classList.remove('hidden');
   $('ytControls').classList.remove('hidden');
   $('ytPlayPause').textContent='▶';
@@ -808,12 +926,13 @@ async function openVideo(idx){
 
   const vid=ytIdOf(v);
   const start=(()=>{const p=progressMap()[v.id];return p&&p._sec?Math.floor(p._sec):0;})();
-  
-  if(YT && YT.destroy){ try{ YT.destroy(); }catch(e){} }
-  window.ytInstance = null;
-  
+
+  if(ytPlayer && ytPlayer.destroy){ try{ ytPlayer.destroy(); }catch(e){} }
+  ytPlayer=null;
+  ytPlayerReady=false;
+
   const mk=()=>{
-    YT = window.ytInstance = new window.YT.Player('ytPlayer',{
+    ytPlayer = new window.YT.Player('ytPlayer',{
       videoId:vid,
       playerVars:{
         rel:0, modestbranding:1, start:start, playsinline:1,
@@ -823,7 +942,6 @@ async function openVideo(idx){
       events:{
         onReady:e=>{
           ytPlayerReady=true;
-          window.ytInstance = YT;
           try{ e.target.setVolume(ytCurrentVolume); }catch(err){}
           startYtTimer();
           setTimeout(()=>{ try{ e.target.playVideo(); }catch(err){} }, 400);
@@ -832,11 +950,13 @@ async function openVideo(idx){
       }
     });
   };
-  
+
   if(ytApiReady && window.YT && window.YT.Player){ mk(); }
   else { ytReadyQueue.push(mk); if(!window.YT) loadYtApi(); }
 
   try{const nv=(v.views||0)+1;v.views=nv;await sb.from('videos').update({views:nv}).eq('id',v.id);}catch(e){}
+  try{await sb.rpc('client_log_activity',{p_username:USER.username,p_activity_type:'video_watch',p_details:JSON.stringify({video:v.title,id:v.id}),p_user_agent:navigator.userAgent.slice(0,200)});}catch(e){}
+
   renderStars(v);loadRating(v);loadComments(v);
 }
 
@@ -850,9 +970,9 @@ function onYtState(e){
 function startYtTimer(){
   clearInterval(ytTimeTimer);
   ytTimeTimer=setInterval(()=>{
-    if(!YT||!YT.getCurrentTime)return;
+    if(!ytPlayerReady||!ytPlayer||!ytPlayer.getCurrentTime)return;
     try{
-      const t=YT.getCurrentTime(),d=YT.getDuration();
+      const t=ytPlayer.getCurrentTime(),d=ytPlayer.getDuration();
       if(!d)return;
       const pct=Math.min(100,(t/d)*100);
       $('ytProgressFill').style.width=pct+'%';
@@ -864,52 +984,61 @@ function startYtTimer(){
 
 let _lastSave=0;
 async function markProgress(pct,done,sec){
-  const v=CURRENT_VIDEO;if(!v)return;const pm=progressMap();const prev=pm[v.id]||{p:0,done:false};
-  const wasDone=prev.done;const newP=Math.max(prev.p||0,Math.round(pct));
-  pm[v.id]={p:newP,done:prev.done||done,_sec:sec||prev._sec||0};USER.video_progress=pm;
+  const v=CURRENT_VIDEO;if(!v)return;
+  const pm=progressMap();
+  const prev=pm[v.id]||{p:0,done:false};
+  const wasDone=prev.done;
+  const newP=Math.max(prev.p||0,Math.round(pct));
+  pm[v.id]={p:newP,done:prev.done||done,_sec:sec||prev._sec||0};
+  USER.video_progress=pm;
   const now=Date.now();
-  if(now-_lastSave>3500||done){_lastSave=now;
-    try{await sb.from('users').update({video_progress:pm}).eq('username',USER.username);}catch(e){}}
+  if(now-_lastSave>3500||done){
+    _lastSave=now;
+    try{await sb.from('users').update({video_progress:pm}).eq('username',USER.username);}catch(e){}
+  }
   if(done&&!wasDone){
     USER.videos_watched=(USER.videos_watched||0)+1;
     try{await sb.from('users').update({videos_watched:USER.videos_watched,video_progress:pm}).eq('username',USER.username);}catch(e){}
-    try{await sb.rpc('log_user_activity',{p_username:USER.username,p_activity_type:'video_complete'});}catch(e){}
+    try{await sb.rpc('client_log_activity',{p_username:USER.username,p_activity_type:'video_complete',p_details:JSON.stringify({video:v.title,id:v.id}),p_user_agent:navigator.userAgent.slice(0,200)});}catch(e){}
     await awardXp(10,'أكملت فيديو!');
     renderVideos();
   }
 }
 
 function closeVideo(){
-  $('vidModal').classList.remove('open');document.body.style.overflow='';
+  $('vidModal').classList.remove('open');
+  document.body.style.overflow='';
   clearInterval(ytTimeTimer);clearTimeout(ytControlsTimer);
-  if(YT&&YT.getCurrentTime){try{markProgress((YT.getCurrentTime()/YT.getDuration())*100,false,YT.getCurrentTime());}catch(e){}}
-  if(YT&&YT.stopVideo)try{YT.stopVideo()}catch(e){}
+  if(ytPlayerReady&&ytPlayer&&ytPlayer.getCurrentTime){
+    try{markProgress((ytPlayer.getCurrentTime()/ytPlayer.getDuration())*100,false,ytPlayer.getCurrentTime());}catch(e){}
+  }
+  if(ytPlayerReady&&ytPlayer&&ytPlayer.stopVideo){try{ytPlayer.stopVideo();}catch(e){}}
   renderVideos();
 }
 $('closeVid').onclick=closeVideo;
 
-/* ============ أزرار المشغل المخصصة ============ */
+/* ============ أزرار المشغل ============ */
 document.addEventListener('click',e=>{
   const t=e.target.closest('button');
   if(!t)return;
   if(t.id==='ytPlayPause'){
-    if(!ytPlayerReady||!window.ytInstance)return;
+    if(!ytPlayerReady||!ytPlayer)return;
     try{
       const S=window.YT.PlayerState;
-      const st=window.ytInstance.getPlayerState();
-      if(st===S.PLAYING){window.ytInstance.pauseVideo();} else {window.ytInstance.playVideo();}
+      const st=ytPlayer.getPlayerState();
+      if(st===S.PLAYING){ytPlayer.pauseVideo();}else{ytPlayer.playVideo();}
       showYtControls();
     }catch(err){}
     return;
   }
-  if(t.id==='ytBack10'){if(window.ytInstance&&ytPlayerReady){try{window.ytInstance.seekTo(Math.max(0,window.ytInstance.getCurrentTime()-10),true);showYtControls();}catch(err){}}return;}
-  if(t.id==='ytFwd10'){if(window.ytInstance&&ytPlayerReady){try{window.ytInstance.seekTo(window.ytInstance.getCurrentTime()+10,true);showYtControls();}catch(err){}}return;}
+  if(t.id==='ytBack10'){if(ytPlayerReady&&ytPlayer){try{ytPlayer.seekTo(Math.max(0,ytPlayer.getCurrentTime()-10),true);showYtControls();}catch(err){}}return;}
+  if(t.id==='ytFwd10'){if(ytPlayerReady&&ytPlayer){try{ytPlayer.seekTo(ytPlayer.getCurrentTime()+10,true);showYtControls();}catch(err){}}return;}
   if(t.id==='ytMute'){
-    if(!window.ytInstance||!ytPlayerReady)return;
+    if(!ytPlayerReady||!ytPlayer)return;
     try{
       ytMuted=!ytMuted;
-      if(ytMuted){window.ytInstance.mute();t.textContent='🔇';}
-      else{window.ytInstance.unMute();t.textContent='🔊';}
+      if(ytMuted){ytPlayer.mute();t.textContent='🔇';}
+      else{ytPlayer.unMute();t.textContent='🔊';}
     }catch(err){}
     return;
   }
@@ -923,33 +1052,33 @@ document.addEventListener('click',e=>{
 
 document.addEventListener('click',e=>{
   if(e.target.closest('#ytBigPlay')){
-    if(!ytPlayerReady||!window.ytInstance)return;
-    try{window.ytInstance.playVideo();$('ytBigPlay').classList.add('hidden');}catch(err){}
+    if(!ytPlayerReady||!ytPlayer)return;
+    try{ytPlayer.playVideo();$('ytBigPlay').classList.add('hidden');}catch(err){}
   }
 });
 
 document.addEventListener('click',e=>{
   const p=e.target.closest('#ytProgress');
-  if(!p||!ytPlayerReady||!window.ytInstance)return;
+  if(!p||!ytPlayerReady||!ytPlayer)return;
   try{
     const r=p.getBoundingClientRect();
     const pct=Math.min(100,Math.max(0,((e.clientX-r.left)/r.width)*100));
-    const dur=window.ytInstance.getDuration();
-    window.ytInstance.seekTo((pct/100)*dur,true);
+    const dur=ytPlayer.getDuration();
+    ytPlayer.seekTo((pct/100)*dur,true);
   }catch(err){}
 });
 
 document.addEventListener('click',e=>{
   const v=e.target.closest('#ytVolume');
-  if(!v||!ytPlayerReady||!window.ytInstance)return;
+  if(!v||!ytPlayerReady||!ytPlayer)return;
   try{
     const r=v.getBoundingClientRect();
     const pct=Math.min(100,Math.max(0,((e.clientX-r.left)/r.width)*100));
     ytCurrentVolume=Math.round(pct);
     ytMuted=false;
     if($('ytMute'))$('ytMute').textContent='🔊';
-    window.ytInstance.setVolume(ytCurrentVolume);
-    window.ytInstance.unMute();
+    ytPlayer.setVolume(ytCurrentVolume);
+    ytPlayer.unMute();
     if($('ytVolumeFill'))$('ytVolumeFill').style.width=pct+'%';
   }catch(err){}
 });
@@ -957,36 +1086,22 @@ document.addEventListener('click',e=>{
 document.addEventListener('mousemove',e=>{if(e.target.closest('.player-box')) showYtControls();});
 document.addEventListener('touchstart',e=>{if(e.target.closest('.player-box')) showYtControls();},{passive:true});
 
-/* ============ الحمايات ============ */
-// منع Right Click
-document.addEventListener('contextmenu',e=>e.preventDefault());
-// منع السحب
-document.addEventListener('dragstart',e=>e.preventDefault());
-// منع الاختصارات الخطيرة
-document.addEventListener('keydown',e=>{
-  if(e.key==='F12'){e.preventDefault();e.stopPropagation();return false;}
-  if(e.ctrlKey&&e.shiftKey&&['I','J','C','K'].includes(e.key.toUpperCase())){e.preventDefault();e.stopPropagation();return false;}
-  if(e.ctrlKey&&['U','S','P'].includes(e.key.toUpperCase())){e.preventDefault();e.stopPropagation();return false;}
-  if(e.metaKey&&e.altKey&&['I','J','C','U'].includes(e.key.toUpperCase())){e.preventDefault();e.stopPropagation();return false;}
-  if(e.key==='PrintScreen'){e.preventDefault();try{navigator.clipboard.writeText('');}catch(err){}}
-});
-// منع التحديد
-document.addEventListener('selectstart',e=>{if(!e.target.closest('input,textarea'))e.preventDefault();});
-// منع النسخ
-document.addEventListener('copy',e=>{if(!e.target.closest('input,textarea'))e.preventDefault();});
-document.addEventListener('cut',e=>{if(!e.target.closest('input,textarea'))e.preventDefault();});
-
 /* ============ RATING ============ */
-function renderStars(v){const my=(USER.ratings&&USER.ratings[v.id])||0;
+function renderStars(v){
+  const my=(USER.ratings&&USER.ratings[v.id])||0;
   $('starRate').innerHTML=[1,2,3,4,5].map(n=>`<button data-n="${n}" class="${n<=my?'on':''}">★</button>`).join('');
   document.querySelectorAll('#starRate button').forEach(b=>{
     b.onmouseenter=()=>hoverStars(+b.dataset.n);
     b.onmouseleave=()=>hoverStars(my);
-    b.onclick=()=>rateVideo(v,+b.dataset.n);});}
+    b.onclick=()=>rateVideo(v,+b.dataset.n);
+  });
+}
 function hoverStars(n){document.querySelectorAll('#starRate button').forEach(b=>b.classList.toggle('on',+b.dataset.n<=n));}
-async function loadRating(v){const avg=v.rating_count?(v.total_rating/v.rating_count):(v.total_rating||0);
+async function loadRating(v){
+  const avg=v.rating_count?(v.total_rating/v.rating_count):(v.total_rating||0);
   $('mAvgRate').textContent=(avg||0).toFixed(1);
-  $('mRateCount').textContent=v.rating_count?`${v.rating_count} تقييم`:'لا تقييمات';}
+  $('mRateCount').textContent=v.rating_count?`${v.rating_count} تقييم`:'لا تقييمات';
+}
 async function rateVideo(v,n){
   const ratings=USER.ratings&&typeof USER.ratings==='object'?USER.ratings:{};
   const old=ratings[v.id]||0;ratings[v.id]=n;USER.ratings=ratings;
@@ -995,70 +1110,97 @@ async function rateVideo(v,n){
   v.total_rating=tr;v.rating_count=rc;
   try{await sb.from('users').update({ratings}).eq('username',USER.username);}catch(e){}
   try{await sb.from('videos').update({total_rating:tr,rating_count:rc}).eq('id',v.id);}catch(e){}
-  renderStars(v);loadRating(v);toast(`قيّمت الفيديو ${n} نجوم`,'ok','⭐');}
+  renderStars(v);loadRating(v);toast(`قيّمت الفيديو ${n} نجوم`,'ok','⭐');
+  try{await sb.rpc('client_log_activity',{p_username:USER.username,p_activity_type:'rating',p_details:JSON.stringify({video:v.title,stars:n}),p_user_agent:navigator.userAgent.slice(0,200)});}catch(e){}
+}
 
 /* ============ COMMENTS ============ */
-async function loadComments(v){$('cmList').innerHTML='<div class="skel" style="height:60px;margin-bottom:8px"></div><div class="skel" style="height:60px"></div>';
-  try{const {data}=await sb.from('comments').select('*').eq('video_id',v.id).order('time',{ascending:false}).limit(50);
+async function loadComments(v){
+  $('cmList').innerHTML='<div class="skel" style="height:60px;margin-bottom:8px"></div><div class="skel" style="height:60px"></div>';
+  try{
+    const {data}=await sb.from('comments').select('*').eq('video_id',v.id).order('time',{ascending:false}).limit(50);
     const rows=data||[];
     $('cmList').innerHTML=rows.length?rows.map(c=>`<div class="cm"><b>${esc(c.username)}</b><small>${fmtTime(c.time)}</small><p>${esc(c.text)}</p></div>`).join('')
-      :'<div class="empty"><div class="e">💬</div>كن أول من يعلّق</div>';
-  }catch(e){$('cmList').innerHTML='<div class="empty">تعذّر تحميل التعليقات</div>';}}
+      :'<div class="empty"><div class="e">💬</div><p>كن أول من يعلّق</p></div>';
+  }catch(e){$('cmList').innerHTML='<div class="empty">تعذّر تحميل التعليقات</div>';}
+}
 function fmtTime(t){try{const d=new Date(t);return d.toLocaleDateString('ar-EG',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});}catch(e){return'';}}
-$('cmSend').onclick=async()=>{const txt=clean($('cmInput').value);if(!txt)return;const v=CURRENT_VIDEO;
+$('cmSend').onclick=async()=>{
+  const txt=clean($('cmInput').value);
+  if(!txt)return;
+  const v=CURRENT_VIDEO;
   $('cmInput').value='';
-  try{await sb.from('comments').insert({video_id:v.id,username:USER.username,text:txt,time:new Date().toISOString()});
-    if(!USER._commented){USER._commented=1;
+  try{
+    await sb.from('comments').insert({video_id:v.id,username:USER.username,text:txt,time:new Date().toISOString()});
+    if(!USER._commented){
+      USER._commented=1;
       const beforeBadges=BADGES.filter(b=>b.ck({...USER,_commented:0})).map(b=>b.id);
-      if(BADGES.find(b=>b.id==='commenter').ck(USER)&&!beforeBadges.includes('commenter'))celebrate('🏅 شارة: ✍️ مُعلّق!');}
-    toast('تم إضافة تعليقك','ok');loadComments(v);
-  }catch(e){toast('تعذّر إرسال التعليق','err');}};
+      if(BADGES.find(b=>b.id==='commenter').ck(USER)&&!beforeBadges.includes('commenter'))celebrate('🏅 شارة: ✍️ مُعلّق!');
+    }
+    toast('تم إضافة تعليقك','ok');
+    try{await sb.rpc('client_log_activity',{p_username:USER.username,p_activity_type:'comment',p_details:JSON.stringify({video:v.title,text:txt.slice(0,50)}),p_user_agent:navigator.userAgent.slice(0,200)});}catch(e){}
+    loadComments(v);
+  }catch(e){toast('تعذّر إرسال التعليق','err');}
+};
 
 /* ============ LEADERBOARD ============ */
 async function loadLeaderboard(){
   $('lbList').innerHTML=Array.from({length:6}).map(()=>'<div class="skel" style="height:60px;margin-bottom:8px"></div>').join('');
-  try{const {data}=await sb.from('users').select('username,xp,level,level_emoji,videos_watched').order('xp',{ascending:false}).limit(20);
+  try{
+    const {data}=await sb.from('users').select('username,xp,level,level_emoji,videos_watched').order('xp',{ascending:false}).limit(20);
     const rows=data||[];
-    $('lbList').innerHTML=rows.map((u,i)=>{const rank=i+1;const cls=rank<=3?'g'+rank:'';
+    $('lbList').innerHTML=rows.map((u,i)=>{
+      const rank=i+1;const cls=rank<=3?'g'+rank:'';
       const medal=rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':rank;
       return `<div class="lb-item ${u.username===USER.username?'me':''}">
         <div class="lb-rank ${cls}">${medal}</div>
         <div class="lb-name">${esc(u.level_emoji||'🌱')} ${esc(u.username)}<small>${esc(u.level||'مبتدئ')} · ${u.videos_watched||0} فيديو</small></div>
-        <div class="lb-xp">${u.xp||0}</div></div>`;}).join('')||'<div class="empty"><div class="e">🏆</div>لا يوجد متصدرين بعد</div>';
-  }catch(e){$('lbList').innerHTML='<div class="empty">تعذّر تحميل المتصدرين</div>';}}
+        <div class="lb-xp">${u.xp||0}</div></div>`;
+    }).join('')||'<div class="empty"><div class="e">🏆</div><p>لا يوجد متصدرين بعد</p></div>';
+  }catch(e){$('lbList').innerHTML='<div class="empty">تعذّر تحميل المتصدرين</div>';}
+}
 
 /* ============ FORUM ============ */
 async function loadForum(){
   $('forumList').innerHTML=Array.from({length:4}).map(()=>'<div class="skel" style="height:100px;margin-bottom:10px"></div>').join('');
-  try{const {data}=await sb.from('forum_topics').select('*').order('pinned',{ascending:false}).order('created_at',{ascending:false}).limit(50);
+  try{
+    const {data}=await sb.from('forum_topics').select('*').order('pinned',{ascending:false}).order('created_at',{ascending:false}).limit(50);
     const rows=data||[];
     $('forumList').innerHTML=rows.length?rows.map(t=>`<div class="topic" data-id="${t.id}">
       <div class="th"><h3>${esc(t.title)}</h3><div class="badges2">
         ${t.pinned?'<span class="tag pin">📌</span>':''}${t.closed?'<span class="tag closed">🔒</span>':''}</div></div>
       <p>${esc((t.body||'').slice(0,140))}${(t.body||'').length>140?'…':''}</p>
       <div class="tf"><span>✍️ ${esc(t.author)}</span><span>❤️ ${t.likes||0}</span><span>💬 ${t.replies_count||0}</span><span>${fmtTime(t.created_at)}</span></div>
-    </div>`).join(''):'<div class="empty"><div class="e">💬</div>لا مواضيع بعد — ابدأ نقاشاً!</div>';
+    </div>`).join(''):'<div class="empty"><div class="e">💬</div><p>لا مواضيع بعد — ابدأ نقاشاً!</p></div>';
     document.querySelectorAll('#forumList .topic').forEach(el=>el.onclick=()=>openTopic(+el.dataset.id,rows.find(r=>r.id==el.dataset.id)));
-  }catch(e){$('forumList').innerHTML='<div class="empty">تعذّر تحميل المنتدى</div>';}}
+  }catch(e){$('forumList').innerHTML='<div class="empty">تعذّر تحميل المنتدى</div>';}
+}
 
 async function openTopic(id,t){
   $('forumModal').classList.add('open');document.body.style.overflow='hidden';
   $('forumModalBody').innerHTML='<div class="skel" style="height:120px"></div>';
-  let replies=[];try{const {data}=await sb.from('forum_replies').select('*').eq('topic_id',id).order('created_at',{ascending:true});replies=data||[];}catch(e){}
+  let replies=[];
+  try{const {data}=await sb.from('forum_replies').select('*').eq('topic_id',id).order('created_at',{ascending:true});replies=data||[];}catch(e){}
   $('forumModalBody').innerHTML=`
     <h2 style="font-size:18px;font-weight:900;margin-bottom:6px">${esc(t.title)}</h2>
     <div style="display:flex;gap:12px;font-size:11px;color:var(--muted);margin-bottom:12px;flex-wrap:wrap">
       <span>✍️ ${esc(t.author)}</span><span>${fmtTime(t.created_at)}</span>${t.closed?'<span class="tag closed">🔒 مغلق</span>':''}</div>
     <p style="line-height:1.8;margin-bottom:14px;font-size:14px">${esc(t.body||'')}</p>
     <div style="font-weight:800;margin-bottom:8px;font-size:14px">💬 الردود (${replies.length})</div>
-    <div id="repliesBox">${replies.length?replies.map(r=>`<div class="reply"><b>${esc(r.author)}</b> <small style="color:var(--muted)">${fmtTime(r.created_at)}</small><div style="margin-top:5px">${esc(r.body)}</div></div>`).join(''):'<div class="empty" style="padding:20px"><div class="e">💭</div>لا ردود بعد</div>'}</div>
+    <div id="repliesBox">${replies.length?replies.map(r=>`<div class="reply"><b>${esc(r.author)}</b> <small style="color:var(--muted)">${fmtTime(r.created_at)}</small><div style="margin-top:5px">${esc(r.body)}</div></div>`).join(''):'<div class="empty" style="padding:20px"><div class="e">💭</div><p>لا ردود بعد</p></div>'}</div>
     ${t.closed?'<div style="text-align:center;color:var(--muted);margin-top:12px;font-size:13px">🔒 الموضوع مغلق للردود</div>':
     `<div class="cm-input" style="margin-top:12px"><input id="replyInput" placeholder="اكتب رداً..." maxlength="500"><button class="btn-primary" id="replySend">رد</button></div>`}`;
-  if(!t.closed)$('replySend').onclick=async()=>{const body=clean($('replyInput').value);if(!body)return;
-    try{await sb.from('forum_replies').insert({topic_id:id,body,author:USER.username,created_at:new Date().toISOString()});
+  if(!t.closed)$('replySend').onclick=async()=>{
+    const body=clean($('replyInput').value);if(!body)return;
+    try{
+      await sb.from('forum_replies').insert({topic_id:id,body,author:USER.username,created_at:new Date().toISOString()});
       try{await sb.from('forum_topics').update({replies_count:(t.replies_count||0)+1}).eq('id',id);}catch(e){}
-      toast('تم إضافة ردك','ok');openTopic(id,{...t,replies_count:(t.replies_count||0)+1});
-    }catch(e){toast('تعذّر إرسال الرد','err');}};}
+      toast('تم إضافة ردك','ok');
+      try{await sb.rpc('client_log_activity',{p_username:USER.username,p_activity_type:'forum_reply',p_details:JSON.stringify({topic:t.title,body:body.slice(0,50)}),p_user_agent:navigator.userAgent.slice(0,200)});}catch(e){}
+      openTopic(id,{...t,replies_count:(t.replies_count||0)+1});
+    }catch(e){toast('تعذّر إرسال الرد','err');}
+  };
+}
 $('closeForum').onclick=()=>{$('forumModal').classList.remove('open');document.body.style.overflow='';loadForum();};
 $('newTopicBtn').onclick=()=>{
   $('forumModal').classList.add('open');document.body.style.overflow='hidden';
@@ -1066,56 +1208,77 @@ $('newTopicBtn').onclick=()=>{
     <input id="ntTitle" placeholder="عنوان الموضوع" maxlength="120" style="width:100%;padding:12px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--txt);outline:none;margin-bottom:10px;font-size:14px">
     <textarea id="ntBody" placeholder="اكتب تفاصيل موضوعك..." maxlength="2000" style="width:100%;min-height:120px;padding:12px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--txt);outline:none;resize:vertical;font-family:inherit;font-size:14px"></textarea>
     <button class="btn-primary" id="ntSubmit" style="width:100%;margin-top:12px">نشر الموضوع</button>`;
-  $('ntSubmit').onclick=async()=>{const title=clean($('ntTitle').value),body=clean($('ntBody').value);
+  $('ntSubmit').onclick=async()=>{
+    const title=clean($('ntTitle').value),body=clean($('ntBody').value);
     if(!title||!body)return toast('املأ العنوان والمحتوى','err');
-    try{await sb.from('forum_topics').insert({title,body,author:USER.username,pinned:false,closed:false,likes:0,replies_count:0,created_at:new Date().toISOString()});
-      toast('تم نشر الموضوع','ok');$('forumModal').classList.remove('open');document.body.style.overflow='';loadForum();
-    }catch(e){toast('تعذّر نشر الموضوع','err');}};};
+    try{
+      await sb.from('forum_topics').insert({title,body,author:USER.username,pinned:false,closed:false,likes:0,replies_count:0,created_at:new Date().toISOString()});
+      toast('تم نشر الموضوع','ok');
+      try{await sb.rpc('client_log_activity',{p_username:USER.username,p_activity_type:'forum_topic',p_details:JSON.stringify({title}),p_user_agent:navigator.userAgent.slice(0,200)});}catch(e){}
+      $('forumModal').classList.remove('open');document.body.style.overflow='';loadForum();
+    }catch(e){toast('تعذّر نشر الموضوع','err');}
+  };
+};
 
 /* ============ UNLOCK ============ */
-$('unlockBtn').onclick=async()=>{const code=clean($('unlockInput').value).toUpperCase();if(!code)return toast('أدخل الكود','err');
+$('unlockBtn').onclick=async()=>{
+  const code=clean($('unlockInput').value).toUpperCase();
+  if(!code)return toast('أدخل الكود','err');
   const btn=$('unlockBtn');btn.disabled=true;btn.textContent='...';
-  try{const {data,error}=await sb.rpc('use_unlock_code',{p_username:USER.username,p_code:code});
+  try{
+    const {data,error}=await sb.rpc('use_unlock_code',{p_username:USER.username,p_code:code});
     if(error)throw error;
     let res=Array.isArray(data)?data[0]:data;
     const ok=res===true||(res&&(res.success||res.ok||res.status==='ok'||Array.isArray(res.videos)));
     if(ok||res){
       const {data:u}=await sb.from('users').select('unlocked_videos,videos_locked').eq('username',USER.username).limit(1);
       if(u&&u[0]){USER.unlocked_videos=u[0].unlocked_videos;USER.videos_locked=u[0].videos_locked;}
-      celebrate('🔓 تم فتح الفيديوهات بنجاح!');$('unlockInput').value='';await loadVideos();
+      celebrate('🔓 تم فتح الفيديوهات بنجاح!');
+      try{await sb.rpc('client_log_activity',{p_username:USER.username,p_activity_type:'unlock_code',p_details:JSON.stringify({code}),p_user_agent:navigator.userAgent.slice(0,200)});}catch(e){}
+      $('unlockInput').value='';
+      await loadVideos();
     }else{toast('كود غير صالح أو منتهي','err');}
   }catch(e){toast('كود غير صالح أو منتهي الصلاحية','err');}
-  finally{btn.disabled=false;btn.textContent='فتح';}};
+  finally{btn.disabled=false;btn.textContent='فتح';}
+};
 
 /* ============ NOTIFICATIONS ============ */
 async function loadNotifs(){
-  try{const {data}=await sb.from('notifications').select('*').or(`target.eq.all,target.eq.${USER.username}`).order('created_at',{ascending:false}).limit(30);
-    NOTIFS=data||[];}catch(e){NOTIFS=[];}
-  let reads=[];try{const {data}=await sb.from('notification_reads').select('notification_id').eq('username',USER.username);reads=(data||[]).map(r=>r.notification_id);}catch(e){}
+  try{
+    const {data}=await sb.from('notifications').select('*').or(`target.eq.all,target.eq.${USER.username}`).order('created_at',{ascending:false}).limit(30);
+    NOTIFS=data||[];
+  }catch(e){NOTIFS=[];}
+  let reads=[];
+  try{const {data}=await sb.from('notification_reads').select('notification_id').eq('username',USER.username);reads=(data||[]).map(r=>r.notification_id);}catch(e){}
   const unread=NOTIFS.filter(n=>!reads.includes(n.id)).length;
-  $('notifDot').style.display=unread?'grid':'none';$('notifDot').textContent=unread>9?'9+':unread;
+  $('notifDot').style.display=unread?'grid':'none';
+  $('notifDot').textContent=unread>9?'9+':unread;
   $('notifPanel').innerHTML=NOTIFS.length?NOTIFS.map(n=>`<div class="notif-item"><b>${esc(n.title)}</b><p>${esc(n.body)}</p><small>${fmtTime(n.created_at)}</small></div>`).join('')
-    :'<div class="empty"><div class="e">🔔</div>لا إشعارات</div>';
+    :'<div class="empty"><div class="e">🔔</div><p>لا إشعارات</p></div>';
   USER._notifReads=reads;
 }
-$('notifBtn').onclick=async()=>{const p=$('notifPanel');const willOpen=!p.classList.contains('open');
+$('notifBtn').onclick=async()=>{
+  const p=$('notifPanel');
+  const willOpen=!p.classList.contains('open');
   p.classList.toggle('open');
-  if(willOpen){$('notifDot').style.display='none';
+  if(willOpen){
+    $('notifDot').style.display='none';
     const unread=NOTIFS.filter(n=>!(USER._notifReads||[]).includes(n.id));
     for(const n of unread){try{await sb.from('notification_reads').insert({username:USER.username,notification_id:n.id});}catch(e){}}
-    USER._notifReads=NOTIFS.map(n=>n.id);}};
+    USER._notifReads=NOTIFS.map(n=>n.id);
+  }
+};
 document.addEventListener('click',e=>{if(!$('notifPanel').contains(e.target)&&e.target.closest('#notifBtn')===null)$('notifPanel').classList.remove('open');});
 
-/* ============ SOCIAL SVG ICONS ============ */
-const SOCIAL_META = {
-  facebook: {name:'فيسبوك', icon:'<svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>'},
-  instagram: {name:'انستجرام', icon:'<svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>'},
-  whatsapp: {name:'واتساب', icon:'<svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>'},
-  tiktok: {name:'تيك توك', icon:'<svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>'},
-  telegram: {name:'تليجرام', icon:'<svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>'},
-  telegram_channel: {name:'قناة تليجرام', icon:'<svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>'},
-  website: {name:'الموقع الرسمي', icon:'<svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm7.938 6h-3.104a15.94 15.94 0 00-1.41-3.59A9.96 9.96 0 0119.938 6zM12 2.04c.828 1.24 1.48 2.6 1.91 4H10.09c.43-1.4 1.08-2.76 1.91-4zM2.462 14a9.94 9.94 0 010-4h3.56a17.27 17.27 0 000 4H2.462zm.6 2h3.104c.35 1.28.83 2.49 1.41 3.59A9.96 9.96 0 013.062 16zm3.104-8H3.062a9.96 9.96 0 014.514-3.59A15.94 15.94 0 006.166 8zM12 21.96c-.828-1.24-1.48-2.6-1.91-4h3.82c-.43 1.4-1.08 2.76-1.91 4zM14.34 16H9.66a15.4 15.4 0 010-8h4.68a15.4 15.4 0 010 8zm.79 5.59c.58-1.1 1.06-2.31 1.41-3.59h3.104a9.96 9.96 0 01-4.514 3.59zM17.978 14a17.27 17.27 0 000-4h3.56a9.94 9.94 0 010 4h-3.56z"/></svg>'},
-  phone: {name:'اتصل بنا', icon:'<svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>'}
+/* ============ SOCIAL ============ */
+const SOCIAL_META={
+  facebook:{name:'فيسبوك',icon:'<svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>'},
+  instagram:{name:'انستجرام',icon:'<svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>'},
+  whatsapp:{name:'واتساب',icon:'<svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>'},
+  tiktok:{name:'تيك توك',icon:'<svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>'},
+  telegram:{name:'تليجرام',icon:'<svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>'},
+  telegram_channel:{name:'قناة تليجرام',icon:'<svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>'},
+  website:{name:'الموقع الرسمي',icon:'<svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm7.938 6h-3.104a15.94 15.94 0 00-1.41-3.59A9.96 9.96 0 0119.938 6zM12 2.04c.828 1.24 1.48 2.6 1.91 4H10.09c.43-1.4 1.08-2.76 1.91-4zM2.462 14a9.94 9.94 0 010-4h3.56a17.27 17.27 0 000 4H2.462zm.6 2h3.104c.35 1.28.83 2.49 1.41 3.59A9.96 9.96 0 013.062 16zm3.104-8H3.062a9.96 9.96 0 014.514-3.59A15.94 15.94 0 006.166 8zM12 21.96c-.828-1.24-1.48-2.6-1.91-4h3.82c-.43 1.4-1.08 2.76-1.91 4zM14.34 16H9.66a15.4 15.4 0 010-8h4.68a15.4 15.4 0 010 8zm.79 5.59c.58-1.1 1.06-2.31 1.41-3.59h3.104a9.96 9.96 0 01-4.514 3.59zM17.978 14a17.27 17.27 0 000-4h3.56a9.94 9.94 0 010 4h-3.56z"/></svg>'}
 };
 
 async function loadSocial(){
@@ -1124,7 +1287,6 @@ async function loadSocial(){
     const {data,error}=await sb.rpc('get_site_settings');
     if(!error) cfg = (Array.isArray(data)?data[0]:data) || {};
   }catch(e){}
-
   cfg = Object.assign({
     facebook:'https://www.facebook.com/share/1BwVV1hoks/',
     instagram:'https://www.instagram.com/sayedhassan.2009',
@@ -1132,8 +1294,7 @@ async function loadSocial(){
     tiktok:'https://www.tiktok.com/@sayedhasaneisa',
     telegram:'https://t.me/sayedhasan_R',
     telegram_channel:'https://t.me/sayoda_elgadar',
-    website:'https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/',
-    phone:'01041254010'
+    website:'https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/'
   }, cfg || {});
 
   const order=['telegram','telegram_channel','whatsapp','facebook','instagram','tiktok','website'];
@@ -1142,21 +1303,17 @@ async function loadSocial(){
       const m = SOCIAL_META[k]||{icon:'🔗',name:k};
       return `<a class="sup-btn" href="${esc(cfg[k])}" target="_blank" rel="noopener">
         <span class="ic">${m.icon}</span>
-        <div><div>${m.name}</div>
-        <small style="color:var(--muted)">اضغط للتواصل</small></div></a>`;
+        <div><div>${m.name}</div><small style="color:var(--muted)">اضغط للتواصل</small></div></a>`;
     }).join('') || '<div class="empty">لا قنوات متاحة</div>';
   }
-
   if($('socialBtns')){
     $('socialBtns').innerHTML = order.filter(k=>cfg[k]).map(k=>{
       const m = SOCIAL_META[k]||{icon:'🔗',name:k};
       return `<a class="sup-btn" style="margin:0" href="${esc(cfg[k])}" target="_blank" rel="noopener">
         <span class="ic">${m.icon}</span>
-        <div><div>${m.name}</div>
-        <small style="color:var(--muted)">${esc(cfg[k]).replace(/^https?:\/\//,'').slice(0,40)}</small></div></a>`;
+        <div><div>${m.name}</div><small style="color:var(--muted)">${esc(cfg[k]).replace(/^https?:\/\//,'').slice(0,40)}</small></div></a>`;
     }).join('') || '<div class="empty">لا قنوات متاحة</div>';
   }
-
   if($('socialFooter')){
     const icons = order.filter(k=>cfg[k]).map(k=>{
       const m = SOCIAL_META[k]||{icon:'🔗',name:k};
@@ -1174,7 +1331,10 @@ async function init(){
   loadYtApi();
 }
 init();
-if('serviceWorker' in navigator){navigator.serviceWorker.register('./service-worker.js').catch(()=>{});}
+
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
+}
 </script>
 </body>
 </html>
