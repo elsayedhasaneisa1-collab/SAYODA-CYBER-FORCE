@@ -783,14 +783,30 @@ async function awardXp(amount,reason){
 
 /* ============ VIDEOS ============ */
 function progressMap(){try{return USER.video_progress&&typeof USER.video_progress==='object'?USER.video_progress:{};}catch(e){return{};}}
-function unlockedList(){return Array.isArray(USER.unlocked_videos)?USER.unlocked_videos.map(String):[];}
-
 /* 🔒 كل الفيديوهات مقفولة إلا لو المستخدم استخدم كود فتح */
+function unlockedList(){
+  try{
+    if(!USER) return [];
+    const uv = USER.unlocked_videos;
+    if(Array.isArray(uv)) return uv.map(String);
+    if(typeof uv === 'string'){
+      try{ return JSON.parse(uv).map(String); }catch(e){ return []; }
+    }
+    return [];
+  }catch(e){ return []; }
+}
 function isAccessible(idx){
-  const v=ALL_VIDEOS[idx];
-  const un=unlockedList();
+  const v = ALL_VIDEOS[idx];
+  const un = unlockedList();
+  
+  console.log('🔍 isAccessible:', {videoId: v.id, unlocked: un});
+  
+  /* لو الفيديو موجود في القايمة */
   if(un.includes(String(v.id))) return true;
+  
+  /* لو المستخدم فتح أي كود، كل الفيديوهات مفتوحة */
   if(un.length > 0) return true;
+  
   return false;
 }
 
@@ -1187,19 +1203,61 @@ $('unlockBtn').onclick=async()=>{
   if(!code)return toast('أدخل الكود','err');
   const btn=$('unlockBtn');btn.disabled=true;btn.textContent='...';
   try{
+    console.log('🔓 use_unlock_code:', code);
     const {data,error}=await sb.rpc('use_unlock_code',{p_username:USER.username,p_code:code});
+    console.log('🔓 result:', {data, error});
     if(error)throw error;
+    
     let res=Array.isArray(data)?data[0]:data;
     const ok=res===true||(res&&(res.success||res.ok||res.status==='ok'||Array.isArray(res.videos)));
+    
     if(ok||res){
-      const {data:u}=await sb.from('users').select('unlocked_videos,videos_locked').eq('username',USER.username).limit(1);
-      if(u&&u[0]){USER.unlocked_videos=u[0].unlocked_videos;USER.videos_locked=u[0].videos_locked;}
+      /* ✅ إعادة جلب بيانات المستخدم */
+      const {data:uList, error:uErr}=await sb.from('users')
+        .select('unlocked_videos,videos_locked')
+        .eq('username',USER.username)
+        .limit(1);
+      
+      console.log('👤 user refresh:', {uList, uErr});
+      
+      if(uList && uList[0]){
+        USER.unlocked_videos = uList[0].unlocked_videos || [];
+        USER.videos_locked = uList[0].videos_locked || [];
+        console.log('✅ unlocked_videos:', USER.unlocked_videos);
+      }
+      
+      /* لو الدالة رجّعت videos مباشرة */
+      if(res && Array.isArray(res.videos)){
+        USER.unlocked_videos = res.videos;
+        console.log('✅ من الـ RPC:', res.videos);
+      }
+      
       celebrate('🔓 تم فتح الفيديوهات بنجاح!');
-      try{await sb.rpc('client_log_activity',{p_username:USER.username,p_activity_type:'unlock_code',p_details:JSON.stringify({code}),p_user_agent:navigator.userAgent.slice(0,200)});}catch(e){}
+      
+      try{
+        await sb.rpc('client_log_activity',{
+          p_username:USER.username,
+          p_activity_type:'unlock_code',
+          p_details:JSON.stringify({code}),
+          p_user_agent:navigator.userAgent.slice(0,200)
+        });
+      }catch(e){}
+      
       $('unlockInput').value='';
+      
+      /* ✅ إعادة تحميل الفيديوهات */
       await loadVideos();
-    }else{toast('كود غير صالح أو منتهي','err');}
-  }catch(e){toast('كود غير صالح أو منتهي الصلاحية','err');}
+      
+      /* ✅ انتقل لصفحة الفيديوهات */
+      setTimeout(()=>go('videos'), 500);
+      
+    }else{
+      toast('كود غير صالح أو منتهي','err');
+    }
+  }catch(e){
+    console.error('❌ Unlock error:', e);
+    toast('كود غير صالح أو منتهي الصلاحية','err');
+  }
   finally{btn.disabled=false;btn.textContent='فتح';}
 };
 
