@@ -115,6 +115,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 .btn.ghost:hover{background:var(--gold-soft);box-shadow:0 10px 28px rgba(255,215,0,.2)}
 .btn.warn{background:linear-gradient(135deg,#ff9500,#cc7700);color:#fff}
 .btn.ok{background:linear-gradient(135deg,#28d17c,#1fa562);color:#fff}
+.btn.blue{background:linear-gradient(135deg,#19aaff,#0b7fd4);color:#fff}
 
 .list-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:13px;
   background:rgba(26,18,6,.6);border:1px solid var(--border-soft);margin-bottom:9px;
@@ -208,6 +209,33 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
   margin-left:6px;animation:blink 1.5s infinite;box-shadow:0 0 10px #28d17c}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 
+/* ============ VIDEO MANAGE MODAL ============ */
+.vid-modal{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);
+  display:none;align-items:center;justify-content:center;padding:20px}
+.vid-modal.open{display:flex;animation:fade .25s}
+.vid-modal-box{background:linear-gradient(160deg,rgba(26,18,6,.98),rgba(20,13,0,.98));
+  border:1px solid var(--border);border-radius:20px;width:100%;max-width:520px;max-height:85vh;
+  display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.7);overflow:hidden}
+.vid-modal-head{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;
+  align-items:center;justify-content:space-between;gap:12px;flex-shrink:0}
+.vid-modal-head h3{margin:0;font-size:16px;color:var(--gold);font-weight:900;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vid-modal-head .close-btn{width:34px;height:34px;border-radius:9px;border:1px solid var(--border);
+  background:transparent;color:var(--gold);font-size:18px;display:grid;place-items:center;cursor:pointer;transition:.2s;flex-shrink:0}
+.vid-modal-head .close-btn:hover{background:var(--gold);color:#0a0600}
+.vid-modal-actions{padding:12px 20px;display:flex;gap:8px;border-bottom:1px solid var(--border);flex-shrink:0}
+.vid-modal-actions .btn{flex:1}
+.vid-modal-body{flex:1;overflow-y:auto;padding:14px 20px}
+.vid-check{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;
+  background:rgba(10,6,0,.4);border:1px solid var(--border-soft);margin-bottom:8px;cursor:pointer;transition:.2s}
+.vid-check:hover{border-color:var(--gold);background:rgba(26,18,6,.7)}
+.vid-check input{width:20px;height:20px;accent-color:var(--gold);cursor:pointer;flex-shrink:0}
+.vid-check .title{flex:1;font-weight:700;font-size:14px;color:var(--txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.vid-check .cat{font-size:11px;color:var(--muted);background:var(--gold-soft);padding:3px 9px;border-radius:10px;flex-shrink:0}
+.vid-check.checked{border-color:var(--gold);background:var(--gold-soft)}
+.vid-modal-foot{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:8px;flex-shrink:0}
+.vid-modal-foot .btn{flex:1}
+
 @media(max-width:560px){
   .stats{grid-template-columns:repeat(2,1fr)}
   .stat .n{font-size:24px}
@@ -216,6 +244,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
   .wrap{padding:14px 10px 30px}
   .card{padding:16px}
   .log-time{font-size:9px}
+  .vid-modal-box{max-height:92vh}
 }
 </style>
 </head> 
@@ -286,8 +315,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
           <option value="video_complete">🎬 إكمال فيديو</option>
           <option value="comment">💬 تعليق</option>
           <option value="rating">⭐ تقييم</option>
-          <option value="forum_topic">📝 موضوع منتدى</option>
-          <option value="forum_reply">💭 رد منتدى</option>
           <option value="unlock_code">🔓 كود فتح</option>
           <option value="admin_action">⚙️ عملية أدمن</option>
         </select>
@@ -302,7 +329,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 
   <div class="panel" id="p-users">
     <div class="sec-title">👥 إدارة الحسابات</div>
-    <div class="sec-sub">تحكم كامل بالمستخدمين — تفعيل / إيقاف / حذف</div>
+    <div class="sec-sub">تحكم كامل بالمستخدمين — تفعيل / إيقاف / حذف / إدارة الفيديوهات</div>
     <input class="search" id="userSearch" placeholder="🔍 ابحث عن مستخدم..." />
     <div id="usersList"></div>
   </div>
@@ -396,6 +423,28 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 </div>
 </div>
 
+<!-- ============ VIDEO MANAGE MODAL ============ -->
+<div class="vid-modal" id="vidManageModal">
+  <div class="vid-modal-box">
+    <div class="vid-modal-head">
+      <h3 id="vmTitle">🎬 إدارة فيديوهات: —</h3>
+      <button class="close-btn" id="vmClose">✕</button>
+    </div>
+    <div class="vid-modal-actions">
+      <button class="btn ok" id="vmSelectAll">✅ فتح الكل</button>
+      <button class="btn danger" id="vmDeselectAll">❌ قفل الكل</button>
+    </div>
+    <div class="vid-modal-body" id="vmList">
+      <div class="skel"></div>
+      <div class="skel"></div>
+    </div>
+    <div class="vid-modal-foot">
+      <button class="btn" id="vmSave">💾 حفظ التعديلات</button>
+      <button class="btn ghost" id="vmCancel">إلغاء</button>
+    </div>
+  </div>
+</div>
+
 <div id="toasts"></div>
 
 <script>
@@ -429,6 +478,7 @@ let PASS=sessionStorage.getItem('sayoda_admin_pass')||null;
 let USERS=[], VIDEOS=[];
 let LIVE_TIMER=null, DASH_TIMER=null;
 let LOG_FILTER_TYPE='', LOG_FILTER_USER='';
+let VM_CURRENT_USER=null;
 const BAN_FEATURES=[
   {k:'comments',t:'التعليقات'},
   {k:'forum',t:'المنتدى'},
@@ -440,7 +490,6 @@ const ACTIVITY_ICONS={
   login:'🔑',logout:'🚪',register:'✨',
   video_watch:'👁',video_complete:'🎬',
   comment:'💬',rating:'⭐',
-  forum_topic:'📝',forum_reply:'💭',
   unlock_code:'🔓',unlock_fail:'❌',
   admin_action:'⚙️',settings:'⚙️',
   notification:'📢',ban:'🚫',unban:'✅'
@@ -449,7 +498,6 @@ const ACTIVITY_LABELS={
   login:'تسجيل دخول',logout:'تسجيل خروج',register:'تسجيل جديد',
   video_watch:'مشاهدة فيديو',video_complete:'إكمال فيديو',
   comment:'تعليق',rating:'تقييم',
-  forum_topic:'موضوع منتدى',forum_reply:'رد منتدى',
   unlock_code:'استخدام كود فتح',unlock_fail:'فشل كود فتح',
   admin_action:'عملية أدمن',settings:'تعديل إعدادات',
   notification:'إشعار',ban:'حظر مستخدم',unban:'فك حظر'
@@ -615,7 +663,6 @@ async function loadStats(){
       {ic:'✅',n:s.active||0,l:'حسابات نشطة'},
       {ic:'🎬',n:s.videos||0,l:'الفيديوهات'},
       {ic:'💬',n:s.comments||0,l:'التعليقات'},
-      {ic:'📝',n:s.topics||0,l:'مواضيع المنتدى'},
       {ic:'🔑',n:s.today_logins||0,l:'دخول اليوم'},
       {ic:'✨',n:s.today_registers||0,l:'تسجيلات اليوم'},
       {ic:'📊',n:s.today_activity||0,l:'نشاطات اليوم'}
@@ -749,6 +796,7 @@ function renderUsers(q=''){
       </div>
       <span class="pill ${u.active!==false?'on':'off'}">${u.active!==false?'نشط':'موقوف'}</span>
       <div class="li-actions">
+        <button class="btn sm blue" data-act="videos" data-user="${esc(u.username)}">🎬 الفيديوهات</button>
         <button class="btn sm ${u.active!==false?'warn':'ok'}" data-act="toggle" data-user="${esc(u.username)}">
           ${u.active!==false?'⏸ إيقاف':'▶ تفعيل'}
         </button>
@@ -760,7 +808,8 @@ function renderUsers(q=''){
   $('usersList').querySelectorAll('[data-act]').forEach(b=>{
     b.onclick=()=>{
       const un=b.dataset.user;
-      if(b.dataset.act==='toggle') toggleActive(un);
+      if(b.dataset.act==='videos') openVideoManager(un);
+      else if(b.dataset.act==='toggle') toggleActive(un);
       else delUser(un);
     };
   });
@@ -804,6 +853,142 @@ async function delUser(un){
   }catch(e){toast('فشل الحذف','err');}
 }
 
+/* ============ VIDEO MANAGER (جديد) ============ */
+async function openVideoManager(un){
+  if(!ensurePass()) return;
+  VM_CURRENT_USER = un;
+  $('vmTitle').textContent = '🎬 إدارة فيديوهات: ' + un;
+  $('vmList').innerHTML='<div class="skel"></div><div class="skel"></div>';
+  $('vidManageModal').classList.add('open');
+
+  try{
+    /* 1) جلب الفيديوهات الحالية */
+    const {data:userData,error:uErr} = await sb.from('users')
+      .select('unlocked_videos')
+      .eq('username', un)
+      .limit(1);
+    
+    if(uErr) throw uErr;
+    
+    let unlocked = [];
+    const raw = userData?.[0]?.unlocked_videos;
+    if(Array.isArray(raw)) unlocked = raw.map(String);
+    else if(typeof raw === 'string'){
+      try{ const p = JSON.parse(raw); if(Array.isArray(p)) unlocked = p.map(String); }catch(e){}
+    }
+
+    /* 2) جلب كل الفيديوهات */
+    if(!VIDEOS.length){
+      const {data:vData} = await sb.from('videos').select('id,title,category').order('created_at',{ascending:true});
+      VIDEOS = vData || [];
+    }
+
+    /* 3) اعرضهم */
+    if(!VIDEOS.length){
+      $('vmList').innerHTML='<div class="empty"><div class="e">🎬</div><p>لا فيديوهات</p></div>';
+      return;
+    }
+
+    $('vmList').innerHTML = VIDEOS.map(v=>{
+      const checked = unlocked.includes(String(v.id));
+      return `<label class="vid-check ${checked?'checked':''}" data-vid="${v.id}">
+        <input type="checkbox" ${checked?'checked':''} data-vid="${v.id}">
+        <span class="title">${esc(v.title||'بدون عنوان')}</span>
+        <span class="cat">${esc(v.category||'عام')}</span>
+      </label>`;
+    }).join('');
+
+    /* 4) اربط الأحداث */
+    $('vmList').querySelectorAll('.vid-check').forEach(el=>{
+      const cb = el.querySelector('input');
+      cb.onchange = () => el.classList.toggle('checked', cb.checked);
+      el.onclick = (e) => {
+        if(e.target.tagName !== 'INPUT'){
+          cb.checked = !cb.checked;
+          el.classList.toggle('checked', cb.checked);
+        }
+      };
+    });
+
+  }catch(e){
+    console.error('openVideoManager error:',e);
+    $('vmList').innerHTML='<div class="empty"><div class="e">⚠️</div><p>تعذّر التحميل</p></div>';
+  }
+}
+
+/* --- زرار فتح الكل --- */
+$('vmSelectAll').onclick = () => {
+  $('vmList').querySelectorAll('.vid-check').forEach(el=>{
+    el.querySelector('input').checked = true;
+    el.classList.add('checked');
+  });
+};
+
+/* --- زرار قفل الكل --- */
+$('vmDeselectAll').onclick = () => {
+  $('vmList').querySelectorAll('.vid-check').forEach(el=>{
+    el.querySelector('input').checked = false;
+    el.classList.remove('checked');
+  });
+};
+
+/* --- زرار الحفظ --- */
+$('vmSave').onclick = async () => {
+  if(!VM_CURRENT_USER) return;
+  const btn = $('vmSave'); btn.disabled = true; btn.textContent = '...';
+  try{
+    /* اجمع الـ IDs المختارة */
+    const selected = [];
+    $('vmList').querySelectorAll('.vid-check input:checked').forEach(cb=>{
+      const id = parseInt(cb.dataset.vid);
+      if(!isNaN(id)) selected.push(id);
+    });
+
+    console.log('💾 حفظ الفيديوهات:', VM_CURRENT_USER, selected);
+
+    /* حدّث DB مباشرة */
+    const {error} = await sb.from('users')
+      .update({unlocked_videos: selected})
+      .eq('username', VM_CURRENT_USER);
+    
+    if(error) throw error;
+
+    /* سجّل النشاط */
+    try{
+      await sb.rpc('client_log_activity',{
+        p_username: ADMIN.username,
+        p_activity_type: 'admin_action',
+        p_details: jsonbDetails({action:'set_user_videos', target:VM_CURRENT_USER, count:selected.length}),
+        p_user_agent: navigator.userAgent.slice(0,200)
+      });
+    }catch(e){}
+
+    /* حدّث المستخدم في القايمة */
+    const u = USERS.find(x=>x.username===VM_CURRENT_USER);
+    if(u) u.unlocked_videos = selected;
+
+    toast(`تم حفظ ${selected.length} فيديو لـ ${VM_CURRENT_USER}`);
+    $('vidManageModal').classList.remove('open');
+    VM_CURRENT_USER = null;
+    renderUsers($('userSearch').value);
+
+  }catch(e){
+    console.error('Save error:',e);
+    toast('فشل الحفظ: '+(e.message||''),'err');
+  }finally{
+    btn.disabled = false; btn.textContent = '💾 حفظ التعديلات';
+  }
+};
+
+/* --- زرار الإلغاء / الإغلاق --- */
+function closeVideoManager(){
+  $('vidManageModal').classList.remove('open');
+  VM_CURRENT_USER = null;
+}
+$('vmClose').onclick = closeVideoManager;
+$('vmCancel').onclick = closeVideoManager;
+$('vidManageModal').onclick = (e) => { if(e.target === $('vidManageModal')) closeVideoManager(); };
+
 /* ============ VIDEOS ============ */
 async function loadVideos(){
   try{
@@ -838,6 +1023,7 @@ $('addVidBtn').onclick=async()=>{
     if(error)throw error;
     toast('تم إضافة الفيديو');
     ['vTitle','vDesc','vUrl','vCat','vThumb'].forEach(i=>$(i).value='');
+    VIDEOS=[]; /* نجبر إعادة التحميل */
     loadVideos();
     try{
       await sb.rpc('client_log_activity',{
@@ -857,6 +1043,7 @@ async function delVid(id){
     const {error}=await sb.rpc('admin_delete_video',{p_username:ADMIN.username,p_password:PASS,p_video_id:id});
     if(error)throw error;
     toast('تم الحذف');
+    VIDEOS=[];
     loadVideos();
     try{
       await sb.rpc('client_log_activity',{
@@ -995,14 +1182,9 @@ $('banSearch').oninput=e=>renderBans(e.target.value);
 async function toggleBan(un,feature){
   if(!ensurePass()) return;
   try{
-    console.log('🚫 toggleBan:', {un, feature});
-    const {data,error}=await sb.rpc('admin_toggle_ban',{
-      p_username:ADMIN.username,
-      p_password:PASS,
-      p_target_user:un,
-      p_feature:feature
+    const {error}=await sb.rpc('admin_toggle_ban',{
+      p_username:ADMIN.username,p_password:PASS,p_target_user:un,p_feature:feature
     });
-    console.log('🚫 result:', {data, error});
     if(error) throw error;
     const u=USERS.find(x=>x.username===un);
     if(u){
@@ -1013,7 +1195,7 @@ async function toggleBan(un,feature){
     renderBans($('banSearch').value);
     toast('تم تحديث الحظر');
   }catch(e){
-    console.error('❌ toggleBan error:',e);
+    console.error('toggleBan error:',e);
     toast('فشل: '+(e.message||''),'err');
   }
 }
