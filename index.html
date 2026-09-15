@@ -26,7 +26,7 @@
   --border:rgba(11,127,212,.22); --txt:#0a1b34; --muted:#5a708f;
   --shadow:0 18px 50px rgba(20,60,120,.14);
 }
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-touch-callout:none}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--txt);min-height:100vh;transition:background .3s,color .3s;overflow-x:hidden;padding-bottom:80px}
 [data-theme="dark"] body{background:
@@ -37,10 +37,9 @@ body{background:var(--bg);color:var(--txt);min-height:100vh;transition:backgroun
 ::-webkit-scrollbar-thumb{background:linear-gradient(var(--blue),var(--blue-2));border-radius:20px}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer}
-img{max-width:100%;-webkit-user-drag:none;user-drag:none;pointer-events:none}
+img{max-width:100%;-webkit-user-drag:none;user-drag:none;pointer-events:none;-webkit-touch-callout:none}
 input,textarea{-webkit-user-select:text;user-select:text}
 
-/* HEADER */
 header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
   gap:10px;padding:10px 16px;background:var(--card);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
   border-bottom:1px solid var(--border);min-height:62px}
@@ -59,7 +58,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
   border:1px solid var(--border);font-weight:800;font-size:12px;white-space:nowrap}
 .mini-xp .lvl{color:var(--blue)}
 
-/* SIDEBAR */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:80;opacity:0;visibility:hidden;transition:.3s;backdrop-filter:blur(3px)}
 .overlay.open{opacity:1;visibility:visible}
 .sidebar{position:fixed;top:0;right:-320px;width:290px;max-width:85vw;height:100%;z-index:90;
@@ -81,18 +79,15 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
   background:rgba(255,77,109,.12);color:var(--danger);font-weight:800;font-size:14px;transition:.2s}
 .logout-btn:hover{background:var(--danger);color:#fff}
 
-/* MAIN */
 main{max-width:1050px;margin:0 auto;padding:16px 14px 30px}
 .page{display:none;animation:fade .4s}
 .page.active{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .sec-title{font-size:20px;font-weight:900;margin-bottom:4px;display:flex;align-items:center;gap:8px}
 .sec-sub{color:var(--muted);font-size:13px;margin-bottom:16px}
-
 .card{background:var(--card);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:var(--radius);
   padding:16px;box-shadow:var(--shadow)}
 
-/* PROFILE */
 .prof-hero{background:linear-gradient(135deg,rgba(25,170,255,.16),rgba(11,127,212,.06));
   border:1px solid var(--border);border-radius:20px;padding:20px;display:flex;align-items:center;gap:16px;margin-bottom:16px;flex-wrap:wrap}
 .prof-av{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--blue-2));
@@ -105,15 +100,12 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px}
 .xp-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--blue-2));border-radius:20px;transition:width .8s cubic-bezier(.2,.9,.3,1)}
 .xp-txt{font-size:11px;color:var(--muted);margin-top:6px;font-weight:700}
 
-/* STATS - 3 أعمدة بدل 4 */
 .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
 .stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 8px;text-align:center;transition:.25s}
 .stat:hover{transform:translateY(-3px);border-color:var(--blue)}
 .stat .n{font-size:22px;font-weight:900;color:var(--blue)}
 .stat .l{font-size:11px;color:var(--muted);font-weight:700;margin-top:4px}
-@media(max-width:400px){.stats-grid{grid-template-columns:repeat(3,1fr)}.stat{padding:12px 4px}.stat .n{font-size:20px}.stat .l{font-size:10px}}
 
-/* ACTIVITY CHART - محسّن */
 .chart-wrap{margin-top:0}
 .chart{display:flex;align-items:flex-end;gap:6px;height:130px;padding:20px 4px 26px;position:relative}
 .chart .bar{flex:1;background:linear-gradient(180deg,var(--blue),var(--blue-2));border-radius:8px 8px 0 0;min-height:4px;
@@ -121,7 +113,6 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px}
 .chart .bar span{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);text-align:center;font-size:10px;color:var(--muted);font-weight:700;white-space:nowrap}
 .chart .bar b{position:absolute;top:-20px;left:50%;transform:translateX(-50%);text-align:center;font-size:10px;color:var(--blue);font-weight:800;white-space:nowrap}
 
-/* BADGES */
 .badges-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:10px;margin-top:8px}
 .badge{aspect-ratio:1;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
   border:1px solid var(--border);background:var(--card);padding:6px;text-align:center;transition:.25s}
@@ -129,12 +120,10 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px}
 .badge.locked{opacity:.4;filter:grayscale(1)}
 .badge .e{font-size:26px}.badge .t{font-size:9px;font-weight:700;line-height:1.1}
 
-/* REFERRAL */
 .ref-box{background:linear-gradient(135deg,rgba(25,170,255,.12),transparent);border:1px dashed var(--blue);
   border-radius:16px;padding:16px;margin-top:16px;text-align:center}
 .ref-code{font-size:22px;font-weight:900;letter-spacing:3px;color:var(--blue);margin:8px 0;user-select:all;-webkit-user-select:all;word-break:break-all}
 
-/* LEADERBOARD */
 .lb-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:var(--card);
   border:1px solid var(--border);margin-bottom:8px;transition:.25s}
 .lb-item:hover{transform:translateX(-4px)}
@@ -147,14 +136,12 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px}
 .lb-name small{display:block;color:var(--muted);font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lb-xp{font-weight:900;color:var(--blue);font-size:14px;flex-shrink:0}
 
-/* VIDEOS */
 .filters{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:6px;scrollbar-width:none}
 .filters::-webkit-scrollbar{display:none}
 .chip{white-space:nowrap;padding:8px 16px;border-radius:22px;border:1px solid var(--border);background:var(--card);
   font-weight:700;font-size:13px;transition:.2s}
 .chip.active{background:linear-gradient(135deg,var(--blue),var(--blue-2));color:#021226;border-color:transparent}
 .vid-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
-@media(max-width:400px){.vid-grid{grid-template-columns:1fr}}
 .vid-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:.28s;position:relative;cursor:pointer}
 .vid-card:hover{transform:translateY(-4px);border-color:var(--blue);box-shadow:0 16px 36px rgba(0,0,0,.4)}
 .vid-thumb{position:relative;aspect-ratio:16/9;background:var(--bg-3);overflow:hidden}
@@ -171,13 +158,12 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px}
 .vid-meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:11px;color:var(--muted)}
 .cat-tag{padding:3px 9px;border-radius:10px;background:var(--blue-soft);color:var(--blue);font-weight:700}
 
-/* MODAL */
 .modal{position:fixed;inset:0;z-index:100;background:rgba(2,8,18,.85);backdrop-filter:blur(6px);
   display:none;align-items:flex-start;justify-content:center;padding:12px;overflow-y:auto}
 .modal.open{display:flex;animation:fade .25s}
 .modal-inner{background:var(--card-solid);border:1px solid var(--border);border-radius:18px;width:100%;max-width:800px;margin:16px 0;overflow:hidden;box-shadow:var(--shadow)}
 
-/* YOUTUBE PLAYER */
+/* ============ YOUTUBE PLAYER ============ */
 .player-box{position:relative;aspect-ratio:16/9;background:#000;overflow:hidden}
 .player-box iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
 .player-shield{position:absolute;inset:0;z-index:3;background:transparent}
@@ -213,7 +199,6 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px}
   .yt-row{gap:5px}
 }
 
-/* RATING/COMMENTS */
 .stars{display:inline-flex;gap:3px;direction:ltr}
 .stars button{background:none;border:none;font-size:24px;color:#3a4b64;transition:.15s}
 .stars button.on{color:var(--gold);transform:scale(1.1)}
@@ -226,7 +211,6 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px}
 .cm-input input{flex:1;padding:11px 12px;border-radius:12px;border:1px solid var(--border);background:var(--card);color:var(--txt);outline:none;font-size:14px}
 .cm-input input:focus{border-color:var(--blue)}
 
-/* FORUM */
 .fr-new{width:100%;padding:12px;border-radius:14px;border:1px dashed var(--blue);background:var(--blue-soft);
   color:var(--blue);font-weight:800;font-size:14px;margin-bottom:14px}
 .topic{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px;transition:.2s;cursor:pointer}
@@ -242,7 +226,6 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px}
 .reply{padding:10px 12px;border-radius:12px;background:var(--bg-3);margin-bottom:8px;font-size:13px}
 .reply b{color:var(--blue)}
 
-/* UNLOCK */
 .unlock-box{text-align:center;padding:24px 16px}
 .unlock-box .big{font-size:52px;margin-bottom:10px}
 .code-input{display:flex;gap:8px;max-width:400px;margin:16px auto 0}
@@ -250,7 +233,6 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px}
   text-align:center;font-size:18px;font-weight:900;letter-spacing:3px;text-transform:uppercase;outline:none}
 .code-input input:focus{border-color:var(--blue)}
 
-/* INFO / SUPPORT */
 .info-card{padding:16px;border-radius:14px;background:var(--card);border:1px solid var(--border);margin-bottom:12px}
 .info-card h3{color:var(--blue);margin-bottom:8px;font-size:16px}
 .info-card p{color:var(--muted);line-height:1.8;font-size:14px}
@@ -262,18 +244,15 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px}
 .sup-btn > div{min-width:0;flex:1}
 .sup-btn small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
 
-/* BUTTONS */
 .btn-primary{padding:12px 20px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--blue),var(--blue-2));
   color:#021226;font-weight:900;font-size:14px;box-shadow:0 10px 26px rgba(25,170,255,.32);transition:.2s}
 .btn-primary:hover{transform:translateY(-2px)}
 
-/* SKELETON */
 .skel{background:linear-gradient(90deg,var(--bg-3) 25%,rgba(25,170,255,.08) 50%,var(--bg-3) 75%);
   background-size:200% 100%;animation:shimmer 1.3s infinite;border-radius:12px}
 @keyframes shimmer{to{background-position:-200% 0}}
 .skel-card{height:200px;border-radius:16px}
 
-/* TOASTS */
 #toasts{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:8px;width:92%;max-width:380px;pointer-events:none}
 .toast{padding:12px 14px;border-radius:12px;background:var(--card-solid);border:1px solid var(--border);
   box-shadow:var(--shadow);display:flex;align-items:center;gap:10px;font-weight:700;animation:toastIn .35s;font-size:13px;pointer-events:auto}
@@ -281,7 +260,6 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px}
 .toast .tic{font-size:18px;flex-shrink:0}
 @keyframes toastIn{from{opacity:0;transform:translateY(20px) scale(.9)}to{opacity:1;transform:none}}
 
-/* BOTTOM NAV */
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:60;display:flex;justify-content:space-around;
   background:var(--card);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
   border-top:1px solid var(--border);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
@@ -294,7 +272,6 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px}
   width:28px;height:3px;background:var(--blue);border-radius:0 0 3px 3px;transition:.2s}
 .bn.active::after{transform:translateX(-50%) scaleX(1)}
 
-/* NOTIF PANEL */
 #confetti{position:fixed;inset:0;z-index:300;pointer-events:none;display:none}
 .notif-panel{position:fixed;top:66px;left:12px;z-index:95;width:310px;max-width:92vw;max-height:70vh;overflow-y:auto;
   background:var(--card-solid);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);padding:10px;display:none}
@@ -305,7 +282,6 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px}
 .empty{text-align:center;padding:32px 16px;color:var(--muted)}
 .empty .e{font-size:44px;margin-bottom:8px}
 
-/* FOOTER */
 footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);font-size:12px}
 .social-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
 .social-ic{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;
@@ -532,6 +508,7 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
 <div id="toasts"></div>
 <canvas id="confetti"></canvas>
 <script>
+/* ============ CONFIG ============ */
 const SUPABASE_URL="https://brawrhpvtnzvvrzkguic.supabase.co";
 const SUPABASE_KEY="sb_publishable_Q8fBS3nVZqgvfd6diaul8A_cMvHUFtN";
 const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
@@ -561,13 +538,15 @@ const BADGES=[
 ];
 
 let USER=null, ALL_VIDEOS=[], CURRENT_VIDEO=null, YT=null, ACTIVE_CAT='all', NOTIFS=[];
-let ytApiReady=false, ytReadyQueue=[];
+let ytApiReady=false, ytReadyQueue=[], ytPlayerReady=false;
 let ytTimeTimer=null, ytControlsTimer=null, ytCurrentVolume=100, ytMuted=false, ytIsPlaying=false;
 
+/* ============ SESSION ============ */
 function getSession(){try{return JSON.parse(localStorage.getItem('sayoda_session')||'null')}catch(e){return null}}
 const SESSION=getSession();
 if(!SESSION||!SESSION.username||!SESSION.token){location.replace('./login.html');}
 
+/* ============ THEME ============ */
 (function(){const t=localStorage.getItem('sayoda_theme')||'dark';document.documentElement.setAttribute('data-theme',t);updThemeIcon(t);})();
 function updThemeIcon(t){$('themeIcon').innerHTML=t==='light'
   ?'<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"/><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"/><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"/>'
@@ -576,11 +555,13 @@ $('themeBtn').onclick=()=>{const cur=document.documentElement.getAttribute('data
   document.documentElement.setAttribute('data-theme',nx);localStorage.setItem('sayoda_theme',nx);updThemeIcon(nx);
   const mt=document.querySelector('meta[name=theme-color]');if(mt)mt.content=nx==='light'?'#eef4fc':'#020812';};
 
+/* ============ TOAST ============ */
 function toast(msg,type='info',icon){const el=document.createElement('div');el.className='toast '+type;
   const ic=icon||(type==='ok'?'✅':type==='err'?'⚠️':'ℹ️');
   el.innerHTML=`<span class="tic">${ic}</span><span>${esc(msg)}</span>`;
   $('toasts').appendChild(el);setTimeout(()=>{el.style.opacity='0';el.style.transform='translateY(20px)';setTimeout(()=>el.remove(),300)},3400);}
 
+/* ============ CONFETTI ============ */
 function playChime(){try{const a=new(window.AudioContext||window.webkitAudioContext)();
   [0,0.12,0.24].forEach((d,i)=>{const o=a.createGain(),s=a.createOscillator();s.type='sine';
   s.frequency.value=[523,659,784][i];s.connect(o);o.connect(a.destination);
@@ -626,13 +607,14 @@ function closeSidebar(){$('sidebar').classList.remove('open');$('overlay').class
 $('menuBtn').onclick=openSidebar;
 $('overlay').onclick=()=>{closeSidebar();$('notifPanel').classList.remove('open');};
 
+/* ============ LOGOUT ============ */
 $('logoutBtn').onclick=async()=>{
   try{ if(SESSION.token) await sb.rpc('secure_logout',{p_token:SESSION.token}); }catch(e){}
   localStorage.removeItem('sayoda_session');
   location.replace('./login.html');
 };
 
-/* ============ USER ============ */
+/* ============ LOAD USER ============ */
 async function loadUser(){
   const {data,error}=await sb.from('users').select('*').eq('username',SESSION.username).limit(1);
   if(error||!data||!data[0]){toast('تعذّر تحميل البيانات','err');return;}
@@ -687,7 +669,6 @@ async function loadActivityChart(){
     (data||[]).forEach(r=>{const k=String(r.activity_date).slice(0,10);counts[k]=(counts[k]||0)+(r.count||1);});
   }catch(e){}
   const max=Math.max(1,...days.map(d=>counts[d.key]||0));
-  const total=days.reduce((s,d)=>s+(counts[d.key]||0),0);
   const today=new Date().toISOString().slice(0,10);
   $('activityChart').innerHTML=days.map(d=>{
     const c=counts[d.key]||0;
@@ -804,16 +785,33 @@ async function openVideo(idx){
 
   const vid=ytIdOf(v);
   const start=(()=>{const p=progressMap()[v.id];return p&&p._sec?Math.floor(p._sec):0;})();
-  const mk=()=>{if(YT&&YT.destroy)try{YT.destroy()}catch(e){}
-    YT=new window.YT.Player('ytPlayer',{
+  
+  if(YT && YT.destroy){ try{ YT.destroy(); }catch(e){} }
+  window.ytInstance = null;
+  
+  const mk=()=>{
+    YT = window.ytInstance = new window.YT.Player('ytPlayer',{
       videoId:vid,
-      playerVars:{rel:0,modestbranding:1,start,playsinline:1,origin:location.origin,controls:0,disablekb:1,fs:0,iv_load_policy:3},
+      playerVars:{
+        rel:0, modestbranding:1, start:start, playsinline:1,
+        origin:location.origin, controls:0, disablekb:1, fs:0,
+        iv_load_policy:3, showinfo:0
+      },
       events:{
-        onReady:e=>{ e.target.setVolume(ytCurrentVolume); startYtTimer(); },
+        onReady:e=>{
+          ytPlayerReady=true;
+          window.ytInstance = YT;
+          try{ e.target.setVolume(ytCurrentVolume); }catch(err){}
+          startYtTimer();
+          setTimeout(()=>{ try{ e.target.playVideo(); }catch(err){} }, 400);
+        },
         onStateChange:onYtState
       }
-    });};
-  if(ytApiReady&&window.YT&&window.YT.Player)mk();else{ytReadyQueue.push(mk);if(!window.YT)loadYtApi();}
+    });
+  };
+  
+  if(ytApiReady && window.YT && window.YT.Player){ mk(); }
+  else { ytReadyQueue.push(mk); if(!window.YT) loadYtApi(); }
 
   try{const nv=(v.views||0)+1;v.views=nv;await sb.from('videos').update({views:nv}).eq('id',v.id);}catch(e){}
   renderStars(v);loadRating(v);loadComments(v);
@@ -830,12 +828,14 @@ function startYtTimer(){
   clearInterval(ytTimeTimer);
   ytTimeTimer=setInterval(()=>{
     if(!YT||!YT.getCurrentTime)return;
-    const t=YT.getCurrentTime(),d=YT.getDuration();
-    if(!d)return;
-    const pct=Math.min(100,(t/d)*100);
-    $('ytProgressFill').style.width=pct+'%';
-    $('ytTime').textContent=fmtSec(t)+' / '+fmtSec(d);
-    if(pct>=90) markProgress(pct,true,t); else if(pct>0) markProgress(pct,false,t);
+    try{
+      const t=YT.getCurrentTime(),d=YT.getDuration();
+      if(!d)return;
+      const pct=Math.min(100,(t/d)*100);
+      $('ytProgressFill').style.width=pct+'%';
+      $('ytTime').textContent=fmtSec(t)+' / '+fmtSec(d);
+      if(pct>=90) markProgress(pct,true,t); else if(pct>0) markProgress(pct,false,t);
+    }catch(e){}
   },500);
 }
 
@@ -865,24 +865,29 @@ function closeVideo(){
 }
 $('closeVid').onclick=closeVideo;
 
+/* ============ أزرار المشغل المخصصة ============ */
 document.addEventListener('click',e=>{
   const t=e.target.closest('button');
   if(!t)return;
   if(t.id==='ytPlayPause'){
-    if(!YT||!YT.getPlayerState)return;
-    const S=window.YT.PlayerState;
-    const st=YT.getPlayerState();
-    if(st===S.PLAYING){YT.pauseVideo();} else {YT.playVideo();}
-    showYtControls();
+    if(!ytPlayerReady||!window.ytInstance)return;
+    try{
+      const S=window.YT.PlayerState;
+      const st=window.ytInstance.getPlayerState();
+      if(st===S.PLAYING){window.ytInstance.pauseVideo();} else {window.ytInstance.playVideo();}
+      showYtControls();
+    }catch(err){}
     return;
   }
-  if(t.id==='ytBack10'){if(YT&&YT.getCurrentTime){YT.seekTo(Math.max(0,YT.getCurrentTime()-10),true);showYtControls();}return;}
-  if(t.id==='ytFwd10'){if(YT&&YT.getCurrentTime){YT.seekTo(YT.getCurrentTime()+10,true);showYtControls();}return;}
+  if(t.id==='ytBack10'){if(window.ytInstance&&ytPlayerReady){try{window.ytInstance.seekTo(Math.max(0,window.ytInstance.getCurrentTime()-10),true);showYtControls();}catch(err){}}return;}
+  if(t.id==='ytFwd10'){if(window.ytInstance&&ytPlayerReady){try{window.ytInstance.seekTo(window.ytInstance.getCurrentTime()+10,true);showYtControls();}catch(err){}}return;}
   if(t.id==='ytMute'){
-    if(!YT)return;
-    ytMuted=!ytMuted;
-    if(ytMuted){YT.mute();t.textContent='🔇';}
-    else{YT.unMute();t.textContent='🔊';}
+    if(!window.ytInstance||!ytPlayerReady)return;
+    try{
+      ytMuted=!ytMuted;
+      if(ytMuted){window.ytInstance.mute();t.textContent='🔇';}
+      else{window.ytInstance.unMute();t.textContent='🔊';}
+    }catch(err){}
     return;
   }
   if(t.id==='ytFull'){
@@ -894,44 +899,59 @@ document.addEventListener('click',e=>{
 });
 
 document.addEventListener('click',e=>{
-  if(e.target.closest('#ytBigPlay')) {if(!YT)return;YT.playVideo();showYtControls();}
+  if(e.target.closest('#ytBigPlay')){
+    if(!ytPlayerReady||!window.ytInstance)return;
+    try{window.ytInstance.playVideo();$('ytBigPlay').classList.add('hidden');}catch(err){}
+  }
 });
 
 document.addEventListener('click',e=>{
   const p=e.target.closest('#ytProgress');
-  if(!p||!YT||!YT.getDuration)return;
-  const r=p.getBoundingClientRect();
-  const pct=Math.min(100,Math.max(0,((e.clientX-r.left)/r.width)*100));
-  const dur=YT.getDuration();
-  YT.seekTo((pct/100)*dur,true);
+  if(!p||!ytPlayerReady||!window.ytInstance)return;
+  try{
+    const r=p.getBoundingClientRect();
+    const pct=Math.min(100,Math.max(0,((e.clientX-r.left)/r.width)*100));
+    const dur=window.ytInstance.getDuration();
+    window.ytInstance.seekTo((pct/100)*dur,true);
+  }catch(err){}
 });
 
 document.addEventListener('click',e=>{
   const v=e.target.closest('#ytVolume');
-  if(!v||!YT)return;
-  const r=v.getBoundingClientRect();
-  const pct=Math.min(100,Math.max(0,((e.clientX-r.left)/r.width)*100));
-  ytCurrentVolume=Math.round(pct);
-  ytMuted=false;$('ytMute').textContent='🔊';
-  YT.setVolume(ytCurrentVolume);
-  YT.unMute();
-  $('ytVolumeFill').style.width=pct+'%';
+  if(!v||!ytPlayerReady||!window.ytInstance)return;
+  try{
+    const r=v.getBoundingClientRect();
+    const pct=Math.min(100,Math.max(0,((e.clientX-r.left)/r.width)*100));
+    ytCurrentVolume=Math.round(pct);
+    ytMuted=false;
+    if($('ytMute'))$('ytMute').textContent='🔊';
+    window.ytInstance.setVolume(ytCurrentVolume);
+    window.ytInstance.unMute();
+    if($('ytVolumeFill'))$('ytVolumeFill').style.width=pct+'%';
+  }catch(err){}
 });
 
 document.addEventListener('mousemove',e=>{if(e.target.closest('.player-box')) showYtControls();});
 document.addEventListener('touchstart',e=>{if(e.target.closest('.player-box')) showYtControls();},{passive:true});
 
-/* ============ منع التنزيل ============ */
-document.addEventListener('contextmenu',e=>{
-  if(e.target.closest('.player-box,.vid-card,.vid-thumb,img,.modal')) e.preventDefault();
-});
-document.addEventListener('dragstart',e=>{if(e.target.tagName==='IMG') e.preventDefault();});
+/* ============ الحمايات ============ */
+// منع Right Click
+document.addEventListener('contextmenu',e=>e.preventDefault());
+// منع السحب
+document.addEventListener('dragstart',e=>e.preventDefault());
+// منع الاختصارات الخطيرة
 document.addEventListener('keydown',e=>{
-  if(e.key==='F12'){e.preventDefault();return false;}
-  if(e.ctrlKey&&e.shiftKey&&['I','J','C'].includes(e.key.toUpperCase())){e.preventDefault();return false;}
-  if(e.ctrlKey&&['U','S','P'].includes(e.key.toUpperCase())){e.preventDefault();return false;}
-  if(e.key==='PrintScreen'){e.preventDefault();}
+  if(e.key==='F12'){e.preventDefault();e.stopPropagation();return false;}
+  if(e.ctrlKey&&e.shiftKey&&['I','J','C','K'].includes(e.key.toUpperCase())){e.preventDefault();e.stopPropagation();return false;}
+  if(e.ctrlKey&&['U','S','P'].includes(e.key.toUpperCase())){e.preventDefault();e.stopPropagation();return false;}
+  if(e.metaKey&&e.altKey&&['I','J','C','U'].includes(e.key.toUpperCase())){e.preventDefault();e.stopPropagation();return false;}
+  if(e.key==='PrintScreen'){e.preventDefault();try{navigator.clipboard.writeText('');}catch(err){}}
 });
+// منع التحديد
+document.addEventListener('selectstart',e=>{if(!e.target.closest('input,textarea'))e.preventDefault();});
+// منع النسخ
+document.addEventListener('copy',e=>{if(!e.target.closest('input,textarea'))e.preventDefault();});
+document.addEventListener('cut',e=>{if(!e.target.closest('input,textarea'))e.preventDefault();});
 
 /* ============ RATING ============ */
 function renderStars(v){const my=(USER.ratings&&USER.ratings[v.id])||0;
@@ -1065,38 +1085,14 @@ document.addEventListener('click',e=>{if(!$('notifPanel').contains(e.target)&&e.
 
 /* ============ SOCIAL SVG ICONS ============ */
 const SOCIAL_META = {
-  facebook: {
-    name:'فيسبوك',
-    icon:'<svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>'
-  },
-  instagram: {
-    name:'انستجرام',
-    icon:'<svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>'
-  },
-  whatsapp: {
-    name:'واتساب',
-    icon:'<svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>'
-  },
-  tiktok: {
-    name:'تيك توك',
-    icon:'<svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>'
-  },
-  telegram: {
-    name:'تليجرام',
-    icon:'<svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>'
-  },
-  telegram_channel: {
-    name:'قناة تليجرام',
-    icon:'<svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>'
-  },
-  website: {
-    name:'الموقع الرسمي',
-    icon:'<svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm7.938 6h-3.104a15.94 15.94 0 00-1.41-3.59A9.96 9.96 0 0119.938 6zM12 2.04c.828 1.24 1.48 2.6 1.91 4H10.09c.43-1.4 1.08-2.76 1.91-4zM2.462 14a9.94 9.94 0 010-4h3.56a17.27 17.27 0 000 4H2.462zm.6 2h3.104c.35 1.28.83 2.49 1.41 3.59A9.96 9.96 0 013.062 16zm3.104-8H3.062a9.96 9.96 0 014.514-3.59A15.94 15.94 0 006.166 8zM12 21.96c-.828-1.24-1.48-2.6-1.91-4h3.82c-.43 1.4-1.08 2.76-1.91 4zM14.34 16H9.66a15.4 15.4 0 010-8h4.68a15.4 15.4 0 010 8zm.79 5.59c.58-1.1 1.06-2.31 1.41-3.59h3.104a9.96 9.96 0 01-4.514 3.59zM17.978 14a17.27 17.27 0 000-4h3.56a9.94 9.94 0 010 4h-3.56z"/></svg>'
-  },
-  phone: {
-    name:'اتصل بنا',
-    icon:'<svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>'
-  }
+  facebook: {name:'فيسبوك', icon:'<svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>'},
+  instagram: {name:'انستجرام', icon:'<svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>'},
+  whatsapp: {name:'واتساب', icon:'<svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>'},
+  tiktok: {name:'تيك توك', icon:'<svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>'},
+  telegram: {name:'تليجرام', icon:'<svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>'},
+  telegram_channel: {name:'قناة تليجرام', icon:'<svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>'},
+  website: {name:'الموقع الرسمي', icon:'<svg viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm7.938 6h-3.104a15.94 15.94 0 00-1.41-3.59A9.96 9.96 0 0119.938 6zM12 2.04c.828 1.24 1.48 2.6 1.91 4H10.09c.43-1.4 1.08-2.76 1.91-4zM2.462 14a9.94 9.94 0 010-4h3.56a17.27 17.27 0 000 4H2.462zm.6 2h3.104c.35 1.28.83 2.49 1.41 3.59A9.96 9.96 0 013.062 16zm3.104-8H3.062a9.96 9.96 0 014.514-3.59A15.94 15.94 0 006.166 8zM12 21.96c-.828-1.24-1.48-2.6-1.91-4h3.82c-.43 1.4-1.08 2.76-1.91 4zM14.34 16H9.66a15.4 15.4 0 010-8h4.68a15.4 15.4 0 010 8zm.79 5.59c.58-1.1 1.06-2.31 1.41-3.59h3.104a9.96 9.96 0 01-4.514 3.59zM17.978 14a17.27 17.27 0 000-4h3.56a9.94 9.94 0 010 4h-3.56z"/></svg>'},
+  phone: {name:'اتصل بنا', icon:'<svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>'}
 };
 
 async function loadSocial(){
