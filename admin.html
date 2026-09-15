@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0a0600" />
 <title>لوحة التحكم الذهبية | SAYODA ADMIN</title>
 <link rel="manifest" href="./manifest.json" />
-<link rel="icon" href="./logo.png" />
+<link rel="icon" href="./logog.png" />
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -222,7 +222,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 
 <div class="gate" id="gate">
   <div class="box">
-    <img src="./logo.png" onerror="this.style.display='none'">
+    <img src="./logog.png" onerror="this.style.display='none'">
     <h2>🔐 لوحة التحكم الذهبية</h2>
     <p>أدخل كلمة مرور المدير للوصول إلى اللوحة</p>
     <input type="password" id="gatePass" placeholder="كلمة المرور" autocomplete="current-password" />
@@ -235,7 +235,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 
 <header>
   <div class="hl">
-    <img src="./logo.png" onerror="this.style.display='none'">
+    <img src="./logog.png" onerror="this.style.display='none'">
     <div class="ht">
       SAYODA <span>ADMIN</span>
       <small>✨ لوحة التحكم الذهبية</small>
@@ -251,6 +251,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 
   <div class="tabs" id="tabs"></div>
 
+  <!-- DASHBOARD -->
   <div class="panel active" id="p-dash">
     <div class="sec-title">📊 لوحة الإحصائيات المباشرة</div>
     <div class="sec-sub">
@@ -299,6 +300,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     </div>
   </div>
 
+  <!-- USERS -->
   <div class="panel" id="p-users">
     <div class="sec-title">👥 إدارة الحسابات</div>
     <div class="sec-sub">تحكم كامل بالمستخدمين — تفعيل / إيقاف / حذف</div>
@@ -306,6 +308,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     <div id="usersList"></div>
   </div>
 
+  <!-- VIDEOS -->
   <div class="panel" id="p-videos">
     <div class="sec-title">🎬 إدارة الفيديوهات</div>
     <div class="card">
@@ -327,6 +330,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     </div>
   </div>
 
+  <!-- CODES -->
   <div class="panel" id="p-codes">
     <div class="sec-title">🔓 أكواد الفتح</div>
     <div class="card">
@@ -351,6 +355,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     </div>
   </div>
 
+  <!-- NOTIFS -->
   <div class="panel" id="p-notifs">
     <div class="sec-title">📢 الإشعارات</div>
     <div class="card">
@@ -364,12 +369,14 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     </div>
   </div>
 
+  <!-- FORUM -->
   <div class="panel" id="p-forum">
     <div class="sec-title">💬 إدارة المنتدى</div>
     <div class="sec-sub">تثبيت / إغلاق / حذف المواضيع</div>
     <div id="adminForumList"></div>
   </div>
 
+  <!-- BANS -->
   <div class="panel" id="p-bans">
     <div class="sec-title">🚫 نظام الحظر</div>
     <div class="sec-sub">اختر مستخدماً وحدّد الميزات المحظورة عنه</div>
@@ -377,6 +384,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     <div id="bansList"></div>
   </div>
 
+  <!-- SETTINGS -->
   <div class="panel" id="p-settings">
     <div class="sec-title">⚙️ إعدادات المنصة</div>
     <div class="card">
@@ -402,10 +410,9 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 </div>
 
 <div id="toasts"></div>
-
 <script>
 /* ============================================
-   SAYODA ADMIN — JavaScript (مصحّح نهائياً)
+   SAYODA ADMIN — JavaScript
    ============================================ */
 const SUPABASE_URL="https://brawrhpvtnzvvrzkguic.supabase.co";
 const SUPABASE_KEY="sb_publishable_Q8fBS3nVZqgvfd6diaul8A_cMvHUFtN";
@@ -927,7 +934,7 @@ async function toggleCode(id){
     const {error}=await sb.rpc('admin_toggle_unlock_code',{p_username:ADMIN.username,p_password:PASS,p_code_id:id});
     if(error)throw error;
     toast('تم التحديث');loadCodes();
-  }catch(e){toast('فشل','err');}
+  }catch(e){toast('فشل: '+(e.message||''),'err');}
 }
 
 async function delCode(id){
@@ -937,7 +944,7 @@ async function delCode(id){
     const {error}=await sb.rpc('admin_delete_unlock_code',{p_username:ADMIN.username,p_password:PASS,p_code_id:id});
     if(error)throw error;
     toast('تم الحذف');loadCodes();
-  }catch(e){toast('فشل','err');}
+  }catch(e){toast('فشل: '+(e.message||''),'err');}
 }
 
 $('exportCsv').onclick=()=>{
@@ -977,13 +984,17 @@ $('sendNotifBtn').onclick=async()=>{
   finally{btn.disabled=false;btn.textContent='📨 إرسال الإشعار';}
 };
 
-/* ============ FORUM (مصحّح) ============ */
+/* ============ FORUM ============ */
 async function loadForum(){
+  if(!ensurePass()) return;
+  console.log('📋 loadForum started');
   $('adminForumList').innerHTML='<div class="skel"></div><div class="skel"></div>';
   try{
     const {data,error}=await sb.from('forum_topics').select('*').order('created_at',{ascending:false}).limit(100);
     if(error){ console.error('Load forum error:',error); throw error; }
     const rows=data||[];
+    console.log('📋 forum topics:', rows.length);
+    
     $('adminForumList').innerHTML=rows.length?rows.map(t=>`<div class="list-item">
       <div class="li-main">
         <b>${esc(t.title)} ${t.pinned?'📌':''}${t.closed?'🔒':''}</b>
@@ -999,6 +1010,7 @@ async function loadForum(){
     $('adminForumList').querySelectorAll('[data-topic-pin]').forEach(b=>b.onclick=()=>pinTopic(b.dataset.topicPin));
     $('adminForumList').querySelectorAll('[data-topic-close]').forEach(b=>b.onclick=()=>closeTopic(b.dataset.topicClose));
     $('adminForumList').querySelectorAll('[data-topic-del]').forEach(b=>b.onclick=()=>delTopic(b.dataset.topicDel));
+    console.log('📋 forum rendered, buttons:', document.querySelectorAll('[data-topic-close]').length);
   }catch(e){
     console.error('Load forum error:',e);
     $('adminForumList').innerHTML='<div class="empty"><div class="e">⚠️</div><p>تعذّر التحميل<br><small style="color:#ff9db0;font-size:11px">'+(e.message||'')+'</small></p></div>';
@@ -1085,10 +1097,15 @@ $('banSearch').oninput=e=>renderBans(e.target.value);
 async function toggleBan(un,feature){
   if(!ensurePass()) return;
   try{
-    const {error}=await sb.rpc('admin_toggle_ban',{
-      p_username:ADMIN.username,p_password:PASS,p_target_user:un,p_feature:feature
+    console.log('🚫 toggleBan called:', {un, feature});
+    const {data,error}=await sb.rpc('admin_toggle_ban',{
+      p_username:ADMIN.username,
+      p_password:PASS,
+      p_target_user:un,
+      p_feature:feature
     });
-    if(error)throw error;
+    console.log('🚫 toggleBan result:', {data,error});
+    if(error) throw error;
     const u=USERS.find(x=>x.username===un);
     if(u){
       let b=Array.isArray(u.banned_features)?u.banned_features:[];
@@ -1097,7 +1114,10 @@ async function toggleBan(un,feature){
     }
     renderBans($('banSearch').value);
     toast('تم تحديث الحظر');
-  }catch(e){toast('فشل: '+(e.message||''),'err');}
+  }catch(e){
+    console.error('❌ toggleBan error:',e);
+    toast('فشل: '+(e.message||''),'err');
+  }
 }
 
 /* ============ SETTINGS ============ */
