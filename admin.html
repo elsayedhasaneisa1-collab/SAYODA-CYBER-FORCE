@@ -177,32 +177,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 .gate input:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(255,215,0,.15)}
 .gate .btn{margin-bottom:8px}
 
-.log-item{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:12px;
-  background:rgba(10,6,0,.4);border:1px solid var(--border-soft);margin-bottom:8px;
-  transition:.2s;border-right:3px solid transparent;box-sizing:border-box}
-.log-item:hover{background:rgba(26,18,6,.7)}
-.log-item.type-login{border-right-color:#28d17c}
-.log-item.type-register{border-right-color:#19aaff}
-.log-item.type-video_watch{border-right-color:#ff9500}
-.log-item.type-video_complete{border-right-color:#ffd700}
-.log-item.type-comment{border-right-color:#ff9db0}
-.log-item.type-rating{border-right-color:#9b59b6}
-.log-item.type-unlock_code{border-right-color:#e74c3c}
-.log-item.type-logout{border-right-color:#95a5a6}
-.log-item.type-admin_action{border-right-color:#d4af37}
-.log-ic{width:38px;height:38px;border-radius:11px;background:var(--gold-soft);
-  display:grid;place-items:center;font-size:18px;flex-shrink:0}
-.log-body{flex:1;min-width:0}
-.log-body b{font-size:13px;color:var(--txt)}
-.log-body .log-type{font-size:11px;color:var(--gold);font-weight:700;margin-top:2px}
-.log-body .log-details{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5;word-break:break-word}
-.log-time{font-size:10px;color:var(--muted);white-space:nowrap;flex-shrink:0;text-align:left}
-
-.filters-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;width:100%;box-sizing:border-box}
-.filters-row select{padding:10px 14px;border-radius:10px;border:1px solid var(--border-soft);
-  background:rgba(10,6,0,.6);color:var(--txt);outline:none;font-size:13px;font-weight:700;box-sizing:border-box}
-.filters-row select:focus{border-color:var(--gold)}
-
 .live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#28d17c;
   margin-left:6px;animation:blink 1.5s infinite;box-shadow:0 0 10px #28d17c}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
@@ -241,7 +215,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
   .ht small{display:none}
   .wrap{padding:14px 10px 30px}
   .card{padding:16px}
-  .log-time{font-size:9px}
   .vid-modal-box{max-height:92vh}
 }
 </style>
@@ -298,29 +271,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
       <h3>🟢 المستخدمون الأونلاين الآن</h3>
       <div id="onlineUsers">
         <div class="empty"><div class="e">👥</div><p>جاري التحميل...</p></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>🕐 سجل النشاطات المباشر</h3>
-      <div class="filters-row">
-        <select id="logTypeFilter">
-          <option value="">كل الأنواع</option>
-          <option value="login">🔑 تسجيل دخول</option>
-          <option value="logout">🚪 تسجيل خروج</option>
-          <option value="register">✨ تسجيل جديد</option>
-          <option value="video_watch">👁 مشاهدة فيديو</option>
-          <option value="video_complete">🎬 إكمال فيديو</option>
-          <option value="comment">💬 تعليق</option>
-          <option value="rating">⭐ تقييم</option>
-          <option value="unlock_code">🔓 كود فتح</option>
-          <option value="admin_action">⚙️ عملية أدمن</option>
-        </select>
-        <input type="text" id="logUserFilter" placeholder="فلترة باسم مستخدم..." style="flex:1;min-width:150px;padding:10px 14px;border-radius:10px;border:1px solid var(--border-soft);background:rgba(10,6,0,.6);color:var(--txt);outline:none;font-size:13px;box-sizing:border-box" />
-        <button class="btn sm" id="refreshLogBtn">🔄 تحديث</button>
-      </div>
-      <div id="activityLog">
-        <div class="empty"><div class="e">📋</div><p>جاري التحميل...</p></div>
       </div>
     </div>
   </div>
@@ -421,7 +371,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 </div>
 </div>
 
-<!-- ============ VIDEO MANAGE MODAL ============ -->
+<!-- VIDEO MANAGE MODAL -->
 <div class="vid-modal" id="vidManageModal">
   <div class="vid-modal-box">
     <div class="vid-modal-head">
@@ -474,8 +424,7 @@ document.addEventListener('keydown',e=>{
 let ADMIN=null;
 let PASS=sessionStorage.getItem('sayoda_admin_pass')||null;
 let USERS=[], VIDEOS=[];
-let LIVE_TIMER=null, DASH_TIMER=null;
-let LOG_FILTER_TYPE='', LOG_FILTER_USER='';
+let LIVE_TIMER=null;
 let VM_CURRENT_USER=null;
 const BAN_FEATURES=[
   {k:'comments',t:'التعليقات'},
@@ -483,22 +432,6 @@ const BAN_FEATURES=[
   {k:'unlock',t:'فتح الأكواد'},
   {k:'videos',t:'الفيديوهات'}
 ];
-const ACTIVITY_ICONS={
-  login:'🔑',logout:'🚪',register:'✨',
-  video_watch:'👁',video_complete:'🎬',
-  comment:'💬',rating:'⭐',
-  unlock_code:'🔓',unlock_fail:'❌',
-  admin_action:'⚙️',settings:'⚙️',
-  notification:'📢',ban:'🚫',unban:'✅'
-};
-const ACTIVITY_LABELS={
-  login:'تسجيل دخول',logout:'تسجيل خروج',register:'تسجيل جديد',
-  video_watch:'مشاهدة فيديو',video_complete:'إكمال فيديو',
-  comment:'تعليق',rating:'تقييم',
-  unlock_code:'استخدام كود فتح',unlock_fail:'فشل كود فتح',
-  admin_action:'عملية أدمن',settings:'تعديل إعدادات',
-  notification:'إشعار',ban:'حظر مستخدم',unban:'فك حظر'
-};
 
 /* ============ SESSION ============ */
 function getSession(){try{return JSON.parse(localStorage.getItem('sayoda_session')||'null')}catch(e){return null}}
@@ -522,18 +455,51 @@ function resetIdle(){
 async function logoutAdmin(){
   try{
     if(SESSION.token) await sb.rpc('secure_logout',{p_token:SESSION.token});
-    if(ADMIN) await sb.rpc('client_log_activity',{
-      p_username:ADMIN.username,
-      p_activity_type:'logout',
-      p_details:'{}',
-      p_user_agent:navigator.userAgent.slice(0,200)
-    });
+    if(ADMIN) await sendTelegram('🚪 خروج أدمن', {username:ADMIN.username});
   }catch(e){}
   sessionStorage.removeItem('sayoda_admin_pass');
   localStorage.removeItem('sayoda_session');
   location.replace('./login.html');
 }
 $('logoutBtn').onclick=logoutAdmin;
+
+/* ============ TELEGRAM NOTIFY ============ */
+const TG_BOT_TOKEN = '8655357261:AAHlqaWW8KwDM1J6YWqTvlp-taB8mKLU57M';
+const TG_CHAT_ID = '7114350905';
+
+async function sendTelegram(title, details){
+  try{
+    const time = new Date().toLocaleString('ar-EG', {hour:'2-digit',minute:'2-digit',day:'numeric',month:'short'});
+    let msg = `🛡️ *SAYODA ADMIN*\n\n`;
+    msg += `📌 *${title}*\n`;
+    msg += `🕐 ${time}\n`;
+    if(details){
+      msg += `\n`;
+      for(const [k,v] of Object.entries(details)){
+        if(v !== null && v !== undefined && v !== ''){
+          msg += `• *${k}:* ${String(v).slice(0,200)}\n`;
+        }
+      }
+    }
+    const url = `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`;
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        chat_id: TG_CHAT_ID,
+        text: msg,
+        parse_mode: 'Markdown'
+      })
+    });
+    const data = await res.json();
+    if(!data.ok) console.warn('Telegram error:', data);
+    else console.log('✅ Telegram sent:', title);
+    return data.ok;
+  }catch(e){
+    console.error('Telegram fetch error:', e);
+    return false;
+  }
+}
 
 /* ============ TOAST ============ */
 function toast(m,t='ok'){
@@ -545,7 +511,16 @@ function toast(m,t='ok'){
 }
 
 /* ============ HELPERS ============ */
-function jsonbDetails(obj){return JSON.stringify(obj||{})}
+function ensurePass(){
+  if(!PASS) PASS=sessionStorage.getItem('sayoda_admin_pass');
+  if(!PASS){
+    toast('انتهت الجلسة — أدخل كلمة المرور مرة أخرى','err');
+    $('gate').style.display='grid';
+    $('app').style.display='none';
+    return false;
+  }
+  return true;
+}
 function fmtDate(t){
   try{
     const d=new Date(t);
@@ -556,19 +531,6 @@ function fmtDate(t){
     if(diff<604800)return `منذ ${Math.floor(diff/86400)} يوم`;
     return d.toLocaleDateString('ar-EG',{day:'numeric',month:'short',year:'numeric'});
   }catch(e){return''}
-}
-function fullTime(t){
-  try{return new Date(t).toLocaleString('ar-EG',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});}catch(e){return''}
-}
-function ensurePass(){
-  if(!PASS) PASS=sessionStorage.getItem('sayoda_admin_pass');
-  if(!PASS){
-    toast('انتهت الجلسة — أدخل كلمة المرور مرة أخرى','err');
-    $('gate').style.display='grid';
-    $('app').style.display='none';
-    return false;
-  }
-  return true;
 }
 
 /* ============ GATE ============ */
@@ -586,20 +548,14 @@ $('gateBtn').onclick=async()=>{
       ADMIN={username:SESSION.username};
       PASS=p;
       sessionStorage.setItem('sayoda_admin_pass',p);
-      try{
-        await sb.rpc('client_log_activity',{
-          p_username:ADMIN.username,
-          p_activity_type:'admin_action',
-          p_details:jsonbDetails({action:'admin_login'}),
-          p_user_agent:navigator.userAgent.slice(0,200)
-        });
-      }catch(e){}
+      await sendTelegram('🔓 دخول لوحة الأدمن', {username:ADMIN.username});
       $('gate').style.display='none';
       $('app').style.display='block';
       resetIdle();
       init();
     } else {
       toast('كلمة مرور خاطئة','err');
+      await sendTelegram('⚠️ محاولة دخول أدمن فاشلة', {username:SESSION.username});
     }
   }catch(e){
     console.error('Gate error:',e);
@@ -638,7 +594,6 @@ async function init(){
   if(!ensurePass()) return;
   await Promise.all([loadUsers(),loadVideos()]);
   await loadStats();
-  await loadActivityLog();
   await loadOnlineUsers();
   startLiveUpdates();
 }
@@ -674,7 +629,7 @@ async function loadStats(){
     `).join('');
   }catch(e){
     console.error('Stats error:',e);
-    $('statsGrid').innerHTML='<div class="empty" style="grid-column:1/-1"><div class="e">⚠️</div><p>تعذّر تحميل الإحصائيات<br><small style="color:#ff9db0;font-size:11px">'+(e.message||'')+'</small></p></div>';
+    $('statsGrid').innerHTML='<div class="empty" style="grid-column:1/-1"><div class="e">⚠️</div><p>تعذّر تحميل الإحصائيات</p></div>';
   }
 }
 
@@ -706,70 +661,17 @@ async function loadOnlineUsers(){
     `;
   }catch(e){
     console.error('Online error:',e);
-    $('onlineUsers').innerHTML='<div class="empty"><div class="e">⚠️</div><p>تعذّر التحميل<br><small style="color:#ff9db0;font-size:11px">'+(e.message||'')+'</small></p></div>';
+    $('onlineUsers').innerHTML='<div class="empty"><div class="e">⚠️</div><p>تعذّر التحميل</p></div>';
   }
 }
-
-/* ============ ACTIVITY LOG ============ */
-async function loadActivityLog(){
-  if(!ensurePass()) return;
-  $('activityLog').innerHTML='<div class="skel"></div><div class="skel"></div><div class="skel"></div>';
-  try{
-    const {data,error}=await sb.rpc('admin_get_activity_log',{
-      p_username:ADMIN.username,
-      p_password:PASS,
-      p_limit:100,
-      p_filter_username:LOG_FILTER_USER||null,
-      p_filter_type:LOG_FILTER_TYPE||null
-    });
-    if(error){ console.error('Log RPC error:',error); throw error; }
-    const rows=Array.isArray(data)?data:[];
-
-    if(!rows.length){
-      $('activityLog').innerHTML='<div class="empty"><div class="e">📋</div><p>لا يوجد نشاطات مسجّلة بعد</p></div>';
-      return;
-    }
-
-    $('activityLog').innerHTML=rows.map(r=>{
-      const icon=ACTIVITY_ICONS[r.activity_type]||'📌';
-      const label=ACTIVITY_LABELS[r.activity_type]||r.activity_type;
-      let det='';
-      try{
-        if(r.details && typeof r.details==='object'){
-          det=Object.entries(r.details).map(([k,v])=>{
-            if(v===null||v===undefined||v==='')return '';
-            return `${k}: ${typeof v==='object'?JSON.stringify(v):v}`;
-          }).filter(Boolean).join(' · ');
-        }
-      }catch(e){}
-      return `<div class="log-item type-${esc(r.activity_type)}">
-        <div class="log-ic">${icon}</div>
-        <div class="log-body">
-          <b>${esc(r.username)}</b>
-          <div class="log-type">${esc(label)}</div>
-          ${det?`<div class="log-details">${esc(det)}</div>`:''}
-        </div>
-        <div class="log-time" title="${fullTime(r.created_at)}">${fmtDate(r.created_at)}</div>
-      </div>`;
-    }).join('');
-  }catch(e){
-    console.error('Log error:',e);
-    $('activityLog').innerHTML='<div class="empty"><div class="e">⚠️</div><p>تعذّر التحميل<br><small style="color:#ff9db0;font-size:11px">'+(e.message||'')+'</small></p></div>';
-  }
-}
-
-$('logTypeFilter').onchange=e=>{LOG_FILTER_TYPE=e.target.value;loadActivityLog();};
-$('logUserFilter').oninput=e=>{LOG_FILTER_USER=clean(e.target.value);clearTimeout(window._logT);window._logT=setTimeout(loadActivityLog,600);};
-$('refreshLogBtn').onclick=()=>{loadActivityLog();loadOnlineUsers();loadStats();toast('تم التحديث');};
 
 /* ============ LIVE ============ */
 function startLiveUpdates(){
   stopLiveUpdates();
-  LIVE_TIMER=setInterval(()=>{loadStats();loadOnlineUsers();},15000);
-  DASH_TIMER=setInterval(()=>{loadActivityLog();},20000);
+  LIVE_TIMER=setInterval(()=>{loadStats();loadOnlineUsers();},20000);
 }
 function stopLiveUpdates(){
-  clearInterval(LIVE_TIMER);clearInterval(DASH_TIMER);
+  clearInterval(LIVE_TIMER);
 }
 
 /* ============ USERS ============ */
@@ -786,32 +688,36 @@ function renderUsers(q=''){
   const list=USERS.filter(u=>!q||u.username.toLowerCase().includes(q.toLowerCase()));
   $('usersList').innerHTML=list.length?list.map(u=>{
     const safePhone=u.phone?esc(u.phone):'—';
-    const pass = u.password ? esc(u.password) : '—';
-    return `<div class="list-item" style="cursor:pointer" data-act="open" data-user="${esc(u.username)}">
+    return `<div class="list-item" style="cursor:pointer" data-open="${esc(u.username)}">
       <div class="li-main">
         <b>${esc(u.username)} ${u.role==='admin'?'<span class="pill gold">👑 مدير</span>':''}</b>
-        <small>${esc(u.level||'مبتدئ')} · ${u.xp||0} XP · 🎬 ${u.videos_watched||0} · 🔥 ${u.streak||0}</small>
-        <small style="color:var(--danger);font-weight:700;user-select:all;-webkit-user-select:all">🔑 الباسورد: ${pass}</small>
-        <small>📞 ${safePhone}</small>
+        <small>${esc(u.level||'مبتدئ')} · ${u.xp||0} XP · 🎬 ${u.videos_watched||0} · 🔥 ${u.streak||0} · 📞 ${safePhone}</small>
       </div>
       <span class="pill ${u.active!==false?'on':'off'}">${u.active!==false?'نشط':'موقوف'}</span>
-      <div class="li-actions" onclick="event.stopPropagation()">
-        <button class="btn sm blue" data-act="videos" data-user="${esc(u.username)}">🎬 الفيديوهات</button>
+      <div class="li-actions">
+        <button class="btn sm blue" data-act="videos" data-user="${esc(u.username)}">🎬</button>
         <button class="btn sm ${u.active!==false?'warn':'ok'}" data-act="toggle" data-user="${esc(u.username)}">
-          ${u.active!==false?'⏸ إيقاف':'▶ تفعيل'}
+          ${u.active!==false?'⏸':'▶'}
         </button>
-        <button class="btn sm danger" data-act="del" data-user="${esc(u.username)}">🗑 حذف</button>
+        <button class="btn sm danger" data-act="del" data-user="${esc(u.username)}">🗑</button>
       </div>
     </div>`;
   }).join(''):'<div class="empty"><div class="e">👥</div><p>لا نتائج</p></div>';
 
-  $('usersList').querySelectorAll('[data-act]').forEach(el=>{
+  /* زر الفتح: الضغط على أي مكان في المستخدم */
+  $('usersList').querySelectorAll('[data-open]').forEach(el=>{
     el.onclick=(e)=>{
+      if(e.target.closest('button')) return;
+      openUserDetails(el.dataset.open);
+    };
+  });
+  /* الأزرار */
+  $('usersList').querySelectorAll('[data-act]').forEach(b=>{
+    b.onclick=(e)=>{
       e.stopPropagation();
-      const un=el.dataset.user;
-      const act=el.dataset.act;
-      if(act==='open') openUserDetails(un);
-      else if(act==='videos') openVideoManager(un);
+      const un=b.dataset.user;
+      const act=b.dataset.act;
+      if(act==='videos') openVideoManager(un);
       else if(act==='toggle') toggleActive(un);
       else if(act==='del') delUser(un);
     };
@@ -838,10 +744,6 @@ function openUserDetails(un){
           <div style="padding:12px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:12px">
             <div style="font-size:11px;color:var(--muted);margin-bottom:4px">اسم المستخدم</div>
             <div style="font-weight:900;font-size:16px">${esc(u.username)}</div>
-          </div>
-          <div style="padding:12px;background:rgba(255,77,109,.1);border:1px solid rgba(255,77,109,.3);border-radius:12px">
-            <div style="font-size:11px;color:var(--muted);margin-bottom:4px">🔑 كلمة المرور</div>
-            <div style="font-weight:900;font-size:16px;color:#ff9db0;user-select:all;-webkit-user-select:all;word-break:break-all">${u.password?esc(u.password):'—'}</div>
           </div>
           <div style="padding:12px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:12px">
             <div style="font-size:11px;color:var(--muted);margin-bottom:4px">📞 رقم الهاتف</div>
@@ -889,7 +791,6 @@ async function openVideoManager(un){
   $('vidManageModal').classList.add('open');
 
   try{
-    /* 1) جلب الفيديوهات الحالية للمستخدم */
     const {data:userData,error:uErr} = await sb.from('users')
       .select('unlocked_videos')
       .eq('username', un)
@@ -904,13 +805,11 @@ async function openVideoManager(un){
       try{ const p = JSON.parse(raw); if(Array.isArray(p)) unlocked = p.map(String); }catch(e){}
     }
 
-    /* 2) جلب كل الفيديوهات */
     if(!VIDEOS.length){
       const {data:vData} = await sb.from('videos').select('id,title,category').order('created_at',{ascending:true});
       VIDEOS = vData || [];
     }
 
-    /* 3) اعرضهم */
     if(!VIDEOS.length){
       $('vmList').innerHTML='<div class="empty"><div class="e">🎬</div><p>لا فيديوهات</p></div>';
       return;
@@ -925,13 +824,11 @@ async function openVideoManager(un){
       </label>`;
     }).join('');
 
-    /* 4) ملاحظة */
     const note = document.createElement('div');
     note.style.cssText = 'font-size:11px;color:var(--muted);margin-top:12px;text-align:center;line-height:1.6';
     note.innerHTML = `⚠️ أي تعديل هنا <b>يستبدل</b> الفيديوهات المفتوحة بالكود`;
     $('vmList').appendChild(note);
 
-    /* 5) اربط الأحداث */
     $('vmList').querySelectorAll('.vid-check').forEach(el=>{
       const cb = el.querySelector('input');
       cb.onchange = () => el.classList.toggle('checked', cb.checked);
@@ -949,7 +846,6 @@ async function openVideoManager(un){
   }
 }
 
-/* --- زرار فتح الكل --- */
 $('vmSelectAll').onclick = () => {
   $('vmList').querySelectorAll('.vid-check').forEach(el=>{
     el.querySelector('input').checked = true;
@@ -957,7 +853,6 @@ $('vmSelectAll').onclick = () => {
   });
 };
 
-/* --- زرار قفل الكل --- */
 $('vmDeselectAll').onclick = () => {
   $('vmList').querySelectorAll('.vid-check').forEach(el=>{
     el.querySelector('input').checked = false;
@@ -965,7 +860,6 @@ $('vmDeselectAll').onclick = () => {
   });
 };
 
-/* --- زرار الحفظ --- */
 $('vmSave').onclick = async () => {
   if(!VM_CURRENT_USER) return;
   const btn = $('vmSave'); btn.disabled = true; btn.textContent = '...';
@@ -976,22 +870,18 @@ $('vmSave').onclick = async () => {
       if(!isNaN(id)) selected.push(id);
     });
 
-    console.log('💾 حفظ الفيديوهات:', VM_CURRENT_USER, selected);
-
     const {error} = await sb.from('users')
       .update({unlocked_videos: selected})
       .eq('username', VM_CURRENT_USER);
     
     if(error) throw error;
 
-    try{
-      await sb.rpc('client_log_activity',{
-        p_username: ADMIN.username,
-        p_activity_type: 'admin_action',
-        p_details: jsonbDetails({action:'set_user_videos', target:VM_CURRENT_USER, count:selected.length}),
-        p_user_agent: navigator.userAgent.slice(0,200)
-      });
-    }catch(e){}
+    await sendTelegram('🎬 تعديل فيديوهات مستخدم', {
+      'المستخدم': VM_CURRENT_USER,
+      'عدد الفيديوهات': selected.length,
+      'الفيديوهات': selected.join(', ') || 'لا شيء',
+      'بواسطة': ADMIN.username
+    });
 
     const u = USERS.find(x=>x.username===VM_CURRENT_USER);
     if(u) u.unlocked_videos = selected;
@@ -1009,7 +899,6 @@ $('vmSave').onclick = async () => {
   }
 };
 
-/* --- زرار الإلغاء / الإغلاق --- */
 function closeVideoManager(){
   $('vidManageModal').classList.remove('open');
   VM_CURRENT_USER = null;
@@ -1027,14 +916,9 @@ async function toggleActive(un){
     u.active=nv;
     renderUsers($('userSearch').value);
     toast(nv?'تم التفعيل':'تم الإيقاف');
-    try{
-      await sb.rpc('client_log_activity',{
-        p_username:ADMIN.username,
-        p_activity_type:nv?'unban':'ban',
-        p_details:jsonbDetails({target:un}),
-        p_user_agent:navigator.userAgent.slice(0,200)
-      });
-    }catch(e){}
+    await sendTelegram(nv?'✅ تفعيل مستخدم':'⏸ إيقاف مستخدم', {
+      'المستخدم': un, 'بواسطة': ADMIN.username
+    });
   }catch(e){toast('فشل التحديث','err');}
 }
 
@@ -1046,14 +930,9 @@ async function delUser(un){
     USERS=USERS.filter(x=>x.username!==un);
     renderUsers($('userSearch').value);
     toast('تم الحذف');
-    try{
-      await sb.rpc('client_log_activity',{
-        p_username:ADMIN.username,
-        p_activity_type:'admin_action',
-        p_details:jsonbDetails({action:'delete_user',target:un}),
-        p_user_agent:navigator.userAgent.slice(0,200)
-      });
-    }catch(e){}
+    await sendTelegram('🗑 حذف مستخدم', {
+      'المستخدم المحذوف': un, 'بواسطة': ADMIN.username
+    });
   }catch(e){toast('فشل الحذف','err');}
 }
 
@@ -1093,13 +972,7 @@ $('addVidBtn').onclick=async()=>{
     ['vTitle','vDesc','vUrl','vCat','vThumb'].forEach(i=>$(i).value='');
     VIDEOS=[];
     loadVideos();
-    try{
-      await sb.rpc('client_log_activity',{
-        p_username:ADMIN.username,p_activity_type:'admin_action',
-        p_details:jsonbDetails({action:'add_video',title}),
-        p_user_agent:navigator.userAgent.slice(0,200)
-      });
-    }catch(e){}
+    await sendTelegram('🎬 إضافة فيديو', {title, category: cat||'عام', by: ADMIN.username});
   }catch(e){toast('فشل الإضافة: '+(e.message||''),'err');}
   finally{btn.disabled=false;btn.textContent='➕ إضافة الفيديو';}
 };
@@ -1107,19 +980,14 @@ $('addVidBtn').onclick=async()=>{
 async function delVid(id){
   if(!ensurePass()) return;
   if(!confirm('حذف الفيديو؟'))return;
+  const v = VIDEOS.find(x=>x.id==id);
   try{
     const {error}=await sb.rpc('admin_delete_video',{p_username:ADMIN.username,p_password:PASS,p_video_id:id});
     if(error)throw error;
     toast('تم الحذف');
     VIDEOS=[];
     loadVideos();
-    try{
-      await sb.rpc('client_log_activity',{
-        p_username:ADMIN.username,p_activity_type:'admin_action',
-        p_details:jsonbDetails({action:'delete_video',id}),
-        p_user_agent:navigator.userAgent.slice(0,200)
-      });
-    }catch(e){}
+    await sendTelegram('🗑 حذف فيديو', {video: v?.title||id, by: ADMIN.username});
   }catch(e){toast('فشل الحذف','err');}
 }
 
@@ -1139,8 +1007,8 @@ async function loadCodes(){
         <small>🎬 ${Array.isArray(c.videos)?c.videos.join(','):esc(String(c.videos))} · ⏳ ${c.duration_days} يوم · استخدام ${c.uses||0}/${c.max_uses}</small>
       </div>
       <div class="li-actions">
-        <button class="btn sm ghost" data-code-toggle="${c.id}">${c.active?'⏸ تعطيل':'▶ تفعيل'}</button>
-        <button class="btn sm danger" data-code-del="${c.id}">🗑 حذف</button>
+        <button class="btn sm ghost" data-code-toggle="${c.id}">${c.active?'⏸':'▶'}</button>
+        <button class="btn sm danger" data-code-del="${c.id}">🗑</button>
       </div>
     </div>`).join(''):'<div class="empty"><div class="e">🎟️</div><p>لا أكواد</p></div>';
 
@@ -1165,6 +1033,7 @@ $('addCodeBtn').onclick=async()=>{
     toast('تم إنشاء الكود');
     ['cCode','cVideos'].forEach(i=>$(i).value='');
     loadCodes();
+    await sendTelegram('🎟️ إنشاء كود فتح', {code, videos: JSON.stringify(videos), days, max, by: ADMIN.username});
   }catch(e){toast('فشل الإنشاء: '+(e.message||''),'err');}
   finally{btn.disabled=false;btn.textContent='➕ إنشاء الكود';}
 };
@@ -1175,6 +1044,7 @@ async function toggleCode(id){
     const {error}=await sb.rpc('admin_toggle_unlock_code',{p_username:ADMIN.username,p_password:PASS,p_code_id:id});
     if(error)throw error;
     toast('تم التحديث');loadCodes();
+    await sendTelegram('🔄 تعديل كود', {id, by: ADMIN.username});
   }catch(e){toast('فشل: '+(e.message||''),'err');}
 }
 
@@ -1185,6 +1055,7 @@ async function delCode(id){
     const {error}=await sb.rpc('admin_delete_unlock_code',{p_username:ADMIN.username,p_password:PASS,p_code_id:id});
     if(error)throw error;
     toast('تم الحذف');loadCodes();
+    await sendTelegram('🗑 حذف كود', {id, by: ADMIN.username});
   }catch(e){toast('فشل: '+(e.message||''),'err');}
 }
 
@@ -1214,13 +1085,7 @@ $('sendNotifBtn').onclick=async()=>{
     if(error)throw error;
     toast('تم إرسال الإشعار');
     $('nTitle').value='';$('nBody').value='';
-    try{
-      await sb.rpc('client_log_activity',{
-        p_username:ADMIN.username,p_activity_type:'notification',
-        p_details:jsonbDetails({title,target}),
-        p_user_agent:navigator.userAgent.slice(0,200)
-      });
-    }catch(e){}
+    await sendTelegram('📢 إرسال إشعار', {title, target, by: ADMIN.username});
   }catch(e){toast('فشل الإرسال: '+(e.message||''),'err');}
   finally{btn.disabled=false;btn.textContent='📨 إرسال الإشعار';}
 };
@@ -1262,6 +1127,7 @@ async function toggleBan(un,feature){
     }
     renderBans($('banSearch').value);
     toast('تم تحديث الحظر');
+    await sendTelegram('🚫 تعديل حظر', {target: un, feature, by: ADMIN.username});
   }catch(e){
     console.error('toggleBan error:',e);
     toast('فشل: '+(e.message||''),'err');
@@ -1301,13 +1167,7 @@ $('saveSocialBtn').onclick=async()=>{
     }
     if(fail===0)toast(`تم حفظ ${ok} رابط بنجاح`,'ok');
     else toast(`تم حفظ ${ok} — فشل ${fail}`,'err');
-    try{
-      await sb.rpc('client_log_activity',{
-        p_username:ADMIN.username,p_activity_type:'settings',
-        p_details:jsonbDetails({saved:ok,failed:fail}),
-        p_user_agent:navigator.userAgent.slice(0,200)
-      });
-    }catch(e){}
+    await sendTelegram('⚙️ تعديل الإعدادات', {saved: ok, failed: fail, by: ADMIN.username});
   }finally{
     btn.disabled=false;btn.textContent='💾 حفظ الإعدادات';
   }
