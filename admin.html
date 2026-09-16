@@ -351,17 +351,31 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
   </div>
 
   <div class="panel" id="p-notifs">
-    <div class="sec-title">📢 الإشعارات</div>
-    <div class="card">
-      <h3>✉️ إرسال إشعار جديد</h3>
-      <div class="frm">
-        <div><label>عنوان الإشعار</label><input id="nTitle" placeholder="مثال: تحديث جديد!" /></div>
-        <div><label>نص الإشعار</label><textarea id="nBody" placeholder="اكتب تفاصيل الإشعار..."></textarea></div>
-        <div><label>المستهدف</label><input id="nTarget" placeholder="all أو اسم مستخدم" value="all" /></div>
-        <button class="btn" id="sendNotifBtn">📨 إرسال الإشعار</button>
-      </div>
+  <div class="sec-title">📢 الإشعارات</div>
+  
+  <!-- إرسال إشعار جديد -->
+  <div class="card">
+    <h3>✉️ إرسال إشعار جديد</h3>
+    <div class="frm">
+      <div><label>عنوان الإشعار</label><input id="nTitle" placeholder="مثال: تحديث جديد!" /></div>
+      <div><label>نص الإشعار</label><textarea id="nBody" placeholder="اكتب تفاصيل الإشعار..."></textarea></div>
+      <div><label>المستهدف</label><input id="nTarget" placeholder="all أو اسم مستخدم" value="all" /></div>
+      <button class="btn" id="sendNotifBtn">📨 إرسال الإشعار</button>
     </div>
   </div>
+
+  <!-- الإشعارات السابقة -->
+  <div class="card">
+    <h3>
+      📋 الإشعارات السابقة
+      <button class="btn sm danger" id="delAllNotifsBtn" style="margin-right:auto">🗑 مسح الكل</button>
+    </h3>
+    <div id="adminNotifsList">
+      <div class="skel"></div>
+      <div class="skel"></div>
+    </div>
+  </div>
+</div>
 
   <div class="panel" id="p-bans">
     <div class="sec-title">🚫 نظام الحظر</div>
@@ -604,6 +618,7 @@ document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{
   $('p-'+b.dataset.t).classList.add('active');
   if(b.dataset.t==='codes') loadCodes();
   if(b.dataset.t==='settings') loadSettings();
+  if(b.dataset.t==='notifs') loadAdminNotifications();
   if(b.dataset.t==='dash') startLiveUpdates();
   else stopLiveUpdates();
 });
@@ -1268,9 +1283,96 @@ $('sendNotifBtn').onclick=async()=>{
         p_user_agent:navigator.userAgent.slice(0,200)
       });
     }catch(e){}
+    /* ⭐ أعد تحميل القايمة */
+    loadAdminNotifications();
   }catch(e){toast('فشل الإرسال: '+(e.message||''),'err');}
   finally{btn.disabled=false;btn.textContent='📨 إرسال الإشعار';}
 };
+
+/* ============ ADMIN NOTIFICATIONS LIST ============ */
+async function loadAdminNotifications(){
+  if(!ensurePass()) return;
+  const container = $('adminNotifsList');
+  if(!container) return;
+  container.innerHTML = '<div class="skel"></div><div class="skel"></div>';
+  try{
+    const {data,error}=await sb.rpc('admin_get_notifications',{
+      p_username: ADMIN.username,
+      p_password: PASS,
+      p_limit: 100
+    });
+    if(error) throw error;
+    const rows = Array.isArray(data) ? data : [];
+
+    if(!rows.length){
+      container.innerHTML = '<div class="empty"><div class="e">📭</div><p>لا توجد إشعارات سابقة</p></div>';
+      return;
+    }
+
+    container.innerHTML = rows.map(n => `
+      <div class="list-item" style="align-items:flex-start">
+        <div class="li-main" style="width:100%">
+          <b>📌 ${esc(n.title)}</b>
+          <small style="margin-top:6px;line-height:1.7">${esc(n.body)}</small>
+          <small style="color:var(--gold);margin-top:6px">
+            🎯 ${esc(n.target||'all')} · 🕐 ${fmtDate(n.created_at)}
+            ${n.created_by ? ' · 👤 ' + esc(n.created_by) : ''}
+          </small>
+        </div>
+        <div class="li-actions" style="margin-top:6px">
+          <button class="btn sm danger" data-notif-del="${n.id}">🗑 مسح</button>
+        </div>
+      </div>
+    `).join('');
+
+    container.querySelectorAll('[data-notif-del]').forEach(b=>{
+      b.onclick = () => deleteNotification(+b.dataset.notifDel);
+    });
+
+  }catch(e){
+    console.error('Load admin notifications error:',e);
+    container.innerHTML = '<div class="empty"><div class="e">⚠️</div><p>تعذّر التحميل</p></div>';
+  }
+}
+
+async function deleteNotification(id){
+  if(!confirm('🗑 مسح هذا الإشعار؟')) return;
+  try{
+    const {error}=await sb.rpc('admin_delete_notification',{
+      p_username: ADMIN.username,
+      p_password: PASS,
+      p_notification_id: id
+    });
+    if(error) throw error;
+    toast('✅ تم مسح الإشعار');
+    loadAdminNotifications();
+  }catch(e){
+    console.error('Delete notification error:',e);
+    toast('فشل المسح: '+(e.message||''),'err');
+  }
+}
+
+$('delAllNotifsBtn').onclick = async () => {
+  if(!ensurePass()) return;
+  if(!confirm('⚠️ مسح كل الإشعارات؟\n\nلا يمكن التراجع!')) return;
+  const btn = $('delAllNotifsBtn');
+  btn.disabled = true; btn.textContent = '...';
+  try{
+    const {error}=await sb.rpc('admin_delete_all_notifications',{
+      p_username: ADMIN.username,
+      p_password: PASS
+    });
+    if(error) throw error;
+    toast('✅ تم مسح كل الإشعارات');
+    loadAdminNotifications();
+  }catch(e){
+    console.error('Delete all error:',e);
+    toast('فشل: '+(e.message||''),'err');
+  }finally{
+    btn.disabled = false; btn.textContent = '🗑 مسح الكل';
+  }
+};
+
 
 /* ============ BANS ============ */
 function renderBans(q=''){
