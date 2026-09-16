@@ -1326,7 +1326,7 @@ async function loadAdminNotifications(){
     `).join('');
 
     container.querySelectorAll('[data-notif-del]').forEach(b=>{
-      b.onclick = () => deleteNotification(+b.dataset.notifDel);
+      b.onclick = () => deleteNotification(b.dataset.notifDel);
     });
 
   }catch(e){
