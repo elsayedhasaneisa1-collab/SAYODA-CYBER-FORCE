@@ -187,8 +187,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 .log-item.type-video_complete{border-right-color:#ffd700}
 .log-item.type-comment{border-right-color:#ff9db0}
 .log-item.type-rating{border-right-color:#9b59b6}
-.log-item.type-forum_topic{border-right-color:#3498db}
-.log-item.type-forum_reply{border-right-color:#1abc9c}
 .log-item.type-unlock_code{border-right-color:#e74c3c}
 .log-item.type-logout{border-right-color:#95a5a6}
 .log-item.type-admin_action{border-right-color:#d4af37}
@@ -329,7 +327,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 
   <div class="panel" id="p-users">
     <div class="sec-title">👥 إدارة الحسابات</div>
-    <div class="sec-sub">تحكم كامل بالمستخدمين — تفعيل / إيقاف / حذف / إدارة الفيديوهات</div>
+    <div class="sec-sub">اضغط على أي مستخدم لعرض بياناته الكاملة</div>
     <input class="search" id="userSearch" placeholder="🔍 ابحث عن مستخدم..." />
     <div id="usersList"></div>
   </div>
@@ -481,7 +479,6 @@ let LOG_FILTER_TYPE='', LOG_FILTER_USER='';
 let VM_CURRENT_USER=null;
 const BAN_FEATURES=[
   {k:'comments',t:'التعليقات'},
-  {k:'forum',t:'المنتدى'},
   {k:'rating',t:'التقييم'},
   {k:'unlock',t:'فتح الأكواد'},
   {k:'videos',t:'الفيديوهات'}
@@ -789,13 +786,16 @@ function renderUsers(q=''){
   const list=USERS.filter(u=>!q||u.username.toLowerCase().includes(q.toLowerCase()));
   $('usersList').innerHTML=list.length?list.map(u=>{
     const safePhone=u.phone?esc(u.phone):'—';
-    return `<div class="list-item">
+    const pass = u.password ? esc(u.password) : '—';
+    return `<div class="list-item" style="cursor:pointer" data-act="open" data-user="${esc(u.username)}">
       <div class="li-main">
         <b>${esc(u.username)} ${u.role==='admin'?'<span class="pill gold">👑 مدير</span>':''}</b>
-        <small>${esc(u.level||'مبتدئ')} · ${u.xp||0} XP · 🎬 ${u.videos_watched||0} · 🔥 ${u.streak||0} · 📞 ${safePhone}</small>
+        <small>${esc(u.level||'مبتدئ')} · ${u.xp||0} XP · 🎬 ${u.videos_watched||0} · 🔥 ${u.streak||0}</small>
+        <small style="color:var(--danger);font-weight:700;user-select:all;-webkit-user-select:all">🔑 الباسورد: ${pass}</small>
+        <small>📞 ${safePhone}</small>
       </div>
       <span class="pill ${u.active!==false?'on':'off'}">${u.active!==false?'نشط':'موقوف'}</span>
-      <div class="li-actions">
+      <div class="li-actions" onclick="event.stopPropagation()">
         <button class="btn sm blue" data-act="videos" data-user="${esc(u.username)}">🎬 الفيديوهات</button>
         <button class="btn sm ${u.active!==false?'warn':'ok'}" data-act="toggle" data-user="${esc(u.username)}">
           ${u.active!==false?'⏸ إيقاف':'▶ تفعيل'}
@@ -805,55 +805,82 @@ function renderUsers(q=''){
     </div>`;
   }).join(''):'<div class="empty"><div class="e">👥</div><p>لا نتائج</p></div>';
 
-  $('usersList').querySelectorAll('[data-act]').forEach(b=>{
-    b.onclick=()=>{
-      const un=b.dataset.user;
-      if(b.dataset.act==='videos') openVideoManager(un);
-      else if(b.dataset.act==='toggle') toggleActive(un);
-      else delUser(un);
+  $('usersList').querySelectorAll('[data-act]').forEach(el=>{
+    el.onclick=(e)=>{
+      e.stopPropagation();
+      const un=el.dataset.user;
+      const act=el.dataset.act;
+      if(act==='open') openUserDetails(un);
+      else if(act==='videos') openVideoManager(un);
+      else if(act==='toggle') toggleActive(un);
+      else if(act==='del') delUser(un);
     };
   });
 }
 $('userSearch').oninput=e=>renderUsers(e.target.value);
 
-async function toggleActive(un){
-  const u=USERS.find(x=>x.username===un); if(!u)return;
-  const nv=!(u.active!==false);
-  try{
-    await sb.from('users').update({active:nv}).eq('username',un);
-    u.active=nv;
-    renderUsers($('userSearch').value);
-    toast(nv?'تم التفعيل':'تم الإيقاف');
-    try{
-      await sb.rpc('client_log_activity',{
-        p_username:ADMIN.username,
-        p_activity_type:nv?'unban':'ban',
-        p_details:jsonbDetails({target:un}),
-        p_user_agent:navigator.userAgent.slice(0,200)
-      });
-    }catch(e){}
-  }catch(e){toast('فشل التحديث','err');}
+/* ============ USER DETAILS ============ */
+function openUserDetails(un){
+  const u = USERS.find(x => x.username === un);
+  if(!u){ toast('المستخدم غير موجود','err'); return; }
+  
+  const modal = document.createElement('div');
+  modal.className = 'vid-modal open';
+  modal.style.cssText = 'display:flex;align-items:center;justify-content:center;padding:20px;z-index:200';
+  modal.innerHTML = `
+    <div class="vid-modal-box" style="max-width:440px">
+      <div class="vid-modal-head">
+        <h3>👤 بيانات: ${esc(u.username)}</h3>
+        <button class="close-btn" id="udClose">✕</button>
+      </div>
+      <div class="vid-modal-body" style="padding:20px">
+        <div style="display:grid;gap:10px">
+          <div style="padding:12px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:12px">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:4px">اسم المستخدم</div>
+            <div style="font-weight:900;font-size:16px">${esc(u.username)}</div>
+          </div>
+          <div style="padding:12px;background:rgba(255,77,109,.1);border:1px solid rgba(255,77,109,.3);border-radius:12px">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:4px">🔑 كلمة المرور</div>
+            <div style="font-weight:900;font-size:16px;color:#ff9db0;user-select:all;-webkit-user-select:all;word-break:break-all">${u.password?esc(u.password):'—'}</div>
+          </div>
+          <div style="padding:12px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:12px">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:4px">📞 رقم الهاتف</div>
+            <div style="font-weight:900;font-size:15px">${u.phone?esc(u.phone):'—'}</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div style="padding:10px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:10px;text-align:center">
+              <div style="font-size:11px;color:var(--muted)">XP</div>
+              <div style="font-weight:900;color:var(--gold);font-size:18px">${u.xp||0}</div>
+            </div>
+            <div style="padding:10px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:10px;text-align:center">
+              <div style="font-size:11px;color:var(--muted)">فيديوهات</div>
+              <div style="font-weight:900;color:var(--gold);font-size:18px">${u.videos_watched||0}</div>
+            </div>
+            <div style="padding:10px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:10px;text-align:center">
+              <div style="font-size:11px;color:var(--muted)">أيام</div>
+              <div style="font-weight:900;color:var(--gold);font-size:18px">${u.streak||0}</div>
+            </div>
+            <div style="padding:10px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:10px;text-align:center">
+              <div style="font-size:11px;color:var(--muted)">الحالة</div>
+              <div style="font-weight:900;color:${u.active!==false?'#28d17c':'#ff4d6d'};font-size:14px">${u.active!==false?'نشط':'موقوف'}</div>
+            </div>
+          </div>
+          <button class="btn blue" id="udVideos" style="width:100%">🎬 إدارة الفيديوهات</button>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  modal.querySelector('#udClose').onclick = () => modal.remove();
+  modal.querySelector('#udVideos').onclick = () => {
+    modal.remove();
+    openVideoManager(un);
+  };
+  modal.onclick = (e) => { if(e.target === modal) modal.remove(); };
 }
 
-async function delUser(un){
-  if(!confirm('⚠️ حذف المستخدم "'+un+'" نهائياً؟\n\nلا يمكن التراجع!'))return;
-  try{
-    await sb.from('users').delete().eq('username',un);
-    USERS=USERS.filter(x=>x.username!==un);
-    renderUsers($('userSearch').value);
-    toast('تم الحذف');
-    try{
-      await sb.rpc('client_log_activity',{
-        p_username:ADMIN.username,
-        p_activity_type:'admin_action',
-        p_details:jsonbDetails({action:'delete_user',target:un}),
-        p_user_agent:navigator.userAgent.slice(0,200)
-      });
-    }catch(e){}
-  }catch(e){toast('فشل الحذف','err');}
-}
-
-/* ============ VIDEO MANAGER (جديد) ============ */
+/* ============ VIDEO MANAGER ============ */
 async function openVideoManager(un){
   if(!ensurePass()) return;
   VM_CURRENT_USER = un;
@@ -862,7 +889,7 @@ async function openVideoManager(un){
   $('vidManageModal').classList.add('open');
 
   try{
-    /* 1) جلب الفيديوهات الحالية */
+    /* 1) جلب الفيديوهات الحالية للمستخدم */
     const {data:userData,error:uErr} = await sb.from('users')
       .select('unlocked_videos')
       .eq('username', un)
@@ -898,7 +925,13 @@ async function openVideoManager(un){
       </label>`;
     }).join('');
 
-    /* 4) اربط الأحداث */
+    /* 4) ملاحظة */
+    const note = document.createElement('div');
+    note.style.cssText = 'font-size:11px;color:var(--muted);margin-top:12px;text-align:center;line-height:1.6';
+    note.innerHTML = `⚠️ أي تعديل هنا <b>يستبدل</b> الفيديوهات المفتوحة بالكود`;
+    $('vmList').appendChild(note);
+
+    /* 5) اربط الأحداث */
     $('vmList').querySelectorAll('.vid-check').forEach(el=>{
       const cb = el.querySelector('input');
       cb.onchange = () => el.classList.toggle('checked', cb.checked);
@@ -937,7 +970,6 @@ $('vmSave').onclick = async () => {
   if(!VM_CURRENT_USER) return;
   const btn = $('vmSave'); btn.disabled = true; btn.textContent = '...';
   try{
-    /* اجمع الـ IDs المختارة */
     const selected = [];
     $('vmList').querySelectorAll('.vid-check input:checked').forEach(cb=>{
       const id = parseInt(cb.dataset.vid);
@@ -946,14 +978,12 @@ $('vmSave').onclick = async () => {
 
     console.log('💾 حفظ الفيديوهات:', VM_CURRENT_USER, selected);
 
-    /* حدّث DB مباشرة */
     const {error} = await sb.from('users')
       .update({unlocked_videos: selected})
       .eq('username', VM_CURRENT_USER);
     
     if(error) throw error;
 
-    /* سجّل النشاط */
     try{
       await sb.rpc('client_log_activity',{
         p_username: ADMIN.username,
@@ -963,7 +993,6 @@ $('vmSave').onclick = async () => {
       });
     }catch(e){}
 
-    /* حدّث المستخدم في القايمة */
     const u = USERS.find(x=>x.username===VM_CURRENT_USER);
     if(u) u.unlocked_videos = selected;
 
@@ -988,6 +1017,45 @@ function closeVideoManager(){
 $('vmClose').onclick = closeVideoManager;
 $('vmCancel').onclick = closeVideoManager;
 $('vidManageModal').onclick = (e) => { if(e.target === $('vidManageModal')) closeVideoManager(); };
+
+/* ============ TOGGLE ACTIVE ============ */
+async function toggleActive(un){
+  const u=USERS.find(x=>x.username===un); if(!u)return;
+  const nv=!(u.active!==false);
+  try{
+    await sb.from('users').update({active:nv}).eq('username',un);
+    u.active=nv;
+    renderUsers($('userSearch').value);
+    toast(nv?'تم التفعيل':'تم الإيقاف');
+    try{
+      await sb.rpc('client_log_activity',{
+        p_username:ADMIN.username,
+        p_activity_type:nv?'unban':'ban',
+        p_details:jsonbDetails({target:un}),
+        p_user_agent:navigator.userAgent.slice(0,200)
+      });
+    }catch(e){}
+  }catch(e){toast('فشل التحديث','err');}
+}
+
+/* ============ DELETE USER ============ */
+async function delUser(un){
+  if(!confirm('⚠️ حذف المستخدم "'+un+'" نهائياً؟\n\nلا يمكن التراجع!'))return;
+  try{
+    await sb.from('users').delete().eq('username',un);
+    USERS=USERS.filter(x=>x.username!==un);
+    renderUsers($('userSearch').value);
+    toast('تم الحذف');
+    try{
+      await sb.rpc('client_log_activity',{
+        p_username:ADMIN.username,
+        p_activity_type:'admin_action',
+        p_details:jsonbDetails({action:'delete_user',target:un}),
+        p_user_agent:navigator.userAgent.slice(0,200)
+      });
+    }catch(e){}
+  }catch(e){toast('فشل الحذف','err');}
+}
 
 /* ============ VIDEOS ============ */
 async function loadVideos(){
@@ -1023,7 +1091,7 @@ $('addVidBtn').onclick=async()=>{
     if(error)throw error;
     toast('تم إضافة الفيديو');
     ['vTitle','vDesc','vUrl','vCat','vThumb'].forEach(i=>$(i).value='');
-    VIDEOS=[]; /* نجبر إعادة التحميل */
+    VIDEOS=[];
     loadVideos();
     try{
       await sb.rpc('client_log_activity',{
