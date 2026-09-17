@@ -210,7 +210,6 @@ $('toggleEye2').onclick = () => {
   p.type = p.type === 'password' ? 'text' : 'password';
 };
 
-/* مؤشر قوة الباسورد */
 $('password').addEventListener('input', e => {
   const v = e.target.value;
   let score = 0;
@@ -227,12 +226,10 @@ $('password').addEventListener('input', e => {
   else bar.style.background = '#28d17c';
 });
 
-/* كود الدعوة بأحرف كبيرة + إزالة مسافات */
 $('refCode').addEventListener('input', e => {
   e.target.value = e.target.value.toUpperCase().replace(/\s/g,'');
 });
 
-/* الهاتف: أرقام فقط */
 $('phone').addEventListener('input', e => {
   e.target.value = e.target.value.replace(/[^0-9]/g,'');
 });
@@ -249,7 +246,6 @@ document.querySelectorAll('.btn, .btn-ghost').forEach(b => b.addEventListener('c
   setTimeout(()=>c.remove(), 600);
 }));
 
-/* ============ SUBMIT ============ */
 $('registerForm').addEventListener('submit', async e => {
   e.preventDefault();
 
@@ -283,7 +279,9 @@ $('registerForm').addEventListener('submit', async e => {
   btn.innerHTML = '<span class="spinner"></span>';
 
   try{
-    /* --- إنشاء الحساب --- */
+    /* ============================================
+       الخطوة 1: إنشاء الحساب
+       ============================================ */
     const { data, error } = await sb.rpc('secure_register', {
       p_username: username,
       p_password: password
@@ -307,29 +305,51 @@ $('registerForm').addEventListener('submit', async e => {
       throw new Error('failed');
     }
 
-    /* --- تحديث رقم الهاتف --- */
+    console.log('✅ الحساب اتعمل:', username);
+
+    /* ============================================
+       الخطوة 2: تحديث رقم الهاتف
+       ============================================ */
     try{
-      await sb.from('users').update({ phone: phone }).eq('username', username);
+      const { error: phoneErr } = await sb.from('users')
+        .update({ phone: phone })
+        .eq('username', username);
+      if(phoneErr) console.warn('⚠️ Phone update error:', phoneErr);
+      else console.log('✅ الهاتف اتسجل');
     }catch(err){ console.warn('Phone update failed:', err); }
 
-    /* --- كود الدعوة (اختياري) --- */
+    /* ============================================
+       الخطوة 3: كود الدعوة (اختياري)
+       ============================================ */
     let referralBonus = 0;
     if(refCode){
       try{
+        console.log('🎁 Applying referral code:', refCode);
+        
         const { data: rData, error: rErr } = await sb.rpc('apply_referral_code', {
           p_new_user: username,
           p_code: refCode
         });
-        if(!rErr){
-          const rRes = Array.isArray(rData)?rData[0]:rData;
-          if(rRes && rRes.ok){
-            referralBonus = 50;
-          }
+        
+        if(rErr) throw rErr;
+        
+        const rRes = Array.isArray(rData) ? rData[0] : rData;
+        console.log('🎁 Referral result:', rRes);
+        
+        if(rRes && rRes.ok){
+          referralBonus = 50;
+          console.log('✅ كود الدعوة اتطبق. referrer:', rRes.referrer);
+        } else {
+          console.warn('⚠️ كود الدعوة فشل:', rRes?.error);
         }
-      }catch(err){ console.warn('Referral failed:', err); }
+      }catch(err){
+        console.error('❌ Referral error:', err);
+      }
     }
 
-    /* --- تسجيل النشاط --- */
+    /* ============================================
+       الخطوة 4: تسجيل النشاط
+       ============================================ */
     try{
       await sb.rpc('client_log_activity', {
         p_username: username,
@@ -337,12 +357,16 @@ $('registerForm').addEventListener('submit', async e => {
         p_details: JSON.stringify({
           phone: phone,
           refCode: refCode || null,
-          hasReferral: !!refCode
+          hasReferral: !!refCode,
+          referralBonus: referralBonus
         }),
         p_user_agent: navigator.userAgent.slice(0,200)
       });
-    }catch(err){}
+    }catch(err){ console.warn('Activity log error:', err); }
 
+    /* ============================================
+       الخطوة 5: رسالة النجاح
+       ============================================ */
     showMsg(
       referralBonus > 0
         ? '✅ تم إنشاء حسابك! كود الدعوة اتطبّق (+50 XP) — جاري تسجيل الدخول...'
@@ -350,7 +374,9 @@ $('registerForm').addEventListener('submit', async e => {
       'ok'
     );
 
-    /* --- تسجيل دخول تلقائي --- */
+    /* ============================================
+       الخطوة 6: تسجيل دخول تلقائي
+       ============================================ */
     const { data: loginData, error: loginErr } = await sb.rpc('secure_login', {
       p_username: username,
       p_password: password
@@ -375,6 +401,7 @@ $('registerForm').addEventListener('submit', async e => {
 
   }catch(err){
     if(err.message !== 'failed'){
+      console.error('❌ Register error:', err);
       showMsg('⚠️ خطأ في الاتصال بالخادم', 'err');
     }
   }finally{
