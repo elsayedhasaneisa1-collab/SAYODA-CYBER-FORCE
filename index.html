@@ -7,7 +7,7 @@
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="X-Frame-Options" content="DENY" />
 <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
-<title>SAYODA | CYBER FORCE</title>
+<title>CYBER FORCE</title>
 <link rel="manifest" href="./manifest.json" />
 <link rel="icon" href="./logo.png" />
 <link rel="apple-touch-icon" href="./logo.png" />
@@ -141,7 +141,6 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px;width:100%;box-sizing
 .lb-name small{display:block;color:var(--muted);font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lb-xp{font-weight:900;color:var(--blue);font-size:14px;flex-shrink:0}
 
-/* ============ INSTRUCTORS CARDS ============ */
 .ins-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;width:100%;box-sizing:border-box}
 @media(max-width:400px){.ins-grid{grid-template-columns:1fr}}
 .ins-card{background:linear-gradient(160deg,rgba(255,213,74,.08),rgba(25,170,255,.04));
@@ -170,7 +169,6 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px;width:100%;box-sizing
 .ins-badge-active{position:absolute;top:12px;left:12px;padding:3px 9px;border-radius:8px;
   background:rgba(40,209,124,.2);color:#28d17c;font-size:10px;font-weight:800;border:1px solid rgba(40,209,124,.4)}
 
-/* ============ INSTRUCTOR VIDEOS PAGE ============ */
 .back-bar{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:12px 16px;
   background:var(--card);border:1px solid var(--border);border-radius:14px;box-sizing:border-box}
 .back-btn{width:40px;height:40px;border-radius:12px;border:1px solid var(--border);background:var(--blue-soft);
@@ -209,7 +207,6 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px;width:100%;box-sizing
   font-weight:700;font-size:13px;transition:.2s;flex-shrink:0;cursor:pointer}
 .chip.active{background:linear-gradient(135deg,var(--blue),var(--blue-2));color:#021226;border-color:transparent}
 
-/* ============ MODAL ============ */
 .modal{position:fixed;inset:0;z-index:100;background:rgba(2,8,18,.85);backdrop-filter:blur(6px);
   display:none;align-items:flex-start;justify-content:center;padding:12px;overflow-y:auto}
 .modal.open{display:flex;animation:fade .25s}
@@ -219,7 +216,6 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px;width:100%;box-sizing
 .player-box iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
 .player-shield{position:absolute;inset:0;z-index:3;background:transparent}
 
-/* ============ WATERMARK ============ */
 .watermark{position:absolute;z-index:5;pointer-events:none;
   font-family:'Tajawal',sans-serif;font-weight:900;
   color:rgba(255,255,255,.22);text-shadow:0 0 8px rgba(0,0,0,.5);
@@ -356,7 +352,7 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
     <img src="./logo.png" alt="logo" onerror="this.style.display='none'" />
-    <div class="hd-title">SAYODA <span>FORCE</span><small>CYBER LEARNING</small></div>
+    <div class="hd-title">CYBER <span>FORCE</span><small>CYBER LEARNING</small></div>
   </div>
   <div class="hd-right">
     <div class="mini-xp"><span class="lvl" id="miniLvl">🌱</span><span id="miniXp">0 XP</span></div>
@@ -385,7 +381,7 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
 </aside>
 
 <main>
-  <!-- ============ PROFILE ============ -->
+  <!-- PROFILE -->
   <section class="page active" id="page-profile">
     <div class="prof-hero">
       <div class="prof-av" id="pAv">?</div>
@@ -421,14 +417,14 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
     </div>
   </section>
 
-  <!-- ============ INSTRUCTORS ============ -->
+  <!-- INSTRUCTORS -->
   <section class="page" id="page-instructors">
     <div class="sec-title">👨‍🏫 المدربين</div>
     <div class="sec-sub">اختر مدرب لعرض فيديوهاته والتواصل معاه</div>
     <div class="ins-grid" id="insGrid"></div>
   </section>
 
-  <!-- ============ INSTRUCTOR VIDEOS ============ -->
+  <!-- INSTRUCTOR VIDEOS -->
   <section class="page" id="page-instructor-videos">
     <div class="back-bar">
       <button class="back-btn" id="backToInstructors">←</button>
@@ -449,20 +445,20 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
     <div class="vid-grid" id="ivGrid"></div>
   </section>
 
-  <!-- ============ LEADERBOARD ============ -->
+  <!-- LEADERBOARD -->
   <section class="page" id="page-leaderboard">
     <div class="sec-title">🏆 المتصدرين</div>
     <div class="sec-sub">أفضل 20 محارب سيبراني في المنصة</div>
     <div id="lbList"></div>
   </section>
 
-  <!-- ============ ABOUT ============ -->
+  <!-- ABOUT -->
   <section class="page" id="page-about">
     <div class="sec-title">ℹ️ عن المنصة</div>
-    <div class="sec-sub">تعرّف على SAYODA CYBER FORCE</div>
+    <div class="sec-sub">تعرّف على CYBER FORCE</div>
     <div class="info-card">
       <h3>🛡️ من نحن</h3>
-      <p>منصة <b>SAYODA CYBER FORCE</b> هي منصة تعليمية احترافية متخصصة في مجال الأمن السيبراني، تهدف إلى تأهيل جيل جديد من خبراء الأمن الرقمي عبر محتوى عربي عالي الجودة ونظام تعليمي تفاعلي محفّز.</p>
+      <p>منصة <b>CYBER FORCE</b> هي منصة تعليمية احترافية متخصصة في مجال الأمن السيبراني، تهدف إلى تأهيل جيل جديد من خبراء الأمن الرقمي عبر محتوى عربي عالي الجودة ونظام تعليمي تفاعلي محفّز.</p>
     </div>
     <div class="info-card">
       <h3>🎯 رؤيتنا</h3>
@@ -474,7 +470,7 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
     </div>
   </section>
 
-  <!-- ============ SUPPORT ============ -->
+  <!-- SUPPORT -->
   <section class="page" id="page-support">
     <div class="sec-title">💬 الدعم الفني</div>
     <div class="sec-sub">نحن هنا لمساعدتك في أي وقت</div>
@@ -484,20 +480,20 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
 
 <footer class="site-footer">
   <div class="social-row" id="socialFooter"></div>
-  <div>© 2026 SAYODA <b style="color:var(--blue)">CYBER FORCE</b> — جميع الحقوق محفوظة</div>
+  <div>© 2026 CYBER <b style="color:var(--blue)">FORCE</b> — جميع الحقوق محفوظة</div>
 </footer>
 
-<!-- ============ VIDEO MODAL ============ -->
+<!-- VIDEO MODAL -->
 <div class="modal" id="vidModal">
   <div class="modal-inner">
     <div class="player-box">
       <button class="modal-close" id="closeVid">✕</button>
       
-      <!-- WATERMARKS (طبقات الحماية) -->
+      <!-- WATERMARKS -->
       <div class="watermark wm-tl" id="wmTL">—</div>
-      <div class="watermark wm-tr" id="wmTR">SAYODA CYBER FORCE</div>
+      <div class="watermark wm-tr" id="wmTR">CYBER FORCE</div>
       <div class="watermark wm-bl" id="wmBL">—</div>
-      <div class="watermark wm-center" id="wmCenter">SAYODA</div>
+      <div class="watermark wm-center" id="wmCenter">CYBER FORCE</div>
       
       <div id="ytPlayer"></div>
       <div class="player-shield"></div>
@@ -518,6 +514,7 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
           <div class="yt-volume" id="ytVolume">
             <div class="yt-volume-fill" id="ytVolumeFill"></div>
           </div>
+          <button class="yt-btn" id="ytFull" title="تكبير الشاشة">⛶</button>
         </div>
       </div>
     </div>
@@ -550,7 +547,7 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
 
 <script>
 /* ============================================
-   SAYODA CYBER FORCE — index.html
+   CYBER FORCE — index.html
    ============================================ */
 const SUPABASE_URL="https://brawrhpvtnzvvrzkguic.supabase.co";
 const SUPABASE_KEY="sb_publishable_Q8fBS3nVZqgvfd6diaul8A_cMvHUFtN";
@@ -560,7 +557,9 @@ const clean=s=>String(s==null?'':s).replace(/[<>]/g,'').trim();
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeInt=(n,def=0)=>{const v=parseInt(n,10);return Number.isFinite(v)?v:def;};
 
-/* ============ الحمايات ============ */
+const UNLOCK_THRESHOLD = 50;
+
+/* الحمايات */
 document.addEventListener('contextmenu',e=>e.preventDefault());
 document.addEventListener('dragstart',e=>e.preventDefault());
 document.addEventListener('selectstart',e=>{if(!e.target.closest('input,textarea,select'))e.preventDefault();});
@@ -574,7 +573,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='PrintScreen'){e.preventDefault();try{navigator.clipboard.writeText('');}catch(err){}}
 });
 
-/* ============ STATE ============ */
+/* STATE */
 let USER=null;
 let INSTRUCTORS=[];
 let CURRENT_INSTRUCTOR=null;
@@ -595,8 +594,6 @@ let IS_ADMIN=false;
 let IS_INSTRUCTOR=false;
 let USER_PHONE='';
 
-const UNLOCK_THRESHOLD = 50; // نسبة الفتح للفيديو التالي
-
 const LEVELS=[
   {min:0,name:'مبتدئ',emoji:'🌱'},
   {min:100,name:'متعلم',emoji:'📘'},
@@ -613,16 +610,15 @@ const BADGES=[
   {id:'streak7',e:'⚡',t:'أسبوع كامل',ck:u=>(u.streak||0)>=7},
   {id:'xp100',e:'💯',t:'100 XP',ck:u=>(u.xp||0)>=100},
   {id:'xp500',e:'💎',t:'500 XP',ck:u=>(u.xp||0)>=500},
-  {id:'legend',e:'👑',t:'أسطورة',ck:u=>(u.xp||0)>=1000},
-  {id:'social',e:'🤝',t:'داعية',ck:u=>(u.referral_count||0)>=1}
+  {id:'legend',e:'👑',t:'أسطورة',ck:u=>(u.xp||0)>=1000}
 ];
 
-/* ============ SESSION ============ */
+/* SESSION */
 function getSession(){try{return JSON.parse(localStorage.getItem('sayoda_session')||'null')}catch(e){return null}}
 const SESSION=getSession();
 if(!SESSION||!SESSION.username||!SESSION.token){location.replace('./login.html');}
 
-/* ============ THEME ============ */
+/* THEME */
 (function(){const t=localStorage.getItem('sayoda_theme')||'dark';document.documentElement.setAttribute('data-theme',t);updThemeIcon(t);})();
 function updThemeIcon(t){$('themeIcon').innerHTML=t==='light'
   ?'<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"/><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"/><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"/>'
@@ -631,7 +627,6 @@ $('themeBtn').onclick=()=>{const cur=document.documentElement.getAttribute('data
   document.documentElement.setAttribute('data-theme',nx);localStorage.setItem('sayoda_theme',nx);updThemeIcon(nx);
   const mt=document.querySelector('meta[name=theme-color]');if(mt)mt.content=nx==='light'?'#eef4fc':'#020812';};
 
-/* ============ TOAST ============ */
 function toast(msg,type='info',icon){
   const el=document.createElement('div');
   el.className='toast '+type;
@@ -641,7 +636,6 @@ function toast(msg,type='info',icon){
   setTimeout(()=>{el.style.opacity='0';el.style.transform='translateY(20px)';setTimeout(()=>el.remove(),300)},3400);
 }
 
-/* ============ CONFETTI ============ */
 function playChime(){try{
   const a=new(window.AudioContext||window.webkitAudioContext)();
   [0,0.12,0.24].forEach((d,i)=>{
@@ -674,7 +668,7 @@ function confetti(){
 }
 function celebrate(msg){playChime();confetti();toast(msg,'ok','🎉');}
 
-/* ============ NAV ============ */
+/* NAV */
 const SECTIONS=[
   {id:'profile',ic:'👤',t:'ملفي'},
   {id:'instructors',ic:'👨‍🏫',t:'المدربين'},
@@ -718,22 +712,16 @@ function closeSidebar(){$('sidebar').classList.remove('open');$('overlay').class
 $('menuBtn').onclick=openSidebar;
 $('overlay').onclick=()=>{closeSidebar();$('notifPanel').classList.remove('open');};
 
-/* ============ LOGOUT ============ */
+/* LOGOUT */
 $('logoutBtn').onclick=async()=>{
   try{
     if(SESSION.token) await sb.rpc('secure_logout',{p_token:SESSION.token});
-    if(USER) await sb.rpc('client_log_activity',{
-      p_username:USER.username,
-      p_activity_type:'logout',
-      p_details:'{}',
-      p_user_agent:navigator.userAgent.slice(0,200)
-    });
   }catch(e){}
   localStorage.removeItem('sayoda_session');
   location.replace('./login.html');
 };
 
-/* ============ LOAD USER ============ */
+/* LOAD USER */
 async function loadUser(){
   try{
     const {data,error}=await sb.from('users').select('*').eq('username',SESSION.username).limit(1);
@@ -746,9 +734,9 @@ async function loadUser(){
     IS_ADMIN = USER.role === 'admin';
     IS_INSTRUCTOR = USER.role === 'instructor' || (IS_ADMIN && USER.is_instructor === true);
     
-    try{ await updateStreak(); }catch(e){ console.error('streak error:',e); }
-    try{ renderProfile(); }catch(e){ console.error('renderProfile error:',e); }
-    try{ updateMiniXp(); }catch(e){ console.error('miniXp error:',e); }
+    try{ await updateStreak(); }catch(e){}
+    try{ renderProfile(); }catch(e){}
+    try{ updateMiniXp(); }catch(e){}
     
     $('sideAv').textContent=(USER.username||'?')[0].toUpperCase();
     $('sideName').textContent=USER.username;
@@ -760,10 +748,7 @@ async function loadUser(){
     $('sideRole').textContent = roleTxt;
     
     buildNav();
-  }catch(e){
-    console.error('loadUser error:',e);
-    toast('تعذّر تحميل البيانات','err');
-  }
+  }catch(e){ console.error(e); }
 }
 
 function levelOf(xp){let cur=LEVELS[0],nx=null;for(let i=0;i<LEVELS.length;i++){if(xp>=LEVELS[i].min){cur=LEVELS[i];nx=LEVELS[i+1]||null;}}return{cur,nx};}
@@ -780,7 +765,7 @@ async function updateStreak(){
   try{await sb.from('users').update({streak,last_visit:new Date().toISOString()}).eq('username',USER.username);}catch(e){}
 }
 
-/* ============ PROFILE ============ */
+/* PROFILE */
 function renderProfile(){
   const xp=USER.xp||0;
   const {cur,nx}=levelOf(xp);
@@ -847,7 +832,7 @@ $('copyRefBtn').onclick=()=>{
   navigator.clipboard.writeText(c).then(()=>toast('تم نسخ كود الدعوة','ok')).catch(()=>toast('انسخ يدوياً: '+c,'info'));
 };
 
-/* ============ INSTRUCTORS LIST ============ */
+/* INSTRUCTORS LIST */
 async function loadInstructors(){
   $('insGrid').innerHTML=Array.from({length:3}).map(()=>'<div class="skel skel-card"></div>').join('');
   try{
@@ -859,7 +844,6 @@ async function loadInstructors(){
   }catch(e){
     console.error('loadInstructors error:', e);
     INSTRUCTORS = [];
-    /* fallback: نجيب المدربين بدون حالة الاشتراك */
     try{
       const {data} = await sb.from('users')
         .select('id, username, whatsapp, specialty, bio')
@@ -926,7 +910,7 @@ function renderInstructors(){
   });
 }
 
-/* ============ INSTRUCTOR VIDEOS PAGE ============ */
+/* INSTRUCTOR VIDEOS */
 async function openInstructor(username){
   CURRENT_INSTRUCTOR = INSTRUCTORS.find(i => i.instructor_username === username);
   if(!CURRENT_INSTRUCTOR){
@@ -937,7 +921,6 @@ async function openInstructor(username){
   $('ivTitle').textContent = '🎬 ' + CURRENT_INSTRUCTOR.instructor_username;
   $('ivSub').textContent = CURRENT_INSTRUCTOR.specialty || 'مدرب';
   
-  // تحديث العدادات
   $('ivVideosCount').textContent = '📹 ' + safeInt(CURRENT_INSTRUCTOR.videos_count) + ' فيديو';
   $('ivUnlockedCount').textContent = '🔓 ' + safeInt(CURRENT_INSTRUCTOR.unlocked_count) + ' مفتوح';
   
@@ -957,11 +940,8 @@ async function openInstructor(username){
   }
   
   ACTIVE_CAT = 'all';
-  
-  // تحميل الفيديوهات
   await loadInstructorVideos();
   
-  // نروح للصفحة
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   $('page-instructor-videos').classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
@@ -1066,15 +1046,13 @@ function renderInstructorVideos(){
   });
 }
 
-/* ============ REQUEST UNLOCK ============ */
+/* REQUEST UNLOCK */
 async function requestUnlockForVideo(video){
   if(!CURRENT_INSTRUCTOR) return;
   
-  // نحدد رقم المدرب
   const instructorWA = CURRENT_INSTRUCTOR.whatsapp || '';
   const instructorName = CURRENT_INSTRUCTOR.instructor_username || 'المدرب';
   
-  // نسجل الطلب في قاعدة البيانات
   try{
     await sb.rpc('request_instructor_access', {
       p_student_username: USER.username,
@@ -1082,7 +1060,6 @@ async function requestUnlockForVideo(video){
     });
   }catch(e){ console.warn('request log error:', e); }
   
-  // نسجل النشاط
   try{
     await sb.rpc('client_log_activity', {
       p_username: USER.username,
@@ -1096,25 +1073,21 @@ async function requestUnlockForVideo(video){
     });
   }catch(e){}
   
-  // نبني رسالة الواتساب
   const msg = encodeURIComponent(
     'السلام عليكم أستاذ ' + instructorName + ' 👋\n\n' +
     'أنا الطالب: ' + USER.username + '\n' +
     'رقم هاتفي: ' + (USER.phone || USER_PHONE || '—') + '\n\n' +
-    'عايز أفتح فيديوهاتك على منصة SAYODA CYBER FORCE\n' +
+    'عايز أفتح فيديوهاتك على منصة CYBER FORCE\n' +
     'الفيديو: ' + (video.title || '') + '\n\n' +
     'منتظر ردك 🙏'
   );
   
   if(!instructorWA){
-    // المدرب لسه مسجلش رقمه
     toast('⚠️ المدرب لسه مسجلش رقم واتساب — تواصل مع الإدارة','err');
     return;
   }
   
   const waUrl = 'https://wa.me/' + instructorWA + '?text=' + msg;
-  
-  // نفتح نافذة تأكيد
   showWhatsappModal(instructorName, instructorWA, waUrl);
 }
 
@@ -1131,7 +1104,7 @@ function contactInstructor(username){
   const msg = encodeURIComponent(
     'السلام عليكم أستاذ ' + username + ' 👋\n\n' +
     'أنا الطالب: ' + USER.username + '\n\n' +
-    'عايز أستفسر عن فيديوهاتك على منصة SAYODA CYBER FORCE'
+    'عايز أستفسر عن فيديوهاتك على منصة CYBER FORCE'
   );
   
   const waUrl = 'https://wa.me/' + instructorWA + '?text=' + msg;
@@ -1162,7 +1135,7 @@ function showWhatsappModal(instructorName, waNumber, waUrl){
             السلام عليكم أستاذ <b style="color:var(--gold)">${esc(instructorName)}</b> 👋<br>
             أنا الطالب: <b>${esc(USER.username)}</b><br>
             رقم هاتفي: <b>${esc(USER.phone || USER_PHONE || '—')}</b><br>
-            عايز أفتح فيديوهاتك على منصة SAYODA
+            عايز أفتح فيديوهاتك على منصة CYBER FORCE
           </div>
         </div>
         <a href="${waUrl}" target="_blank" rel="noopener noreferrer"
@@ -1179,7 +1152,7 @@ function showWhatsappModal(instructorName, waNumber, waUrl){
   modal.onclick = (e) => { if(e.target === modal) modal.remove(); };
 }
 
-/* ============ VIDEO PLAYER ============ */
+/* VIDEO PLAYER */
 function loadYtApi(){
   if(window.YT && window.YT.Player){ytApiReady=true;return;}
   if(document.querySelector('script[src*="iframe_api"]')) return;
@@ -1203,22 +1176,14 @@ function showYtControls(){
 }
 
 function setWatermarks(){
-  // رقم الهاتف + اسم المستخدم على الفيديو
   const phone = USER.phone || USER_PHONE || '—';
   const user = USER.username || '';
   const ts = new Date().toLocaleString('ar-EG', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
   
-  // فوق شمال (المطلوب)
   $('wmTL').textContent = '📱 ' + phone;
-  
-  // فوق يمين (شعار)
-  $('wmTR').textContent = 'SAYODA | ' + user;
-  
-  // تحت شمال (وقت)
+  $('wmTR').textContent = 'CYBER FORCE | ' + user;
   $('wmBL').textContent = '🕐 ' + ts;
-  
-  // وسط (اسم المستخدم كبير شفاف)
-  $('wmCenter').textContent = '@' + user;
+  $('wmCenter').textContent = 'CYBER FORCE';
 }
 
 async function openVideo(v){
@@ -1267,11 +1232,8 @@ async function openVideo(v){
   else { ytReadyQueue.push(mk); if(!window.YT) loadYtApi(); }
 
   try{
-    const {data:uData} = await sb.from('users').select('video_progress').eq('username',USER.username).limit(1);
-    if(uData && uData[0]) USER.video_progress = uData[0].video_progress || {};
+    await sb.rpc('client_log_activity',{p_username:USER.username,p_activity_type:'video_watch',p_details:JSON.stringify({video:v.title,id:v.video_id,instructor:CURRENT_INSTRUCTOR?.instructor_username}),p_user_agent:navigator.userAgent.slice(0,200)});
   }catch(e){}
-
-  try{await sb.rpc('client_log_activity',{p_username:USER.username,p_activity_type:'video_watch',p_details:JSON.stringify({video:v.title,id:v.video_id,instructor:CURRENT_INSTRUCTOR?.instructor_username}),p_user_agent:navigator.userAgent.slice(0,200)});}catch(e){}
 
   renderStars(v); loadRating(v); loadComments(v);
 }
@@ -1301,7 +1263,6 @@ async function markProgress(pct,done){
   const v=CURRENT_VIDEO;if(!v)return;
   if(pct < UNLOCK_THRESHOLD && !done) return;
   
-  // لما يوصل 50% أو يكمل → نبلغ المدرب إن الطالب يستحق الفيديو التالي
   if(pct >= UNLOCK_THRESHOLD && CURRENT_INSTRUCTOR){
     try{
       await sb.rpc('client_log_activity',{
@@ -1327,6 +1288,7 @@ function closeVideo(){
 }
 $('closeVid').onclick=closeVideo;
 
+/* أزرار المشغل */
 document.addEventListener('click',e=>{
   const t=e.target.closest('button');
   if(!t)return;
@@ -1349,6 +1311,19 @@ document.addEventListener('click',e=>{
       if(ytMuted){ytPlayer.mute();t.textContent='🔇';}
       else{ytPlayer.unMute();t.textContent='🔊';}
     }catch(err){}
+    return;
+  }
+  if(t.id==='ytFull'){
+    const box=document.querySelector('.player-box');
+    if(!box) return;
+    const isFull = document.fullscreenElement || document.webkitFullscreenElement;
+    if(!isFull){
+      const req = box.requestFullscreen || box.webkitRequestFullscreen || box.mozRequestFullScreen || box.msRequestFullscreen;
+      if(req) req.call(box).catch(()=>toast('تكبير الشاشة غير مدعوم','err'));
+    } else {
+      const exit = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+      if(exit) exit.call(document);
+    }
     return;
   }
 });
@@ -1389,7 +1364,7 @@ document.addEventListener('click',e=>{
 document.addEventListener('mousemove',e=>{if(e.target.closest('.player-box')) showYtControls();});
 document.addEventListener('touchstart',e=>{if(e.target.closest('.player-box')) showYtControls();},{passive:true});
 
-/* ============ RATING ============ */
+/* RATING */
 function renderStars(v){
   const my=(USER.ratings&&USER.ratings[v.video_id])||0;
   $('starRate').innerHTML=[1,2,3,4,5].map(n=>`<button data-n="${n}" class="${n<=my?'on':''}">★</button>`).join('');
@@ -1411,7 +1386,7 @@ async function rateVideo(v,n){
   renderStars(v);toast(`قيّمت الفيديو ${n} نجوم`,'ok','⭐');
 }
 
-/* ============ COMMENTS ============ */
+/* COMMENTS */
 async function loadComments(v){
   $('cmList').innerHTML='<div class="empty"><div class="e">💬</div><p>التعليقات قريباً</p></div>';
 }
@@ -1419,7 +1394,7 @@ $('cmSend').onclick=()=>{
   toast('التعليقات مش مفعلة حالياً','info');
 };
 
-/* ============ LEADERBOARD ============ */
+/* LEADERBOARD */
 async function loadLeaderboard(){
   $('lbList').innerHTML=Array.from({length:6}).map(()=>'<div class="skel" style="height:60px;margin-bottom:8px"></div>').join('');
   try{
@@ -1436,7 +1411,7 @@ async function loadLeaderboard(){
   }catch(e){$('lbList').innerHTML='<div class="empty">تعذّر تحميل المتصدرين</div>';}
 }
 
-/* ============ NOTIFICATIONS ============ */
+/* NOTIFICATIONS */
 async function loadNotifs(){
   try{
     const {data}=await sb.from('notifications').select('*').or(`target.eq.all,target.eq.${USER.username}`).order('created_at',{ascending:false}).limit(30);
@@ -1464,7 +1439,7 @@ $('notifBtn').onclick=async()=>{
 };
 document.addEventListener('click',e=>{if(!$('notifPanel').contains(e.target)&&e.target.closest('#notifBtn')===null)$('notifPanel').classList.remove('open');});
 
-/* ============ SOCIAL ============ */
+/* SOCIAL */
 async function loadSocial(){
   let cfg={};
   try{
@@ -1493,16 +1468,15 @@ async function loadSocial(){
   
   if($('supportBtns')) $('supportBtns').innerHTML = renderBtns();
   if($('socialBtns')) $('socialBtns').innerHTML = renderBtns();
-  if($('socialFooter')) $('socialFooter').innerHTML = '';
 }
 
-/* ============ INIT ============ */
+/* INIT */
 async function init(){
   buildNav();
   await loadUser();
   await Promise.all([loadInstructors(), loadNotifs(), loadSocial()]);
   loadYtApi();
-  go('instructors'); // نبدأ بصفحة المدربين
+  go('instructors');
 }
 init();
 
