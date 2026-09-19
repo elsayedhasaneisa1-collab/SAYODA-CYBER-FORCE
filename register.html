@@ -55,6 +55,7 @@ body{
 .field{margin-bottom:14px}
 .field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px;color:#cfe3fb}
 .field label .opt{color:var(--muted);font-weight:500;font-size:11px}
+.field label .req{color:var(--danger);font-size:14px;margin-left:2px}
 .input-box{position:relative}
 .input-box svg{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--blue);opacity:.8;pointer-events:none}
 .field input{width:100%;padding:14px 44px 14px 44px;border-radius:14px;
@@ -70,14 +71,14 @@ body{
 
 /* ============ TOGGLE SECTION ============ */
 .toggle-section{margin-bottom:16px;padding:12px;border-radius:14px;
-  background:rgba(3,10,22,.5);border:1px solid var(--border-soft,rgba(25,170,255,.12))}
+  background:rgba(3,10,22,.5);border:1px solid rgba(255,215,0,.2)}
 .toggle-header{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;user-select:none}
-.toggle-header .txt{font-size:13px;font-weight:800;color:#cfe3fb;display:flex;align-items:center;gap:6px}
+.toggle-header .txt{font-size:13px;font-weight:800;color:#ffd700;display:flex;align-items:center;gap:6px}
 .toggle-header .txt .ic{font-size:16px}
 .toggle-header .arrow{color:var(--muted);font-size:14px;transition:transform .25s}
 .toggle-section.open .arrow{transform:rotate(180deg)}
 .toggle-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
-.toggle-section.open .toggle-body{max-height:400px;padding-top:14px}
+.toggle-section.open .toggle-body{max-height:300px;padding-top:14px}
 
 .ins-badge{display:inline-block;padding:3px 9px;border-radius:10px;
   background:rgba(255,215,0,.15);color:#ffd700;font-size:10px;font-weight:800;
@@ -122,7 +123,7 @@ body{
 
   <form id="registerForm" autocomplete="off">
     <div class="field">
-      <label>اسم المستخدم</label>
+      <label>اسم المستخدم <span class="req">*</span></label>
       <div class="input-box">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         <input type="text" id="username" placeholder="اختر اسم مستخدم (3 أحرف على الأقل)" required autocomplete="username" minlength="3" maxlength="30" />
@@ -131,16 +132,18 @@ body{
     </div>
 
     <div class="field">
-      <label>رقم الهاتف</label>
+      <label>رقم الهاتف <span class="req">*</span></label>
       <div class="input-box">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         <input type="tel" id="phone" placeholder="01xxxxxxxxx" required autocomplete="tel" pattern="[0-9]{10,15}" maxlength="15" />
       </div>
-      <small class="hint">رقم هاتفك (10-15 رقم)</small>
+      <small class="hint">
+        📱 رقمك هيستخدم للتواصل + <b style="color:#ffd700">كرقم واتساب لو بقيت مدرب</b>
+      </small>
     </div>
 
     <div class="field">
-      <label>كلمة المرور</label>
+      <label>كلمة المرور <span class="req">*</span></label>
       <div class="input-box">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         <input type="password" id="password" placeholder="6 أحرف على الأقل" required autocomplete="new-password" minlength="6" />
@@ -152,7 +155,7 @@ body{
     </div>
 
     <div class="field">
-      <label>تأكيد كلمة المرور</label>
+      <label>تأكيد كلمة المرور <span class="req">*</span></label>
       <div class="input-box">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         <input type="password" id="confirm" placeholder="أعد كتابة كلمة المرور" required autocomplete="new-password" />
@@ -192,7 +195,8 @@ body{
               style="text-transform:uppercase" autocomplete="off" />
           </div>
           <small class="hint">
-            لو عندك كود من الإدارة، اكتبه هنا واترقّي لمدرب فوراً
+            لو عندك كود من الإدارة، اكتبه هنا واترقّى لمدرب فوراً
+            <br>📱 <b style="color:#ffd700">رقم هاتفك هيتحول لرقم واتساب تلقائياً</b>
           </small>
         </div>
       </div>
@@ -243,11 +247,31 @@ try{
   }
 }catch(e){}
 
+/* ============ HELPERS ============ */
 function showMsg(t, type){
   const m = $('msg');
   m.className = 'msg ' + type;
   m.textContent = t;
   window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'});
+}
+
+/**
+ * تحويل رقم الهاتف المصري لصيغة واتساب الدولية
+ * 01041254010 → 201041254010
+ * 201041254010 → 201041254010 (لو دخل دولي أصلاً)
+ */
+function toWhatsappFormat(phone){
+  let p = String(phone||'').replace(/\D/g,'');
+  if(!p) return '';
+  // لو دخل 01xxxxxxxxx → 201xxxxxxxxx
+  if(p.startsWith('0') && p.length >= 10){
+    p = '20' + p.substring(1);
+  }
+  // لو دخل 1xxxxxxxxx (بدون 0 وبدون 20) → 201xxxxxxxxx
+  else if(p.length === 10 && p.startsWith('1')){
+    p = '20' + p;
+  }
+  return p;
 }
 
 /* ============ TOGGLE المدرب ============ */
@@ -336,6 +360,9 @@ $('registerForm').addEventListener('submit', async e => {
     return showMsg('⚠️ كلمتا المرور غير متطابقتين', 'err');
   }
 
+  // تحويل الرقم لصيغة واتساب
+  const whatsapp = toWhatsappFormat(phone);
+
   const btn = $('submitBtn');
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>';
@@ -370,13 +397,17 @@ $('registerForm').addEventListener('submit', async e => {
     console.log('✅ الحساب اتعمل:', username);
 
     /* ============================================
-       الخطوة 2: تحديث رقم الهاتف
+       الخطوة 2: تحديث الهاتف + الواتساب
        ============================================ */
     try{
       const { error: phoneErr } = await sb.from('users')
-        .update({ phone: phone })
+        .update({ 
+          phone: phone,
+          whatsapp: whatsapp
+        })
         .eq('username', username);
       if(phoneErr) console.warn('⚠️ Phone update error:', phoneErr);
+      else console.log('✅ الهاتف والواتساب اتسجلوا');
     }catch(err){ console.warn('Phone update failed:', err); }
 
     /* ============================================
@@ -413,7 +444,7 @@ $('registerForm').addEventListener('submit', async e => {
           const iRes = Array.isArray(iData) ? iData[0] : iData;
           if(iRes && iRes.ok){
             becameInstructor = true;
-            console.log('✅ المستخدم اترقّى لمدرب');
+            console.log('✅ المستخدم اترقّى لمدرب - واتساب:', whatsapp);
           } else {
             console.warn('⚠️ كود المدرب فشل:', iRes?.error);
           }
@@ -430,6 +461,7 @@ $('registerForm').addEventListener('submit', async e => {
         p_activity_type: 'register',
         p_details: JSON.stringify({
           phone: phone,
+          whatsapp: whatsapp,
           refCode: refCode || null,
           hasReferral: !!refCode,
           referralBonus: referralBonus,
@@ -445,7 +477,7 @@ $('registerForm').addEventListener('submit', async e => {
        ============================================ */
     let successMsg = '✅ تم إنشاء حسابك بنجاح! جاري تسجيل الدخول...';
     if(becameInstructor){
-      successMsg = '🎬 تم إنشاء حسابك كمدرب! جاري تسجيل الدخول...';
+      successMsg = '🎬 تم إنشاء حسابك كمدرب! رقم واتسابك مسجل تلقائياً ✅';
     } else if(referralBonus > 0){
       successMsg = '✅ تم إنشاء حسابك! كود الدعوة اتطبّق (+50 XP) — جاري تسجيل الدخول...';
     }
@@ -463,7 +495,6 @@ $('registerForm').addEventListener('submit', async e => {
     const loginRes = Array.isArray(loginData) ? loginData[0] : loginData;
 
     if(loginRes && loginRes.ok){
-      // نحدد الدور الحقيقي بعد الترقية
       let finalRole = loginRes.role || 'student';
       let finalIsIns = false;
 
@@ -486,7 +517,6 @@ $('registerForm').addEventListener('submit', async e => {
         ts: Date.now()
       }));
 
-      // وجهة التحويل
       let dest = './index.html';
       if(finalRole === 'instructor' || (finalRole === 'admin' && finalIsIns)){
         dest = './instructor.html';

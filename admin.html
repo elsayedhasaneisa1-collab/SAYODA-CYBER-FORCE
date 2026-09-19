@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#0a0600" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <title>لوحة التحكم الذهبية | SAYODA ADMIN</title>
 <link rel="manifest" href="./manifest.json" />
 <link rel="icon" href="./logog.png" />
@@ -61,6 +62,8 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 .tab:hover{border-color:var(--border);color:var(--gold)}
 .tab.active{background:linear-gradient(135deg,var(--gold),var(--gold-3));color:#0a0600;border-color:transparent;
   box-shadow:0 8px 24px rgba(255,215,0,.35);font-weight:900}
+.tab .badge{background:var(--danger);color:#fff;font-size:10px;padding:2px 6px;border-radius:8px;font-weight:900;min-width:18px;text-align:center}
+.tab.active .badge{background:#0a0600;color:var(--gold)}
 
 .panel{display:none;animation:fade .35s;width:100%}
 .panel.active{display:block}
@@ -103,6 +106,8 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
 @media(max-width:560px){.row2,.row3{grid-template-columns:1fr}}
 .frm label{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.3px}
+.frm label .req{color:var(--danger);font-size:14px;margin-left:2px}
+.frm label .opt{color:var(--muted);font-weight:500;font-size:11px}
 
 .btn{padding:13px 22px;border:none;border-radius:12px;font-weight:900;font-size:14px;
   background:linear-gradient(135deg,var(--gold),var(--gold-3));color:#0a0600;
@@ -310,6 +315,8 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
           <option value="register">✨ تسجيل جديد</option>
           <option value="video_watch">👁 مشاهدة فيديو</option>
           <option value="video_complete">🎬 إكمال فيديو</option>
+          <option value="video_progress">📊 تقدم فيديو</option>
+          <option value="unlock_request">📱 طلب فتح</option>
           <option value="comment">💬 تعليق</option>
           <option value="rating">⭐ تقييم</option>
           <option value="unlock_code">🔓 كود فتح</option>
@@ -343,17 +350,23 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
       <h3>➕ إضافة مدرب جديد</h3>
       <div class="frm">
         <div class="row2">
-          <div><label>اسم المستخدم</label>
+          <div><label>اسم المستخدم <span class="req">*</span></label>
             <input id="newInsUser" placeholder="instructor_name" /></div>
-          <div><label>كلمة المرور</label>
+          <div><label>كلمة المرور <span class="req">*</span></label>
             <input id="newInsPass" type="text" placeholder="باسورد قوي (6+)" /></div>
         </div>
         <div class="row2">
-          <div><label>التخصص (اختياري)</label>
+          <div><label>رقم الواتساب <span class="req">*</span></label>
+            <input id="newInsWhatsapp" type="tel" placeholder="2010xxxxxxx" maxlength="15" inputmode="numeric" /></div>
+          <div><label>التخصص <span class="opt">(اختياري)</span></label>
             <input id="newInsSpec" placeholder="مثال: اختراق أخلاقي" /></div>
-          <div><label>نبذة (اختياري)</label>
-            <input id="newInsBio" placeholder="مدرب أمن سيبراني..." /></div>
         </div>
+        <div><label>نبذة <span class="opt">(اختياري)</span></label>
+          <input id="newInsBio" placeholder="مدرب أمن سيبراني..." /></div>
+        <p style="font-size:11px;color:var(--muted);line-height:1.6">
+          ⚠️ رقم الواتساب لازم يكون بصيغة دولية <b style="color:var(--gold)">بدون + وبدون 0</b>
+          <br>مثال: <b style="color:var(--gold)">201041254010</b>
+        </p>
         <button class="btn" id="addInsBtn">➕ إضافة المدرب</button>
       </div>
     </div>
@@ -574,7 +587,8 @@ const BAN_FEATURES=[
 
 const ACTIVITY_ICONS={
   login:'🔑',logout:'🚪',register:'✨',
-  video_watch:'👁',video_complete:'🎬',
+  video_watch:'👁',video_complete:'🎬',video_progress:'📊',
+  unlock_request:'📱',
   comment:'💬',rating:'⭐',
   unlock_code:'🔓',unlock_fail:'❌',
   admin_action:'⚙️',settings:'⚙️',
@@ -583,7 +597,8 @@ const ACTIVITY_ICONS={
 };
 const ACTIVITY_LABELS={
   login:'تسجيل دخول',logout:'تسجيل خروج',register:'تسجيل جديد',
-  video_watch:'مشاهدة فيديو',video_complete:'إكمال فيديو',
+  video_watch:'مشاهدة فيديو',video_complete:'إكمال فيديو',video_progress:'تقدم فيديو',
+  unlock_request:'طلب فتح فيديو',
   comment:'تعليق',rating:'تقييم',
   unlock_code:'استخدام كود فتح',unlock_fail:'فشل كود فتح',
   admin_action:'عملية أدمن',settings:'تعديل إعدادات',
@@ -725,24 +740,27 @@ const TABS=[
   {id:'bans',t:'🚫 الحظر'},
   {id:'settings',t:'⚙️ الإعدادات'}
 ];
-$('tabs').innerHTML=TABS.map((t,i)=>`<button class="tab ${i===0?'active':''}" data-t="${t.id}">${t.t}</button>`).join('');
 
-document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{
-  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-  b.classList.add('active');
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  $('p-'+b.dataset.t).classList.add('active');
-  if(b.dataset.t==='codes') loadCodes();
-  if(b.dataset.t==='settings') loadSettings();
-  if(b.dataset.t==='notifs') loadAdminNotifications();
-  if(b.dataset.t==='instructors'){ loadInstructors(); loadInsCodes(); loadPendingVideos(); }
-  if(b.dataset.t==='dash') startLiveUpdates();
-  else stopLiveUpdates();
-});
+function buildTabs(){
+  $('tabs').innerHTML=TABS.map((t,i)=>`<button class="tab ${i===0?'active':''}" data-t="${t.id}">${t.t}</button>`).join('');
+  document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    $('p-'+b.dataset.t).classList.add('active');
+    if(b.dataset.t==='codes') loadCodes();
+    if(b.dataset.t==='settings') loadSettings();
+    if(b.dataset.t==='notifs') loadAdminNotifications();
+    if(b.dataset.t==='instructors'){ loadInstructors(); loadInsCodes(); loadPendingVideos(); }
+    if(b.dataset.t==='dash') startLiveUpdates();
+    else stopLiveUpdates();
+  });
+}
 
 /* ============ INIT ============ */
 async function init(){
   if(!ensurePass()) return;
+  buildTabs();
   await Promise.all([loadUsers(),loadVideos()]);
   await loadStats();
   await loadActivityLog();
@@ -849,7 +867,7 @@ async function loadActivityLog(){
           }).filter(Boolean).join(' · ');
         }
       }catch(e){}
-      return `<div class="log-item type-${esc(r.activity_type)}" style="padding:12px;border-radius:12px;background:rgba(26,18,6,.5);border:1px solid var(--border-soft);margin-bottom:8px;display:flex;gap:12px;align-items:flex-start">
+      return `<div style="padding:12px;border-radius:12px;background:rgba(26,18,6,.5);border:1px solid var(--border-soft);margin-bottom:8px;display:flex;gap:12px;align-items:flex-start">
         <div style="font-size:20px;flex-shrink:0">${icon}</div>
         <div style="flex:1;min-width:0">
           <b style="color:var(--gold)">${esc(r.username)}</b>
@@ -967,6 +985,10 @@ function openUserDetails(un){
           <div style="padding:12px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:12px">
             <div style="font-size:11px;color:var(--muted);margin-bottom:4px">📞 رقم الهاتف</div>
             <div style="font-weight:900;font-size:15px">${u.phone?esc(u.phone):'—'}</div>
+          </div>
+          <div style="padding:12px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:12px">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:4px">📱 رقم الواتساب</div>
+            <div style="font-weight:900;font-size:15px">${u.whatsapp?esc(u.whatsapp):'—'}</div>
           </div>
           <div style="padding:12px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:12px">
             <div style="font-size:11px;color:var(--muted);margin-bottom:4px">🎭 الدور</div>
@@ -1093,7 +1115,7 @@ async function loadInstructors(){
   $('instructorsList').innerHTML='<div class="skel"></div><div class="skel"></div>';
   try{
     const {data, error} = await sb.from('users')
-      .select('id, username, role, is_instructor, active, xp, specialty, bio, created_at')
+      .select('id, username, role, is_instructor, active, xp, specialty, bio, whatsapp, created_at')
       .or('role.eq.instructor,and(role.eq.admin,is_instructor.eq.true)')
       .order('created_at', {ascending: false});
     
@@ -1116,17 +1138,23 @@ function renderInstructors(q=''){
   
   $('instructorsList').innerHTML = list.map(u => {
     const isAdmin = u.role === 'admin';
+    const hasWA = !!u.whatsapp;
+    const waBadge = hasWA 
+      ? `<span class="pill on">📱 ${esc(u.whatsapp)}</span>` 
+      : `<span class="pill off">⚠️ مفيش واتساب</span>`;
+    
     return `<div class="list-item">
       <div class="li-main">
         <b>${isAdmin?'👑':'🎬'} ${esc(u.username)} ${isAdmin?'<span class="pill gold">أدمن+مدرب</span>':'<span class="pill warn">مدرب</span>'}</b>
-        <small>
-          ${u.specialty?`🎯 ${esc(u.specialty)} · `:''}
-          ${u.active!==false?'🟢 نشط':'🔴 موقوف'}
-          ${u.created_at?` · 📅 ${fmtDate(u.created_at)}`:''}
-        </small>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;align-items:center">
+          ${waBadge}
+          ${u.specialty?`<span class="pill gold">🎯 ${esc(u.specialty)}</span>`:''}
+          ${u.active!==false?'<span class="pill on">🟢 نشط</span>':'<span class="pill off">🔴 موقوف</span>'}
+        </div>
       </div>
       <div class="li-actions">
         <button class="btn sm blue" data-ins-vids="${esc(u.username)}">🎬 فيديوهاته</button>
+        <button class="btn sm ghost" data-ins-wa="${esc(u.username)}">📱 رقمه</button>
         ${!isAdmin ? `<button class="btn sm danger" data-ban-ins="${esc(u.username)}">🚫 حظر</button>` : ''}
       </div>
     </div>`;
@@ -1137,6 +1165,12 @@ function renderInstructors(q=''){
   });
   $('instructorsList').querySelectorAll('[data-ins-vids]').forEach(b => {
     b.onclick = () => openVideoManager(b.dataset.insVids);
+  });
+  $('instructorsList').querySelectorAll('[data-ins-wa]').forEach(b => {
+    b.onclick = () => {
+      const u = INSTRUCTORS.find(x => x.username === b.dataset.insWa);
+      if(u) alert(`📱 رقم واتساب ${u.username}:\n${u.whatsapp || 'غير مسجل'}`);
+    };
   });
 }
 
@@ -1210,12 +1244,15 @@ $('addInsBtn').onclick = async () => {
   if(!ensurePass()) return;
   const u = clean($('newInsUser').value);
   const p = $('newInsPass').value;
+  const wa = clean($('newInsWhatsapp').value).replace(/\D/g, '');
   const spec = clean($('newInsSpec').value);
   const bio = clean($('newInsBio').value);
 
   if(!u || !p) return toast('اسم المستخدم وكلمة المرور مطلوبان','err');
   if(u.length < 3) return toast('اسم المستخدم قصير جداً','err');
   if(p.length < 6) return toast('كلمة المرور قصيرة (6+)','err');
+  if(!wa || wa.length < 10) return toast('رقم الواتساب مطلوب (10 أرقام على الأقل)','err');
+  if(wa.startsWith('0')) return toast('رقم الواتساب بدون 0 في الأول (مثال: 201041254010)','err');
 
   const btn = $('addInsBtn');
   btn.disabled = true; btn.textContent = '...';
@@ -1227,7 +1264,8 @@ $('addInsBtn').onclick = async () => {
       p_new_username: u,
       p_new_password: p,
       p_bio: bio || null,
-      p_specialty: spec || null
+      p_specialty: spec || null,
+      p_whatsapp: wa
     });
     if(error) throw error;
     const res = Array.isArray(data) ? data[0] : data;
@@ -1235,6 +1273,7 @@ $('addInsBtn').onclick = async () => {
       toast('✅ تم إضافة المدرب');
       $('newInsUser').value = '';
       $('newInsPass').value = '';
+      $('newInsWhatsapp').value = '';
       $('newInsSpec').value = '';
       $('newInsBio').value = '';
       await loadUsers();

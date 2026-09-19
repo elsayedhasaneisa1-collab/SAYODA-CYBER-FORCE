@@ -1,15 +1,19 @@
 /* ============================================
    SAYODA CYBER FORCE — Service Worker
-   Version: v4 (2026-09) — Relative paths
+   Version: v5 (2026-09) — يدعم نظام المدربين الجديد
    ============================================ */
 
-const CACHE = "sayoda-cyber-v4";
+const CACHE = "sayoda-cyber-v5";
 const ASSETS = [
   "./login.html",
+  "./register.html",
   "./index.html",
   "./admin.html",
+  "./instructor.html",
   "./manifest.json",
   "./logo.png",
+  "./logog.png",
+  "./logol.png",
   "./bg.png",
   "./sayed.png"
 ];
@@ -42,8 +46,10 @@ self.addEventListener("fetch", (e) => {
 
   const url = new URL(req.url);
 
+  /* تجاهل الطلبات الخارجية (Supabase, Google Fonts, YouTube...) */
   if (url.origin !== self.location.origin) return;
 
+  /* صفحات HTML → network first، fallback للـ cache */
   if (req.mode === "navigate" || req.destination === "document") {
     e.respondWith(
       fetch(req)
@@ -59,6 +65,7 @@ self.addEventListener("fetch", (e) => {
     return;
   }
 
+  /* باقي الملفات (صور، CSS، JS) → cache first، fallback للشبكة */
   e.respondWith(
     caches.match(req).then((cached) => {
       const networkFetch = fetch(req)
@@ -73,6 +80,7 @@ self.addEventListener("fetch", (e) => {
   );
 });
 
+/* ============ SKIP WAITING ============ */
 self.addEventListener("message", (e) => {
   if (e.data === "SKIP_WAITING") self.skipWaiting();
 });
