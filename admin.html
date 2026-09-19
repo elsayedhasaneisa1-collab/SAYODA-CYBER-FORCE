@@ -87,7 +87,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
   background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.5}
 .card h3{font-size:16px;font-weight:900;margin-bottom:16px;color:var(--gold);
-  display:flex;align-items:center;gap:8px}
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .card h3::before{content:'';width:4px;height:18px;border-radius:2px;
   background:linear-gradient(180deg,var(--gold),var(--gold-2))}
 
@@ -100,7 +100,8 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 .frm textarea{min-height:90px;resize:vertical}
 .frm input::placeholder,.frm textarea::placeholder{color:rgba(184,162,113,.6)}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:560px){.row2{grid-template-columns:1fr}}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:560px){.row2,.row3{grid-template-columns:1fr}}
 .frm label{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.3px}
 
 .btn{padding:13px 22px;border:none;border-radius:12px;font-weight:900;font-size:14px;
@@ -126,10 +127,12 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 .li-main small{display:block;color:var(--muted);font-size:12px;margin-top:3px;line-height:1.5;word-break:break-word}
 .li-actions{display:flex;gap:6px;flex-wrap:wrap}
 
-.pill{font-size:11px;padding:4px 11px;border-radius:10px;font-weight:800;letter-spacing:.3px}
+.pill{font-size:11px;padding:4px 11px;border-radius:10px;font-weight:800;letter-spacing:.3px;display:inline-block}
 .pill.on{background:rgba(40,209,124,.18);color:#28d17c;border:1px solid rgba(40,209,124,.3)}
 .pill.off{background:rgba(255,77,109,.18);color:#ff4d6d;border:1px solid rgba(255,77,109,.3)}
 .pill.gold{background:var(--gold-soft);color:var(--gold);border:1px solid var(--border)}
+.pill.warn{background:rgba(255,149,0,.18);color:#ff9500;border:1px solid rgba(255,149,0,.3)}
+.pill.blue{background:rgba(25,170,255,.18);color:#19aaff;border:1px solid rgba(25,170,255,.3)}
 
 .search{width:100%;padding:13px 15px;border-radius:12px;border:1px solid var(--border-soft);
   background:rgba(26,18,6,.6);color:var(--txt);outline:none;margin-bottom:14px;font-size:14px;box-sizing:border-box}
@@ -181,7 +184,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
   margin-left:6px;animation:blink 1.5s infinite;box-shadow:0 0 10px #28d17c}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 
-/* ============ VIDEO MANAGE MODAL ============ */
+/* ============ MODAL ============ */
 .vid-modal{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);
   display:none;align-items:center;justify-content:center;padding:20px}
 .vid-modal.open{display:flex;animation:fade .25s}
@@ -208,6 +211,25 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 .vid-modal-foot{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:8px;flex-shrink:0}
 .vid-modal-foot .btn{flex:1}
 
+/* ============ STATUS BADGES ============ */
+.status-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 11px;border-radius:10px;
+  font-size:11px;font-weight:800;letter-spacing:.3px}
+.status-approved{background:rgba(40,209,124,.18);color:#28d17c;border:1px solid rgba(40,209,124,.3)}
+.status-pending{background:rgba(255,149,0,.18);color:#ff9500;border:1px solid rgba(255,149,0,.3)}
+.status-rejected{background:rgba(255,77,109,.18);color:#ff4d6d;border:1px solid rgba(255,77,109,.3)}
+
+/* ============ PENDING VIDEO CARD ============ */
+.pending-card{background:linear-gradient(160deg,rgba(26,18,6,.92),rgba(20,13,0,.85));
+  border:1px solid rgba(255,149,0,.35);border-radius:14px;padding:16px;margin-bottom:14px;
+  box-shadow:0 8px 24px rgba(255,149,0,.08)}
+.pending-card .p-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap}
+.pending-card .p-head img{width:140px;height:80px;object-fit:cover;border-radius:10px;
+  border:1px solid var(--border-soft);flex-shrink:0}
+.pending-card .p-info{flex:1;min-width:200px}
+.pending-card .p-info h4{font-size:15px;font-weight:900;color:var(--txt);margin-bottom:4px}
+.pending-card .p-info p{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:6px}
+.pending-card .p-actions{display:flex;gap:8px;flex-wrap:wrap}
+
 @media(max-width:560px){
   .stats{grid-template-columns:repeat(2,1fr)}
   .stat .n{font-size:24px}
@@ -216,11 +238,13 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
   .wrap{padding:14px 10px 30px}
   .card{padding:16px}
   .vid-modal-box{max-height:92vh}
+  .pending-card .p-head img{width:100%;height:auto;max-height:180px}
 }
 </style>
 </head> 
 <body>
 
+<!-- GATE -->
 <div class="gate" id="gate">
   <div class="box">
     <img src="./logog.png" onerror="this.style.display='none'">
@@ -243,6 +267,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     </div>
   </div>
   <div class="hr">
+    <button class="icon-btn" id="insPanelBtn" title="لوحة المدرب" style="display:none" onclick="location.href='./instructor.html'">🎬</button>
     <button class="icon-btn" onclick="location.href='./index.html'" title="المنصة">🏠</button>
     <button class="icon-btn" id="logoutBtn" title="خروج">🚪</button>
   </div>
@@ -252,6 +277,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 
   <div class="tabs" id="tabs"></div>
 
+  <!-- ============ DASHBOARD ============ -->
   <div class="panel active" id="p-dash">
     <div class="sec-title">📊 لوحة الإحصائيات المباشرة</div>
     <div class="sec-sub">
@@ -288,6 +314,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
           <option value="rating">⭐ تقييم</option>
           <option value="unlock_code">🔓 كود فتح</option>
           <option value="admin_action">⚙️ عملية أدمن</option>
+          <option value="instructor_action">🎬 عملية مدرب</option>
         </select>
         <input type="text" id="logUserFilter" placeholder="فلترة باسم مستخدم..." style="flex:1;min-width:150px;padding:10px 14px;border-radius:10px;border:1px solid var(--border-soft);background:rgba(10,6,0,.6);color:var(--txt);outline:none;font-size:13px;box-sizing:border-box" />
         <button class="btn sm" id="refreshLogBtn">🔄 تحديث</button>
@@ -298,6 +325,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     </div>
   </div>
 
+  <!-- ============ USERS ============ -->
   <div class="panel" id="p-users">
     <div class="sec-title">👥 إدارة الحسابات</div>
     <div class="sec-sub">اضغط على أي مستخدم لعرض بياناته الكاملة</div>
@@ -305,10 +333,78 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     <div id="usersList"></div>
   </div>
 
+  <!-- ============ INSTRUCTORS ============ -->
+  <div class="panel" id="p-instructors">
+    <div class="sec-title">👨‍🏫 إدارة المدربين</div>
+    <div class="sec-sub">أضف مدربين، أنشئ أكواد دعوة، وراقب المحتوى</div>
+
+    <!-- إضافة مدرب يدوياً -->
+    <div class="card">
+      <h3>➕ إضافة مدرب جديد</h3>
+      <div class="frm">
+        <div class="row2">
+          <div><label>اسم المستخدم</label>
+            <input id="newInsUser" placeholder="instructor_name" /></div>
+          <div><label>كلمة المرور</label>
+            <input id="newInsPass" type="text" placeholder="باسورد قوي (6+)" /></div>
+        </div>
+        <div class="row2">
+          <div><label>التخصص (اختياري)</label>
+            <input id="newInsSpec" placeholder="مثال: اختراق أخلاقي" /></div>
+          <div><label>نبذة (اختياري)</label>
+            <input id="newInsBio" placeholder="مدرب أمن سيبراني..." /></div>
+        </div>
+        <button class="btn" id="addInsBtn">➕ إضافة المدرب</button>
+      </div>
+    </div>
+
+    <!-- أكواد دعوة المدربين -->
+    <div class="card">
+      <h3>🎟️ إنشاء كود دعوة مدرب
+        <button class="btn sm ghost" id="exportInsCodesBtn" style="margin-right:auto">⬇ تصدير CSV</button>
+      </h3>
+      <div class="frm">
+        <div class="row3">
+          <div><label>الكود</label>
+            <input id="insCodeInput" placeholder="INS-2026-001" style="text-transform:uppercase" /></div>
+          <div><label>عدد الاستخدامات</label>
+            <input id="insCodeMax" type="number" value="1" min="1" /></div>
+          <div><label>صلاحية (أيام)</label>
+            <input id="insCodeDays" type="number" value="30" min="1" /></div>
+        </div>
+        <button class="btn" id="createInsCodeBtn">🎟️ إنشاء الكود</button>
+      </div>
+      <div id="insCodesList" style="margin-top:16px">
+        <div class="skel"></div>
+      </div>
+    </div>
+
+    <!-- قائمة المدربين -->
+    <div class="card">
+      <h3>📋 المدربين الحاليين</h3>
+      <input class="search" id="insSearch" placeholder="🔍 ابحث عن مدرب..." />
+      <div id="instructorsList">
+        <div class="skel"></div>
+        <div class="skel"></div>
+      </div>
+    </div>
+
+    <!-- فيديوهات في انتظار المراجعة -->
+    <div class="card">
+      <h3>⏳ فيديوهات في انتظار المراجعة
+        <button class="btn sm ghost" id="refreshPendingBtn" style="margin-right:auto">🔄 تحديث</button>
+      </h3>
+      <div id="pendingVideosList">
+        <div class="skel"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ VIDEOS ============ -->
   <div class="panel" id="p-videos">
     <div class="sec-title">🎬 إدارة الفيديوهات</div>
     <div class="card">
-      <h3>➕ إضافة فيديو جديد</h3>
+      <h3>➕ إضافة فيديو جديد (نشر فوري)</h3>
       <div class="frm">
         <div><label>عنوان الفيديو</label><input id="vTitle" placeholder="مثال: مقدمة في الأمن السيبراني" /></div>
         <div><label>وصف الفيديو</label><textarea id="vDesc" placeholder="وصف مختصر..."></textarea></div>
@@ -326,6 +422,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     </div>
   </div>
 
+  <!-- ============ CODES ============ -->
   <div class="panel" id="p-codes">
     <div class="sec-title">🔓 أكواد الفتح</div>
     <div class="card">
@@ -350,33 +447,33 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     </div>
   </div>
 
+  <!-- ============ NOTIFS ============ -->
   <div class="panel" id="p-notifs">
-  <div class="sec-title">📢 الإشعارات</div>
-  
-  <!-- إرسال إشعار جديد -->
-  <div class="card">
-    <h3>✉️ إرسال إشعار جديد</h3>
-    <div class="frm">
-      <div><label>عنوان الإشعار</label><input id="nTitle" placeholder="مثال: تحديث جديد!" /></div>
-      <div><label>نص الإشعار</label><textarea id="nBody" placeholder="اكتب تفاصيل الإشعار..."></textarea></div>
-      <div><label>المستهدف</label><input id="nTarget" placeholder="all أو اسم مستخدم" value="all" /></div>
-      <button class="btn" id="sendNotifBtn">📨 إرسال الإشعار</button>
+    <div class="sec-title">📢 الإشعارات</div>
+
+    <div class="card">
+      <h3>✉️ إرسال إشعار جديد</h3>
+      <div class="frm">
+        <div><label>عنوان الإشعار</label><input id="nTitle" placeholder="مثال: تحديث جديد!" /></div>
+        <div><label>نص الإشعار</label><textarea id="nBody" placeholder="اكتب تفاصيل الإشعار..."></textarea></div>
+        <div><label>المستهدف</label><input id="nTarget" placeholder="all أو اسم مستخدم" value="all" /></div>
+        <button class="btn" id="sendNotifBtn">📨 إرسال الإشعار</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>
+        📋 الإشعارات السابقة
+        <button class="btn sm danger" id="delAllNotifsBtn" style="margin-right:auto">🗑 مسح الكل</button>
+      </h3>
+      <div id="adminNotifsList">
+        <div class="skel"></div>
+        <div class="skel"></div>
+      </div>
     </div>
   </div>
 
-  <!-- الإشعارات السابقة -->
-  <div class="card">
-    <h3>
-      📋 الإشعارات السابقة
-      <button class="btn sm danger" id="delAllNotifsBtn" style="margin-right:auto">🗑 مسح الكل</button>
-    </h3>
-    <div id="adminNotifsList">
-      <div class="skel"></div>
-      <div class="skel"></div>
-    </div>
-  </div>
-</div>
-
+  <!-- ============ BANS ============ -->
   <div class="panel" id="p-bans">
     <div class="sec-title">🚫 نظام الحظر</div>
     <div class="sec-sub">اختر مستخدماً وحدّد الميزات المحظورة عنه</div>
@@ -384,6 +481,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     <div id="bansList"></div>
   </div>
 
+  <!-- ============ SETTINGS ============ -->
   <div class="panel" id="p-settings">
     <div class="sec-title">⚙️ إعدادات المنصة</div>
     <div class="card">
@@ -442,6 +540,7 @@ const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 const $=id=>document.getElementById(id);
 const clean=s=>String(s==null?'':s).replace(/[<>]/g,'').trim();
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safeInt=(n,d=0)=>{const v=parseInt(n,10);return Number.isFinite(v)?v:d};
 
 /* ============ الحمايات ============ */
 document.addEventListener('contextmenu',e=>e.preventDefault());
@@ -460,10 +559,11 @@ document.addEventListener('keydown',e=>{
 /* ============ STATE ============ */
 let ADMIN=null;
 let PASS=sessionStorage.getItem('sayoda_admin_pass')||null;
-let USERS=[], VIDEOS=[];
+let USERS=[], VIDEOS=[], INSTRUCTORS=[];
 let LIVE_TIMER=null, DASH_TIMER=null;
 let LOG_FILTER_TYPE='', LOG_FILTER_USER='';
 let VM_CURRENT_USER=null;
+let ADMIN_IS_INSTRUCTOR=false;
 
 const BAN_FEATURES=[
   {k:'comments',t:'التعليقات'},
@@ -478,7 +578,8 @@ const ACTIVITY_ICONS={
   comment:'💬',rating:'⭐',
   unlock_code:'🔓',unlock_fail:'❌',
   admin_action:'⚙️',settings:'⚙️',
-  notification:'📢',ban:'🚫',unban:'✅'
+  notification:'📢',ban:'🚫',unban:'✅',
+  instructor_action:'🎬'
 };
 const ACTIVITY_LABELS={
   login:'تسجيل دخول',logout:'تسجيل خروج',register:'تسجيل جديد',
@@ -486,7 +587,8 @@ const ACTIVITY_LABELS={
   comment:'تعليق',rating:'تقييم',
   unlock_code:'استخدام كود فتح',unlock_fail:'فشل كود فتح',
   admin_action:'عملية أدمن',settings:'تعديل إعدادات',
-  notification:'إشعار',ban:'حظر مستخدم',unban:'فك حظر'
+  notification:'إشعار',ban:'حظر مستخدم',unban:'فك حظر',
+  instructor_action:'عملية مدرب'
 };
 
 /* ============ SESSION ============ */
@@ -575,6 +677,19 @@ $('gateBtn').onclick=async()=>{
       ADMIN={username:SESSION.username};
       PASS=p;
       sessionStorage.setItem('sayoda_admin_pass',p);
+
+      // نعرف هل الأدمن ده مدرب كمان؟
+      try{
+        const {data:uData} = await sb.from('users')
+          .select('is_instructor')
+          .eq('username', SESSION.username)
+          .limit(1);
+        ADMIN_IS_INSTRUCTOR = uData && uData[0] && uData[0].is_instructor === true;
+        if(ADMIN_IS_INSTRUCTOR){
+          $('insPanelBtn').style.display='grid';
+        }
+      }catch(e){}
+
       try{
         await sb.rpc('client_log_activity',{
           p_username:ADMIN.username,
@@ -603,6 +718,7 @@ $('gatePass').addEventListener('keydown',e=>{if(e.key==='Enter')$('gateBtn').cli
 const TABS=[
   {id:'dash',t:'📊 الإحصائيات'},
   {id:'users',t:'👥 الحسابات'},
+  {id:'instructors',t:'👨‍🏫 المدربين'},
   {id:'videos',t:'🎬 الفيديوهات'},
   {id:'codes',t:'🔓 الأكواد'},
   {id:'notifs',t:'📢 الإشعارات'},
@@ -619,6 +735,7 @@ document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{
   if(b.dataset.t==='codes') loadCodes();
   if(b.dataset.t==='settings') loadSettings();
   if(b.dataset.t==='notifs') loadAdminNotifications();
+  if(b.dataset.t==='instructors'){ loadInstructors(); loadInsCodes(); loadPendingVideos(); }
   if(b.dataset.t==='dash') startLiveUpdates();
   else stopLiveUpdates();
 });
@@ -649,10 +766,10 @@ async function loadStats(){
       {ic:'🟢',n:s.online||0,l:'أونلاين الآن'},
       {ic:'✅',n:s.active||0,l:'حسابات نشطة'},
       {ic:'🎬',n:s.videos||0,l:'الفيديوهات'},
+      {ic:'👨‍🏫',n:s.instructors||0,l:'المدربين'},
+      {ic:'⏳',n:s.pending_videos||0,l:'في انتظار المراجعة'},
       {ic:'💬',n:s.comments||0,l:'التعليقات'},
-      {ic:'🔑',n:s.today_logins||0,l:'دخول اليوم'},
-      {ic:'✨',n:s.today_registers||0,l:'تسجيلات اليوم'},
-      {ic:'📊',n:s.today_activity||0,l:'نشاطات اليوم'}
+      {ic:'🔑',n:s.today_logins||0,l:'دخول اليوم'}
     ];
 
     $('statsGrid').innerHTML=stats.map(x=>`
@@ -732,14 +849,14 @@ async function loadActivityLog(){
           }).filter(Boolean).join(' · ');
         }
       }catch(e){}
-      return `<div class="log-item type-${esc(r.activity_type)}">
-        <div class="log-ic">${icon}</div>
-        <div class="log-body">
-          <b>${esc(r.username)}</b>
-          <div class="log-type">${esc(label)}</div>
-          ${det?`<div class="log-details">${esc(det)}</div>`:''}
+      return `<div class="log-item type-${esc(r.activity_type)}" style="padding:12px;border-radius:12px;background:rgba(26,18,6,.5);border:1px solid var(--border-soft);margin-bottom:8px;display:flex;gap:12px;align-items:flex-start">
+        <div style="font-size:20px;flex-shrink:0">${icon}</div>
+        <div style="flex:1;min-width:0">
+          <b style="color:var(--gold)">${esc(r.username)}</b>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px">${esc(label)}</div>
+          ${det?`<div style="font-size:11px;color:var(--muted);margin-top:4px;word-break:break-word">${esc(det)}</div>`:''}
         </div>
-        <div class="log-time" title="${fullTime(r.created_at)}">${fmtDate(r.created_at)}</div>
+        <div style="font-size:11px;color:var(--muted);flex-shrink:0" title="${fullTime(r.created_at)}">${fmtDate(r.created_at)}</div>
       </div>`;
     }).join('');
   }catch(e){
@@ -748,7 +865,6 @@ async function loadActivityLog(){
   }
 }
 
-/* نربط الفلاتر بعد تحميل الصفحة */
 setTimeout(()=>{
   const tf = $('logTypeFilter');
   const uf = $('logUserFilter');
@@ -787,14 +903,19 @@ function renderUsers(q=''){
   const list=USERS.filter(u=>!q||u.username.toLowerCase().includes(q.toLowerCase()));
   $('usersList').innerHTML=list.length?list.map(u=>{
     const safePhone=u.phone?esc(u.phone):'—';
+    const isIns = u.role === 'instructor' || (u.role === 'admin' && u.is_instructor === true);
+    const badgeRole = u.role === 'admin'
+      ? (u.is_instructor ? '<span class="pill gold">👑 أدمن+مدرب</span>' : '<span class="pill gold">👑 مدير</span>')
+      : (u.role === 'instructor' ? '<span class="pill warn">🎬 مدرب</span>' : '');
     return `<div class="list-item" style="cursor:pointer" data-open="${esc(u.username)}">
       <div class="li-main">
-        <b>${esc(u.username)} ${u.role==='admin'?'<span class="pill gold">👑 مدير</span>':''}</b>
+        <b>${esc(u.username)} ${badgeRole}</b>
         <small>${esc(u.level||'مبتدئ')} · ${u.xp||0} XP · 🎬 ${u.videos_watched||0} · 🔥 ${u.streak||0} · 📞 ${safePhone}</small>
       </div>
       <span class="pill ${u.active!==false?'on':'off'}">${u.active!==false?'نشط':'موقوف'}</span>
       <div class="li-actions">
         <button class="btn sm blue" data-act="videos" data-user="${esc(u.username)}">🎬</button>
+        ${isIns && u.role === 'instructor' ? `<button class="btn sm danger" data-act="ban-ins" data-user="${esc(u.username)}">🚫</button>` : ''}
         <button class="btn sm ${u.active!==false?'warn':'ok'}" data-act="toggle" data-user="${esc(u.username)}">
           ${u.active!==false?'⏸':'▶'}
         </button>
@@ -803,14 +924,12 @@ function renderUsers(q=''){
     </div>`;
   }).join(''):'<div class="empty"><div class="e">👥</div><p>لا نتائج</p></div>';
 
-  /* الضغط على المستخدم */
   $('usersList').querySelectorAll('[data-open]').forEach(el=>{
     el.onclick=(e)=>{
       if(e.target.closest('button')) return;
       openUserDetails(el.dataset.open);
     };
   });
-  /* الأزرار */
   $('usersList').querySelectorAll('[data-act]').forEach(b=>{
     b.onclick=(e)=>{
       e.stopPropagation();
@@ -819,6 +938,7 @@ function renderUsers(q=''){
       if(act==='videos') openVideoManager(un);
       else if(act==='toggle') toggleActive(un);
       else if(act==='del') delUser(un);
+      else if(act==='ban-ins') banInstructor(un);
     };
   });
 }
@@ -848,6 +968,12 @@ function openUserDetails(un){
             <div style="font-size:11px;color:var(--muted);margin-bottom:4px">📞 رقم الهاتف</div>
             <div style="font-weight:900;font-size:15px">${u.phone?esc(u.phone):'—'}</div>
           </div>
+          <div style="padding:12px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:12px">
+            <div style="font-size:11px;color:var(--muted);margin-bottom:4px">🎭 الدور</div>
+            <div style="font-weight:900;font-size:15px">
+              ${u.role === 'admin' ? (u.is_instructor ? '👑 أدمن + 🎬 مدرب' : '👑 أدمن') : u.role === 'instructor' ? '🎬 مدرب' : '🎓 طالب'}
+            </div>
+          </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
             <div style="padding:10px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:10px;text-align:center">
               <div style="font-size:11px;color:var(--muted)">XP</div>
@@ -868,6 +994,7 @@ function openUserDetails(un){
           </div>
           <button class="btn blue" id="udVideos" style="width:100%">🎬 إدارة الفيديوهات</button>
           <button class="btn warn" id="udResetPass" style="width:100%">🔄 إعادة تعيين كلمة المرور</button>
+          ${u.role === 'instructor' ? `<button class="btn danger" id="udBanIns" style="width:100%">🚫 حظر المدرب (حذف شامل)</button>` : ''}
         </div>
       </div>
     </div>
@@ -879,81 +1006,463 @@ function openUserDetails(un){
     modal.remove();
     openVideoManager(un);
   };
-  modal.querySelector('#udResetPass').onclick = async () => {
-    if(!confirm('⚠️ إعادة تعيين كلمة مرور "' + un + '"؟\n\nسيتم توليد باسورد جديد.')) return;
-    
-    const btn = modal.querySelector('#udResetPass');
-    btn.disabled = true;
-    btn.textContent = '...';
-    
-    try{
-      const {data, error} = await sb.rpc('admin_reset_user_password', {
-        p_username: ADMIN.username,
-        p_password: PASS,
-        p_target_user: un
-      });
-      
-      if(error) throw error;
-      
-      const res = Array.isArray(data) ? data[0] : data;
-      
-      if(res && res.ok){
-        const newPass = res.new_password;
-        
-        const passBox = document.createElement('div');
-        passBox.style.cssText = `
-          margin-top: 12px;
-          padding: 16px;
-          background: linear-gradient(135deg, rgba(255,149,0,.15), rgba(255,215,0,.08));
-          border: 2px solid #ff9500;
-          border-radius: 14px;
-          text-align: center;
-        `;
-        passBox.innerHTML = `
-          <div style="font-size:12px;color:var(--muted);margin-bottom:6px">🔑 كلمة المرور الجديدة</div>
-          <div style="font-size:24px;font-weight:900;color:#ff9500;letter-spacing:2px;
-                      user-select:all;-webkit-user-select:all;font-family:monospace;
-                      padding:10px;background:rgba(0,0,0,.4);border-radius:10px;
-                      margin-bottom:10px">${newPass}</div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.6">
-            ⚠️ انسخها وابعتها للمستخدم الآن<br>
-            لن تظهر مرة أخرى
-          </div>
-          <button class="btn sm ok" id="copyNewPass" style="margin-top:10px;width:100%">
-            📋 نسخ الباسورد
-          </button>
-        `;
-        
-        const oldBox = modal.querySelector('#newPassBox');
-        if(oldBox) oldBox.remove();
-        
-        passBox.id = 'newPassBox';
-        modal.querySelector('.vid-modal-body').appendChild(passBox);
-        
-        passBox.querySelector('#copyNewPass').onclick = () => {
-          navigator.clipboard.writeText(newPass).then(() => {
-            toast('✅ تم نسخ الباسورد', 'ok');
-          }).catch(() => {
-            toast('انسخ يدوياً: ' + newPass, 'info');
-          });
-        };
-        
-        toast('✅ تم توليد باسورد جديد', 'ok');
-      } else {
-        toast('فشل: ' + (res?.error || 'خطأ غير معروف'), 'err');
-      }
-    }catch(e){
-      console.error('Reset error:', e);
-      toast('فشل: ' + (e.message || ''), 'err');
-    }finally{
-      btn.disabled = false;
-      btn.textContent = '🔄 إعادة تعيين كلمة المرور';
-    }
-  };
+  modal.querySelector('#udResetPass').onclick = () => resetUserPassword(un, modal);
+  
+  const banBtn = modal.querySelector('#udBanIns');
+  if(banBtn){
+    banBtn.onclick = () => { modal.remove(); banInstructor(un); };
+  }
+
   modal.onclick = (e) => { if(e.target === modal) modal.remove(); };
 }
 
-/* ============ VIDEO MANAGER ============ */
+async function resetUserPassword(un, modal){
+  if(!confirm('⚠️ إعادة تعيين كلمة مرور "' + un + '"؟\n\nسيتم توليد باسورد جديد.')) return;
+  
+  const btn = modal.querySelector('#udResetPass');
+  btn.disabled = true;
+  btn.textContent = '...';
+  
+  try{
+    const {data, error} = await sb.rpc('admin_reset_user_password', {
+      p_username: ADMIN.username,
+      p_password: PASS,
+      p_target_user: un
+    });
+    
+    if(error) throw error;
+    
+    const res = Array.isArray(data) ? data[0] : data;
+    
+    if(res && res.ok){
+      const newPass = res.new_password;
+      
+      const passBox = document.createElement('div');
+      passBox.style.cssText = `
+        margin-top: 12px;
+        padding: 16px;
+        background: linear-gradient(135deg, rgba(255,149,0,.15), rgba(255,215,0,.08));
+        border: 2px solid #ff9500;
+        border-radius: 14px;
+        text-align: center;
+      `;
+      passBox.innerHTML = `
+        <div style="font-size:12px;color:var(--muted);margin-bottom:6px">🔑 كلمة المرور الجديدة</div>
+        <div style="font-size:24px;font-weight:900;color:#ff9500;letter-spacing:2px;
+                    user-select:all;-webkit-user-select:all;font-family:monospace;
+                    padding:10px;background:rgba(0,0,0,.4);border-radius:10px;
+                    margin-bottom:10px">${newPass}</div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.6">
+          ⚠️ انسخها وابعتها للمستخدم الآن<br>
+          لن تظهر مرة أخرى
+        </div>
+        <button class="btn sm ok" id="copyNewPass" style="margin-top:10px;width:100%">
+          📋 نسخ الباسورد
+        </button>
+      `;
+      
+      const oldBox = modal.querySelector('#newPassBox');
+      if(oldBox) oldBox.remove();
+      
+      passBox.id = 'newPassBox';
+      modal.querySelector('.vid-modal-body').appendChild(passBox);
+      
+      passBox.querySelector('#copyNewPass').onclick = () => {
+        navigator.clipboard.writeText(newPass).then(() => {
+          toast('✅ تم نسخ الباسورد', 'ok');
+        }).catch(() => {
+          toast('انسخ يدوياً: ' + newPass, 'info');
+        });
+      };
+      
+      toast('✅ تم توليد باسورد جديد', 'ok');
+    } else {
+      toast('فشل: ' + (res?.error || 'خطأ غير معروف'), 'err');
+    }
+  }catch(e){
+    console.error('Reset error:', e);
+    toast('فشل: ' + (e.message || ''), 'err');
+  }finally{
+    btn.disabled = false;
+    btn.textContent = '🔄 إعادة تعيين كلمة المرور';
+  }
+}
+
+/* ============ INSTRUCTORS MANAGEMENT ============ */
+async function loadInstructors(){
+  $('instructorsList').innerHTML='<div class="skel"></div><div class="skel"></div>';
+  try{
+    const {data, error} = await sb.from('users')
+      .select('id, username, role, is_instructor, active, xp, specialty, bio, created_at')
+      .or('role.eq.instructor,and(role.eq.admin,is_instructor.eq.true)')
+      .order('created_at', {ascending: false});
+    
+    if(error) throw error;
+    INSTRUCTORS = data || [];
+  }catch(e){
+    console.error('loadInstructors error:', e);
+    INSTRUCTORS = [];
+  }
+  renderInstructors();
+}
+
+function renderInstructors(q=''){
+  const list = INSTRUCTORS.filter(u => !q || u.username.toLowerCase().includes(q.toLowerCase()));
+  
+  if(!list.length){
+    $('instructorsList').innerHTML='<div class="empty"><div class="e">👨‍🏫</div><p>لا يوجد مدربين بعد</p></div>';
+    return;
+  }
+  
+  $('instructorsList').innerHTML = list.map(u => {
+    const isAdmin = u.role === 'admin';
+    return `<div class="list-item">
+      <div class="li-main">
+        <b>${isAdmin?'👑':'🎬'} ${esc(u.username)} ${isAdmin?'<span class="pill gold">أدمن+مدرب</span>':'<span class="pill warn">مدرب</span>'}</b>
+        <small>
+          ${u.specialty?`🎯 ${esc(u.specialty)} · `:''}
+          ${u.active!==false?'🟢 نشط':'🔴 موقوف'}
+          ${u.created_at?` · 📅 ${fmtDate(u.created_at)}`:''}
+        </small>
+      </div>
+      <div class="li-actions">
+        <button class="btn sm blue" data-ins-vids="${esc(u.username)}">🎬 فيديوهاته</button>
+        ${!isAdmin ? `<button class="btn sm danger" data-ban-ins="${esc(u.username)}">🚫 حظر</button>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+  
+  $('instructorsList').querySelectorAll('[data-ban-ins]').forEach(b => {
+    b.onclick = () => banInstructor(b.dataset.banIns);
+  });
+  $('instructorsList').querySelectorAll('[data-ins-vids]').forEach(b => {
+    b.onclick = () => openVideoManager(b.dataset.insVids);
+  });
+}
+
+$('insSearch').oninput = e => renderInstructors(e.target.value);
+
+/* ============ BAN INSTRUCTOR (DELETE ALL) ============ */
+async function banInstructor(un){
+  if(!ensurePass()) return;
+
+  const u = USERS.find(x => x.username === un) || INSTRUCTORS.find(x => x.username === un);
+  
+  if(!confirm(
+    '⚠️ تحذير خطير!\n\n' +
+    'حظر المدرب "' + un + '"\n\n' +
+    '• هيتم حذف الحساب نهائياً\n' +
+    '• هيتم حذف كل فيديوهاته\n' +
+    '• لا يمكن التراجع!\n\n' +
+    'هل أنت متأكد؟'
+  )) return;
+
+  const typed = prompt(
+    'للتأكيد النهائي، اكتب اسم المدرب:\n' +
+    '"' + un + '"'
+  );
+  if(typed !== un){
+    toast('تم إلغاء العملية','err');
+    return;
+  }
+
+  const reason = prompt('سبب الحظر (اختياري):') || null;
+
+  try{
+    const {data, error} = await sb.rpc('admin_ban_instructor', {
+      p_username: ADMIN.username,
+      p_password: PASS,
+      p_target:   un,
+      p_reason:   reason
+    });
+
+    if(error) throw error;
+    const res = Array.isArray(data) ? data[0] : data;
+
+    if(res && res.ok){
+      toast(
+        `✅ تم حظر "${un}" وحذف ${res.deleted_videos || 0} فيديو`,
+        'ok'
+      );
+      USERS = USERS.filter(x => x.username !== un);
+      INSTRUCTORS = INSTRUCTORS.filter(x => x.username !== un);
+      renderUsers($('userSearch').value);
+      renderInstructors($('insSearch').value);
+      renderBans($('banSearch').value);
+    } else {
+      const errMap = {
+        'not_admin':'ليس لديك صلاحية',
+        'user_not_found':'المدرب غير موجود',
+        'not_instructor':'هذا المستخدم ليس مدرب',
+        'cannot_ban_self':'لا يمكنك حظر نفسك',
+        'cannot_ban_admin':'لا يمكنك حظر أدمن'
+      };
+      toast('فشل: ' + (errMap[res?.error] || res?.error || 'خطأ'), 'err');
+    }
+  } catch(e){
+    console.error('banInstructor error:', e);
+    toast('فشل الحظر: ' + (e.message || ''), 'err');
+  }
+}
+
+/* ============ ADD INSTRUCTOR ============ */
+$('addInsBtn').onclick = async () => {
+  if(!ensurePass()) return;
+  const u = clean($('newInsUser').value);
+  const p = $('newInsPass').value;
+  const spec = clean($('newInsSpec').value);
+  const bio = clean($('newInsBio').value);
+
+  if(!u || !p) return toast('اسم المستخدم وكلمة المرور مطلوبان','err');
+  if(u.length < 3) return toast('اسم المستخدم قصير جداً','err');
+  if(p.length < 6) return toast('كلمة المرور قصيرة (6+)','err');
+
+  const btn = $('addInsBtn');
+  btn.disabled = true; btn.textContent = '...';
+
+  try{
+    const {data, error} = await sb.rpc('admin_add_instructor', {
+      p_username: ADMIN.username,
+      p_password: PASS,
+      p_new_username: u,
+      p_new_password: p,
+      p_bio: bio || null,
+      p_specialty: spec || null
+    });
+    if(error) throw error;
+    const res = Array.isArray(data) ? data[0] : data;
+    if(res && res.ok){
+      toast('✅ تم إضافة المدرب');
+      $('newInsUser').value = '';
+      $('newInsPass').value = '';
+      $('newInsSpec').value = '';
+      $('newInsBio').value = '';
+      await loadUsers();
+      await loadInstructors();
+    } else {
+      const errMap = {
+        'username_exists':'اسم المستخدم موجود بالفعل',
+        'password_short':'كلمة المرور قصيرة',
+        'not_admin':'ليس لديك صلاحية'
+      };
+      toast('فشل: ' + (errMap[res?.error] || res?.error || 'خطأ'), 'err');
+    }
+  } catch(e){
+    toast('فشل: ' + (e.message||''), 'err');
+  } finally {
+    btn.disabled = false; btn.textContent = '➕ إضافة المدرب';
+  }
+};
+
+/* ============ INVITE CODES ============ */
+async function loadInsCodes(){
+  $('insCodesList').innerHTML = '<div class="skel"></div>';
+  try{
+    const {data, error} = await sb.from('instructor_invite_codes')
+      .select('*')
+      .order('created_at', {ascending: false})
+      .limit(100);
+    
+    if(error) throw error;
+    const rows = data || [];
+    window._insCodes = rows;
+    
+    if(!rows.length){
+      $('insCodesList').innerHTML = '<div class="empty"><div class="e">🎟️</div><p>لا توجد أكواد بعد</p></div>';
+      return;
+    }
+    
+    $('insCodesList').innerHTML = rows.map(c => {
+      const expired = c.expires_at && new Date(c.expires_at) < new Date();
+      const used = c.uses >= c.max_uses;
+      const status = !c.active ? 'معطّل' : expired ? 'منتهي' : used ? 'مستخدم بالكامل' : 'فعّال';
+      const statusClass = c.active && !expired && !used ? 'on' : 'off';
+      
+      return `<div class="list-item">
+        <div class="li-main">
+          <b>🎟️ ${esc(c.code)}</b>
+          <span class="pill ${statusClass}">${status}</span>
+          <small>
+            👤 ${esc(c.created_by)} · 🎯 ${c.uses}/${c.max_uses}
+            ${c.expires_at ? ` · 📅 ينتهي ${fmtDate(c.expires_at)}` : ''}
+          </small>
+        </div>
+        <div class="li-actions">
+          <button class="btn sm ghost" data-copy-code="${esc(c.code)}">📋</button>
+          <button class="btn sm danger" data-del-ins-code="${c.id}">🗑</button>
+        </div>
+      </div>`;
+    }).join('');
+    
+    $('insCodesList').querySelectorAll('[data-copy-code]').forEach(b => {
+      b.onclick = () => {
+        navigator.clipboard.writeText(b.dataset.copyCode).then(() => toast('✅ تم نسخ الكود','ok'));
+      };
+    });
+    $('insCodesList').querySelectorAll('[data-del-ins-code]').forEach(b => {
+      b.onclick = () => deleteInsCode(b.dataset.delInsCode);
+    });
+    
+  }catch(e){
+    console.error('loadInsCodes error:', e);
+    $('insCodesList').innerHTML = '<div class="empty"><div class="e">⚠️</div><p>تعذّر التحميل</p></div>';
+  }
+}
+
+$('createInsCodeBtn').onclick = async () => {
+  if(!ensurePass()) return;
+  const code = clean($('insCodeInput').value).toUpperCase();
+  const max = safeInt($('insCodeMax').value, 1);
+  const days = safeInt($('insCodeDays').value, 30);
+  
+  if(!code) return toast('اكتب الكود','err');
+  if(max < 1 || days < 1) return toast('قيم غير صحيحة','err');
+  
+  const btn = $('createInsCodeBtn');
+  btn.disabled = true; btn.textContent = '...';
+  
+  try{
+    const {data, error} = await sb.rpc('admin_create_instructor_code', {
+      p_username: ADMIN.username,
+      p_password: PASS,
+      p_code: code,
+      p_max_uses: max,
+      p_days: days
+    });
+    if(error) throw error;
+    const res = Array.isArray(data) ? data[0] : data;
+    
+    if(res && res.ok){
+      toast('✅ تم إنشاء الكود: ' + res.code, 'ok');
+      $('insCodeInput').value = '';
+      loadInsCodes();
+    } else {
+      const errMap = {
+        'code_exists':'الكود موجود بالفعل',
+        'not_admin':'ليس لديك صلاحية'
+      };
+      toast('فشل: ' + (errMap[res?.error] || res?.error || 'خطأ'), 'err');
+    }
+  }catch(e){
+    toast('فشل: ' + (e.message||''), 'err');
+  }finally{
+    btn.disabled = false; btn.textContent = '🎟️ إنشاء الكود';
+  }
+};
+
+async function deleteInsCode(id){
+  if(!confirm('حذف هذا الكود؟')) return;
+  try{
+    const {error} = await sb.from('instructor_invite_codes').delete().eq('id', id);
+    if(error) throw error;
+    toast('تم الحذف');
+    loadInsCodes();
+  }catch(e){
+    toast('فشل: ' + (e.message||''), 'err');
+  }
+}
+
+$('exportInsCodesBtn').onclick = () => {
+  const rows = window._insCodes || [];
+  if(!rows.length) return toast('لا أكواد للتصدير','err');
+  const head = ['code','created_by','uses','max_uses','active','expires_at','created_at'];
+  const csv = [head.join(',')].concat(rows.map(c => head.map(h => {
+    let v = c[h];
+    return '"' + String(v==null?'':v).replace(/"/g,'""') + '"';
+  }).join(','))).join('\n');
+  const blob = new Blob(['\uFEFF'+csv], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'instructor_codes.csv';
+  a.click();
+  toast('تم التصدير');
+};
+
+/* ============ PENDING VIDEOS ============ */
+async function loadPendingVideos(){
+  $('pendingVideosList').innerHTML='<div class="skel"></div><div class="skel"></div>';
+  try{
+    const {data, error} = await sb.rpc('admin_get_pending_videos', {
+      p_username: ADMIN.username,
+      p_password: PASS
+    });
+    if(error) throw error;
+    const rows = Array.isArray(data) ? data : [];
+    
+    if(!rows.length){
+      $('pendingVideosList').innerHTML = '<div class="empty"><div class="e">✅</div><p>لا توجد فيديوهات في انتظار المراجعة</p></div>';
+      return;
+    }
+    
+    $('pendingVideosList').innerHTML = rows.map(v => {
+      const ytMatch = (v.youtube_url||'').match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
+      const thumb = v.thumbnail || (ytMatch ? `https://i.ytimg.com/vi/${ytMatch[1]}/mqdefault.jpg` : './sayed.png');
+      
+      return `<div class="pending-card">
+        <div class="p-head">
+          <img src="${esc(thumb)}" onerror="this.src='./sayed.png'" alt="">
+          <div class="p-info">
+            <h4>${esc(v.title)}</h4>
+            <p>${esc(v.description||'بدون وصف').slice(0,200)}</p>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--muted)">
+              <span>👨‍🏫 ${esc(v.instructor_name)}</span>
+              <span>🎯 ${esc(v.category||'عام')}</span>
+              <span>🕐 ${fmtDate(v.created_at)}</span>
+            </div>
+          </div>
+        </div>
+        <div class="p-actions">
+          <button class="btn sm ok" data-approve="${v.id}">✅ موافقة ونشر</button>
+          <button class="btn sm danger" data-reject="${v.id}">❌ رفض</button>
+          <a class="btn sm ghost" href="${esc(v.youtube_url)}" target="_blank" rel="noopener">👁 معاينة</a>
+        </div>
+      </div>`;
+    }).join('');
+    
+    $('pendingVideosList').querySelectorAll('[data-approve]').forEach(b => {
+      b.onclick = () => reviewVideo(b.dataset.approve, 'approve');
+    });
+    $('pendingVideosList').querySelectorAll('[data-reject]').forEach(b => {
+      b.onclick = () => {
+        const reason = prompt('سبب الرفض (اختياري):');
+        reviewVideo(b.dataset.reject, 'reject', reason);
+      };
+    });
+    
+  }catch(e){
+    console.error('loadPendingVideos error:', e);
+    $('pendingVideosList').innerHTML = '<div class="empty"><div class="e">⚠️</div><p>تعذّر التحميل</p></div>';
+  }
+}
+
+async function reviewVideo(vid, action, reason){
+  if(!ensurePass()) return;
+  try{
+    const {data, error} = await sb.rpc('admin_review_video', {
+      p_username: ADMIN.username,
+      p_password: PASS,
+      p_video_id: parseInt(vid),
+      p_action: action,
+      p_reason: reason || null
+    });
+    if(error) throw error;
+    const res = Array.isArray(data) ? data[0] : data;
+    if(res && res.ok){
+      toast(action === 'approve' ? '✅ تم نشر الفيديو' : 'تم رفض الفيديو');
+      loadPendingVideos();
+      loadVideos();
+      loadStats();
+    } else {
+      toast('فشل: ' + (res?.error||''), 'err');
+    }
+  }catch(e){
+    toast('فشل: ' + (e.message||''), 'err');
+  }
+}
+
+$('refreshPendingBtn').onclick = () => { loadPendingVideos(); toast('تم التحديث'); };
+
+/* ============ VIDEO MANAGER (per user) ============ */
 async function openVideoManager(un){
   if(!ensurePass()) return;
   VM_CURRENT_USER = un;
@@ -1125,15 +1634,26 @@ async function loadVideos(){
     const {data}=await sb.from('videos').select('*').order('created_at',{ascending:false});
     VIDEOS=data||[];
   }catch(e){VIDEOS=[];}
-  $('adminVidList').innerHTML=VIDEOS.length?VIDEOS.map(v=>`<div class="list-item">
-    <div class="li-main">
-      <b>${esc(v.title)}</b>
-      <small>${esc(v.category||'عام')} · 👁 ${v.views||0} · ⭐ ${v.rating_count?((v.total_rating/v.rating_count)||0).toFixed(1):'—'} ${v.locked?'· 🔒':''}</small>
-    </div>
-    <div class="li-actions">
-      <button class="btn sm danger" data-vid="${v.id}">🗑 حذف</button>
-    </div>
-  </div>`).join(''):'<div class="empty"><div class="e">🎬</div><p>لا فيديوهات</p></div>';
+  $('adminVidList').innerHTML=VIDEOS.length?VIDEOS.map(v=>{
+    const statusMap = {
+      approved:{cls:'status-approved', txt:'✅ معتمد'},
+      pending:{cls:'status-pending', txt:'⏳ مراجعة'},
+      rejected:{cls:'status-rejected', txt:'❌ مرفوض'}
+    };
+    const st = statusMap[v.status] || statusMap.approved;
+    return `<div class="list-item">
+      <div class="li-main">
+        <b>${esc(v.title)}</b>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;align-items:center">
+          <span class="status-badge ${st.cls}">${st.txt}</span>
+          <small>${esc(v.category||'عام')} · 👁 ${v.views||0}</small>
+        </div>
+      </div>
+      <div class="li-actions">
+        <button class="btn sm danger" data-vid="${v.id}">🗑 حذف</button>
+      </div>
+    </div>`;
+  }).join(''):'<div class="empty"><div class="e">🎬</div><p>لا فيديوهات</p></div>';
 
   $('adminVidList').querySelectorAll('[data-vid]').forEach(b=>b.onclick=()=>delVid(b.dataset.vid));
 }
@@ -1283,13 +1803,11 @@ $('sendNotifBtn').onclick=async()=>{
         p_user_agent:navigator.userAgent.slice(0,200)
       });
     }catch(e){}
-    /* ⭐ أعد تحميل القايمة */
     loadAdminNotifications();
   }catch(e){toast('فشل الإرسال: '+(e.message||''),'err');}
   finally{btn.disabled=false;btn.textContent='📨 إرسال الإشعار';}
 };
 
-/* ============ ADMIN NOTIFICATIONS LIST ============ */
 async function loadAdminNotifications(){
   if(!ensurePass()) return;
   const container = $('adminNotifsList');
@@ -1373,10 +1891,12 @@ $('delAllNotifsBtn').onclick = async () => {
   }
 };
 
-
 /* ============ BANS ============ */
 function renderBans(q=''){
-  const list=USERS.filter(u=>u.role!=='admin'&&(!q||u.username.toLowerCase().includes(q.toLowerCase())));
+  const list=USERS.filter(u=>{
+    const isIns = u.role === 'instructor';
+    return u.role !== 'admin' && !isIns && (!q||u.username.toLowerCase().includes(q.toLowerCase()));
+  });
   $('bansList').innerHTML=list.length?list.map(u=>{
     const banned=Array.isArray(u.banned_features)?u.banned_features:[];
     return `<div class="list-item" style="flex-direction:column;align-items:stretch">

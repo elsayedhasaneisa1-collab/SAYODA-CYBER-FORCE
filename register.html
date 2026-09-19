@@ -68,6 +68,21 @@ body{
 .strength{height:5px;border-radius:5px;background:rgba(3,10,22,.6);margin-top:6px;overflow:hidden;border:1px solid var(--border)}
 .strength i{display:block;height:100%;width:0%;transition:width .3s,background .3s;background:var(--danger)}
 
+/* ============ TOGGLE SECTION ============ */
+.toggle-section{margin-bottom:16px;padding:12px;border-radius:14px;
+  background:rgba(3,10,22,.5);border:1px solid var(--border-soft,rgba(25,170,255,.12))}
+.toggle-header{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;user-select:none}
+.toggle-header .txt{font-size:13px;font-weight:800;color:#cfe3fb;display:flex;align-items:center;gap:6px}
+.toggle-header .txt .ic{font-size:16px}
+.toggle-header .arrow{color:var(--muted);font-size:14px;transition:transform .25s}
+.toggle-section.open .arrow{transform:rotate(180deg)}
+.toggle-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.toggle-section.open .toggle-body{max-height:400px;padding-top:14px}
+
+.ins-badge{display:inline-block;padding:3px 9px;border-radius:10px;
+  background:rgba(255,215,0,.15);color:#ffd700;font-size:10px;font-weight:800;
+  border:1px solid rgba(255,215,0,.3);margin-right:6px}
+
 .btn{width:100%;padding:15px;border:none;border-radius:14px;cursor:pointer;
   background:linear-gradient(135deg,var(--blue),var(--blue-2));color:#021226;
   font-size:16px;font-weight:900;letter-spacing:.5px;position:relative;overflow:hidden;
@@ -156,6 +171,33 @@ body{
       <small class="hint">لو حد دعاك، اكتب كوده هنا (اختياري) — هتاخد أنت وهو +50 XP</small>
     </div>
 
+    <!-- ============ قسم المدرب (اختياري) ============ -->
+    <div class="toggle-section" id="insToggle">
+      <div class="toggle-header" id="insToggleHeader">
+        <div class="txt">
+          <span class="ic">🎬</span>
+          <span>عندك كود مدرب؟</span>
+          <span class="ins-badge">اختياري</span>
+        </div>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="toggle-body">
+        <div class="field" style="margin-bottom:0">
+          <label>كود المدرب</label>
+          <div class="input-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            <input type="text" id="insCode" placeholder="INS-XXXX-XXXX" maxlength="30"
+              style="text-transform:uppercase" autocomplete="off" />
+          </div>
+          <small class="hint">
+            لو عندك كود من الإدارة، اكتبه هنا واترقّي لمدرب فوراً
+          </small>
+        </div>
+      </div>
+    </div>
+
     <button type="submit" class="btn" id="submitBtn">إنشاء الحساب</button>
     <button type="button" class="btn-ghost" onclick="location.href='./login.html'">← لدي حساب بالفعل</button>
   </form>
@@ -187,10 +229,17 @@ const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const $ = id => document.getElementById(id);
 const clean = s => String(s||'').replace(/[<>]/g,'').trim();
 
+/* ============ SESSION CHECK ============ */
 try{
   const s = JSON.parse(localStorage.getItem('sayoda_session')||'null');
   if(s && s.username && s.token){
-    location.replace(s.role==='admin' ? './admin.html' : './index.html');
+    if(s.role === 'admin'){
+      location.replace('./admin.html');
+    } else if(s.role === 'instructor'){
+      location.replace('./instructor.html');
+    } else {
+      location.replace('./index.html');
+    }
   }
 }catch(e){}
 
@@ -201,6 +250,11 @@ function showMsg(t, type){
   window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'});
 }
 
+/* ============ TOGGLE المدرب ============ */
+$('insToggleHeader').onclick = () => {
+  $('insToggle').classList.toggle('open');
+};
+
 $('toggleEye1').onclick = () => {
   const p = $('password');
   p.type = p.type === 'password' ? 'text' : 'password';
@@ -210,6 +264,7 @@ $('toggleEye2').onclick = () => {
   p.type = p.type === 'password' ? 'text' : 'password';
 };
 
+/* ============ قوة الباسورد ============ */
 $('password').addEventListener('input', e => {
   const v = e.target.value;
   let score = 0;
@@ -226,14 +281,18 @@ $('password').addEventListener('input', e => {
   else bar.style.background = '#28d17c';
 });
 
+/* ============ تنظيف المدخلات ============ */
 $('refCode').addEventListener('input', e => {
   e.target.value = e.target.value.toUpperCase().replace(/\s/g,'');
 });
-
+$('insCode').addEventListener('input', e => {
+  e.target.value = e.target.value.toUpperCase().replace(/\s/g,'');
+});
 $('phone').addEventListener('input', e => {
   e.target.value = e.target.value.replace(/[^0-9]/g,'');
 });
 
+/* ============ Ripple ============ */
 document.querySelectorAll('.btn, .btn-ghost').forEach(b => b.addEventListener('click', function(e){
   const c = document.createElement('span');
   c.className = 'ripple';
@@ -246,6 +305,7 @@ document.querySelectorAll('.btn, .btn-ghost').forEach(b => b.addEventListener('c
   setTimeout(()=>c.remove(), 600);
 }));
 
+/* ============ SUBMIT ============ */
 $('registerForm').addEventListener('submit', async e => {
   e.preventDefault();
 
@@ -254,7 +314,9 @@ $('registerForm').addEventListener('submit', async e => {
   const password = $('password').value;
   const confirm  = $('confirm').value;
   const refCode  = clean($('refCode').value).toUpperCase();
+  const insCode  = clean($('insCode').value).toUpperCase();
 
+  /* ============ التحقق ============ */
   if(!username || !phone || !password || !confirm){
     return showMsg('⚠️ الرجاء ملء جميع الحقول المطلوبة', 'err');
   }
@@ -280,7 +342,7 @@ $('registerForm').addEventListener('submit', async e => {
 
   try{
     /* ============================================
-       الخطوة 1: إنشاء الحساب
+       الخطوة 1: إنشاء الحساب (كطالب)
        ============================================ */
     const { data, error } = await sb.rpc('secure_register', {
       p_username: username,
@@ -315,7 +377,6 @@ $('registerForm').addEventListener('submit', async e => {
         .update({ phone: phone })
         .eq('username', username);
       if(phoneErr) console.warn('⚠️ Phone update error:', phoneErr);
-      else console.log('✅ الهاتف اتسجل');
     }catch(err){ console.warn('Phone update failed:', err); }
 
     /* ============================================
@@ -324,31 +385,44 @@ $('registerForm').addEventListener('submit', async e => {
     let referralBonus = 0;
     if(refCode){
       try{
-        console.log('🎁 Applying referral code:', refCode);
-        
         const { data: rData, error: rErr } = await sb.rpc('apply_referral_code', {
           p_new_user: username,
           p_code: refCode
         });
-        
-        if(rErr) throw rErr;
-        
-        const rRes = Array.isArray(rData) ? rData[0] : rData;
-        console.log('🎁 Referral result:', rRes);
-        
-        if(rRes && rRes.ok){
-          referralBonus = 50;
-          console.log('✅ كود الدعوة اتطبق. referrer:', rRes.referrer);
-        } else {
-          console.warn('⚠️ كود الدعوة فشل:', rRes?.error);
+        if(!rErr){
+          const rRes = Array.isArray(rData) ? rData[0] : rData;
+          if(rRes && rRes.ok){
+            referralBonus = 50;
+            console.log('✅ كود الدعوة اتطبق. referrer:', rRes.referrer);
+          }
         }
-      }catch(err){
-        console.error('❌ Referral error:', err);
-      }
+      }catch(err){ console.error('❌ Referral error:', err); }
     }
 
     /* ============================================
-       الخطوة 4: تسجيل النشاط
+       الخطوة 4: كود المدرب (اختياري)
+       ============================================ */
+    let becameInstructor = false;
+    if(insCode){
+      try{
+        const { data: iData, error: iErr } = await sb.rpc('apply_instructor_code', {
+          p_username: username,
+          p_code: insCode
+        });
+        if(!iErr){
+          const iRes = Array.isArray(iData) ? iData[0] : iData;
+          if(iRes && iRes.ok){
+            becameInstructor = true;
+            console.log('✅ المستخدم اترقّى لمدرب');
+          } else {
+            console.warn('⚠️ كود المدرب فشل:', iRes?.error);
+          }
+        }
+      }catch(err){ console.error('❌ Instructor code error:', err); }
+    }
+
+    /* ============================================
+       الخطوة 5: تسجيل النشاط
        ============================================ */
     try{
       await sb.rpc('client_log_activity', {
@@ -358,24 +432,27 @@ $('registerForm').addEventListener('submit', async e => {
           phone: phone,
           refCode: refCode || null,
           hasReferral: !!refCode,
-          referralBonus: referralBonus
+          referralBonus: referralBonus,
+          becameInstructor: becameInstructor,
+          insCode: becameInstructor ? insCode : null
         }),
         p_user_agent: navigator.userAgent.slice(0,200)
       });
     }catch(err){ console.warn('Activity log error:', err); }
 
     /* ============================================
-       الخطوة 5: رسالة النجاح
+       الخطوة 6: رسالة النجاح
        ============================================ */
-    showMsg(
-      referralBonus > 0
-        ? '✅ تم إنشاء حسابك! كود الدعوة اتطبّق (+50 XP) — جاري تسجيل الدخول...'
-        : '✅ تم إنشاء حسابك بنجاح! جاري تسجيل الدخول...',
-      'ok'
-    );
+    let successMsg = '✅ تم إنشاء حسابك بنجاح! جاري تسجيل الدخول...';
+    if(becameInstructor){
+      successMsg = '🎬 تم إنشاء حسابك كمدرب! جاري تسجيل الدخول...';
+    } else if(referralBonus > 0){
+      successMsg = '✅ تم إنشاء حسابك! كود الدعوة اتطبّق (+50 XP) — جاري تسجيل الدخول...';
+    }
+    showMsg(successMsg, 'ok');
 
     /* ============================================
-       الخطوة 6: تسجيل دخول تلقائي
+       الخطوة 7: تسجيل دخول تلقائي
        ============================================ */
     const { data: loginData, error: loginErr } = await sb.rpc('secure_login', {
       p_username: username,
@@ -386,15 +463,38 @@ $('registerForm').addEventListener('submit', async e => {
     const loginRes = Array.isArray(loginData) ? loginData[0] : loginData;
 
     if(loginRes && loginRes.ok){
+      // نحدد الدور الحقيقي بعد الترقية
+      let finalRole = loginRes.role || 'student';
+      let finalIsIns = false;
+
+      try{
+        const { data: uData } = await sb.from('users')
+          .select('role, is_instructor')
+          .eq('username', username)
+          .limit(1);
+        if(uData && uData[0]){
+          finalRole = uData[0].role || finalRole;
+          finalIsIns = uData[0].is_instructor === true;
+        }
+      }catch(e){}
+
       localStorage.setItem('sayoda_session', JSON.stringify({
         username: loginRes.username,
-        role: loginRes.role,
+        role: finalRole,
+        is_instructor: finalIsIns,
         token: loginRes.token,
         ts: Date.now()
       }));
-      setTimeout(()=>{
-        location.replace((loginRes.role === 'admin') ? './admin.html' : './index.html');
-      }, 1200);
+
+      // وجهة التحويل
+      let dest = './index.html';
+      if(finalRole === 'instructor' || (finalRole === 'admin' && finalIsIns)){
+        dest = './instructor.html';
+      } else if(finalRole === 'admin'){
+        dest = './admin.html';
+      }
+
+      setTimeout(()=> location.replace(dest), 1200);
     } else {
       setTimeout(()=>location.replace('./login.html'), 1400);
     }

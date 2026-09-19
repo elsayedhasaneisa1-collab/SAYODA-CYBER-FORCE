@@ -96,7 +96,7 @@ body{
 
 <div class="card">
   <div class="logo-wrap">
-    <img src="./logol.png" alt="logo" onerror="this.style.display='none'" />
+    <img src="./logo.png" alt="logo" onerror="this.style.display='none'" />
     <div class="brand">SAYODA <span>| CYBER FORCE</span></div>
     <div class="sub">🔐 منصة التعلّم الأمنية الاحترافية</div>
   </div>
@@ -157,7 +157,14 @@ const clean = s => String(s||'').replace(/[<>]/g,'').trim();
 try{
   const s = JSON.parse(localStorage.getItem('sayoda_session')||'null');
   if(s && s.username && s.token){
-    location.replace(s.role==='admin' ? './admin.html' : './index.html');
+    // توجيه حسب الدور
+    if(s.role === 'admin'){
+      location.replace('./admin.html');
+    } else if(s.role === 'instructor'){
+      location.replace('./instructor.html');
+    } else {
+      location.replace('./index.html');
+    }
   }
 }catch(e){}
 
@@ -246,9 +253,34 @@ $('loginForm').addEventListener('submit', async e => {
 
     setLock({ n: 0, t: 0 });
 
+    /* ============================================
+       تحديد الدور الحقيقي (admin / instructor / student)
+       - لو الأدمن عنده is_instructor = true → يروح لوحة المدرب
+         (مع إمكانية الرجوع للأدمن من زرار في الهيدر)
+       - لو أدمن عادي → admin.html
+       - لو مدرب → instructor.html
+       - غير كده → index.html
+       ============================================ */
+    let role = res.role || 'student';
+    let isInstructor = false;
+
+    // نتأكد من is_instructor في قاعدة البيانات
+    try{
+      const { data: uData } = await sb.from('users')
+        .select('role, is_instructor')
+        .eq('username', res.username)
+        .limit(1);
+      if(uData && uData[0]){
+        role = uData[0].role || role;
+        isInstructor = uData[0].is_instructor === true;
+      }
+    }catch(e){ console.warn('role check error:', e); }
+
+    // خزّن كل حاجة في الـ session
     localStorage.setItem('sayoda_session', JSON.stringify({
       username: res.username,
-      role: res.role,
+      role: role,
+      is_instructor: isInstructor,
       token: res.token,
       ts: Date.now()
     }));
@@ -260,15 +292,31 @@ $('loginForm').addEventListener('submit', async e => {
       await sb.rpc('client_log_activity', {
         p_username: res.username,
         p_activity_type: 'login',
-        p_details: JSON.stringify({}),
+        p_details: JSON.stringify({ role: role, is_instructor: isInstructor }),
         p_user_agent: navigator.userAgent.slice(0,200)
       });
     }catch(e){}
 
-    showMsg('✅ تم الدخول بنجاح! جاري التحويل...', 'ok');
+    /* تحديد وجهة التحويل */
+    let destination = './index.html';
+    let welcomeMsg = '✅ تم الدخول بنجاح! جاري التحويل...';
+
+    if(role === 'admin' && isInstructor){
+      // أدمن + مدرب → لوحة المدرب (وفيها زرار للأدمن)
+      destination = './instructor.html';
+      welcomeMsg = '👑 مرحباً أيها المدير-المدرب! جاري التحويل...';
+    } else if(role === 'admin'){
+      destination = './admin.html';
+      welcomeMsg = '👑 مرحباً أيها المدير! جاري التحويل...';
+    } else if(role === 'instructor'){
+      destination = './instructor.html';
+      welcomeMsg = '🎬 مرحباً أيها المدرب! جاري التحويل...';
+    }
+
+    showMsg(welcomeMsg, 'ok');
     setTimeout(() => {
-      location.replace((res.role === 'admin') ? './admin.html' : './index.html');
-    }, 700);
+      location.replace(destination);
+    }, 800);
 
   }catch(err){
     if(!['bad','inactive','not_found'].includes(err.message)){
