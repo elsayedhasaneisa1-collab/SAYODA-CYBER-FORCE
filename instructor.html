@@ -1005,11 +1005,17 @@ async function openStudentModal(studentUsername){
 $('smOpenAll').onclick = async () => {
   if(!VM_CURRENT_STUDENT) return;
   
-  const approvedVideos = MY_VIDEOS.filter(v => v.status === 'approved');
-  if(!approvedVideos.length){
-    toast('لا يوجد فيديوهات معتمدة','err');
-    return;
-  }
+  const approvedVideos = MY_VIDEOS
+  .filter(v => v.status === 'approved')
+  .sort((a, b) => new Date(a.created_at) - new Date(b.created_at)); // ✅ الأقدم الأول
+
+if(!approvedVideos.length){
+  toast('لا يوجد فيديوهات معتمدة','err');
+  return;
+}
+
+const firstVideo = approvedVideos[0];
+console.log('🎬 أول فيديو:', firstVideo.title, 'ID:', firstVideo.video_id);
   
   const firstVideo = approvedVideos[0];
   const btn = $('smOpenAll');
