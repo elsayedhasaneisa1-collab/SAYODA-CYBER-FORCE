@@ -920,7 +920,7 @@ function renderStudents(q=''){
         <div class="st-av">${esc(firstChar)}</div>
         <div class="st-info">
           <h4>👤 ${esc(s.student_username)}</h4>
-          <small>🕐 آخر زيارة: ${s.last_visit ? fmtDate(s.last_visit) : '—'}</small>
+          <small>🕐 آخر دخول: ${s.last_login ? fmtDate(s.last_login) : '—'}</small>
         </div>
         ${statusPill}
       </div>
@@ -992,10 +992,10 @@ async function openStudentModal(studentUsername){
         <div class="val" style="font-size:12px">${esc(student.level||'مبتدئ')}</div>
       </div>
       <div class="info-item">
-        <div class="lbl">🕐 آخر زيارة</div>
-        <div class="val" style="font-size:11px">${student.last_visit ? fmtDate(student.last_visit) : '—'}</div>
-      </div>
-    </div>
+  <div class="lbl">🕐 آخر دخول</div>
+  <div class="val" style="font-size:11px">${student.last_login ? fmtDate(student.last_login) : '—'}</div>
+ </div> 
+</div>
   `;
   
   $('studentModal').classList.add('open');
