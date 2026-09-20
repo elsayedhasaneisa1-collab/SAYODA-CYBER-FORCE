@@ -1300,7 +1300,10 @@ function setWatermarks(){
 async function openVideo(v){
   CURRENT_VIDEO = v;
   setWatermarks();
-  
+  async function openVideo(v){
+  CURRENT_VIDEO = v;
+  _videoXpAwarded = false;   // ✅ reset
+  setWatermarks();
   $('mTitle').textContent = v.title || '';
   $('mDesc').textContent = v.description || '';
   $('vidModal').classList.add('open');
@@ -1353,7 +1356,25 @@ async function openVideo(v){
 
 function onYtState(e){
   const S=window.YT.PlayerState;
-  if(e.data===S.ENDED){ ytIsPlaying=false; $('ytPlayPause').textContent='▶'; markProgress(100,true); }
+  if(e.data===S.ENDED){ 
+    ytIsPlaying=false; 
+    $('ytPlayPause').textContent='▶'; 
+    markProgress(100,true);
+    awardVideoXpIfDone();   // ✅ إضافة XP
+  }
+  else if(e.data===S.PLAYING){ 
+    ytIsPlaying=true; 
+    $('ytPlayPause').textContent='⏸'; 
+    $('ytBigPlay').classList.add('hidden'); 
+    showYtControls(); 
+  }
+  else if(e.data===S.PAUSED){ 
+    ytIsPlaying=false; 
+    $('ytPlayPause').textContent='▶'; 
+    $('ytControls').classList.remove('hidden'); 
+    clearTimeout(ytControlsTimer); 
+  }
+}
   else if(e.data===S.PLAYING){ ytIsPlaying=true; $('ytPlayPause').textContent='⏸'; $('ytBigPlay').classList.add('hidden'); showYtControls(); }
   else if(e.data===S.PAUSED){ ytIsPlaying=false; $('ytPlayPause').textContent='▶'; $('ytControls').classList.remove('hidden'); clearTimeout(ytControlsTimer); }
 }
@@ -1431,7 +1452,49 @@ async function saveProgressSilently(v, pct){
     }
   }catch(e){ console.warn('save progress error:', e); }
 }
+/* ============ إضافة XP لما الفيديو يخلص ============ */
+let _videoXpAwarded = false;
 
+async function awardVideoXpIfDone(){
+  if(_videoXpAwarded) return;
+  if(!CURRENT_VIDEO || !USER) return;
+  
+  _videoXpAwarded = true;
+  
+  const videoId = parseInt(CURRENT_VIDEO.video_id);
+  console.log('🎬 محاولة إضافة XP للفيديو:', videoId, 'للمستخدم:', USER.username);
+  
+  try{
+    const {data, error} = await sb.rpc('award_video_xp', {
+      p_username: USER.username,
+      p_video_id: videoId,
+      p_xp_amount: 10
+    });
+    
+    console.log('📥 نتيجة:', data, 'خطأ:', error);
+    
+    if(error){
+      console.error('❌ خطأ:', error.message);
+      return;
+    }
+    
+    const res = Array.isArray(data) ? data[0] : data;
+    
+    if(res && res.ok){
+      console.log('✅ تم إضافة 10 XP — الرصيد الجديد:', res.new_xp);
+      toast('+10 XP 🎬','ok','⭐');
+      USER.xp = res.new_xp;
+      USER.videos_watched = (USER.videos_watched || 0) + 1;
+      try{ updateMiniXp(); }catch(e){}
+    } else if(res && res.error === 'already_awarded'){
+      console.log('ℹ️ XP اتحسب قبل كده');
+    } else {
+      console.warn('⚠️ نتيجة غير متوقعة:', res);
+    }
+  }catch(e){
+    console.error('❌ خطأ في المحاولة:', e);
+  }
+}
 async function markProgress(pct,done){
   const v=CURRENT_VIDEO;if(!v)return;
   
