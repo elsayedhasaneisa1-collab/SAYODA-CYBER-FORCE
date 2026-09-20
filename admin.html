@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#0a0600" />
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-<title>لوحة التحكم الذهبية | SAYODA ADMIN</title>
+<title>لوحة التحكم | CYBER FORCE ADMIN</title>
 <link rel="manifest" href="./manifest.json" />
 <link rel="icon" href="./logog.png" />
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
@@ -44,7 +44,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
   border-bottom:1px solid var(--border);
   box-shadow:0 4px 30px rgba(255,215,0,.08);}
 .hl{display:flex;align-items:center;gap:12px;min-width:0;flex:1}
-.hl img{width:42px;height:42px;object-fit:contain;filter:drop-shadow(0 0 12px rgba(255,215,0,.5));flex-shrink:0}
+.hl img{width:52px;height:52px;object-fit:contain;filter:drop-shadow(0 0 14px rgba(255,215,0,.6));flex-shrink:0}
 .ht{font-weight:900;font-size:16px;line-height:1.1;min-width:0;overflow:hidden;text-overflow:ellipsis}
 .ht span{background:linear-gradient(135deg,var(--gold),var(--gold-3));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .ht small{display:block;font-size:10px;color:var(--muted);font-weight:600;letter-spacing:1px;margin-top:2px}
@@ -62,8 +62,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 .tab:hover{border-color:var(--border);color:var(--gold)}
 .tab.active{background:linear-gradient(135deg,var(--gold),var(--gold-3));color:#0a0600;border-color:transparent;
   box-shadow:0 8px 24px rgba(255,215,0,.35);font-weight:900}
-.tab .badge{background:var(--danger);color:#fff;font-size:10px;padding:2px 6px;border-radius:8px;font-weight:900;min-width:18px;text-align:center}
-.tab.active .badge{background:#0a0600;color:var(--gold)}
 
 .panel{display:none;animation:fade .35s;width:100%}
 .panel.active{display:block}
@@ -167,14 +165,24 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
   background-size:200% 100%;animation:sh 1.3s infinite;border-radius:12px;height:70px;margin-bottom:10px}
 @keyframes sh{to{background-position:-200% 0}}
 
+/* ============ GATE ============ */
 .gate{position:fixed;inset:0;z-index:500;background:var(--bg);display:grid;place-items:center;padding:20px}
 .gate::before{content:'';position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(circle at 50% 30%,rgba(255,215,0,.15),transparent 60%)}
 .gate .box{position:relative;background:linear-gradient(160deg,rgba(26,18,6,.98),rgba(20,13,0,.98));
-  border:1px solid var(--border);border-radius:24px;padding:38px 30px;width:100%;max-width:400px;
+  border:1px solid var(--border);border-radius:26px;padding:36px 28px;width:100%;max-width:450px;
   text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(255,215,0,.15);box-sizing:border-box}
-.gate img{width:80px;margin-bottom:14px;filter:drop-shadow(0 0 20px rgba(255,215,0,.6));animation:float 4s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.gate img{
+  width:200px;
+  max-width:80%;
+  height:auto;
+  margin:0 auto 18px;
+  display:block;
+  object-fit:contain;
+  filter:drop-shadow(0 0 28px rgba(255,215,0,.8)) drop-shadow(0 0 10px rgba(255,215,0,.5));
+  animation:float 4s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 .gate h2{font-size:22px;font-weight:900;margin-bottom:8px;
   background:linear-gradient(135deg,var(--gold),var(--gold-3));
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
@@ -190,50 +198,36 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 
 /* ============ MODAL ============ */
-.vid-modal{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);
+.modal{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);
   display:none;align-items:center;justify-content:center;padding:20px}
-.vid-modal.open{display:flex;animation:fade .25s}
-.vid-modal-box{background:linear-gradient(160deg,rgba(26,18,6,.98),rgba(20,13,0,.98));
-  border:1px solid var(--border);border-radius:20px;width:100%;max-width:520px;max-height:85vh;
+.modal.open{display:flex;animation:fade .25s}
+.modal-box{background:linear-gradient(160deg,rgba(26,18,6,.98),rgba(20,13,0,.98));
+  border:1px solid var(--border);border-radius:20px;width:100%;max-width:560px;max-height:88vh;
   display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.7);overflow:hidden}
-.vid-modal-head{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;
+.modal-head{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;
   align-items:center;justify-content:space-between;gap:12px;flex-shrink:0}
-.vid-modal-head h3{margin:0;font-size:16px;color:var(--gold);font-weight:900;
+.modal-head h3{margin:0;font-size:16px;color:var(--gold);font-weight:900;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.vid-modal-head .close-btn{width:34px;height:34px;border-radius:9px;border:1px solid var(--border);
+.modal-head .close-btn{width:34px;height:34px;border-radius:9px;border:1px solid var(--border);
   background:transparent;color:var(--gold);font-size:18px;display:grid;place-items:center;cursor:pointer;transition:.2s;flex-shrink:0}
-.vid-modal-head .close-btn:hover{background:var(--gold);color:#0a0600}
-.vid-modal-actions{padding:12px 20px;display:flex;gap:8px;border-bottom:1px solid var(--border);flex-shrink:0}
-.vid-modal-actions .btn{flex:1}
-.vid-modal-body{flex:1;overflow-y:auto;padding:14px 20px}
-.vid-check{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;
-  background:rgba(10,6,0,.4);border:1px solid var(--border-soft);margin-bottom:8px;cursor:pointer;transition:.2s}
-.vid-check:hover{border-color:var(--gold);background:rgba(26,18,6,.7)}
-.vid-check input{width:20px;height:20px;accent-color:var(--gold);cursor:pointer;flex-shrink:0}
-.vid-check .title{flex:1;font-weight:700;font-size:14px;color:var(--txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
-.vid-check .cat{font-size:11px;color:var(--muted);background:var(--gold-soft);padding:3px 9px;border-radius:10px;flex-shrink:0}
-.vid-check.checked{border-color:var(--gold);background:var(--gold-soft)}
-.vid-modal-foot{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:8px;flex-shrink:0}
-.vid-modal-foot .btn{flex:1}
-
-/* ============ STATUS BADGES ============ */
-.status-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 11px;border-radius:10px;
-  font-size:11px;font-weight:800;letter-spacing:.3px}
-.status-approved{background:rgba(40,209,124,.18);color:#28d17c;border:1px solid rgba(40,209,124,.3)}
-.status-pending{background:rgba(255,149,0,.18);color:#ff9500;border:1px solid rgba(255,149,0,.3)}
-.status-rejected{background:rgba(255,77,109,.18);color:#ff4d6d;border:1px solid rgba(255,77,109,.3)}
-
-/* ============ PENDING VIDEO CARD ============ */
-.pending-card{background:linear-gradient(160deg,rgba(26,18,6,.92),rgba(20,13,0,.85));
-  border:1px solid rgba(255,149,0,.35);border-radius:14px;padding:16px;margin-bottom:14px;
-  box-shadow:0 8px 24px rgba(255,149,0,.08)}
-.pending-card .p-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap}
-.pending-card .p-head img{width:140px;height:80px;object-fit:cover;border-radius:10px;
-  border:1px solid var(--border-soft);flex-shrink:0}
-.pending-card .p-info{flex:1;min-width:200px}
-.pending-card .p-info h4{font-size:15px;font-weight:900;color:var(--txt);margin-bottom:4px}
-.pending-card .p-info p{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:6px}
-.pending-card .p-actions{display:flex;gap:8px;flex-wrap:wrap}
+.modal-head .close-btn:hover{background:var(--gold);color:#0a0600}
+.modal-info{padding:14px 20px;background:rgba(10,6,0,.5);border-bottom:1px solid var(--border);flex-shrink:0}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.info-item{padding:10px;border-radius:10px;background:rgba(255,215,0,.06);border:1px solid var(--border-soft)}
+.info-item .lbl{font-size:10px;color:var(--muted);font-weight:700;margin-bottom:3px}
+.info-item .val{font-size:13px;font-weight:900;color:var(--gold)}
+.modal-body{flex:1;overflow-y:auto;padding:16px 20px}
+.modal-body h4{font-size:14px;font-weight:900;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.action-btn{width:100%;padding:16px;border-radius:14px;border:none;font-weight:900;font-size:15px;
+  transition:.2s;margin-bottom:10px;text-align:center;line-height:1.4;cursor:pointer}
+.action-btn.open{background:linear-gradient(135deg,#28d17c,#1fa562);color:#fff;box-shadow:0 8px 20px rgba(40,209,124,.3)}
+.action-btn.open:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(40,209,124,.5)}
+.action-btn.close{background:linear-gradient(135deg,#ff4d6d,#c62348);color:#fff;box-shadow:0 8px 20px rgba(255,77,109,.3)}
+.action-btn.close:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(255,77,109,.5)}
+.action-btn small{display:block;font-weight:600;font-size:11px;opacity:.9;margin-top:4px}
+.action-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.modal-foot{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:8px;flex-shrink:0}
+.modal-foot .btn{flex:1}
 
 @media(max-width:560px){
   .stats{grid-template-columns:repeat(2,1fr)}
@@ -242,8 +236,10 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
   .ht small{display:none}
   .wrap{padding:14px 10px 30px}
   .card{padding:16px}
-  .vid-modal-box{max-height:92vh}
-  .pending-card .p-head img{width:100%;height:auto;max-height:180px}
+  .modal-box{max-height:92vh}
+  .gate img{width:160px}
+  .gate .box{padding:28px 20px}
+  .hl img{width:44px;height:44px}
 }
 </style>
 </head> 
@@ -252,7 +248,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 <!-- GATE -->
 <div class="gate" id="gate">
   <div class="box">
-    <img src="./logog.png" onerror="this.style.display='none'">
+    <img src="./logog.png" onerror="this.style.display='none'" alt="logo">
     <h2>🔐 لوحة التحكم الذهبية</h2>
     <p>أدخل كلمة مرور المدير للوصول إلى اللوحة</p>
     <input type="password" id="gatePass" placeholder="كلمة المرور" autocomplete="current-password" />
@@ -267,8 +263,8 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
   <div class="hl">
     <img src="./logog.png" onerror="this.style.display='none'">
     <div class="ht">
-      SAYODA <span>ADMIN</span>
-      <small>✨ لوحة التحكم الذهبية</small>
+      CYBER <span>ADMIN</span>
+      <small>✨ لوحة التحكم</small>
     </div>
   </div>
   <div class="hr">
@@ -282,7 +278,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 
   <div class="tabs" id="tabs"></div>
 
-  <!-- ============ DASHBOARD ============ -->
+  <!-- DASHBOARD -->
   <div class="panel active" id="p-dash">
     <div class="sec-title">📊 لوحة الإحصائيات المباشرة</div>
     <div class="sec-sub">
@@ -332,7 +328,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     </div>
   </div>
 
-  <!-- ============ USERS ============ -->
+  <!-- USERS -->
   <div class="panel" id="p-users">
     <div class="sec-title">👥 إدارة الحسابات</div>
     <div class="sec-sub">اضغط على أي مستخدم لعرض بياناته الكاملة</div>
@@ -340,12 +336,11 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     <div id="usersList"></div>
   </div>
 
-  <!-- ============ INSTRUCTORS ============ -->
+  <!-- INSTRUCTORS -->
   <div class="panel" id="p-instructors">
     <div class="sec-title">👨‍🏫 إدارة المدربين</div>
     <div class="sec-sub">أضف مدربين، أنشئ أكواد دعوة، وراقب المحتوى</div>
 
-    <!-- إضافة مدرب يدوياً -->
     <div class="card">
       <h3>➕ إضافة مدرب جديد</h3>
       <div class="frm">
@@ -371,7 +366,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
       </div>
     </div>
 
-    <!-- أكواد دعوة المدربين -->
     <div class="card">
       <h3>🎟️ إنشاء كود دعوة مدرب
         <button class="btn sm ghost" id="exportInsCodesBtn" style="margin-right:auto">⬇ تصدير CSV</button>
@@ -392,7 +386,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
       </div>
     </div>
 
-    <!-- قائمة المدربين -->
     <div class="card">
       <h3>📋 المدربين الحاليين</h3>
       <input class="search" id="insSearch" placeholder="🔍 ابحث عن مدرب..." />
@@ -402,7 +395,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
       </div>
     </div>
 
-    <!-- فيديوهات في انتظار المراجعة -->
     <div class="card">
       <h3>⏳ فيديوهات في انتظار المراجعة
         <button class="btn sm ghost" id="refreshPendingBtn" style="margin-right:auto">🔄 تحديث</button>
@@ -413,7 +405,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     </div>
   </div>
 
-  <!-- ============ VIDEOS ============ -->
+  <!-- VIDEOS -->
   <div class="panel" id="p-videos">
     <div class="sec-title">🎬 إدارة الفيديوهات</div>
     <div class="card">
@@ -435,7 +427,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     </div>
   </div>
 
-  <!-- ============ CODES ============ -->
+  <!-- CODES -->
   <div class="panel" id="p-codes">
     <div class="sec-title">🔓 أكواد الفتح</div>
     <div class="card">
@@ -460,10 +452,9 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     </div>
   </div>
 
-  <!-- ============ NOTIFS ============ -->
+  <!-- NOTIFS -->
   <div class="panel" id="p-notifs">
     <div class="sec-title">📢 الإشعارات</div>
-
     <div class="card">
       <h3>✉️ إرسال إشعار جديد</h3>
       <div class="frm">
@@ -486,7 +477,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     </div>
   </div>
 
-  <!-- ============ BANS ============ -->
+  <!-- BANS -->
   <div class="panel" id="p-bans">
     <div class="sec-title">🚫 نظام الحظر</div>
     <div class="sec-sub">اختر مستخدماً وحدّد الميزات المحظورة عنه</div>
@@ -494,7 +485,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     <div id="bansList"></div>
   </div>
 
-  <!-- ============ SETTINGS ============ -->
+  <!-- SETTINGS -->
   <div class="panel" id="p-settings">
     <div class="sec-title">⚙️ إعدادات المنصة</div>
     <div class="card">
@@ -519,33 +510,48 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 </div>
 </div>
 
-<!-- VIDEO MANAGE MODAL -->
-<div class="vid-modal" id="vidManageModal">
-  <div class="vid-modal-box">
-    <div class="vid-modal-head">
-      <h3 id="vmTitle">🎬 إدارة فيديوهات: —</h3>
-      <button class="close-btn" id="vmClose">✕</button>
+<!-- USER ACCESS MODAL (NEW) -->
+<div class="modal" id="userAccessModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="uamTitle">👤 بيانات المستخدم</h3>
+      <button class="close-btn" id="uamClose">✕</button>
     </div>
-    <div class="vid-modal-actions">
-      <button class="btn ok" id="vmSelectAll">✅ فتح الكل</button>
-      <button class="btn danger" id="vmDeselectAll">❌ قفل الكل</button>
+    
+    <div class="modal-info" id="uamInfo">
+      <div class="info-grid">
+        <div class="skel" style="height:50px"></div>
+        <div class="skel" style="height:50px"></div>
+      </div>
     </div>
-    <div class="vid-modal-body" id="vmList">
-      <div class="skel"></div>
-      <div class="skel"></div>
+    
+    <div class="modal-body">
+      <h4>🎬 إدارة الوصول للفيديوهات</h4>
+      <p style="color:var(--muted);font-size:13px;line-height:1.7;margin-bottom:16px">
+        اختر أحد الخيارات:
+      </p>
+      
+      <button class="action-btn open" id="uamOpenAll">
+        🔓 فتح الفيديوهات
+        <small>يفتح كل الفيديوهات للمستخدم</small>
+      </button>
+      
+      <button class="action-btn close" id="uamCloseAll">
+        🔒 غلق كل الفيديوهات
+        <small>يقفل كل الفيديوهات عن المستخدم</small>
+      </button>
     </div>
-    <div class="vid-modal-foot">
-      <button class="btn" id="vmSave">💾 حفظ التعديلات</button>
-      <button class="btn ghost" id="vmCancel">إلغاء</button>
+    
+    <div class="modal-foot">
+      <button class="btn ghost" id="uamCancel" style="width:100%">إغلاق</button>
     </div>
   </div>
 </div>
 
-<div id="toasts"></div>
-
+<div id="toasts"></div> 
 <script>
 /* ============================================
-   SAYODA ADMIN — JavaScript
+   CYBER FORCE ADMIN — JavaScript
    ============================================ */
 const SUPABASE_URL="https://brawrhpvtnzvvrzkguic.supabase.co";
 const SUPABASE_KEY="sb_publishable_Q8fBS3nVZqgvfd6diaul8A_cMvHUFtN";
@@ -575,7 +581,7 @@ let PASS=sessionStorage.getItem('sayoda_admin_pass')||null;
 let USERS=[], VIDEOS=[], INSTRUCTORS=[];
 let LIVE_TIMER=null, DASH_TIMER=null;
 let LOG_FILTER_TYPE='', LOG_FILTER_USER='';
-let VM_CURRENT_USER=null;
+let UAM_CURRENT_USER=null;
 let ADMIN_IS_INSTRUCTOR=false;
 
 const BAN_FEATURES=[
@@ -628,12 +634,6 @@ function resetIdle(){
 async function logoutAdmin(){
   try{
     if(SESSION.token) await sb.rpc('secure_logout',{p_token:SESSION.token});
-    if(ADMIN) await sb.rpc('client_log_activity',{
-      p_username:ADMIN.username,
-      p_activity_type:'logout',
-      p_details:'{}',
-      p_user_agent:navigator.userAgent.slice(0,200)
-    });
   }catch(e){}
   sessionStorage.removeItem('sayoda_admin_pass');
   localStorage.removeItem('sayoda_session');
@@ -693,7 +693,6 @@ $('gateBtn').onclick=async()=>{
       PASS=p;
       sessionStorage.setItem('sayoda_admin_pass',p);
 
-      // نعرف هل الأدمن ده مدرب كمان؟
       try{
         const {data:uData} = await sb.from('users')
           .select('is_instructor')
@@ -945,7 +944,7 @@ function renderUsers(q=''){
   $('usersList').querySelectorAll('[data-open]').forEach(el=>{
     el.onclick=(e)=>{
       if(e.target.closest('button')) return;
-      openUserDetails(el.dataset.open);
+      openUserAccess(el.dataset.open);
     };
   });
   $('usersList').querySelectorAll('[data-act]').forEach(b=>{
@@ -953,7 +952,7 @@ function renderUsers(q=''){
       e.stopPropagation();
       const un=b.dataset.user;
       const act=b.dataset.act;
-      if(act==='videos') openVideoManager(un);
+      if(act==='videos') openUserAccess(un);
       else if(act==='toggle') toggleActive(un);
       else if(act==='del') delUser(un);
       else if(act==='ban-ins') banInstructor(un);
@@ -962,153 +961,159 @@ function renderUsers(q=''){
 }
 $('userSearch').oninput=e=>renderUsers(e.target.value);
 
-/* ============ USER DETAILS ============ */
-function openUserDetails(un){
-  const u = USERS.find(x => x.username === un);
+/* ============ USER ACCESS MODAL ============ */
+function openUserAccess(username){
+  const u = USERS.find(x => x.username === username);
   if(!u){ toast('المستخدم غير موجود','err'); return; }
   
-  const modal = document.createElement('div');
-  modal.className = 'vid-modal open';
-  modal.style.cssText = 'display:flex;align-items:center;justify-content:center;padding:20px;z-index:200';
-  modal.innerHTML = `
-    <div class="vid-modal-box" style="max-width:440px">
-      <div class="vid-modal-head">
-        <h3>👤 بيانات: ${esc(u.username)}</h3>
-        <button class="close-btn" id="udClose">✕</button>
+  UAM_CURRENT_USER = u;
+  $('uamTitle').textContent = '👤 ' + username;
+  
+  /* نجيب عدد الفيديوهات المفتوحة */
+  let unlockedCount = 0;
+  try{
+    const uv = u.unlocked_videos;
+    if(Array.isArray(uv)) unlockedCount = uv.length;
+    else if(typeof uv === 'string'){
+      const p = JSON.parse(uv);
+      if(Array.isArray(p)) unlockedCount = p.length;
+    }
+  }catch(e){}
+  
+  const totalVideos = VIDEOS.filter(v => v.status === 'approved').length;
+  const isAdmin = u.role === 'admin';
+  const isIns = u.role === 'instructor';
+  
+  $('uamInfo').innerHTML = `
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="lbl">👤 المستخدم</div>
+        <div class="val">${esc(username)}</div>
       </div>
-      <div class="vid-modal-body" style="padding:20px">
-        <div style="display:grid;gap:10px">
-          <div style="padding:12px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:12px">
-            <div style="font-size:11px;color:var(--muted);margin-bottom:4px">اسم المستخدم</div>
-            <div style="font-weight:900;font-size:16px">${esc(u.username)}</div>
-          </div>
-          <div style="padding:12px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:12px">
-            <div style="font-size:11px;color:var(--muted);margin-bottom:4px">📞 رقم الهاتف</div>
-            <div style="font-weight:900;font-size:15px">${u.phone?esc(u.phone):'—'}</div>
-          </div>
-          <div style="padding:12px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:12px">
-            <div style="font-size:11px;color:var(--muted);margin-bottom:4px">📱 رقم الواتساب</div>
-            <div style="font-weight:900;font-size:15px">${u.whatsapp?esc(u.whatsapp):'—'}</div>
-          </div>
-          <div style="padding:12px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:12px">
-            <div style="font-size:11px;color:var(--muted);margin-bottom:4px">🎭 الدور</div>
-            <div style="font-weight:900;font-size:15px">
-              ${u.role === 'admin' ? (u.is_instructor ? '👑 أدمن + 🎬 مدرب' : '👑 أدمن') : u.role === 'instructor' ? '🎬 مدرب' : '🎓 طالب'}
-            </div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-            <div style="padding:10px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:10px;text-align:center">
-              <div style="font-size:11px;color:var(--muted)">XP</div>
-              <div style="font-weight:900;color:var(--gold);font-size:18px">${u.xp||0}</div>
-            </div>
-            <div style="padding:10px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:10px;text-align:center">
-              <div style="font-size:11px;color:var(--muted)">فيديوهات</div>
-              <div style="font-weight:900;color:var(--gold);font-size:18px">${u.videos_watched||0}</div>
-            </div>
-            <div style="padding:10px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:10px;text-align:center">
-              <div style="font-size:11px;color:var(--muted)">أيام</div>
-              <div style="font-weight:900;color:var(--gold);font-size:18px">${u.streak||0}</div>
-            </div>
-            <div style="padding:10px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:10px;text-align:center">
-              <div style="font-size:11px;color:var(--muted)">الحالة</div>
-              <div style="font-weight:900;color:${u.active!==false?'#28d17c':'#ff4d6d'};font-size:14px">${u.active!==false?'نشط':'موقوف'}</div>
-            </div>
-          </div>
-          <button class="btn blue" id="udVideos" style="width:100%">🎬 إدارة الفيديوهات</button>
-          <button class="btn warn" id="udResetPass" style="width:100%">🔄 إعادة تعيين كلمة المرور</button>
-          ${u.role === 'instructor' ? `<button class="btn danger" id="udBanIns" style="width:100%">🚫 حظر المدرب (حذف شامل)</button>` : ''}
+      <div class="info-item">
+        <div class="lbl">🎭 الدور</div>
+        <div class="val" style="font-size:11px">
+          ${isAdmin ? '👑 مدير' : isIns ? '🎬 مدرب' : '🎓 طالب'}
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="lbl">🔓 مفتوح</div>
+        <div class="val">${unlockedCount} / ${totalVideos}</div>
+      </div>
+      <div class="info-item">
+        <div class="lbl">📊 الحالة</div>
+        <div class="val" style="color:${u.active!==false?'#28d17c':'#ff4d6d'};font-size:12px">
+          ${u.active!==false ? 'نشط' : 'موقوف'}
         </div>
       </div>
     </div>
   `;
-  document.body.appendChild(modal);
-
-  modal.querySelector('#udClose').onclick = () => modal.remove();
-  modal.querySelector('#udVideos').onclick = () => {
-    modal.remove();
-    openVideoManager(un);
-  };
-  modal.querySelector('#udResetPass').onclick = () => resetUserPassword(un, modal);
   
-  const banBtn = modal.querySelector('#udBanIns');
-  if(banBtn){
-    banBtn.onclick = () => { modal.remove(); banInstructor(un); };
-  }
-
-  modal.onclick = (e) => { if(e.target === modal) modal.remove(); };
+  $('userAccessModal').classList.add('open');
 }
 
-async function resetUserPassword(un, modal){
-  if(!confirm('⚠️ إعادة تعيين كلمة مرور "' + un + '"؟\n\nسيتم توليد باسورد جديد.')) return;
+$('uamOpenAll').onclick = async () => {
+  if(!UAM_CURRENT_USER) return;
+  if(!ensurePass()) return;
   
-  const btn = modal.querySelector('#udResetPass');
+  const approvedVideos = VIDEOS.filter(v => v.status === 'approved');
+  if(!approvedVideos.length){
+    toast('لا يوجد فيديوهات معتمدة','err');
+    return;
+  }
+  
+  const btn = $('uamOpenAll');
+  const originalHtml = btn.innerHTML;
   btn.disabled = true;
-  btn.textContent = '...';
+  btn.innerHTML = '⏳ جاري...';
   
   try{
-    const {data, error} = await sb.rpc('admin_reset_user_password', {
-      p_username: ADMIN.username,
-      p_password: PASS,
-      p_target_user: un
-    });
+    const videoIds = approvedVideos.map(v => v.id);
+    const {error} = await sb.from('users')
+      .update({unlocked_videos: videoIds})
+      .eq('username', UAM_CURRENT_USER.username);
     
     if(error) throw error;
     
-    const res = Array.isArray(data) ? data[0] : data;
+    toast(`✅ تم فتح ${videoIds.length} فيديو لـ ${UAM_CURRENT_USER.username}`,'ok');
     
-    if(res && res.ok){
-      const newPass = res.new_password;
-      
-      const passBox = document.createElement('div');
-      passBox.style.cssText = `
-        margin-top: 12px;
-        padding: 16px;
-        background: linear-gradient(135deg, rgba(255,149,0,.15), rgba(255,215,0,.08));
-        border: 2px solid #ff9500;
-        border-radius: 14px;
-        text-align: center;
-      `;
-      passBox.innerHTML = `
-        <div style="font-size:12px;color:var(--muted);margin-bottom:6px">🔑 كلمة المرور الجديدة</div>
-        <div style="font-size:24px;font-weight:900;color:#ff9500;letter-spacing:2px;
-                    user-select:all;-webkit-user-select:all;font-family:monospace;
-                    padding:10px;background:rgba(0,0,0,.4);border-radius:10px;
-                    margin-bottom:10px">${newPass}</div>
-        <div style="font-size:11px;color:var(--muted);line-height:1.6">
-          ⚠️ انسخها وابعتها للمستخدم الآن<br>
-          لن تظهر مرة أخرى
-        </div>
-        <button class="btn sm ok" id="copyNewPass" style="margin-top:10px;width:100%">
-          📋 نسخ الباسورد
-        </button>
-      `;
-      
-      const oldBox = modal.querySelector('#newPassBox');
-      if(oldBox) oldBox.remove();
-      
-      passBox.id = 'newPassBox';
-      modal.querySelector('.vid-modal-body').appendChild(passBox);
-      
-      passBox.querySelector('#copyNewPass').onclick = () => {
-        navigator.clipboard.writeText(newPass).then(() => {
-          toast('✅ تم نسخ الباسورد', 'ok');
-        }).catch(() => {
-          toast('انسخ يدوياً: ' + newPass, 'info');
-        });
-      };
-      
-      toast('✅ تم توليد باسورد جديد', 'ok');
-    } else {
-      toast('فشل: ' + (res?.error || 'خطأ غير معروف'), 'err');
-    }
+    /* سجل النشاط */
+    try{
+      await sb.rpc('client_log_activity',{
+        p_username: ADMIN.username,
+        p_activity_type: 'admin_action',
+        p_details: jsonbDetails({action:'open_all_videos', target: UAM_CURRENT_USER.username, count: videoIds.length}),
+        p_user_agent: navigator.userAgent.slice(0,200)
+      });
+    }catch(e){}
+    
+    $('userAccessModal').classList.remove('open');
+    UAM_CURRENT_USER = null;
+    await loadUsers();
   }catch(e){
-    console.error('Reset error:', e);
-    toast('فشل: ' + (e.message || ''), 'err');
+    console.error('open all error:', e);
+    toast('فشل: ' + (e.message||''),'err');
   }finally{
     btn.disabled = false;
-    btn.textContent = '🔄 إعادة تعيين كلمة المرور';
+    btn.innerHTML = originalHtml;
   }
-}
+};
+
+$('uamCloseAll').onclick = async () => {
+  if(!UAM_CURRENT_USER) return;
+  if(!ensurePass()) return;
+  
+  if(!confirm('⚠️ غلق كل الفيديوهات عن "' + UAM_CURRENT_USER.username + '"؟')) return;
+  
+  const btn = $('uamCloseAll');
+  const originalHtml = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '⏳ جاري...';
+  
+  try{
+    const {error} = await sb.from('users')
+      .update({unlocked_videos: []})
+      .eq('username', UAM_CURRENT_USER.username);
+    
+    if(error) throw error;
+    
+    toast(`✅ تم غلق كل الفيديوهات عن ${UAM_CURRENT_USER.username}`,'ok');
+    
+    try{
+      await sb.rpc('client_log_activity',{
+        p_username: ADMIN.username,
+        p_activity_type: 'admin_action',
+        p_details: jsonbDetails({action:'close_all_videos', target: UAM_CURRENT_USER.username}),
+        p_user_agent: navigator.userAgent.slice(0,200)
+      });
+    }catch(e){}
+    
+    $('userAccessModal').classList.remove('open');
+    UAM_CURRENT_USER = null;
+    await loadUsers();
+  }catch(e){
+    console.error('close all error:', e);
+    toast('فشل: ' + (e.message||''),'err');
+  }finally{
+    btn.disabled = false;
+    btn.innerHTML = originalHtml;
+  }
+};
+
+$('uamClose').onclick = () => {
+  $('userAccessModal').classList.remove('open');
+  UAM_CURRENT_USER = null;
+};
+$('uamCancel').onclick = () => {
+  $('userAccessModal').classList.remove('open');
+  UAM_CURRENT_USER = null;
+};
+$('userAccessModal').onclick = (e) => {
+  if(e.target === $('userAccessModal')){
+    $('userAccessModal').classList.remove('open');
+    UAM_CURRENT_USER = null;
+  }
+};
 
 /* ============ INSTRUCTORS MANAGEMENT ============ */
 async function loadInstructors(){
@@ -1153,8 +1158,7 @@ function renderInstructors(q=''){
         </div>
       </div>
       <div class="li-actions">
-        <button class="btn sm blue" data-ins-vids="${esc(u.username)}">🎬 فيديوهاته</button>
-        <button class="btn sm ghost" data-ins-wa="${esc(u.username)}">📱 رقمه</button>
+        <button class="btn sm blue" data-ins-access="${esc(u.username)}">🎬 إدارة الفيديوهات</button>
         ${!isAdmin ? `<button class="btn sm danger" data-ban-ins="${esc(u.username)}">🚫 حظر</button>` : ''}
       </div>
     </div>`;
@@ -1163,25 +1167,17 @@ function renderInstructors(q=''){
   $('instructorsList').querySelectorAll('[data-ban-ins]').forEach(b => {
     b.onclick = () => banInstructor(b.dataset.banIns);
   });
-  $('instructorsList').querySelectorAll('[data-ins-vids]').forEach(b => {
-    b.onclick = () => openVideoManager(b.dataset.insVids);
-  });
-  $('instructorsList').querySelectorAll('[data-ins-wa]').forEach(b => {
-    b.onclick = () => {
-      const u = INSTRUCTORS.find(x => x.username === b.dataset.insWa);
-      if(u) alert(`📱 رقم واتساب ${u.username}:\n${u.whatsapp || 'غير مسجل'}`);
-    };
+  $('instructorsList').querySelectorAll('[data-ins-access]').forEach(b => {
+    b.onclick = () => openUserAccess(b.dataset.insAccess);
   });
 }
 
 $('insSearch').oninput = e => renderInstructors(e.target.value);
 
-/* ============ BAN INSTRUCTOR (DELETE ALL) ============ */
+/* ============ BAN INSTRUCTOR ============ */
 async function banInstructor(un){
   if(!ensurePass()) return;
 
-  const u = USERS.find(x => x.username === un) || INSTRUCTORS.find(x => x.username === un);
-  
   if(!confirm(
     '⚠️ تحذير خطير!\n\n' +
     'حظر المدرب "' + un + '"\n\n' +
@@ -1437,12 +1433,14 @@ async function loadPendingVideos(){
       const ytMatch = (v.youtube_url||'').match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
       const thumb = v.thumbnail || (ytMatch ? `https://i.ytimg.com/vi/${ytMatch[1]}/mqdefault.jpg` : './sayed.png');
       
-      return `<div class="pending-card">
-        <div class="p-head">
-          <img src="${esc(thumb)}" onerror="this.src='./sayed.png'" alt="">
-          <div class="p-info">
-            <h4>${esc(v.title)}</h4>
-            <p>${esc(v.description||'بدون وصف').slice(0,200)}</p>
+      return `<div style="background:linear-gradient(160deg,rgba(255,149,0,.08),rgba(26,18,6,.92));
+                       border:1px solid rgba(255,149,0,.35);border-radius:14px;padding:16px;margin-bottom:14px">
+        <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap">
+          <img src="${esc(thumb)}" onerror="this.src='./sayed.png'" alt=""
+               style="width:140px;height:80px;object-fit:cover;border-radius:10px;border:1px solid var(--border-soft);flex-shrink:0">
+          <div style="flex:1;min-width:200px">
+            <h4 style="font-size:15px;font-weight:900;color:var(--txt);margin-bottom:4px">${esc(v.title)}</h4>
+            <p style="font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:6px">${esc(v.description||'بدون وصف').slice(0,200)}</p>
             <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--muted)">
               <span>👨‍🏫 ${esc(v.instructor_name)}</span>
               <span>🎯 ${esc(v.category||'عام')}</span>
@@ -1450,7 +1448,7 @@ async function loadPendingVideos(){
             </div>
           </div>
         </div>
-        <div class="p-actions">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn sm ok" data-approve="${v.id}">✅ موافقة ونشر</button>
           <button class="btn sm danger" data-reject="${v.id}">❌ رفض</button>
           <a class="btn sm ghost" href="${esc(v.youtube_url)}" target="_blank" rel="noopener">👁 معاينة</a>
@@ -1501,133 +1499,6 @@ async function reviewVideo(vid, action, reason){
 
 $('refreshPendingBtn').onclick = () => { loadPendingVideos(); toast('تم التحديث'); };
 
-/* ============ VIDEO MANAGER (per user) ============ */
-async function openVideoManager(un){
-  if(!ensurePass()) return;
-  VM_CURRENT_USER = un;
-  $('vmTitle').textContent = '🎬 إدارة فيديوهات: ' + un;
-  $('vmList').innerHTML='<div class="skel"></div><div class="skel"></div>';
-  $('vidManageModal').classList.add('open');
-
-  try{
-    const {data:userData,error:uErr} = await sb.from('users')
-      .select('unlocked_videos')
-      .eq('username', un)
-      .limit(1);
-    
-    if(uErr) throw uErr;
-    
-    let unlocked = [];
-    const raw = userData?.[0]?.unlocked_videos;
-    if(Array.isArray(raw)) unlocked = raw.map(String);
-    else if(typeof raw === 'string'){
-      try{ const p = JSON.parse(raw); if(Array.isArray(p)) unlocked = p.map(String); }catch(e){}
-    }
-
-    if(!VIDEOS.length){
-      const {data:vData} = await sb.from('videos').select('id,title,category').order('created_at',{ascending:true});
-      VIDEOS = vData || [];
-    }
-
-    if(!VIDEOS.length){
-      $('vmList').innerHTML='<div class="empty"><div class="e">🎬</div><p>لا فيديوهات</p></div>';
-      return;
-    }
-
-    $('vmList').innerHTML = VIDEOS.map(v=>{
-      const checked = unlocked.includes(String(v.id));
-      return `<label class="vid-check ${checked?'checked':''}" data-vid="${v.id}">
-        <input type="checkbox" ${checked?'checked':''} data-vid="${v.id}">
-        <span class="title">${esc(v.title||'بدون عنوان')}</span>
-        <span class="cat">${esc(v.category||'عام')}</span>
-      </label>`;
-    }).join('');
-
-    const note = document.createElement('div');
-    note.style.cssText = 'font-size:11px;color:var(--muted);margin-top:12px;text-align:center;line-height:1.6';
-    note.innerHTML = `⚠️ أي تعديل هنا <b>يستبدل</b> الفيديوهات المفتوحة بالكود`;
-    $('vmList').appendChild(note);
-
-    $('vmList').querySelectorAll('.vid-check').forEach(el=>{
-      const cb = el.querySelector('input');
-      cb.onchange = () => el.classList.toggle('checked', cb.checked);
-      el.onclick = (e) => {
-        if(e.target.tagName !== 'INPUT'){
-          cb.checked = !cb.checked;
-          el.classList.toggle('checked', cb.checked);
-        }
-      };
-    });
-
-  }catch(e){
-    console.error('openVideoManager error:',e);
-    $('vmList').innerHTML='<div class="empty"><div class="e">⚠️</div><p>تعذّر التحميل</p></div>';
-  }
-}
-
-$('vmSelectAll').onclick = () => {
-  $('vmList').querySelectorAll('.vid-check').forEach(el=>{
-    el.querySelector('input').checked = true;
-    el.classList.add('checked');
-  });
-};
-
-$('vmDeselectAll').onclick = () => {
-  $('vmList').querySelectorAll('.vid-check').forEach(el=>{
-    el.querySelector('input').checked = false;
-    el.classList.remove('checked');
-  });
-};
-
-$('vmSave').onclick = async () => {
-  if(!VM_CURRENT_USER) return;
-  const btn = $('vmSave'); btn.disabled = true; btn.textContent = '...';
-  try{
-    const selected = [];
-    $('vmList').querySelectorAll('.vid-check input:checked').forEach(cb=>{
-      const id = parseInt(cb.dataset.vid);
-      if(!isNaN(id)) selected.push(id);
-    });
-
-    const {error} = await sb.from('users')
-      .update({unlocked_videos: selected})
-      .eq('username', VM_CURRENT_USER);
-    
-    if(error) throw error;
-
-    try{
-      await sb.rpc('client_log_activity',{
-        p_username: ADMIN.username,
-        p_activity_type: 'admin_action',
-        p_details: jsonbDetails({action:'set_user_videos', target:VM_CURRENT_USER, count:selected.length}),
-        p_user_agent: navigator.userAgent.slice(0,200)
-      });
-    }catch(e){}
-
-    const u = USERS.find(x=>x.username===VM_CURRENT_USER);
-    if(u) u.unlocked_videos = selected;
-
-    toast(`تم حفظ ${selected.length} فيديو لـ ${VM_CURRENT_USER}`);
-    $('vidManageModal').classList.remove('open');
-    VM_CURRENT_USER = null;
-    renderUsers($('userSearch').value);
-
-  }catch(e){
-    console.error('Save error:',e);
-    toast('فشل الحفظ: '+(e.message||''),'err');
-  }finally{
-    btn.disabled = false; btn.textContent = '💾 حفظ التعديلات';
-  }
-};
-
-function closeVideoManager(){
-  $('vidManageModal').classList.remove('open');
-  VM_CURRENT_USER = null;
-}
-$('vmClose').onclick = closeVideoManager;
-$('vmCancel').onclick = closeVideoManager;
-$('vidManageModal').onclick = (e) => { if(e.target === $('vidManageModal')) closeVideoManager(); };
-
 /* ============ TOGGLE ACTIVE ============ */
 async function toggleActive(un){
   const u=USERS.find(x=>x.username===un); if(!u)return;
@@ -1675,16 +1546,16 @@ async function loadVideos(){
   }catch(e){VIDEOS=[];}
   $('adminVidList').innerHTML=VIDEOS.length?VIDEOS.map(v=>{
     const statusMap = {
-      approved:{cls:'status-approved', txt:'✅ معتمد'},
-      pending:{cls:'status-pending', txt:'⏳ مراجعة'},
-      rejected:{cls:'status-rejected', txt:'❌ مرفوض'}
+      approved:{cls:'on', txt:'✅ معتمد'},
+      pending:{cls:'warn', txt:'⏳ مراجعة'},
+      rejected:{cls:'off', txt:'❌ مرفوض'}
     };
     const st = statusMap[v.status] || statusMap.approved;
     return `<div class="list-item">
       <div class="li-main">
         <b>${esc(v.title)}</b>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;align-items:center">
-          <span class="status-badge ${st.cls}">${st.txt}</span>
+          <span class="pill ${st.cls}">${st.txt}</span>
           <small>${esc(v.category||'عام')} · 👁 ${v.views||0}</small>
         </div>
       </div>
