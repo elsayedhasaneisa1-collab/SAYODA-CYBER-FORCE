@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<meta name="theme-color" content="#0a0600" />
+<meta name="theme-color" content="#02140a" />
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-<title>لوحة المدرب الذهبية | SAYODA INSTRUCTOR</title>
+<title>لوحة المدرب | CYBER FORCE</title>
 <link rel="manifest" href="./manifest.json" />
 <link rel="icon" href="./logog.png" />
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
-  --gold:#ffd700; --gold-2:#d4af37; --gold-3:#ffb700;
-  --gold-soft:rgba(255,215,0,.12);
-  --bg:#0a0600; --bg-2:#140d00; --bg-3:#1a1206;
-  --card:rgba(26,18,6,.85); --card-solid:#1a1206;
-  --border:rgba(255,215,0,.22); --border-soft:rgba(255,215,0,.12);
-  --txt:#fff8e1; --muted:#b8a271;
-  --danger:#ff4d6d; --ok:#28d17c; --warn:#ff9500;
+  --green:#28d17c; --green-2:#1fa562; --green-3:#20b868;
+  --green-soft:rgba(40,209,124,.12);
+  --bg:#02140a; --bg-2:#041c10; --bg-3:#0a2a18;
+  --card:rgba(6,26,15,.85); --card-solid:#0a2a18;
+  --border:rgba(40,209,124,.22); --border-soft:rgba(40,209,124,.12);
+  --txt:#e8fff2; --muted:#7ec79e;
+  --danger:#ff4d6d; --warn:#ff9500; --gold:#ffd700;
   --radius:16px; --shadow:0 20px 60px rgba(0,0,0,.6);
 }
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-touch-callout:none}
@@ -26,104 +26,104 @@ html{overflow-x:hidden;width:100%;max-width:100vw}
 body{background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;width:100%;max-width:100vw;position:relative}
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
-    radial-gradient(circle at 15% 10%,rgba(255,215,0,.08),transparent 45%),
-    radial-gradient(circle at 85% 90%,rgba(212,175,55,.06),transparent 45%),
-    linear-gradient(180deg,#0a0600,#140d00);}
+    radial-gradient(circle at 15% 10%,rgba(40,209,124,.10),transparent 45%),
+    radial-gradient(circle at 85% 90%,rgba(31,165,98,.08),transparent 45%),
+    linear-gradient(180deg,#02140a,#041c10);}
 button{font-family:inherit;cursor:pointer}
 input,select,textarea{font-family:inherit;-webkit-user-select:text;user-select:text}
 img{pointer-events:none;-webkit-user-drag:none;user-drag:none;max-width:100%}
 
 ::-webkit-scrollbar{width:9px;height:9px}
-::-webkit-scrollbar-thumb{background:linear-gradient(var(--gold),var(--gold-2));border-radius:20px}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--green),var(--green-2));border-radius:20px}
 ::-webkit-scrollbar-track{background:rgba(0,0,0,.3)}
 
 header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
   gap:12px;padding:12px 18px;width:100%;box-sizing:border-box;
-  background:linear-gradient(180deg,rgba(26,18,6,.98),rgba(26,18,6,.9));
+  background:linear-gradient(180deg,rgba(6,26,15,.98),rgba(6,26,15,.9));
   backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border-bottom:1px solid var(--border);
-  box-shadow:0 4px 30px rgba(255,215,0,.08);}
+  box-shadow:0 4px 30px rgba(40,209,124,.08);}
 .hl{display:flex;align-items:center;gap:12px;min-width:0;flex:1}
-.hl img{width:42px;height:42px;object-fit:contain;filter:drop-shadow(0 0 12px rgba(255,215,0,.5));flex-shrink:0}
+.hl img{width:42px;height:42px;object-fit:contain;filter:drop-shadow(0 0 12px rgba(40,209,124,.5));flex-shrink:0}
 .ht{font-weight:900;font-size:16px;line-height:1.1;min-width:0;overflow:hidden;text-overflow:ellipsis}
-.ht span{background:linear-gradient(135deg,var(--gold),var(--gold-3));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.ht span{background:linear-gradient(135deg,var(--green),var(--green-3));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .ht small{display:block;font-size:10px;color:var(--muted);font-weight:600;letter-spacing:1px;margin-top:2px}
 .hr{display:flex;gap:8px;flex-shrink:0}
-.icon-btn{width:42px;height:42px;border-radius:12px;border:1px solid var(--border);background:var(--gold-soft);
-  color:var(--gold);display:grid;place-items:center;transition:.2s;font-size:18px;flex-shrink:0}
-.icon-btn:hover{background:var(--gold);color:#0a0600;transform:translateY(-2px);box-shadow:0 8px 20px rgba(255,215,0,.3)}
+.icon-btn{width:42px;height:42px;border-radius:12px;border:1px solid var(--border);background:var(--green-soft);
+  color:var(--green);display:grid;place-items:center;transition:.2s;font-size:18px;flex-shrink:0}
+.icon-btn:hover{background:var(--green);color:#02140a;transform:translateY(-2px);box-shadow:0 8px 20px rgba(40,209,124,.3)}
 
 .wrap{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:18px 14px 40px;width:100%;box-sizing:border-box}
 .tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:12px;margin-bottom:18px;scrollbar-width:none;width:100%;box-sizing:border-box}
 .tabs::-webkit-scrollbar{display:none}
 .tab{white-space:nowrap;padding:12px 20px;border-radius:12px;border:1px solid var(--border-soft);
-  background:rgba(26,18,6,.6);font-weight:800;font-size:14px;transition:.25s;color:var(--muted);
+  background:rgba(6,26,15,.6);font-weight:800;font-size:14px;transition:.25s;color:var(--muted);
   display:flex;align-items:center;gap:6px;flex-shrink:0}
-.tab:hover{border-color:var(--border);color:var(--gold)}
-.tab.active{background:linear-gradient(135deg,var(--gold),var(--gold-3));color:#0a0600;border-color:transparent;
-  box-shadow:0 8px 24px rgba(255,215,0,.35);font-weight:900}
+.tab:hover{border-color:var(--border);color:var(--green)}
+.tab.active{background:linear-gradient(135deg,var(--green),var(--green-3));color:#02140a;border-color:transparent;
+  box-shadow:0 8px 24px rgba(40,209,124,.35);font-weight:900}
 .tab .badge{background:var(--danger);color:#fff;font-size:10px;padding:2px 6px;border-radius:8px;font-weight:900;min-width:18px;text-align:center}
-.tab.active .badge{background:#0a0600;color:var(--gold)}
+.tab.active .badge{background:#02140a;color:var(--green)}
 
 .panel{display:none;animation:fade .35s;width:100%}
 .panel.active{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
-.sec-title{font-size:20px;font-weight:900;margin-bottom:16px;display:flex;align-items:center;gap:10px;color:var(--gold)}
+.sec-title{font-size:20px;font-weight:900;margin-bottom:16px;display:flex;align-items:center;gap:10px;color:var(--green)}
 .sec-sub{color:var(--muted);font-size:13px;margin-bottom:18px;line-height:1.6}
 
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:22px;width:100%;box-sizing:border-box}
-.stat{background:linear-gradient(135deg,rgba(26,18,6,.95),rgba(36,26,10,.85));
+.stat{background:linear-gradient(135deg,rgba(6,26,15,.95),rgba(10,42,24,.85));
   border:1px solid var(--border);border-radius:16px;padding:20px 14px;text-align:center;
   position:relative;overflow:hidden;transition:.25s;box-sizing:border-box}
 .stat::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--gold),var(--gold-3),var(--gold));opacity:.7}
-.stat:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 12px 32px rgba(255,215,0,.18)}
-.stat .n{font-size:30px;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--gold-3));
+  background:linear-gradient(90deg,var(--green),var(--green-3),var(--green));opacity:.7}
+.stat:hover{transform:translateY(-4px);border-color:var(--green);box-shadow:0 12px 32px rgba(40,209,124,.18)}
+.stat .n{font-size:30px;font-weight:900;background:linear-gradient(135deg,var(--green),var(--green-3));
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2}
 .stat .l{color:var(--muted);font-weight:700;font-size:12px;margin-top:6px;letter-spacing:.5px}
 .stat .ic{font-size:22px;margin-bottom:6px;display:block;opacity:.9}
 
-.card{background:linear-gradient(160deg,rgba(26,18,6,.92),rgba(20,13,0,.85));
+.card{background:linear-gradient(160deg,rgba(6,26,15,.92),rgba(4,20,12,.85));
   border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:16px;
   box-shadow:var(--shadow);position:relative;width:100%;box-sizing:border-box}
 .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.5}
-.card h3{font-size:16px;font-weight:900;margin-bottom:16px;color:var(--gold);
+  background:linear-gradient(90deg,transparent,var(--green),transparent);opacity:.5}
+.card h3{font-size:16px;font-weight:900;margin-bottom:16px;color:var(--green);
   display:flex;align-items:center;gap:8px}
 .card h3::before{content:'';width:4px;height:18px;border-radius:2px;
-  background:linear-gradient(180deg,var(--gold),var(--gold-2))}
+  background:linear-gradient(180deg,var(--green),var(--green-2))}
 
 .frm{display:grid;gap:12px;width:100%;box-sizing:border-box}
 .frm input,.frm select,.frm textarea{width:100%;padding:13px 15px;border-radius:12px;
-  border:1px solid var(--border-soft);background:rgba(10,6,0,.6);color:var(--txt);
+  border:1px solid var(--border-soft);background:rgba(2,10,6,.6);color:var(--txt);
   outline:none;font-size:14px;transition:.2s;box-sizing:border-box}
 .frm input:focus,.frm select:focus,.frm textarea:focus{
-  border-color:var(--gold);box-shadow:0 0 0 4px rgba(255,215,0,.12);background:rgba(10,6,0,.85)}
+  border-color:var(--green);box-shadow:0 0 0 4px rgba(40,209,124,.12);background:rgba(2,10,6,.85)}
 .frm textarea{min-height:90px;resize:vertical}
-.frm input::placeholder,.frm textarea::placeholder{color:rgba(184,162,113,.6)}
+.frm input::placeholder,.frm textarea::placeholder{color:rgba(126,199,158,.6)}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:560px){.row2{grid-template-columns:1fr}}
 .frm label{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.3px}
 
 .btn{padding:13px 22px;border:none;border-radius:12px;font-weight:900;font-size:14px;
-  background:linear-gradient(135deg,var(--gold),var(--gold-3));color:#0a0600;
+  background:linear-gradient(135deg,var(--green),var(--green-3));color:#02140a;
   transition:.2s;letter-spacing:.3px;box-sizing:border-box}
-.btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(255,215,0,.4)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(40,209,124,.4)}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
 .btn.sm{padding:8px 14px;font-size:12px;border-radius:9px}
 .btn.danger{background:linear-gradient(135deg,#ff4d6d,#c62348);color:#fff}
 .btn.danger:hover{box-shadow:0 10px 28px rgba(255,77,109,.4)}
-.btn.ghost{background:transparent;border:1px solid var(--border);color:var(--gold)}
-.btn.ghost:hover{background:var(--gold-soft);box-shadow:0 10px 28px rgba(255,215,0,.2)}
+.btn.ghost{background:transparent;border:1px solid var(--border);color:var(--green)}
+.btn.ghost:hover{background:var(--green-soft);box-shadow:0 10px 28px rgba(40,209,124,.2)}
 .btn.warn{background:linear-gradient(135deg,#ff9500,#cc7700);color:#fff}
 .btn.ok{background:linear-gradient(135deg,#28d17c,#1fa562);color:#fff}
 .btn.blue{background:linear-gradient(135deg,#19aaff,#0b7fd4);color:#fff}
 
 .list-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:13px;
-  background:rgba(26,18,6,.6);border:1px solid var(--border-soft);margin-bottom:9px;
+  background:rgba(6,26,15,.6);border:1px solid var(--border-soft);margin-bottom:9px;
   flex-wrap:wrap;transition:.2s;width:100%;box-sizing:border-box}
-.list-item:hover{border-color:var(--gold);background:rgba(26,18,6,.85);transform:translateX(-3px)}
+.list-item:hover{border-color:var(--green);background:rgba(6,26,15,.85);transform:translateX(-3px)}
 .li-main{flex:1;min-width:150px}
 .li-main b{font-size:15px;color:var(--txt);font-weight:800}
 .li-main small{display:block;color:var(--muted);font-size:12px;margin-top:3px;line-height:1.5;word-break:break-word}
@@ -132,17 +132,17 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 .pill{font-size:11px;padding:4px 11px;border-radius:10px;font-weight:800;letter-spacing:.3px;display:inline-block}
 .pill.on{background:rgba(40,209,124,.18);color:#28d17c;border:1px solid rgba(40,209,124,.3)}
 .pill.off{background:rgba(255,77,109,.18);color:#ff4d6d;border:1px solid rgba(255,77,109,.3)}
-.pill.gold{background:var(--gold-soft);color:var(--gold);border:1px solid var(--border)}
+.pill.gold{background:var(--green-soft);color:var(--green);border:1px solid var(--border)}
 .pill.warn{background:rgba(255,149,0,.18);color:#ff9500;border:1px solid rgba(255,149,0,.3)}
 .pill.blue{background:rgba(25,170,255,.18);color:#19aaff;border:1px solid rgba(25,170,255,.3)}
 
 .search{width:100%;padding:13px 15px;border-radius:12px;border:1px solid var(--border-soft);
-  background:rgba(26,18,6,.6);color:var(--txt);outline:none;margin-bottom:14px;font-size:14px;box-sizing:border-box}
-.search:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(255,215,0,.12)}
+  background:rgba(6,26,15,.6);color:var(--txt);outline:none;margin-bottom:14px;font-size:14px;box-sizing:border-box}
+.search:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(40,209,124,.12)}
 
 #toasts{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:999;
   display:flex;flex-direction:column;gap:10px;width:92%;max-width:400px;pointer-events:none}
-.toast{padding:14px 18px;border-radius:14px;background:linear-gradient(135deg,rgba(26,18,6,.98),rgba(20,13,0,.98));
+.toast{padding:14px 18px;border-radius:14px;background:linear-gradient(135deg,rgba(6,26,15,.98),rgba(4,20,12,.98));
   border:1px solid var(--border);box-shadow:var(--shadow);display:flex;gap:12px;align-items:center;
   font-weight:700;animation:tin .3s;font-size:14px;pointer-events:auto}
 .toast.ok{border-color:rgba(40,209,124,.5);color:#7ff0b8}
@@ -154,84 +154,85 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 .empty .e{font-size:52px;margin-bottom:10px;opacity:.6}
 .empty p{font-size:14px;line-height:1.6}
 
-.skel{background:linear-gradient(90deg,rgba(26,18,6,.4) 25%,rgba(255,215,0,.08) 50%,rgba(26,18,6,.4) 75%);
+.skel{background:linear-gradient(90deg,rgba(6,26,15,.4) 25%,rgba(40,209,124,.08) 50%,rgba(6,26,15,.4) 75%);
   background-size:200% 100%;animation:sh 1.3s infinite;border-radius:12px;height:70px;margin-bottom:10px}
 @keyframes sh{to{background-position:-200% 0}}
 
 .gate{position:fixed;inset:0;z-index:500;background:var(--bg);display:grid;place-items:center;padding:20px}
 .gate::before{content:'';position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(circle at 50% 30%,rgba(255,215,0,.15),transparent 60%)}
-.gate .box{position:relative;background:linear-gradient(160deg,rgba(26,18,6,.98),rgba(20,13,0,.98));
+  background:radial-gradient(circle at 50% 30%,rgba(40,209,124,.15),transparent 60%)}
+.gate .box{position:relative;background:linear-gradient(160deg,rgba(6,26,15,.98),rgba(4,20,12,.98));
   border:1px solid var(--border);border-radius:24px;padding:38px 30px;width:100%;max-width:400px;
-  text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(255,215,0,.15);box-sizing:border-box}
-.gate img{width:80px;margin-bottom:14px;filter:drop-shadow(0 0 20px rgba(255,215,0,.6));animation:float 4s ease-in-out infinite}
+  text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(40,209,124,.15);box-sizing:border-box}
+.gate img{width:80px;margin-bottom:14px;filter:drop-shadow(0 0 20px rgba(40,209,124,.6));animation:float 4s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .gate h2{font-size:22px;font-weight:900;margin-bottom:8px;
-  background:linear-gradient(135deg,var(--gold),var(--gold-3));
+  background:linear-gradient(135deg,var(--green),var(--green-3));
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .gate p{color:var(--muted);font-size:13px;margin-bottom:22px;line-height:1.6}
 .gate input{width:100%;padding:15px;border-radius:13px;border:1px solid var(--border);
-  background:rgba(10,6,0,.7);color:var(--txt);outline:none;text-align:center;font-size:16px;
+  background:rgba(2,10,6,.7);color:var(--txt);outline:none;text-align:center;font-size:16px;
   margin-bottom:12px;transition:.2s;-webkit-user-select:text;user-select:text;box-sizing:border-box}
-.gate input:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(255,215,0,.15)}
+.gate input:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(40,209,124,.15)}
 .gate .btn{margin-bottom:8px}
 
 .live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#28d17c;
   margin-left:6px;animation:blink 1.5s infinite;box-shadow:0 0 10px #28d17c}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 
-/* ============ STUDENT CARD ============ */
-.student-card{background:linear-gradient(160deg,rgba(26,18,6,.92),rgba(20,13,0,.85));
+/* STUDENT CARD */
+.student-card{background:linear-gradient(160deg,rgba(6,26,15,.92),rgba(4,20,12,.85));
   border:1px solid var(--border-soft);border-radius:16px;padding:16px;margin-bottom:14px;
-  transition:.25s;position:relative;overflow:hidden}
-.student-card:hover{border-color:var(--gold);box-shadow:0 12px 32px rgba(255,215,0,.15)}
+  transition:.25s;position:relative;overflow:hidden;cursor:pointer}
+.student-card:hover{border-color:var(--green);box-shadow:0 12px 32px rgba(40,209,124,.15);transform:translateY(-3px)}
 .student-card.pending{border-color:rgba(255,149,0,.5);
-  background:linear-gradient(160deg,rgba(255,149,0,.08),rgba(26,18,6,.92))}
+  background:linear-gradient(160deg,rgba(255,149,0,.08),rgba(6,26,15,.92))}
 .student-card.pending::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,#ff9500,#ffd700,#ff9500);animation:blink 2s infinite}
+  background:linear-gradient(90deg,#ff9500,#28d17c,#ff9500);animation:blink 2s infinite}
 .st-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
-.st-av{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#ff9500);
-  display:grid;place-items:center;font-size:22px;font-weight:900;color:#3a2600;flex-shrink:0;
-  box-shadow:0 0 16px rgba(255,215,0,.4)}
+.st-av{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--green),#1fa562);
+  display:grid;place-items:center;font-size:22px;font-weight:900;color:#02140a;flex-shrink:0;
+  box-shadow:0 0 16px rgba(40,209,124,.4)}
 .st-info{flex:1;min-width:150px}
 .st-info h4{font-size:15px;font-weight:900;color:var(--txt);margin-bottom:3px}
 .st-info small{font-size:11px;color:var(--muted);display:block}
-.st-stats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.st-stats{display:flex;gap:6px;flex-wrap:wrap}
 .st-stat{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:10px;
-  background:var(--gold-soft);border:1px solid var(--border-soft);font-size:11px;font-weight:800;color:var(--gold)}
-.st-stat.green{background:rgba(40,209,124,.12);border-color:rgba(40,209,124,.3);color:var(--ok)}
-.st-actions{display:flex;gap:8px;flex-wrap:wrap}
-.st-actions .btn{flex:1;min-width:120px}
+  background:var(--green-soft);border:1px solid var(--border-soft);font-size:11px;font-weight:800;color:var(--green)}
+.st-stat.green{background:rgba(40,209,124,.12);border-color:rgba(40,209,124,.3);color:#28d17c}
+.st-stat.warn{background:rgba(255,149,0,.12);border-color:rgba(255,149,0,.3);color:#ff9500}
 
-/* ============ VIDEO CHECK MODAL ============ */
-.vid-modal{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);
+/* MODAL */
+.modal{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);
   display:none;align-items:center;justify-content:center;padding:20px}
-.vid-modal.open{display:flex;animation:fade .25s}
-.vid-modal-box{background:linear-gradient(160deg,rgba(26,18,6,.98),rgba(20,13,0,.98));
+.modal.open{display:flex;animation:fade .25s}
+.modal-box{background:linear-gradient(160deg,rgba(6,26,15,.98),rgba(4,20,12,.98));
   border:1px solid var(--border);border-radius:20px;width:100%;max-width:560px;max-height:88vh;
   display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.7);overflow:hidden}
-.vid-modal-head{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;
+.modal-head{padding:18px 20px;border-bottom:1px solid var(--border);display:flex;
   align-items:center;justify-content:space-between;gap:12px;flex-shrink:0}
-.vid-modal-head h3{margin:0;font-size:16px;color:var(--gold);font-weight:900;
+.modal-head h3{margin:0;font-size:16px;color:var(--green);font-weight:900;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.vid-modal-head .close-btn{width:34px;height:34px;border-radius:9px;border:1px solid var(--border);
-  background:transparent;color:var(--gold);font-size:18px;display:grid;place-items:center;cursor:pointer;transition:.2s;flex-shrink:0}
-.vid-modal-head .close-btn:hover{background:var(--gold);color:#0a0600}
-.vid-modal-info{padding:12px 20px;background:rgba(10,6,0,.4);border-bottom:1px solid var(--border);
-  font-size:12px;color:var(--muted);flex-shrink:0}
-.vid-modal-info b{color:var(--gold)}
-.vid-modal-body{flex:1;overflow-y:auto;padding:14px 20px}
-.vid-check{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;
-  background:rgba(10,6,0,.4);border:1px solid var(--border-soft);margin-bottom:8px;cursor:pointer;transition:.2s;position:relative}
-.vid-check:hover{border-color:var(--gold);background:rgba(26,18,6,.7)}
-.vid-check input{width:20px;height:20px;accent-color:var(--gold);cursor:pointer;flex-shrink:0}
-.vid-check .info{flex:1;min-width:0}
-.vid-check .title{font-weight:700;font-size:14px;color:var(--txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
-.vid-check .cat{font-size:11px;color:var(--muted);margin-top:2px;display:block}
-.vid-check.checked{border-color:var(--gold);background:var(--gold-soft)}
-.vid-check.locked-other{opacity:.5}
-.vid-modal-foot{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:8px;flex-shrink:0}
-.vid-modal-foot .btn{flex:1}
+.modal-head .close-btn{width:34px;height:34px;border-radius:9px;border:1px solid var(--border);
+  background:transparent;color:var(--green);font-size:18px;display:grid;place-items:center;cursor:pointer;transition:.2s;flex-shrink:0}
+.modal-head .close-btn:hover{background:var(--green);color:#02140a}
+.modal-info{padding:14px 20px;background:rgba(2,10,6,.5);border-bottom:1px solid var(--border);flex-shrink:0}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.info-item{padding:10px;border-radius:10px;background:rgba(40,209,124,.06);border:1px solid var(--border-soft)}
+.info-item .lbl{font-size:10px;color:var(--muted);font-weight:700;margin-bottom:3px}
+.info-item .val{font-size:13px;font-weight:900;color:var(--green)}
+.modal-body{flex:1;overflow-y:auto;padding:16px 20px}
+.modal-body h4{font-size:14px;font-weight:900;color:var(--green);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.action-btn{width:100%;padding:16px;border-radius:14px;border:none;font-weight:900;font-size:15px;
+  transition:.2s;margin-bottom:10px;text-align:center;line-height:1.4;cursor:pointer}
+.action-btn.open{background:linear-gradient(135deg,#28d17c,#1fa562);color:#fff;box-shadow:0 8px 20px rgba(40,209,124,.3)}
+.action-btn.open:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(40,209,124,.5)}
+.action-btn.close{background:linear-gradient(135deg,#ff4d6d,#c62348);color:#fff;box-shadow:0 8px 20px rgba(255,77,109,.3)}
+.action-btn.close:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(255,77,109,.5)}
+.action-btn small{display:block;font-weight:600;font-size:11px;opacity:.9;margin-top:4px}
+.action-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.modal-foot{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:8px;flex-shrink:0}
+.modal-foot .btn{flex:1}
 
 @media(max-width:560px){
   .stats{grid-template-columns:repeat(2,1fr)}
@@ -240,8 +241,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
   .ht small{display:none}
   .wrap{padding:14px 10px 30px}
   .card{padding:16px}
-  .vid-modal-box{max-height:92vh}
-  .st-actions .btn{min-width:100%}
+  .modal-box{max-height:92vh}
 }
 </style>
 </head>
@@ -265,8 +265,8 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
   <div class="hl">
     <img src="./logog.png" onerror="this.style.display='none'">
     <div class="ht">
-      SAYODA <span>INSTRUCTOR</span>
-      <small>✨ لوحة المدرب الذهبية</small>
+      CYBER <span>INSTRUCTOR</span>
+      <small>✨ لوحة المدرب</small>
     </div>
   </div>
   <div class="hr">
@@ -277,10 +277,9 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 </header>
 
 <div class="wrap">
-
   <div class="tabs" id="tabs"></div>
 
-  <!-- ============ DASHBOARD ============ -->
+  <!-- DASHBOARD -->
   <div class="panel active" id="p-dash">
     <div class="sec-title">📊 لوحة الإحصائيات</div>
     <div class="sec-sub">
@@ -308,18 +307,18 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     </div>
   </div>
 
-  <!-- ============ REQUESTS ============ -->
+  <!-- REQUESTS (Students) -->
   <div class="panel" id="p-requests">
     <div class="sec-title">📥 طلبات الطلاب</div>
-    <div class="sec-sub">الطلاب اللي عايزين يفتحوا فيديوهاتك</div>
+    <div class="sec-sub">اضغط على أي طالب لعرض تفاصيله وإدارة وصوله</div>
 
-    <div class="card" style="background:linear-gradient(160deg,rgba(25,170,255,.08),rgba(26,18,6,.92))">
+    <div class="card" style="background:linear-gradient(160deg,rgba(40,209,124,.08),rgba(6,26,15,.92))">
       <h3>💡 إزاي يشتغل النظام؟</h3>
       <p style="color:var(--muted);font-size:13px;line-height:1.8">
-        1. الطالب يضغط على فيديو مقفول → هتوصلك رسالة واتساب
-        <br>2. تضغط <b style="color:var(--gold)">"🔓 فتح أول فيديو"</b> → الفيديو الأول يفتح
-        <br>3. لما الطالب يوصل <b style="color:#28d17c">50%</b> من المشاهدة → الفيديو التالي يفتح تلقائياً
-        <br>4. وهكذا لحد ما يشوف كل الفيديوهات
+        1. اضغط على حساب الطالب → هيفتحلك مربع تفاصيله
+        <br>2. اضغط <b style="color:var(--green)">"🔓 فتح الفيديوهات"</b> → الفيديو الأول يفتح
+        <br>3. لما الطالب يوصل <b style="color:#28d17c">50%</b> → الفيديو التالي يفتح تلقائياً
+        <br>4. لو عايز تقفل الفيديوهات → اضغط <b style="color:#ff4d6d">"🔒 غلق الفيديوهات"</b>
       </p>
     </div>
 
@@ -332,24 +331,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     </div>
   </div>
 
-  <!-- ============ MY VIDEOS ============ -->
-  <div class="panel" id="p-videos">
-    <div class="sec-title">🎬 فيديوهاتي</div>
-    <div class="sec-sub">كل الفيديوهات اللي رفعتها وحالتها</div>
-
-    <div class="card">
-      <h3>📼 قائمة الفيديوهات</h3>
-      <div class="filters" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
-        <button class="btn sm ghost filter-btn active" data-filter="all">الكل</button>
-        <button class="btn sm ghost filter-btn" data-filter="approved">✅ معتمد</button>
-        <button class="btn sm ghost filter-btn" data-filter="pending">⏳ قيد المراجعة</button>
-        <button class="btn sm ghost filter-btn" data-filter="rejected">❌ مرفوض</button>
-      </div>
-      <div id="myVideosList"></div>
-    </div>
-  </div>
-
-  <!-- ============ ADD VIDEO ============ -->
+  <!-- ADD VIDEO -->
   <div class="panel" id="p-add">
     <div class="sec-title">➕ إضافة فيديو جديد</div>
     <div class="sec-sub">الفيديو هيروح للمراجعة قبل النشر</div>
@@ -359,26 +341,22 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
       <div class="frm">
         <div><label>عنوان الفيديو *</label>
           <input id="vTitle" placeholder="مثال: مقدمة في الأمن السيبراني" /></div>
-
         <div><label>وصف الفيديو</label>
           <textarea id="vDesc" placeholder="وصف مختصر..."></textarea></div>
-
         <div><label>رابط يوتيوب *</label>
           <input id="vUrl" placeholder="https://youtu.be/..." /></div>
-
         <div class="row2">
           <div><label>التصنيف</label>
             <input id="vCat" placeholder="مثال: مبتدئ" /></div>
           <div><label>صورة مصغّرة (اختياري)</label>
             <input id="vThumb" placeholder="https://..." /></div>
         </div>
-
         <button class="btn" id="addVidBtn">📤 رفع الفيديو للمراجعة</button>
       </div>
     </div>
   </div>
 
-  <!-- ============ SETTINGS ============ -->
+  <!-- SETTINGS -->
   <div class="panel" id="p-settings">
     <div class="sec-title">⚙️ الإعدادات</div>
 
@@ -386,8 +364,8 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
       <h3>📞 رقم الواتساب</h3>
       <p style="color:var(--muted);font-size:13px;margin-bottom:14px;line-height:1.6">
         ده الرقم اللي الطلاب هيبعتوا عليه عشان يفتحوا فيديوهاتك.
-        <br>⚠️ لازم يكون بصيغة دولية <b style="color:var(--gold)">بدون + وبدون 0</b>
-        <br>مثال: <b style="color:var(--gold)">201041254010</b>
+        <br>⚠️ لازم يكون بصيغة دولية <b style="color:var(--green)">بدون + وبدون 0</b>
+        <br>مثال: <b style="color:var(--green)">201041254010</b>
       </p>
       <div class="frm">
         <div>
@@ -401,15 +379,15 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     <div class="card">
       <h3>ℹ️ معلومات الحساب</h3>
       <div style="display:grid;gap:10px">
-        <div style="padding:12px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:12px">
+        <div style="padding:12px;background:rgba(2,10,6,.5);border:1px solid var(--border-soft);border-radius:12px">
           <div style="font-size:11px;color:var(--muted);margin-bottom:4px">اسم المستخدم</div>
           <div style="font-weight:900;font-size:15px" id="accUsername">—</div>
         </div>
-        <div style="padding:12px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:12px">
+        <div style="padding:12px;background:rgba(2,10,6,.5);border:1px solid var(--border-soft);border-radius:12px">
           <div style="font-size:11px;color:var(--muted);margin-bottom:4px">التخصص</div>
           <div style="font-weight:900;font-size:15px" id="accSpecialty">—</div>
         </div>
-        <div style="padding:12px;background:rgba(10,6,0,.5);border:1px solid var(--border-soft);border-radius:12px">
+        <div style="padding:12px;background:rgba(2,10,6,.5);border:1px solid var(--border-soft);border-radius:12px">
           <div style="font-size:11px;color:var(--muted);margin-bottom:4px">نبذة</div>
           <div style="font-weight:600;font-size:13px" id="accBio">—</div>
         </div>
@@ -420,21 +398,40 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 </div>
 </div>
 
-<!-- VIDEO MANAGEMENT MODAL -->
-<div class="vid-modal" id="vidManageModal">
-  <div class="vid-modal-box">
-    <div class="vid-modal-head">
-      <h3 id="vmTitle">🎬 إدارة الفيديوهات</h3>
-      <button class="close-btn" id="vmClose">✕</button>
+<!-- STUDENT MODAL -->
+<div class="modal" id="studentModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="smTitle">👤 بيانات الطالب</h3>
+      <button class="close-btn" id="smClose">✕</button>
     </div>
-    <div class="vid-modal-info" id="vmInfo">—</div>
-    <div class="vid-modal-body" id="vmList">
-      <div class="skel"></div>
-      <div class="skel"></div>
+    
+    <div class="modal-info" id="smInfo">
+      <div class="info-grid">
+        <div class="skel" style="height:50px"></div>
+        <div class="skel" style="height:50px"></div>
+      </div>
     </div>
-    <div class="vid-modal-foot">
-      <button class="btn ok" id="vmUnlockFirst">🔓 فتح أول فيديو</button>
-      <button class="btn ghost" id="vmCancel">إلغاء</button>
+    
+    <div class="modal-body">
+      <h4>🎬 إدارة الوصول</h4>
+      <p style="color:var(--muted);font-size:13px;line-height:1.7;margin-bottom:16px">
+        اختر أحد الخيارات:
+      </p>
+      
+      <button class="action-btn open" id="smOpenAll">
+        🔓 فتح الفيديوهات
+        <small>يفتح أول فيديو تلقائياً، والباقي يفتح عند 50%</small>
+      </button>
+      
+      <button class="action-btn close" id="smCloseAll">
+        🔒 غلق كل الفيديوهات
+        <small>يقفل كل الفيديوهات عن الطالب</small>
+      </button>
+    </div>
+    
+    <div class="modal-foot">
+      <button class="btn ghost" id="smCancel" style="width:100%">إغلاق</button>
     </div>
   </div>
 </div>
@@ -443,7 +440,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 
 <script>
 /* ============================================
-   SAYODA INSTRUCTOR — JavaScript
+   CYBER FORCE — Instructor Panel (Green Theme)
    ============================================ */
 const SUPABASE_URL="https://brawrhpvtnzvvrzkguic.supabase.co";
 const SUPABASE_KEY="sb_publishable_Q8fBS3nVZqgvfd6diaul8A_cMvHUFtN";
@@ -453,7 +450,7 @@ const clean=s=>String(s==null?'':s).replace(/[<>]/g,'').trim();
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeInt=(n,d=0)=>{const v=parseInt(n,10);return Number.isFinite(v)?v:d};
 
-/* ============ الحمايات ============ */
+/* حمايات */
 document.addEventListener('contextmenu',e=>e.preventDefault());
 document.addEventListener('dragstart',e=>e.preventDefault());
 document.addEventListener('selectstart',e=>{if(!e.target.closest('input,textarea,select'))e.preventDefault();});
@@ -467,44 +464,37 @@ document.addEventListener('keydown',e=>{
   if(e.key==='PrintScreen'){e.preventDefault();try{navigator.clipboard.writeText('');}catch(err){}}
 });
 
-/* ============ STATE ============ */
+/* STATE */
 let INSTRUCTOR=null;
 let PASS=sessionStorage.getItem('sayoda_instructor_pass')||null;
 let MY_VIDEOS=[];
 let STUDENTS=[];
-let ACTIVE_FILTER='all';
 let VM_CURRENT_STUDENT=null;
-let ADMIN_IS_INSTRUCTOR=false;
 
-/* ============ SESSION ============ */
+/* SESSION */
 function getSession(){try{return JSON.parse(localStorage.getItem('sayoda_session')||'null')}catch(e){return null}}
 const SESSION=getSession();
 if(!SESSION||!SESSION.username){location.replace('./login.html');}
 
-/* ============ AUTO LOGOUT ============ */
+/* AUTO LOGOUT */
 let IDLE_TIMER=null;
 const IDLE_MS=60*60*1000;
 function resetIdle(){
   clearTimeout(IDLE_TIMER);
-  IDLE_TIMER=setTimeout(()=>{
-    toast('انتهت الجلسة — جاري تسجيل الخروج','err');
-    setTimeout(logoutInstructor,1200);
-  },IDLE_MS);
+  IDLE_TIMER=setTimeout(()=>{ toast('انتهت الجلسة','err'); setTimeout(logoutInstructor,1200); },IDLE_MS);
 }
 ['click','keydown','mousemove','touchstart','scroll'].forEach(ev=>
   document.addEventListener(ev,resetIdle,{passive:true}));
 
 async function logoutInstructor(){
-  try{
-    if(SESSION.token) await sb.rpc('secure_logout',{p_token:SESSION.token});
-  }catch(e){}
+  try{ if(SESSION.token) await sb.rpc('secure_logout',{p_token:SESSION.token}); }catch(e){}
   sessionStorage.removeItem('sayoda_instructor_pass');
   localStorage.removeItem('sayoda_session');
   location.replace('./login.html');
 }
 $('logoutBtn').onclick=logoutInstructor;
 
-/* ============ TOAST ============ */
+/* TOAST */
 function toast(m,t='ok'){
   const e=document.createElement('div');
   e.className='toast '+t;
@@ -513,7 +503,7 @@ function toast(m,t='ok'){
   setTimeout(()=>{e.style.opacity='0';setTimeout(()=>e.remove(),300)},3200);
 }
 
-/* ============ HELPERS ============ */
+/* HELPERS */
 function fmtDate(t){
   try{
     const d=new Date(t);
@@ -528,7 +518,7 @@ function fmtDate(t){
 function ensurePass(){
   if(!PASS) PASS=sessionStorage.getItem('sayoda_instructor_pass');
   if(!PASS){
-    toast('انتهت الجلسة — أدخل كلمة المرور مرة أخرى','err');
+    toast('انتهت الجلسة','err');
     $('gate').style.display='grid';
     $('app').style.display='none';
     return false;
@@ -539,77 +529,46 @@ function ytIdOf(url){
   const m = String(url||'').match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
   return m ? m[1] : '';
 }
-function thumbOf(v){
-  return v.thumbnail || (ytIdOf(v.youtube_url) ? `https://i.ytimg.com/vi/${ytIdOf(v.youtube_url)}/mqdefault.jpg` : './sayed.png');
-}
 
-/* ============ GATE ============ */
+/* GATE */
 $('gateBtn').onclick=async()=>{
   const p=$('gatePass').value;
   if(!p) return toast('أدخل كلمة المرور','err');
   const btn=$('gateBtn'); btn.disabled=true; btn.textContent='...';
   try{
-    const {data,error}=await sb.rpc('admin_verify_password',{
-      p_username:SESSION.username, p_password:p
-    });
+    const {data,error}=await sb.rpc('admin_verify_password',{p_username:SESSION.username, p_password:p});
     if(error) throw error;
     const res=Array.isArray(data)?data[0]:data;
     if(res && res.ok){
-      // نتحقق إن المستخدم مدرب أو أدمن+مدرب
       const {data:uData, error:uErr} = await sb.from('users')
         .select('id, username, role, is_instructor, active, whatsapp, specialty, bio')
-        .eq('username', SESSION.username)
-        .limit(1);
-      
+        .eq('username', SESSION.username).limit(1);
       if(uErr) throw uErr;
       const user = uData && uData[0];
-      
       if(!user){ toast('المستخدم غير موجود','err'); throw new Error('nf'); }
       if(user.active === false){ toast('حسابك موقوف','err'); throw new Error('inactive'); }
-      
       const isIns = user.role === 'instructor' || (user.role === 'admin' && user.is_instructor === true);
       if(!isIns){ toast('ليس لديك صلاحية المدرب','err'); throw new Error('not_ins'); }
       
-      INSTRUCTOR = {
-        id: user.id,
-        username: user.username,
-        role: user.role,
-        is_instructor: user.is_instructor,
-        whatsapp: user.whatsapp,
-        specialty: user.specialty,
-        bio: user.bio
-      };
+      INSTRUCTOR = { id: user.id, username: user.username, role: user.role, is_instructor: user.is_instructor, whatsapp: user.whatsapp, specialty: user.specialty, bio: user.bio };
       PASS=p;
       sessionStorage.setItem('sayoda_instructor_pass',p);
-
-      if(INSTRUCTOR.role === 'admin'){
-        $('adminBtn').style.display='grid';
-      }
-
+      if(INSTRUCTOR.role === 'admin') $('adminBtn').style.display='grid';
       $('gate').style.display='none';
       $('app').style.display='block';
       resetIdle();
       init();
-
-    } else {
-      toast('كلمة مرور خاطئة','err');
-    }
+    } else { toast('كلمة مرور خاطئة','err'); }
   }catch(e){
-    console.error('Gate error:',e);
-    if(!['nf','inactive','not_ins'].includes(e.message)){
-      toast('خطأ في الاتصال','err');
-    }
-  }finally{
-    btn.disabled=false; btn.textContent='🔓 دخول';
-  }
+    if(!['nf','inactive','not_ins'].includes(e.message)) toast('خطأ في الاتصال','err');
+  }finally{ btn.disabled=false; btn.textContent='🔓 دخول'; }
 };
 $('gatePass').addEventListener('keydown',e=>{if(e.key==='Enter')$('gateBtn').click();});
 
-/* ============ TABS ============ */
+/* TABS */
 const TABS=[
   {id:'dash',t:'📊 الإحصائيات'},
   {id:'requests',t:'📥 الطلبات'},
-  {id:'videos',t:'🎬 فيديوهاتي'},
   {id:'add',t:'➕ إضافة فيديو'},
   {id:'settings',t:'⚙️ الإعدادات'}
 ];
@@ -617,9 +576,7 @@ const TABS=[
 function buildTabs(){
   const pendingCount = STUDENTS.filter(s => s.status === 'pending').length;
   $('tabs').innerHTML = TABS.map((t,i) => {
-    const badge = (t.id === 'requests' && pendingCount > 0) 
-      ? `<span class="badge">${pendingCount}</span>` 
-      : '';
+    const badge = (t.id === 'requests' && pendingCount > 0) ? `<span class="badge">${pendingCount}</span>` : '';
     return `<button class="tab ${i===0?'active':''}" data-t="${t.id}">${t.t}${badge}</button>`;
   }).join('');
   
@@ -628,13 +585,12 @@ function buildTabs(){
     b.classList.add('active');
     document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
     $('p-'+b.dataset.t).classList.add('active');
-    if(b.dataset.t==='videos') renderMyVideos();
     if(b.dataset.t==='requests') loadStudents();
     if(b.dataset.t==='settings') loadSettings();
   });
 }
 
-/* ============ INIT ============ */
+/* INIT */
 async function init(){
   if(!ensurePass()) return;
   buildTabs();
@@ -643,18 +599,17 @@ async function init(){
   loadSettings();
 }
 
-/* ============ STATS ============ */
+/* STATS */
 function renderStats(){
-  const total = MY_VIDEOS.length;
-  const approved = MY_VIDEOS.filter(v=>v.status==='approved').length;
+  const total = MY_VIDEOS.filter(v=>v.status==='approved').length;
   const pending = MY_VIDEOS.filter(v=>v.status==='pending').length;
   const rejected = MY_VIDEOS.filter(v=>v.status==='rejected').length;
   const pendingStudents = STUDENTS.filter(s=>s.status==='pending').length;
 
   const stats=[
-    {ic:'🎬',n:total,l:'إجمالي الفيديوهات'},
-    {ic:'✅',n:approved,l:'معتمد ومنشور'},
-    {ic:'⏳',n:pending,l:'فيديو قيد المراجعة'},
+    {ic:'🎬',n:total,l:'فيديوهات منشورة'},
+    {ic:'⏳',n:pending,l:'قيد المراجعة'},
+    {ic:'❌',n:rejected,l:'مرفوضة'},
     {ic:'📥',n:pendingStudents,l:'طلاب في الانتظار'}
   ];
   $('statsGrid').innerHTML=stats.map(x=>`
@@ -666,94 +621,21 @@ function renderStats(){
   `).join('');
 }
 
-/* ============ LOAD VIDEOS ============ */
+/* LOAD VIDEOS (internal reference) */
 async function loadMyVideos(){
   if(!ensurePass()) return;
-  $('myVideosList').innerHTML='<div class="skel"></div><div class="skel"></div>';
   try{
-    const {data, error} = await sb.rpc('instructor_get_my_videos',{
-      p_username: INSTRUCTOR.username,
-      p_password: PASS
-    });
+    const {data, error} = await sb.rpc('instructor_get_my_videos',{p_username: INSTRUCTOR.username, p_password: PASS});
     if(error) throw error;
     MY_VIDEOS = Array.isArray(data) ? data : [];
   }catch(e){
     console.error('loadMyVideos error:',e);
     MY_VIDEOS=[];
-    toast('تعذّر تحميل فيديوهاتك','err');
   }
-  renderMyVideos();
   renderStats();
 }
 
-function renderMyVideos(){
-  const list = ACTIVE_FILTER==='all'
-    ? MY_VIDEOS
-    : MY_VIDEOS.filter(v=>v.status===ACTIVE_FILTER);
-
-  if(!list.length){
-    $('myVideosList').innerHTML=`
-      <div class="empty">
-        <div class="e">🎬</div>
-        <p>${ACTIVE_FILTER==='all'?'لا يوجد فيديوهات بعد — ابدأ برفع أول فيديو!':'لا يوجد فيديوهات في هذه الحالة'}</p>
-      </div>`;
-    return;
-  }
-
-  $('myVideosList').innerHTML = list.map(v=>{
-    const statusMap = {
-      approved:{cls:'on', txt:'✅ معتمد'},
-      pending:{cls:'warn', txt:'⏳ قيد المراجعة'},
-      rejected:{cls:'off', txt:'❌ مرفوض'}
-    };
-    const st = statusMap[v.status] || statusMap.pending;
-
-    return `<div class="list-item" style="align-items:flex-start">
-      <img src="${esc(thumbOf(v))}" onerror="this.src='./sayed.png'" alt=""
-           style="width:100px;height:60px;border-radius:10px;object-fit:cover;
-                  border:1px solid var(--border-soft);flex-shrink:0;background:var(--bg-3)">
-      <div class="li-main" style="width:100%">
-        <b>${esc(v.title)}</b>
-        <small>${esc(v.description||'بدون وصف').slice(0,100)}</small>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;align-items:center">
-          <span class="pill ${st.cls}">${st.txt}</span>
-          <span class="pill gold">${esc(v.category||'عام')}</span>
-          <small style="color:var(--muted)">👁 ${safeInt(v.views)} · 🕐 ${fmtDate(v.created_at)}</small>
-        </div>
-        ${v.status==='rejected' && v.rejection_reason ? `
-          <div style="margin-top:8px;padding:8px 12px;border-radius:10px;background:rgba(255,77,109,.12);
-                      border:1px solid rgba(255,77,109,.3);font-size:12px;color:#ff9db0">
-            <b>سبب الرفض:</b> ${esc(v.rejection_reason)}
-          </div>` : ''}
-      </div>
-    </div>`;
-  }).join('');
-}
-
-/* ============ FILTERS ============ */
-document.querySelectorAll('.filter-btn').forEach(b=>{
-  b.onclick=()=>{
-    document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    document.querySelectorAll('.filter-btn').forEach(x=>{
-      if(x.classList.contains('active')){
-        x.style.background='linear-gradient(135deg,var(--gold),var(--gold-3))';
-        x.style.color='#0a0600';
-      } else {
-        x.style.background='transparent';
-        x.style.color='var(--gold)';
-      }
-    });
-    ACTIVE_FILTER = b.dataset.filter;
-    renderMyVideos();
-  };
-});
-setTimeout(()=>{
-  const fb = document.querySelector('.filter-btn.active');
-  if(fb){ fb.style.background='linear-gradient(135deg,var(--gold),var(--gold-3))'; fb.style.color='#0a0600'; }
-}, 100);
-
-/* ============ ADD VIDEO ============ */
+/* ADD VIDEO */
 $('addVidBtn').onclick = async () => {
   if(!ensurePass()) return;
   const title = clean($('vTitle').value);
@@ -762,58 +644,34 @@ $('addVidBtn').onclick = async () => {
   const cat   = clean($('vCat').value) || 'عام';
   const thumb = clean($('vThumb').value) || null;
 
-  if(!title || !url){
-    return toast('العنوان والرابط مطلوبان','err');
-  }
-
-  const ytId = ytIdOf(url);
-  if(!ytId){
-    return toast('رابط يوتيوب غير صالح','err');
-  }
+  if(!title || !url) return toast('العنوان والرابط مطلوبان','err');
+  if(!ytIdOf(url)) return toast('رابط يوتيوب غير صالح','err');
 
   const btn=$('addVidBtn');
   btn.disabled=true; btn.textContent='... جاري الرفع';
 
   try{
     const {data, error} = await sb.rpc('instructor_add_video',{
-      p_username: INSTRUCTOR.username,
-      p_password: PASS,
-      p_title: title,
-      p_description: desc,
-      p_youtube_url: url,
-      p_category: cat,
-      p_thumbnail: thumb
+      p_username: INSTRUCTOR.username, p_password: PASS,
+      p_title: title, p_description: desc, p_youtube_url: url,
+      p_category: cat, p_thumbnail: thumb
     });
-
     if(error) throw error;
     const res = Array.isArray(data) ? data[0] : data;
-
     if(res && res.ok){
-      if(res.auto_approved){
-        toast('✅ تم نشر الفيديو فوراً (أنت أدمن)','ok');
-      } else {
-        toast('✅ تم رفع الفيديو — في انتظار مراجعة الإدارة','ok');
-      }
+      if(res.auto_approved) toast('✅ تم نشر الفيديو فوراً (أنت أدمن)','ok');
+      else toast('✅ تم رفع الفيديو — في انتظار مراجعة الإدارة','ok');
       ['vTitle','vDesc','vUrl','vCat','vThumb'].forEach(i=>$(i).value='');
       await loadMyVideos();
-      document.querySelector('[data-t="videos"]').click();
     } else {
-      const errMsg = {
-        'not_instructor':'ليس لديك صلاحية',
-        'title_required':'العنوان مطلوب',
-        'url_required':'الرابط مطلوب'
-      }[res?.error] || 'فشل الرفع';
+      const errMsg = {'not_instructor':'ليس لديك صلاحية','title_required':'العنوان مطلوب','url_required':'الرابط مطلوب'}[res?.error] || 'فشل الرفع';
       toast(errMsg,'err');
     }
-  }catch(e){
-    console.error('add video error:',e);
-    toast('فشل رفع الفيديو','err');
-  }finally{
-    btn.disabled=false; btn.textContent='📤 رفع الفيديو للمراجعة';
-  }
+  }catch(e){ console.error(e); toast('فشل رفع الفيديو','err'); }
+  finally{ btn.disabled=false; btn.textContent='📤 رفع الفيديو للمراجعة'; }
 };
 
-/* ============ STUDENTS ============ */
+/* STUDENTS */
 async function loadStudents(){
   if(!ensurePass()) return;
   $('studentsList').innerHTML='<div class="skel"></div><div class="skel"></div>';
@@ -835,10 +693,8 @@ async function loadStudents(){
 }
 
 function renderStudents(q=''){
-  const list = STUDENTS.filter(s => 
-    !q || s.student_username.toLowerCase().includes(q.toLowerCase())
-  );
-
+  const list = STUDENTS.filter(s => !q || s.student_username.toLowerCase().includes(q.toLowerCase()));
+  
   if(!list.length){
     $('studentsList').innerHTML = `
       <div class="empty">
@@ -847,6 +703,8 @@ function renderStudents(q=''){
       </div>`;
     return;
   }
+
+  const totalApproved = MY_VIDEOS.filter(v=>v.status==='approved').length;
 
   $('studentsList').innerHTML = list.map(s => {
     const isPending = s.status === 'pending';
@@ -860,7 +718,7 @@ function renderStudents(q=''){
         ? '<span class="pill on">✅ مشترك</span>'
         : '<span class="pill off">🚫 موقوف</span>';
     
-    return `<div class="student-card ${isPending?'pending':''}">
+    return `<div class="student-card ${isPending?'pending':''}" data-student="${esc(s.student_username)}">
       <div class="st-head">
         <div class="st-av">${esc(firstChar)}</div>
         <div class="st-info">
@@ -870,28 +728,22 @@ function renderStudents(q=''){
         ${statusPill}
       </div>
       <div class="st-stats">
-        <span class="st-stat">📹 إجمالي: ${MY_VIDEOS.filter(v=>v.status==='approved').length}</span>
+        <span class="st-stat">📹 إجمالي: ${totalApproved}</span>
         ${unlockedCount > 0 ? `<span class="st-stat green">🔓 فتحت له: ${unlockedCount}</span>` : ''}
-      </div>
-      <div class="st-actions">
-        ${isPending 
-          ? `<button class="btn ok" data-open-student="${esc(s.student_username)}">🔓 فتح أول فيديو</button>` 
-          : `<button class="btn blue" data-open-student="${esc(s.student_username)}">⚙️ إدارة الفيديوهات</button>`
-        }
       </div>
     </div>`;
   }).join('');
 
-  $('studentsList').querySelectorAll('[data-open-student]').forEach(b => {
-    b.onclick = () => openVideoManager(b.dataset.openStudent);
+  $('studentsList').querySelectorAll('[data-student]').forEach(card => {
+    card.onclick = () => openStudentModal(card.dataset.student);
   });
 }
 
 $('studentSearch').oninput = e => renderStudents(e.target.value);
 $('refreshStudentsBtn').onclick = () => { loadStudents(); toast('تم التحديث'); };
 
-/* ============ VIDEO MANAGER MODAL ============ */
-async function openVideoManager(studentUsername){
+/* STUDENT MODAL */
+async function openStudentModal(studentUsername){
   if(!ensurePass()) return;
   
   const student = STUDENTS.find(s => s.student_username === studentUsername);
@@ -901,65 +753,41 @@ async function openVideoManager(studentUsername){
   }
   
   VM_CURRENT_STUDENT = student;
-  $('vmTitle').textContent = '🎬 إدارة فيديوهات: ' + studentUsername;
+  $('smTitle').textContent = '👤 ' + studentUsername;
   
-  const unlocked = Array.isArray(student.unlocked_videos) 
-    ? student.unlocked_videos.map(String) 
-    : [];
+  const unlockedCount = safeInt(student.unlocked_count);
+  const totalVideos = MY_VIDEOS.filter(v => v.status === 'approved').length;
+  const isActive = student.status === 'active';
+  const isPending = student.status === 'pending';
   
-  $('vmInfo').innerHTML = `
-    👤 الطالب: <b>${esc(studentUsername)}</b> · 
-    🔓 فتحت له: <b>${unlocked.length}</b> من <b>${MY_VIDEOS.filter(v=>v.status==='approved').length}</b> فيديو
+  $('smInfo').innerHTML = `
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="lbl">👤 الطالب</div>
+        <div class="val">${esc(studentUsername)}</div>
+      </div>
+      <div class="info-item">
+        <div class="lbl">📊 الحالة</div>
+        <div class="val" style="color:${isPending?'#ff9500':'#28d17c'}">
+          ${isPending ? '⏳ في الانتظار' : '✅ مشترك'}
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="lbl">🔓 مفتوح</div>
+        <div class="val">${unlockedCount} / ${totalVideos}</div>
+      </div>
+      <div class="info-item">
+        <div class="lbl">🕐 تاريخ الطلب</div>
+        <div class="val" style="font-size:11px">${fmtDate(student.created_at)}</div>
+      </div>
+    </div>
   `;
   
-  $('vmList').innerHTML = '<div class="skel"></div><div class="skel"></div>';
-  $('vidManageModal').classList.add('open');
-  
-  // نجيب الفيديوهات المعتمدة بس
-  const approvedVideos = MY_VIDEOS.filter(v => v.status === 'approved');
-  
-  if(!approvedVideos.length){
-    $('vmList').innerHTML = '<div class="empty"><div class="e">🎬</div><p>لا يوجد فيديوهات معتمدة بعد</p></div>';
-    return;
-  }
-  
-  $('vmList').innerHTML = approvedVideos.map((v, idx) => {
-    const checked = unlocked.includes(String(v.video_id));
-    return `<label class="vid-check ${checked?'checked':''}" data-vid="${v.video_id}">
-      <input type="checkbox" ${checked?'checked':''} data-vid="${v.video_id}">
-      <div class="info">
-        <span class="title">${idx === 0 ? '⭐ ' : ''}${esc(v.title)}</span>
-        <span class="cat">${esc(v.category||'عام')}</span>
-      </div>
-    </label>`;
-  }).join('');
-  
-  $('vmList').querySelectorAll('.vid-check').forEach(el => {
-    const cb = el.querySelector('input');
-    cb.onchange = () => el.classList.toggle('checked', cb.checked);
-    el.onclick = (e) => {
-      if(e.target.tagName !== 'INPUT'){
-        cb.checked = !cb.checked;
-        el.classList.toggle('checked', cb.checked);
-      }
-    };
-  });
-  
-  // لو الطالب pending → الزرار يفتح أول فيديو
-  const isPending = student.status === 'pending';
-  const firstBtn = $('vmUnlockFirst');
-  if(isPending){
-    firstBtn.textContent = '🔓 موافقة وفتح أول فيديو';
-    firstBtn.style.display = 'block';
-  } else {
-    firstBtn.textContent = '💾 حفظ التعديلات';
-    firstBtn.style.display = 'block';
-  }
-  
-  firstBtn.onclick = () => isPending ? approveAndOpenFirst() : saveVideoChanges();
+  $('studentModal').classList.add('open');
 }
 
-async function approveAndOpenFirst(){
+/* Open first video */
+$('smOpenAll').onclick = async () => {
   if(!VM_CURRENT_STUDENT) return;
   
   const approvedVideos = MY_VIDEOS.filter(v => v.status === 'approved');
@@ -969,9 +797,10 @@ async function approveAndOpenFirst(){
   }
   
   const firstVideo = approvedVideos[0];
-  
-  const btn = $('vmUnlockFirst');
-  btn.disabled = true; btn.textContent = '...';
+  const btn = $('smOpenAll');
+  const originalHtml = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '⏳ جاري...';
   
   try{
     const {data, error} = await sb.rpc('instructor_toggle_video_for_student', {
@@ -987,93 +816,81 @@ async function approveAndOpenFirst(){
     
     if(res && res.ok){
       toast(`✅ تم فتح أول فيديو لـ ${VM_CURRENT_STUDENT.student_username}`,'ok');
-      
-      // نحدّث الطالب في القايمة
-      VM_CURRENT_STUDENT.status = 'active';
-      VM_CURRENT_STUDENT.unlocked_videos = res.unlocked || [firstVideo.video_id];
-      VM_CURRENT_STUDENT.unlocked_count = (res.unlocked || []).length;
-      
-      $('vidManageModal').classList.remove('open');
+      $('studentModal').classList.remove('open');
       VM_CURRENT_STUDENT = null;
       await loadStudents();
     } else {
       toast('فشل: ' + (res?.error||'خطأ'),'err');
     }
   }catch(e){
-    console.error('approve error:', e);
-    toast('فشل: ' + (e.message||''),'err');
+    console.error(e);
+    toast('فشل الفتح: ' + (e.message||''),'err');
   }finally{
     btn.disabled = false;
+    btn.innerHTML = originalHtml;
   }
-}
+};
 
-async function saveVideoChanges(){
+/* Close all videos */
+$('smCloseAll').onclick = async () => {
   if(!VM_CURRENT_STUDENT) return;
   
-  const selected = [];
-  $('vmList').querySelectorAll('.vid-check input:checked').forEach(cb => {
-    const id = parseInt(cb.dataset.vid);
-    if(!isNaN(id)) selected.push(id);
-  });
+  if(!confirm('⚠️ غلق كل الفيديوهات عن "' + VM_CURRENT_STUDENT.student_username + '"؟')) return;
   
-  const current = Array.isArray(VM_CURRENT_STUDENT.unlocked_videos) 
-    ? VM_CURRENT_STUDENT.unlocked_videos.map(Number)
-    : [];
-  
-  const toAdd = selected.filter(id => !current.includes(id));
-  const toRemove = current.filter(id => !selected.includes(id));
-  
-  if(!toAdd.length && !toRemove.length){
-    toast('لا يوجد تغييرات','info');
+  const approvedVideos = MY_VIDEOS.filter(v => v.status === 'approved');
+  if(!approvedVideos.length){
+    toast('لا يوجد فيديوهات','err');
     return;
   }
   
-  const btn = $('vmUnlockFirst');
-  btn.disabled = true; btn.textContent = '...';
+  const btn = $('smCloseAll');
+  const originalHtml = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '⏳ جاري...';
   
   try{
-    // نضيف الجديد
-    for(const vid of toAdd){
-      await sb.rpc('instructor_toggle_video_for_student', {
+    let ok = 0;
+    for(const v of approvedVideos){
+      const {error} = await sb.rpc('instructor_toggle_video_for_student', {
         p_instructor_username: INSTRUCTOR.username,
         p_instructor_password: PASS,
         p_student_username: VM_CURRENT_STUDENT.student_username,
-        p_video_id: vid,
-        p_action: 'unlock'
-      });
-    }
-    // نشيل اللي مش عايزينه
-    for(const vid of toRemove){
-      await sb.rpc('instructor_toggle_video_for_student', {
-        p_instructor_username: INSTRUCTOR.username,
-        p_instructor_password: PASS,
-        p_student_username: VM_CURRENT_STUDENT.student_username,
-        p_video_id: vid,
+        p_video_id: v.video_id,
         p_action: 'lock'
       });
+      if(!error) ok++;
     }
     
-    toast(`✅ تم حفظ التعديلات (${selected.length} فيديو)`,'ok');
-    $('vidManageModal').classList.remove('open');
+    toast(`✅ تم غلق ${ok} فيديو`,'ok');
+    $('studentModal').classList.remove('open');
     VM_CURRENT_STUDENT = null;
     await loadStudents();
   }catch(e){
-    console.error('save error:', e);
-    toast('فشل الحفظ: ' + (e.message||''),'err');
+    console.error(e);
+    toast('فشل الغلق: ' + (e.message||''),'err');
   }finally{
     btn.disabled = false;
+    btn.innerHTML = originalHtml;
   }
-}
+};
 
-function closeVideoManager(){
-  $('vidManageModal').classList.remove('open');
+/* Modal close */
+$('smClose').onclick = () => {
+  $('studentModal').classList.remove('open');
   VM_CURRENT_STUDENT = null;
-}
-$('vmClose').onclick = closeVideoManager;
-$('vmCancel').onclick = closeVideoManager;
-$('vidManageModal').onclick = (e) => { if(e.target === $('vidManageModal')) closeVideoManager(); };
+};
+$('smCancel').onclick = () => {
+  $('studentModal').classList.remove('open');
+  VM_CURRENT_STUDENT = null;
+};
+$('studentModal').onclick = (e) => {
+  if(e.target === $('studentModal')){
+    $('studentModal').classList.remove('open');
+    VM_CURRENT_STUDENT = null;
+  }
+};
 
-/* ============ SETTINGS ============ */
+/* SETTINGS */
 async function loadSettings(){
   try{
     $('accUsername').textContent = INSTRUCTOR.username || '—';
@@ -1130,7 +947,7 @@ $('saveWhatsappBtn').onclick = async () => {
   }
 };
 
-/* ============ SERVICE WORKER ============ */
+/* SERVICE WORKER */
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
 }

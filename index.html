@@ -329,7 +329,6 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
   border:1px solid var(--border);margin-bottom:10px;transition:.22s;font-weight:800;width:100%;box-sizing:border-box}
 .sup-btn:hover{transform:translateX(-4px);border-color:var(--blue)}
 .sup-btn .ic{width:44px;height:44px;border-radius:12px;background:var(--blue-soft);display:grid;place-items:center;color:var(--blue);flex-shrink:0}
-.sup-btn .ic svg{width:22px;height:22px;fill:currentColor}
 .sup-btn > div{min-width:0;flex:1}
 .sup-btn small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
 
@@ -480,7 +479,7 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
 
 <footer class="site-footer">
   <div class="social-row" id="socialFooter"></div>
-  <div>© 2026 CYBER <b style="color:var(--blue)">FORCE</b> — جميع الحقوق محفوظة</div>
+  <div>© 2026 جميع الحقوق محفوظة <a href="https://t.me/sayoda_elgadar" target="_blank" rel="noopener noreferrer" style="color:var(--gold);font-weight:900">EL-sayed Hasan</a></div>
 </footer>
 
 <!-- VIDEO MODAL -->
@@ -489,7 +488,6 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
     <div class="player-box">
       <button class="modal-close" id="closeVid">✕</button>
       
-      <!-- WATERMARKS -->
       <div class="watermark wm-tl" id="wmTL">—</div>
       <div class="watermark wm-tr" id="wmTR">CYBER FORCE</div>
       <div class="watermark wm-bl" id="wmBL">—</div>
@@ -543,8 +541,7 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
 
 <nav class="bottom-nav" id="bottomNav"></nav>
 <div id="toasts"></div>
-<canvas id="confetti"></canvas>
-
+<canvas id="confetti"></canvas> 
 <script>
 /* ============================================
    CYBER FORCE — index.html
@@ -557,9 +554,28 @@ const clean=s=>String(s==null?'':s).replace(/[<>]/g,'').trim();
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeInt=(n,def=0)=>{const v=parseInt(n,10);return Number.isFinite(v)?v:def;};
 
+/* ============ HELPERS للنسبة ============ */
+function getVideoProgressPct(videoId){
+  try{
+    if(!USER || !USER.video_progress) return 0;
+    const p = USER.video_progress[videoId];
+    if(!p) return 0;
+    if(p.done) return 100;
+    return safeInt(p.p, 0);
+  }catch(e){ return 0; }
+}
+
+function remainingToUnlock(idx){
+  if(idx === 0) return 0;
+  const prev = INSTRUCTOR_VIDEOS[idx - 1];
+  if(!prev) return 50;
+  const prevPct = getVideoProgressPct(prev.video_id);
+  return Math.max(0, 50 - prevPct);
+}
+
 const UNLOCK_THRESHOLD = 50;
 
-/* الحمايات */
+/* ============ الحمايات ============ */
 document.addEventListener('contextmenu',e=>e.preventDefault());
 document.addEventListener('dragstart',e=>e.preventDefault());
 document.addEventListener('selectstart',e=>{if(!e.target.closest('input,textarea,select'))e.preventDefault();});
@@ -573,7 +589,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='PrintScreen'){e.preventDefault();try{navigator.clipboard.writeText('');}catch(err){}}
 });
 
-/* STATE */
+/* ============ STATE ============ */
 let USER=null;
 let INSTRUCTORS=[];
 let CURRENT_INSTRUCTOR=null;
@@ -613,12 +629,12 @@ const BADGES=[
   {id:'legend',e:'👑',t:'أسطورة',ck:u=>(u.xp||0)>=1000}
 ];
 
-/* SESSION */
+/* ============ SESSION ============ */
 function getSession(){try{return JSON.parse(localStorage.getItem('sayoda_session')||'null')}catch(e){return null}}
 const SESSION=getSession();
 if(!SESSION||!SESSION.username||!SESSION.token){location.replace('./login.html');}
 
-/* THEME */
+/* ============ THEME ============ */
 (function(){const t=localStorage.getItem('sayoda_theme')||'dark';document.documentElement.setAttribute('data-theme',t);updThemeIcon(t);})();
 function updThemeIcon(t){$('themeIcon').innerHTML=t==='light'
   ?'<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"/><line x1="18.4" y1="18.4" x2="19.8" y2="19.8"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.2" y1="19.8" x2="5.6" y2="18.4"/><line x1="18.4" y1="5.6" x2="19.8" y2="4.2"/>'
@@ -627,6 +643,7 @@ $('themeBtn').onclick=()=>{const cur=document.documentElement.getAttribute('data
   document.documentElement.setAttribute('data-theme',nx);localStorage.setItem('sayoda_theme',nx);updThemeIcon(nx);
   const mt=document.querySelector('meta[name=theme-color]');if(mt)mt.content=nx==='light'?'#eef4fc':'#020812';};
 
+/* ============ TOAST ============ */
 function toast(msg,type='info',icon){
   const el=document.createElement('div');
   el.className='toast '+type;
@@ -636,6 +653,7 @@ function toast(msg,type='info',icon){
   setTimeout(()=>{el.style.opacity='0';el.style.transform='translateY(20px)';setTimeout(()=>el.remove(),300)},3400);
 }
 
+/* ============ CONFETTI ============ */
 function playChime(){try{
   const a=new(window.AudioContext||window.webkitAudioContext)();
   [0,0.12,0.24].forEach((d,i)=>{
@@ -668,7 +686,7 @@ function confetti(){
 }
 function celebrate(msg){playChime();confetti();toast(msg,'ok','🎉');}
 
-/* NAV */
+/* ============ NAV ============ */
 const SECTIONS=[
   {id:'profile',ic:'👤',t:'ملفي'},
   {id:'instructors',ic:'👨‍🏫',t:'المدربين'},
@@ -712,7 +730,7 @@ function closeSidebar(){$('sidebar').classList.remove('open');$('overlay').class
 $('menuBtn').onclick=openSidebar;
 $('overlay').onclick=()=>{closeSidebar();$('notifPanel').classList.remove('open');};
 
-/* LOGOUT */
+/* ============ LOGOUT ============ */
 $('logoutBtn').onclick=async()=>{
   try{
     if(SESSION.token) await sb.rpc('secure_logout',{p_token:SESSION.token});
@@ -721,7 +739,7 @@ $('logoutBtn').onclick=async()=>{
   location.replace('./login.html');
 };
 
-/* LOAD USER */
+/* ============ LOAD USER ============ */
 async function loadUser(){
   try{
     const {data,error}=await sb.from('users').select('*').eq('username',SESSION.username).limit(1);
@@ -765,7 +783,7 @@ async function updateStreak(){
   try{await sb.from('users').update({streak,last_visit:new Date().toISOString()}).eq('username',USER.username);}catch(e){}
 }
 
-/* PROFILE */
+/* ============ PROFILE ============ */
 function renderProfile(){
   const xp=USER.xp||0;
   const {cur,nx}=levelOf(xp);
@@ -832,7 +850,7 @@ $('copyRefBtn').onclick=()=>{
   navigator.clipboard.writeText(c).then(()=>toast('تم نسخ كود الدعوة','ok')).catch(()=>toast('انسخ يدوياً: '+c,'info'));
 };
 
-/* INSTRUCTORS LIST */
+/* ============ INSTRUCTORS LIST ============ */
 async function loadInstructors(){
   $('insGrid').innerHTML=Array.from({length:3}).map(()=>'<div class="skel skel-card"></div>').join('');
   try{
@@ -910,13 +928,24 @@ function renderInstructors(){
   });
 }
 
-/* INSTRUCTOR VIDEOS */
+/* ============ INSTRUCTOR VIDEOS ============ */
 async function openInstructor(username){
   CURRENT_INSTRUCTOR = INSTRUCTORS.find(i => i.instructor_username === username);
   if(!CURRENT_INSTRUCTOR){
     toast('المدرب غير موجود','err');
     return;
   }
+  
+  /* ✅ جديد: حدّث تقدم الطالب قبل عرض الفيديوهات */
+  try{
+    const {data:uData} = await sb.from('users')
+      .select('video_progress')
+      .eq('username', USER.username)
+      .limit(1);
+    if(uData && uData[0]){
+      USER.video_progress = uData[0].video_progress || {};
+    }
+  }catch(e){ console.warn('progress refresh error:', e); }
   
   $('ivTitle').textContent = '🎬 ' + CURRENT_INSTRUCTOR.instructor_username;
   $('ivSub').textContent = CURRENT_INSTRUCTOR.specialty || 'مدرب';
@@ -1000,20 +1029,43 @@ function renderInstructorVideos(){
   }
 
   $('ivGrid').innerHTML = list.map((v, idx) => {
+    /* نحسب idx الحقيقي في القايمة الأصلية */
+    const realIdx = INSTRUCTOR_VIDEOS.indexOf(v);
     const isUnlocked = v.is_unlocked === true;
     const thumb = v.thumbnail || (() => {
       const m = (v.youtube_url||'').match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
       return m ? `https://i.ytimg.com/vi/${m[1]}/hqdefault.jpg` : './sayed.png';
     })();
 
-    return `<div class="vid-card ${isUnlocked?'unlocked':''}" data-vid="${v.video_id}" data-idx="${idx}">
+    /* حساب النسبة المتبقية */
+    let lockTxt = 'اطلب من المدرب فتح الفيديو';
+    let showProgress = false;
+    let progressPct = 0;
+    
+    if(!isUnlocked && realIdx > 0){
+      const remaining = remainingToUnlock(realIdx);
+      if(remaining > 0){
+        lockTxt = `متبقي ${remaining}% لفتح هذا الفيديو`;
+        showProgress = true;
+        progressPct = 50 - remaining;
+      } else {
+        lockTxt = 'اكمل الفيديو السابق لفتح هذا';
+      }
+    }
+
+    return `<div class="vid-card ${isUnlocked?'unlocked':''}" data-vid="${v.video_id}" data-idx="${realIdx}">
       <div class="vid-thumb">
         <img src="${esc(thumb)}" onerror="this.src='./sayed.png'" alt="">
         ${isUnlocked 
           ? `<div class="play"><div class="p">▶</div></div>`
           : `<div class="vid-lock">
               <div class="lock-icon">🔒</div>
-              <div class="lock-txt">اطلب من المدرب فتح الفيديو</div>
+              <div class="lock-txt">${lockTxt}</div>
+              ${showProgress ? `
+                <div style="position:absolute;bottom:8px;left:8px;right:8px;height:6px;background:rgba(0,0,0,.5);border-radius:10px;overflow:hidden">
+                  <div style="height:100%;width:${progressPct}%;background:linear-gradient(90deg,var(--blue),#28d17c);border-radius:10px;transition:width .5s"></div>
+                </div>
+              ` : ''}
             </div>`
         }
       </div>
@@ -1046,7 +1098,7 @@ function renderInstructorVideos(){
   });
 }
 
-/* REQUEST UNLOCK */
+/* ============ REQUEST UNLOCK ============ */
 async function requestUnlockForVideo(video){
   if(!CURRENT_INSTRUCTOR) return;
   
@@ -1152,7 +1204,7 @@ function showWhatsappModal(instructorName, waNumber, waUrl){
   modal.onclick = (e) => { if(e.target === modal) modal.remove(); };
 }
 
-/* VIDEO PLAYER */
+/* ============ VIDEO PLAYER ============ */
 function loadYtApi(){
   if(window.YT && window.YT.Player){ytApiReady=true;return;}
   if(document.querySelector('script[src*="iframe_api"]')) return;
@@ -1255,8 +1307,32 @@ function startYtTimer(){
       const pct=Math.min(100,(t/d)*100);
       $('ytProgressFill').style.width=pct+'%';
       $('ytTime').textContent=fmtSec(t)+' / '+fmtSec(d);
+      if(pct>=10) saveProgressSilently(v,pct);
     }catch(e){}
-  },500);
+  },1000);
+}
+
+let _lastSave=0;
+async function saveProgressSilently(v, pct){
+  const now = Date.now();
+  if(now - _lastSave < 5000) return;
+  _lastSave = now;
+  
+  const videoId = CURRENT_VIDEO?.video_id;
+  if(!videoId) return;
+  
+  try{
+    if(!USER.video_progress) USER.video_progress = {};
+    const prev = USER.video_progress[videoId] || {p:0,done:false};
+    USER.video_progress[videoId] = {
+      p: Math.max(safeInt(prev.p,0), Math.round(pct)),
+      done: prev.done || false
+    };
+    
+    await sb.from('users')
+      .update({video_progress: USER.video_progress})
+      .eq('username', USER.username);
+  }catch(e){ console.warn('save progress error:', e); }
 }
 
 async function markProgress(pct,done){
@@ -1285,10 +1361,12 @@ function closeVideo(){
   document.body.style.overflow='';
   clearInterval(ytTimeTimer);clearTimeout(ytControlsTimer);
   if(ytPlayerReady&&ytPlayer&&ytPlayer.stopVideo){try{ytPlayer.stopVideo();}catch(e){}}
+  /* تحديث الصفحة لعرض النسبة الجديدة */
+  setTimeout(()=>loadInstructorVideos(), 500);
 }
 $('closeVid').onclick=closeVideo;
 
-/* أزرار المشغل */
+/* ============ أزرار المشغل ============ */
 document.addEventListener('click',e=>{
   const t=e.target.closest('button');
   if(!t)return;
@@ -1364,7 +1442,7 @@ document.addEventListener('click',e=>{
 document.addEventListener('mousemove',e=>{if(e.target.closest('.player-box')) showYtControls();});
 document.addEventListener('touchstart',e=>{if(e.target.closest('.player-box')) showYtControls();},{passive:true});
 
-/* RATING */
+/* ============ RATING ============ */
 function renderStars(v){
   const my=(USER.ratings&&USER.ratings[v.video_id])||0;
   $('starRate').innerHTML=[1,2,3,4,5].map(n=>`<button data-n="${n}" class="${n<=my?'on':''}">★</button>`).join('');
@@ -1386,7 +1464,7 @@ async function rateVideo(v,n){
   renderStars(v);toast(`قيّمت الفيديو ${n} نجوم`,'ok','⭐');
 }
 
-/* COMMENTS */
+/* ============ COMMENTS ============ */
 async function loadComments(v){
   $('cmList').innerHTML='<div class="empty"><div class="e">💬</div><p>التعليقات قريباً</p></div>';
 }
@@ -1394,7 +1472,7 @@ $('cmSend').onclick=()=>{
   toast('التعليقات مش مفعلة حالياً','info');
 };
 
-/* LEADERBOARD */
+/* ============ LEADERBOARD ============ */
 async function loadLeaderboard(){
   $('lbList').innerHTML=Array.from({length:6}).map(()=>'<div class="skel" style="height:60px;margin-bottom:8px"></div>').join('');
   try{
@@ -1411,7 +1489,7 @@ async function loadLeaderboard(){
   }catch(e){$('lbList').innerHTML='<div class="empty">تعذّر تحميل المتصدرين</div>';}
 }
 
-/* NOTIFICATIONS */
+/* ============ NOTIFICATIONS ============ */
 async function loadNotifs(){
   try{
     const {data}=await sb.from('notifications').select('*').or(`target.eq.all,target.eq.${USER.username}`).order('created_at',{ascending:false}).limit(30);
@@ -1439,38 +1517,77 @@ $('notifBtn').onclick=async()=>{
 };
 document.addEventListener('click',e=>{if(!$('notifPanel').contains(e.target)&&e.target.closest('#notifBtn')===null)$('notifPanel').classList.remove('open');});
 
-/* SOCIAL */
+/* ============ SOCIAL ============ */
 async function loadSocial(){
   let cfg={};
   try{
     const {data,error}=await sb.rpc('get_site_settings');
     if(!error) cfg = (Array.isArray(data)?data[0]:data) || {};
   }catch(e){}
+  
+  /* القيم الافتراضية */
   cfg = Object.assign({
-    whatsapp:'https://wa.me/201041254010',
-    telegram:'https://t.me/sayedhasan_R',
-    telegram_channel:'https://t.me/sayoda_elgadar'
+    facebook: 'https://www.facebook.com/share/1BwVV1hoks/',
+    instagram: 'https://www.instagram.com/sayedhassan.2009',
+    whatsapp: 'https://wa.me/201041254010',
+    tiktok: 'https://www.tiktok.com/@sayedhasaneisa',
+    telegram: 'https://t.me/sayedhasan_R',
+    telegram_channel: 'https://t.me/sayoda_elgadar',
+    website: 'https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/'
   }, cfg || {});
 
-  const order=['telegram','telegram_channel','whatsapp'];
-  const meta = {
-    telegram:{name:'تليجرام',ic:'✈️'},
-    telegram_channel:{name:'قناة تليجرام',ic:'📢'},
-    whatsapp:{name:'واتساب',ic:'💚'}
+  const SOCIAL_META = {
+    facebook: { name: 'فيسبوك', icon: '📘' },
+    instagram: { name: 'انستجرام', icon: '📷' },
+    whatsapp: { name: 'واتساب', icon: '💚' },
+    tiktok: { name: 'تيك توك', icon: '🎵' },
+    telegram: { name: 'تليجرام', icon: '✈️' },
+    telegram_channel: { name: 'قناة تليجرام', icon: '📢' },
+    website: { name: 'الموقع الرسمي', icon: '🌐' }
   };
 
-  const renderBtns = () => order.filter(k=>cfg[k]).map(k=>{
-    const m = meta[k]||{ic:'🔗',name:k};
-    return `<a class="sup-btn" href="${esc(cfg[k])}" target="_blank" rel="noopener noreferrer">
-      <span class="ic">${m.ic}</span>
-      <div><div>${m.name}</div><small style="color:var(--muted)">اضغط للتواصل</small></div></a>`;
-  }).join('') || '<div class="empty">لا قنوات متاحة</div>';
+  const order = ['telegram','telegram_channel','whatsapp','facebook','instagram','tiktok','website'];
+
+  /* الدعم الفني */
+  if($('supportBtns')){
+    const btns = order.filter(k=>cfg[k]).map(k=>{
+      const m = SOCIAL_META[k]||{icon:'🔗',name:k};
+      return `<a class="sup-btn" href="${esc(cfg[k])}" target="_blank" rel="noopener noreferrer">
+        <span class="ic" style="font-size:22px">${m.icon}</span>
+        <div>
+          <div>${m.name}</div>
+          <small style="color:var(--muted)">اضغط للتواصل</small>
+        </div>
+      </a>`;
+    }).join('');
+    $('supportBtns').innerHTML = btns || '<div class="empty">لا قنوات متاحة</div>';
+  }
   
-  if($('supportBtns')) $('supportBtns').innerHTML = renderBtns();
-  if($('socialBtns')) $('socialBtns').innerHTML = renderBtns();
+  /* عن المنصة */
+  if($('socialBtns')){
+    const btns = order.filter(k=>cfg[k]).map(k=>{
+      const m = SOCIAL_META[k]||{icon:'🔗',name:k};
+      return `<a class="sup-btn" style="margin:0" href="${esc(cfg[k])}" target="_blank" rel="noopener noreferrer">
+        <span class="ic" style="font-size:22px">${m.icon}</span>
+        <div>
+          <div>${m.name}</div>
+          <small style="color:var(--muted)">${esc(cfg[k]).replace(/^https?:\/\//,'').slice(0,40)}</small>
+        </div>
+      </a>`;
+    }).join('');
+    $('socialBtns').innerHTML = btns || '<div class="empty">لا قنوات متاحة</div>';
+  }
+  
+  /* الفوتر */
+  if($('socialFooter')){
+    $('socialFooter').innerHTML = order.filter(k=>cfg[k]).map(k=>{
+      const m = SOCIAL_META[k]||{icon:'🔗',name:k};
+      return `<a class="social-ic" href="${esc(cfg[k])}" target="_blank" rel="noopener noreferrer" title="${m.name}" style="font-size:20px;text-decoration:none">${m.icon}</a>`;
+    }).join('');
+  }
 }
 
-/* INIT */
+/* ============ INIT ============ */
 async function init(){
   buildNav();
   await loadUser();
