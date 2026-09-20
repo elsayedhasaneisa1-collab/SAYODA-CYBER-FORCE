@@ -1893,6 +1893,31 @@ $('saveSocialBtn').onclick=async()=>{
 };
 
 /* ============ SERVICE WORKER ============ */
+/* ============ SESSION VALIDATION ============ */
+async function checkSession(){
+  try{
+    const s = JSON.parse(localStorage.getItem('sayoda_session')||'null');
+    if(!s || !s.username || !s.token) return;
+    
+    const {data, error} = await sb.rpc('validate_session', {
+      p_username: s.username,
+      p_token: s.token
+    });
+    
+    if(error) return;
+    
+    if(data === false){
+      console.log('🚫 الجلسة انتهت');
+      localStorage.removeItem('sayoda_session');
+      sessionStorage.removeItem('sayoda_admin_pass');
+      alert('⚠️ تم تسجيل الدخول من جهاز آخر\nسيتم تسجيل خروجك من هذا الجهاز');
+      location.replace('./login.html');
+    }
+  }catch(e){}
+}
+
+checkSession();
+setInterval(checkSession, 30000);
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
 }
