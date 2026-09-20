@@ -7,7 +7,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <title>لوحة المدرب | CYBER FORCE</title>
 <link rel="manifest" href="./manifest.json" />
-<link rel="icon" href="./logogg.png" />
+<link rel="icon" href="./logog.png" />
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -105,6 +105,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:560px){.row2{grid-template-columns:1fr}}
 .frm label{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.3px}
+.frm .hint{font-size:11px;color:var(--muted);line-height:1.5;margin-top:-4px}
 
 .btn{padding:13px 22px;border:none;border-radius:12px;font-weight:900;font-size:14px;
   background:linear-gradient(135deg,var(--green),var(--green-3));color:#02140a;
@@ -296,7 +297,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 <!-- GATE -->
 <div class="gate" id="gate">
   <div class="box">
-    <img src="./logogg.png" onerror="this.style.display='none'" alt="logo">
+    <img src="./logog.png" onerror="this.style.display='none'" alt="logo">
     <h2>🎬 لوحة المدرب</h2>
     <p>أدخل كلمة مرور المدرب للوصول إلى لوحتك</p>
     <input type="password" id="gatePass" placeholder="كلمة المرور" autocomplete="current-password" />
@@ -309,7 +310,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 
 <header>
   <div class="hl">
-    <img src="./logogg.png" onerror="this.style.display='none'">
+    <img src="./logog.png" onerror="this.style.display='none'">
     <div class="ht">
       CYBER <span>INSTRUCTOR</span>
       <small>✨ لوحة المدرب</small>
@@ -348,7 +349,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
         <br>• ترفع فيديوهاتك (بعدها تنتظر موافقة الإدارة)
         <br>• تدير فيديوهاتك (تشوف حالتها أو تحذفها)
         <br>• تشوف طلبات الطلاب + نشاطاتهم + XP
-        <br>• تعدّل بياناتك (النبذة والتخصص والواتساب)
+        <br>• تعدّل بياناتك (الاسم والنبذة والتخصص والواتساب)
       </p>
     </div>
   </div>
@@ -420,8 +421,9 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
       <h3>👤 معلومات الحساب</h3>
       <div class="frm">
         <div>
-          <label>اسم المستخدم (ثابت)</label>
-          <input id="accUsername" disabled style="opacity:.6;cursor:not-allowed" />
+          <label>اسم المستخدم</label>
+          <input id="accUsername" placeholder="اسمك الحالي" />
+          <div class="hint">⚠️ لو غيّرت الاسم → هتحتاج تسجّل دخول بالاسم الجديد</div>
         </div>
         <div>
           <label>التخصص</label>
@@ -1123,33 +1125,98 @@ async function loadSettings(){
   }
 }
 
-/* SAVE PROFILE */
+/* SAVE PROFILE (مع تغيير الاسم) */
 $('saveProfileBtn').onclick = async () => {
   if(!ensurePass()) return;
+  const newUsername = clean($('accUsername').value);
   const spec = clean($('accSpecialty').value);
   const bio = clean($('accBio').value);
+  
+  const usernameChanged = newUsername && newUsername !== INSTRUCTOR.username;
+  
+  /* لو فيه تغيير في الاسم → validation + تأكيد */
+  if(usernameChanged){
+    if(!/^[A-Za-z0-9_]+$/.test(newUsername)){
+      return toast('اسم المستخدم: حروف إنجليزية وأرقام و _ فقط','err');
+    }
+    if(newUsername.length < 3){
+      return toast('اسم المستخدم قصير جداً (3+ أحرف)','err');
+    }
+    if(!confirm(
+      '⚠️ تغيير اسم المستخدم\n\n' +
+      'من: ' + INSTRUCTOR.username + '\n' +
+      'إلى: ' + newUsername + '\n\n' +
+      '• هتحتاج تسجّل دخول بالاسم الجديد\n' +
+      '• كل بياناتك هتتنقل تلقائياً\n' +
+      '• متأكد؟'
+    )) return;
+  }
   
   const btn = $('saveProfileBtn');
   btn.disabled = true; btn.textContent = '...';
   
   try{
-    const {data, error} = await sb.rpc('instructor_update_profile', {
-      p_username: INSTRUCTOR.username,
-      p_password: PASS,
-      p_bio: bio,
-      p_specialty: spec
-    });
-    
-    if(error) throw error;
-    const res = Array.isArray(data) ? data[0] : data;
-    
-    if(res && res.ok){
-      toast('✅ تم حفظ البيانات','ok');
-      INSTRUCTOR.specialty = spec;
-      INSTRUCTOR.bio = bio;
-    } else {
-      toast('فشل: ' + (res?.error||'خطأ'),'err');
+    /* 1) تغيير الاسم */
+    if(usernameChanged){
+      const {data: nameData, error: nameErr} = await sb.rpc('instructor_change_username', {
+        p_current_username: INSTRUCTOR.username,
+        p_password: PASS,
+        p_new_username: newUsername
+      });
+      
+      if(nameErr) throw nameErr;
+      const nRes = Array.isArray(nameData) ? nameData[0] : nameData;
+      
+      if(!nRes || !nRes.ok){
+        const errMap = {
+          'not_instructor': 'ليس لديك صلاحية',
+          'username_short': 'الاسم قصير جداً',
+          'invalid_chars': 'حروف إنجليزية وأرقام فقط',
+          'username_exists': 'الاسم مستخدم بالفعل',
+          'same_username': 'نفس الاسم الحالي',
+          'server_error': 'خطأ في الخادم'
+        };
+        toast('فشل تغيير الاسم: ' + (errMap[nRes?.error] || nRes?.error || 'خطأ'),'err');
+        return;
+      }
+      
+      /* تحديث الجلسة والاسم */
+      INSTRUCTOR.username = newUsername;
+      const s = getSession();
+      if(s){ s.username = newUsername; localStorage.setItem('sayoda_session', JSON.stringify(s)); }
+      
+      toast('✅ تم تغيير اسمك إلى ' + newUsername,'ok');
+      
+      /* لو مفيش تغيير في spec/bio → خروج تلقائي */
+      if(spec === INSTRUCTOR.specialty && bio === INSTRUCTOR.bio){
+        setTimeout(()=>location.replace('./login.html'), 2000);
+        return;
+      }
     }
+    
+    /* 2) تحديث النبذة والتخصص */
+    if(spec !== INSTRUCTOR.specialty || bio !== INSTRUCTOR.bio){
+      const {data, error} = await sb.rpc('instructor_update_profile', {
+        p_username: INSTRUCTOR.username,
+        p_password: PASS,
+        p_bio: bio,
+        p_specialty: spec
+      });
+      
+      if(error) throw error;
+      const res = Array.isArray(data) ? data[0] : data;
+      
+      if(res && res.ok){
+        INSTRUCTOR.specialty = spec;
+        INSTRUCTOR.bio = bio;
+        toast('✅ تم حفظ البيانات','ok');
+      } else {
+        toast('فشل حفظ البيانات: ' + (res?.error||'خطأ'),'err');
+      }
+    } else if(!usernameChanged) {
+      toast('ℹ️ مفيش تغييرات','info');
+    }
+    
   }catch(e){
     console.error('save profile error:', e);
     toast('فشل: ' + (e.message||''),'err');
