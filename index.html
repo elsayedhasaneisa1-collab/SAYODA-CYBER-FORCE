@@ -1434,8 +1434,8 @@ async function saveProgressSilently(v, pct){
 
 async function markProgress(pct,done){
   const v=CURRENT_VIDEO;if(!v)return;
-  if(pct < UNLOCK_THRESHOLD && !done) return;
   
+  /* تسجيل التقدم */
   if(pct >= UNLOCK_THRESHOLD && CURRENT_INSTRUCTOR){
     try{
       await sb.rpc('client_log_activity',{
@@ -1450,6 +1450,39 @@ async function markProgress(pct,done){
         p_user_agent:navigator.userAgent.slice(0,200)
       });
     }catch(e){}
+  }
+  
+  /* ✅ إضافة XP لما الفيديو يخلص */
+  if(done === true){
+    try{
+      const {data, error} = await sb.rpc('award_video_xp', {
+        p_username: USER.username,
+        p_video_id: parseInt(v.video_id),
+        p_xp_amount: 10
+      });
+      
+      if(error){
+        console.warn('award xp error:', error);
+        return;
+      }
+      
+      const res = Array.isArray(data) ? data[0] : data;
+      
+      if(res && res.ok){
+        console.log('✅ تم إضافة 10 XP — الرصيد الجديد:', res.new_xp);
+        toast('+10 XP 🎬','ok','⭐');
+        
+        /* تحديث USER المحلي */
+        USER.xp = res.new_xp;
+        USER.videos_watched = (USER.videos_watched || 0) + 1;
+        
+        /* تحديث الواجهة */
+        try{ updateMiniXp(); }catch(e){}
+        try{ renderProfile(); }catch(e){}
+      } else if(res && res.error === 'already_awarded'){
+        console.log('ℹ️ XP اتحسب قبل كده للفيديو ده');
+      }
+    }catch(e){ console.warn('award xp exception:', e); }
   }
 }
 
