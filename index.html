@@ -8,25 +8,19 @@
 <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
 <title>CYBER FORCE</title>
 
-<!-- ============ Open Graph / Facebook ============ -->
+<!-- Open Graph -->
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="CYBER FORCE" />
 <meta property="og:title" content="CYBER FORCE | منصة تعلم الأمن السيبراني" />
-<meta property="og:description" content="تعلّم الأمن السيبراني بالعربي — منصة احترافية بمحتوى عالي الجودة، مدربين خبراء، ونظام تعليمي تفاعلي." />
+<meta property="og:description" content="تعلّم الأمن السيبراني بالعربي — منصة احترافية بمحتوى عالي الجودة." />
 <meta property="og:image" content="https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/og-image.png" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
 <meta property="og:url" content="https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/" />
 <meta property="og:locale" content="ar_EG" />
-
-<!-- ============ Twitter Card ============ -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="CYBER FORCE | منصة تعلم الأمن السيبراني" />
-<meta name="twitter:description" content="تعلّم الأمن السيبراني بالعربي — منصة احترافية بمحتوى عالي الجودة." />
+<meta name="twitter:description" content="تعلّم الأمن السيبراني بالعربي." />
 <meta name="twitter:image" content="https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/og-image.png" />
-
-<!-- ============ إضافات ============ -->
-<meta name="description" content="منصة CYBER FORCE - تعلّم الأمن السيبراني بالعربي مع أفضل المدربين." />
+<meta name="description" content="منصة CYBER FORCE - تعلّم الأمن السيبراني بالعربي." />
 <meta name="author" content="EL-sayed Hasan" />
 
 <link rel="manifest" href="./manifest.json" />
@@ -353,10 +347,9 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
 .sup-btn > div{min-width:0;flex:1}
 .sup-btn small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
 
-/* ============ SESSION ENDED MODAL ============ */
 #sessionEndedModal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;animation:semFadeIn .3s ease-out}
 .sem-overlay{position:absolute;inset:0;background:rgba(2,8,18,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-.sem-box{position:relative;z-index:1;width:100%;max-width:420px;background:linear-gradient(160deg,rgba(12,22,44,.98),rgba(6,16,36,.98));border:1px solid rgba(25,170,255,.35);border-radius:24px;padding:36px 28px 28px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 80px rgba(25,170,255,.2),0 0 0 1px rgba(255,255,255,.05) inset;animation:semPop .5s cubic-bezier(.2,.9,.3,1.4);overflow:hidden}
+.sem-box{position:relative;z-index:1;width:100%;max-width:420px;background:linear-gradient(160deg,rgba(12,22,44,.98),rgba(6,16,36,.98));border:1px solid rgba(25,170,255,.35);border-radius:24px;padding:36px 28px 28px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 80px rgba(25,170,255,.2);animation:semPop .5s cubic-bezier(.2,.9,.3,1.4);overflow:hidden}
 .sem-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--blue),transparent);animation:semGlow 2s ease-in-out infinite}
 @keyframes semGlow{0%,100%{opacity:.5}50%{opacity:1}}
 @keyframes semFadeIn{from{opacity:0}to{opacity:1}}
@@ -420,7 +413,6 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
 </aside>
 
 <main>
-  <!-- PROFILE -->
   <section class="page active" id="page-profile">
     <div class="prof-hero">
       <div class="prof-av" id="pAv">?</div>
@@ -456,14 +448,12 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
     </div>
   </section>
 
-  <!-- INSTRUCTORS -->
   <section class="page" id="page-instructors">
     <div class="sec-title">👨‍🏫 المدربين</div>
     <div class="sec-sub">اختر مدرب لعرض فيديوهاته والتواصل معاه</div>
     <div class="ins-grid" id="insGrid"></div>
   </section>
 
-  <!-- INSTRUCTOR VIDEOS -->
   <section class="page" id="page-instructor-videos">
     <div class="back-bar">
       <button class="back-btn" id="backToInstructors">←</button>
@@ -484,24 +474,22 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
     <div class="vid-grid" id="ivGrid"></div>
   </section>
 
-  <!-- LEADERBOARD -->
   <section class="page" id="page-leaderboard">
     <div class="sec-title">🏆 المتصدرين</div>
     <div class="sec-sub">أفضل 20 محارب سيبراني في المنصة</div>
     <div id="lbList"></div>
   </section>
 
-  <!-- ABOUT -->
   <section class="page" id="page-about">
     <div class="sec-title">ℹ️ عن المنصة</div>
     <div class="sec-sub">تعرّف على CYBER FORCE</div>
     <div class="info-card">
       <h3>🛡️ من نحن</h3>
-      <p>منصة <b>CYBER FORCE</b> هي منصة تعليمية احترافية متخصصة في مجال الأمن السيبراني، تهدف إلى تأهيل جيل جديد من خبراء الأمن الرقمي عبر محتوى عربي عالي الجودة ونظام تعليمي تفاعلي محفّز.</p>
+      <p>منصة <b>CYBER FORCE</b> هي منصة تعليمية احترافية متخصصة في مجال الأمن السيبراني.</p>
     </div>
     <div class="info-card">
       <h3>🎯 رؤيتنا</h3>
-      <p>أن نكون المرجع الأول للتعلّم السيبراني باللغة العربية، ونصنع مجتمعاً من المحترفين القادرين على حماية الفضاء الرقمي.</p>
+      <p>أن نكون المرجع الأول للتعلّم السيبراني باللغة العربية.</p>
     </div>
     <div class="info-card">
       <h3>📢 تابعنا</h3>
@@ -509,7 +497,6 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
     </div>
   </section>
 
-  <!-- SUPPORT -->
   <section class="page" id="page-support">
     <div class="sec-title">💬 الدعم الفني</div>
     <div class="sec-sub">نحن هنا لمساعدتك في أي وقت</div>
@@ -522,17 +509,14 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
   <div>© 2026 جميع الحقوق محفوظة <a href="https://t.me/sayoda_elgadar" target="_blank" rel="noopener noreferrer" style="color:var(--gold);font-weight:900">EL-sayed Hasan</a></div>
 </footer>
 
-<!-- VIDEO MODAL -->
 <div class="modal" id="vidModal">
   <div class="modal-inner">
     <div class="player-box">
       <button class="modal-close" id="closeVid">✕</button>
-      
       <div class="watermark wm-tl" id="wmTL">—</div>
       <div class="watermark wm-tr" id="wmTR">CYBER FORCE</div>
       <div class="watermark wm-bl" id="wmBL">—</div>
       <div class="watermark wm-center" id="wmCenter">CYBER FORCE</div>
-      
       <div id="ytPlayer"></div>
       <div class="player-shield"></div>
       <div class="yt-big-play" id="ytBigPlay">
@@ -583,6 +567,7 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
 <div id="toasts"></div>
 <canvas id="confetti"></canvas>
 <script>
+<script>
 /* ============================================
    CYBER FORCE — index.html
    ============================================ */
@@ -594,9 +579,12 @@ const clean=s=>String(s==null?'':s).replace(/[<>]/g,'').trim();
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeInt=(n,def=0)=>{const v=parseInt(n,10);return Number.isFinite(v)?v:def;};
 
-/* ============ فك تشفير URL يوتيوب ============ */
+/* ============ CONFIG ============ */
 const CF_SECRET_KEY = 'CF_SECRET_2026_9a8b7c';
+const UNLOCK_THRESHOLD = 50;
+const XP_PER_VIDEO = 10;
 
+/* ============ فك تشفير URL ============ */
 function cfDecrypt(encoded){
   if(!encoded) return '';
   try{
@@ -612,27 +600,6 @@ function cfDecrypt(encoded){
     return '';
   }
 }
-
-/* ============ HELPERS للنسبة ============ */
-function getVideoProgressPct(videoId){
-  try{
-    if(!USER || !USER.video_progress) return 0;
-    const p = USER.video_progress[videoId];
-    if(!p) return 0;
-    if(p.done) return 100;
-    return safeInt(p.p, 0);
-  }catch(e){ return 0; }
-}
-
-function remainingToUnlock(idx){
-  if(idx === 0) return 0;
-  const prev = INSTRUCTOR_VIDEOS[idx - 1];
-  if(!prev) return 50;
-  const prevPct = getVideoProgressPct(prev.video_id);
-  return Math.max(0, 50 - prevPct);
-}
-
-const UNLOCK_THRESHOLD = 50;
 
 /* ============ الحمايات ============ */
 document.addEventListener('contextmenu',e=>e.preventDefault());
@@ -668,6 +635,9 @@ let ytIsPlaying=false;
 let IS_ADMIN=false;
 let IS_INSTRUCTOR=false;
 let USER_PHONE='';
+let _videoXpAwarded = false;
+let _lastSave = 0;
+let _autoUnlockedVideos = new Set();
 
 const LEVELS=[
   {min:0,name:'مبتدئ',emoji:'🌱'},
@@ -761,14 +731,10 @@ function buildNav(){
   if(IS_ADMIN){
     extraNav += `<div class="nav-item gold" id="navAdmin"><span class="ic">👑</span>لوحة التحكم</div>`;
   }
-
   $('sideNav').innerHTML = extraNav + SECTIONS.map(s=>`<div class="nav-item" data-nav="${s.id}"><span class="ic">${s.ic}</span>${s.t}</div>`).join('');
-  
   const bn=[SECTIONS[0],SECTIONS[1],SECTIONS[2],SECTIONS[3],SECTIONS[4]];
   $('bottomNav').innerHTML=bn.map(s=>`<div class="bn" data-nav="${s.id}"><span class="ic">${s.ic}</span>${s.t}</div>`).join('');
-  
   document.querySelectorAll('[data-nav]').forEach(el=>el.onclick=()=>go(el.dataset.nav));
-  
   const ni = $('navInstructor');
   if(ni) ni.onclick = () => location.href = './instructor.html';
   const na = $('navAdmin');
@@ -791,9 +757,7 @@ $('overlay').onclick=()=>{closeSidebar();$('notifPanel').classList.remove('open'
 
 /* ============ LOGOUT ============ */
 $('logoutBtn').onclick=async()=>{
-  try{
-    if(SESSION.token) await sb.rpc('secure_logout',{p_token:SESSION.token});
-  }catch(e){}
+  try{ if(SESSION.token) await sb.rpc('secure_logout',{p_token:SESSION.token}); }catch(e){}
   localStorage.removeItem('sayoda_session');
   location.replace('./login.html');
 };
@@ -806,24 +770,19 @@ async function loadUser(){
     USER=data[0];
     if(USER.active===false){toast('حسابك موقوف','err');setTimeout(()=>{
       localStorage.removeItem('sayoda_session');location.replace('./login.html');},1500);return;}
-    
     USER_PHONE = USER.phone || '';
     IS_ADMIN = USER.role === 'admin';
     IS_INSTRUCTOR = USER.role === 'instructor' || (IS_ADMIN && USER.is_instructor === true);
-    
     try{ await updateStreak(); }catch(e){}
     try{ renderProfile(); }catch(e){}
     try{ updateMiniXp(); }catch(e){}
-    
     $('sideAv').textContent=(USER.username||'?')[0].toUpperCase();
     $('sideName').textContent=USER.username;
-    
     let roleTxt = 'عضو';
     if(USER.role === 'admin' && USER.is_instructor) roleTxt = '👑 أدمن + 🎬 مدرب';
     else if(USER.role === 'admin') roleTxt = '👑 مدير';
     else if(USER.role === 'instructor') roleTxt = '🎬 مدرب';
     $('sideRole').textContent = roleTxt;
-    
     buildNav();
   }catch(e){ console.error(e); }
 }
@@ -855,7 +814,6 @@ function renderProfile(){
   $('pXpTxt').textContent=nx?`${xp} / ${target} XP — باقي ${target-xp} للمستوى التالي`:`${xp} XP — أعلى مستوى! 👑`;
   $('sXp').textContent=xp;
   $('sStreak').textContent=USER.streak||0;
-
   const savedBadges = Array.isArray(USER.badges) ? USER.badges : [];
   const computedBadges = BADGES.filter(b => b.ck(USER)).map(b => b.id);
   const allEarned = [...new Set([...savedBadges, ...computedBadges])];
@@ -946,17 +904,14 @@ function renderInstructors(){
     $('insGrid').innerHTML='<div class="empty" style="grid-column:1/-1"><div class="e">👨‍🏫</div><p>لا يوجد مدربين بعد</p></div>';
     return;
   }
-
   $('insGrid').innerHTML = INSTRUCTORS.map(ins => {
     const firstChar = (ins.instructor_username||'?')[0].toUpperCase();
     const spec = ins.specialty ? esc(ins.specialty) : 'مدرب';
     const videosCount = safeInt(ins.videos_count);
     const unlockedCount = safeInt(ins.unlocked_count);
     const status = ins.subscription_status || 'none';
-    
     let statusBadge = '';
     let btnTxt = '👁 عرض الفيديوهات';
-    
     if(status === 'active'){
       statusBadge = `<span class="ins-badge-active">✅ مفتوح</span>`;
       btnTxt = '▶ متابعة المشاهدة';
@@ -964,7 +919,6 @@ function renderInstructors(){
       statusBadge = `<span class="ins-badge-pending">⏳ في انتظار الموافقة</span>`;
       btnTxt = '⏳ في انتظار الموافقة';
     }
-    
     return `<div class="ins-card" data-ins="${esc(ins.instructor_username)}">
       ${statusBadge}
       <div class="ins-head">
@@ -981,7 +935,6 @@ function renderInstructors(){
       <button class="ins-btn">${btnTxt}</button>
     </div>`;
   }).join('');
-
   document.querySelectorAll('.ins-card').forEach(card => {
     card.onclick = () => openInstructor(card.dataset.ins);
   });
@@ -990,27 +943,15 @@ function renderInstructors(){
 /* ============ INSTRUCTOR VIDEOS ============ */
 async function openInstructor(username){
   CURRENT_INSTRUCTOR = INSTRUCTORS.find(i => i.instructor_username === username);
-  if(!CURRENT_INSTRUCTOR){
-    toast('المدرب غير موجود','err');
-    return;
-  }
-  
+  if(!CURRENT_INSTRUCTOR){ toast('المدرب غير موجود','err'); return; }
   try{
-    const {data:uData} = await sb.from('users')
-      .select('video_progress')
-      .eq('username', USER.username)
-      .limit(1);
-    if(uData && uData[0]){
-      USER.video_progress = uData[0].video_progress || {};
-    }
-  }catch(e){ console.warn('progress refresh error:', e); }
-  
+    const {data:uData} = await sb.from('users').select('video_progress').eq('username', USER.username).limit(1);
+    if(uData && uData[0]) USER.video_progress = uData[0].video_progress || {};
+  }catch(e){}
   $('ivTitle').textContent = '🎬 ' + CURRENT_INSTRUCTOR.instructor_username;
   $('ivSub').textContent = CURRENT_INSTRUCTOR.specialty || 'مدرب';
-  
   $('ivVideosCount').textContent = '📹 ' + safeInt(CURRENT_INSTRUCTOR.videos_count) + ' فيديو';
   $('ivUnlockedCount').textContent = '🔓 ' + safeInt(CURRENT_INSTRUCTOR.unlocked_count) + ' مفتوح';
-  
   const status = CURRENT_INSTRUCTOR.subscription_status || 'none';
   if(status === 'active'){
     $('ivStatus').textContent = '✅ مشترك';
@@ -1025,10 +966,8 @@ async function openInstructor(username){
     $('ivStatus').style.background = 'rgba(255,77,109,.12)';
     $('ivStatus').style.color = '#ff4d6d';
   }
-  
   ACTIVE_CAT = 'all';
   await loadInstructorVideos();
-  
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   $('page-instructor-videos').classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
@@ -1076,31 +1015,39 @@ function buildIVFilters(){
   });
 }
 
+function remainingToUnlock(idx){
+  if(idx === 0) return 0;
+  const prev = INSTRUCTOR_VIDEOS[idx - 1];
+  if(!prev) return 50;
+  let prevPct = 0;
+  try{
+    if(USER && USER.video_progress){
+      const p = USER.video_progress[prev.video_id];
+      prevPct = p ? (p.done ? 100 : safeInt(p.p, 0)) : 0;
+    }
+  }catch(e){}
+  return Math.max(0, 50 - prevPct);
+}
+
 function renderInstructorVideos(){
   const list = ACTIVE_CAT==='all'
     ? INSTRUCTOR_VIDEOS
     : INSTRUCTOR_VIDEOS.filter(v => v.category === ACTIVE_CAT);
-
   if(!list.length){
     $('ivGrid').innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="e">🎬</div><p>لا توجد فيديوهات بعد</p></div>';
     return;
   }
-
   $('ivGrid').innerHTML = list.map((v, idx) => {
     const realIdx = INSTRUCTOR_VIDEOS.indexOf(v);
     const isUnlocked = v.is_unlocked === true;
-    
-    /* ✅ فك تشفير الرابط */
     const ytUrl = cfDecrypt(v.encrypted_url);
     const thumb = v.thumbnail || (() => {
       const m = (ytUrl||'').match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
       return m ? `https://i.ytimg.com/vi/${m[1]}/hqdefault.jpg` : './sayed.png';
     })();
-
     let lockTxt = 'اطلب من المدرب فتح الفيديو';
     let showProgress = false;
     let progressPct = 0;
-    
     if(!isUnlocked && realIdx > 0){
       const remaining = remainingToUnlock(realIdx);
       if(remaining > 0){
@@ -1111,7 +1058,6 @@ function renderInstructorVideos(){
         lockTxt = 'اكمل الفيديو السابق لفتح هذا';
       }
     }
-
     return `<div class="vid-card ${isUnlocked?'unlocked':''}" data-vid="${v.video_id}" data-idx="${realIdx}">
       <div class="vid-thumb">
         <img src="${esc(thumb)}" onerror="this.src='./sayed.png'" alt="">
@@ -1120,11 +1066,7 @@ function renderInstructorVideos(){
           : `<div class="vid-lock">
               <div class="lock-icon">🔒</div>
               <div class="lock-txt">${lockTxt}</div>
-              ${showProgress ? `
-                <div style="position:absolute;bottom:8px;left:8px;right:8px;height:6px;background:rgba(0,0,0,.5);border-radius:10px;overflow:hidden">
-                  <div style="height:100%;width:${progressPct}%;background:linear-gradient(90deg,var(--blue),#28d17c);border-radius:10px;transition:width .5s"></div>
-                </div>
-              ` : ''}
+              ${showProgress ? `<div style="position:absolute;bottom:8px;left:8px;right:8px;height:6px;background:rgba(0,0,0,.5);border-radius:10px;overflow:hidden"><div style="height:100%;width:${progressPct}%;background:linear-gradient(90deg,var(--blue),#28d17c);border-radius:10px;transition:width .5s"></div></div>` : ''}
             </div>`
         }
       </div>
@@ -1133,26 +1075,18 @@ function renderInstructorVideos(){
         <p>${esc(v.description||'')}</p>
         <div class="vid-meta">
           <span class="cat-tag">${esc(v.category||'عام')}</span>
-          ${isUnlocked 
-            ? `<span class="unlock-tag">🔓 مفتوح</span>` 
-            : `<span style="color:#ff9500">🔒 مقفول</span>`
-          }
+          ${isUnlocked ? `<span class="unlock-tag">🔓 مفتوح</span>` : `<span style="color:#ff9500">🔒 مقفول</span>`}
         </div>
       </div>
     </div>`;
   }).join('');
-
   document.querySelectorAll('#ivGrid .vid-card').forEach(card => {
     card.onclick = () => {
       const vid = parseInt(card.dataset.vid);
       const v = INSTRUCTOR_VIDEOS.find(x => x.video_id === vid);
       if(!v) return;
-      
-      if(v.is_unlocked === true){
-        openVideo(v);
-      } else {
-        requestUnlockForVideo(v);
-      }
+      if(v.is_unlocked === true) openVideo(v);
+      else requestUnlockForVideo(v);
     };
   });
 }
@@ -1160,30 +1094,17 @@ function renderInstructorVideos(){
 /* ============ REQUEST UNLOCK ============ */
 async function requestUnlockForVideo(video){
   if(!CURRENT_INSTRUCTOR) return;
-  
   const instructorWA = CURRENT_INSTRUCTOR.whatsapp || '';
   const instructorName = CURRENT_INSTRUCTOR.instructor_username || 'المدرب';
-  
-  try{
-    await sb.rpc('request_instructor_access', {
-      p_student_username: USER.username,
-      p_instructor_username: instructorName
-    });
-  }catch(e){ console.warn('request log error:', e); }
-  
+  try{ await sb.rpc('request_instructor_access', { p_student_username: USER.username, p_instructor_username: instructorName }); }catch(e){}
   try{
     await sb.rpc('client_log_activity', {
       p_username: USER.username,
       p_activity_type: 'unlock_request',
-      p_details: JSON.stringify({
-        instructor: instructorName,
-        video_id: video.video_id,
-        video_title: video.title
-      }),
+      p_details: JSON.stringify({ instructor: instructorName, video_id: video.video_id, video_title: video.title }),
       p_user_agent: navigator.userAgent.slice(0,200)
     });
   }catch(e){}
-  
   const msg = encodeURIComponent(
     'السلام عليكم أستاذ ' + instructorName + ' 👋\n\n' +
     'أنا الطالب: ' + USER.username + '\n' +
@@ -1192,12 +1113,7 @@ async function requestUnlockForVideo(video){
     'الفيديو: ' + (video.title || '') + '\n\n' +
     'منتظر ردك 🙏'
   );
-  
-  if(!instructorWA){
-    toast('⚠️ المدرب لسه مسجلش رقم واتساب — تواصل مع الإدارة','err');
-    return;
-  }
-  
+  if(!instructorWA){ toast('⚠️ المدرب لسه مسجلش رقم واتساب — تواصل مع الإدارة','err'); return; }
   const waUrl = 'https://wa.me/' + instructorWA + '?text=' + msg;
   showWhatsappModal(instructorName, instructorWA, waUrl);
 }
@@ -1205,19 +1121,9 @@ async function requestUnlockForVideo(video){
 function contactInstructor(username){
   const ins = INSTRUCTORS.find(i => i.instructor_username === username);
   if(!ins) return;
-  
   const instructorWA = ins.whatsapp || '';
-  if(!instructorWA){
-    toast('⚠️ المدرب لسه مسجلش رقم واتساب','err');
-    return;
-  }
-  
-  const msg = encodeURIComponent(
-    'السلام عليكم أستاذ ' + username + ' 👋\n\n' +
-    'أنا الطالب: ' + USER.username + '\n\n' +
-    'عايز أستفسر عن فيديوهاتك على منصة CYBER FORCE'
-  );
-  
+  if(!instructorWA){ toast('⚠️ المدرب لسه مسجلش رقم واتساب','err'); return; }
+  const msg = encodeURIComponent('السلام عليكم أستاذ ' + username + ' 👋\n\nأنا الطالب: ' + USER.username + '\n\nعايز أستفسر عن فيديوهاتك على منصة CYBER FORCE');
   const waUrl = 'https://wa.me/' + instructorWA + '?text=' + msg;
   window.open(waUrl, '_blank');
 }
@@ -1225,7 +1131,6 @@ function contactInstructor(username){
 function showWhatsappModal(instructorName, waNumber, waUrl){
   const existing = document.getElementById('waModal');
   if(existing) existing.remove();
-  
   const modal = document.createElement('div');
   modal.id = 'waModal';
   modal.className = 'modal open';
@@ -1236,23 +1141,12 @@ function showWhatsappModal(instructorName, waNumber, waUrl){
         <div style="font-size:56px;margin-bottom:14px">📱</div>
         <h2 style="font-size:19px;font-weight:900;margin-bottom:10px">تواصل مع المدرب</h2>
         <p style="color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:20px">
-          هيتم فتح واتساب على رقم <b style="color:var(--gold)">${esc(instructorName)}</b><br>
-          وابعتله رسالة طلب فتح الفيديوهات
+          هيتم فتح واتساب على رقم <b style="color:var(--gold)">${esc(instructorName)}</b>
         </p>
-        <div style="background:rgba(10,6,0,.5);border:1px solid var(--border);border-radius:12px;
-                    padding:12px;margin-bottom:16px;text-align:right;direction:rtl">
-          <div style="font-size:11px;color:var(--muted);margin-bottom:6px">الرسالة:</div>
-          <div style="font-size:13px;line-height:1.6;color:var(--txt)">
-            السلام عليكم أستاذ <b style="color:var(--gold)">${esc(instructorName)}</b> 👋<br>
-            أنا الطالب: <b>${esc(USER.username)}</b><br>
-            رقم هاتفي: <b>${esc(USER.phone || USER_PHONE || '—')}</b><br>
-            عايز أفتح فيديوهاتك على منصة CYBER FORCE
-          </div>
-        </div>
         <a href="${waUrl}" target="_blank" rel="noopener noreferrer"
            class="btn-primary"
            style="display:block;width:100%;padding:15px;font-size:15px;text-decoration:none;margin-bottom:10px;text-align:center;box-sizing:border-box;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;border:none;border-radius:12px;font-weight:900">
-          📲 فتح واتساب وإرسال الرسالة
+          📲 فتح واتساب
         </a>
         <button class="btn-ghost" id="closeWaModal" style="width:100%">إلغاء</button>
       </div>
@@ -1263,7 +1157,7 @@ function showWhatsappModal(instructorName, waNumber, waUrl){
   modal.onclick = (e) => { if(e.target === modal) modal.remove(); };
 }
 
-/* ============ VIDEO PLAYER ============ */
+/* ============ YOUTUBE ============ */
 function loadYtApi(){
   if(window.YT && window.YT.Player){ytApiReady=true;return;}
   if(document.querySelector('script[src*="iframe_api"]')) return;
@@ -1290,7 +1184,6 @@ function setWatermarks(){
   const phone = USER.phone || USER_PHONE || '—';
   const user = USER.username || '';
   const ts = new Date().toLocaleString('ar-EG', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
-  
   $('wmTL').textContent = '📱 ' + phone;
   $('wmTR').textContent = 'CYBER FORCE | ' + user;
   $('wmBL').textContent = '🕐 ' + ts;
@@ -1299,10 +1192,7 @@ function setWatermarks(){
 
 async function openVideo(v){
   CURRENT_VIDEO = v;
-  setWatermarks();
-  async function openVideo(v){
-  CURRENT_VIDEO = v;
-  _videoXpAwarded = false;   // ✅ reset
+  _videoXpAwarded = false; // reset
   setWatermarks();
   $('mTitle').textContent = v.title || '';
   $('mDesc').textContent = v.description || '';
@@ -1315,7 +1205,6 @@ async function openVideo(v){
   $('ytProgressFill').style.width='0%';
   ytIsPlaying=false;
 
-  /* ✅ فك تشفير الرابط */
   const realUrl = cfDecrypt(v.encrypted_url);
   const vid = (realUrl||'').match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
   const ytId = v.youtube_id || (vid ? vid[1] : '');
@@ -1327,11 +1216,7 @@ async function openVideo(v){
   const mk=()=>{
     ytPlayer = new window.YT.Player('ytPlayer',{
       videoId: ytId,
-      playerVars:{
-        rel:0, modestbranding:1, playsinline:1,
-        origin:location.origin, controls:0, disablekb:1, fs:0,
-        iv_load_policy:3, showinfo:0
-      },
+      playerVars:{ rel:0, modestbranding:1, playsinline:1, origin:location.origin, controls:0, disablekb:1, fs:0, iv_load_policy:3, showinfo:0 },
       events:{
         onReady:e=>{
           ytPlayerReady=true;
@@ -1343,7 +1228,6 @@ async function openVideo(v){
       }
     });
   };
-
   if(ytApiReady && window.YT && window.YT.Player){ mk(); }
   else { ytReadyQueue.push(mk); if(!window.YT) loadYtApi(); }
 
@@ -1351,32 +1235,26 @@ async function openVideo(v){
     await sb.rpc('client_log_activity',{p_username:USER.username,p_activity_type:'video_watch',p_details:JSON.stringify({video:v.title,id:v.video_id,instructor:CURRENT_INSTRUCTOR?.instructor_username}),p_user_agent:navigator.userAgent.slice(0,200)});
   }catch(e){}
 
-  renderStars(v); loadRating(v); loadComments(v);
+  renderStars(v);
 }
 
 function onYtState(e){
   const S=window.YT.PlayerState;
-  if(e.data===S.ENDED){ 
-    ytIsPlaying=false; 
-    $('ytPlayPause').textContent='▶'; 
-    markProgress(100,true);
-    awardVideoXpIfDone();   // ✅ إضافة XP
+  if(e.data === S.ENDED){
+    ytIsPlaying=false;
+    $('ytPlayPause').textContent='▶';
+    awardVideoXp();
+  } else if(e.data === S.PLAYING){
+    ytIsPlaying=true;
+    $('ytPlayPause').textContent='⏸';
+    $('ytBigPlay').classList.add('hidden');
+    showYtControls();
+  } else if(e.data === S.PAUSED){
+    ytIsPlaying=false;
+    $('ytPlayPause').textContent='▶';
+    $('ytControls').classList.remove('hidden');
+    clearTimeout(ytControlsTimer);
   }
-  else if(e.data===S.PLAYING){ 
-    ytIsPlaying=true; 
-    $('ytPlayPause').textContent='⏸'; 
-    $('ytBigPlay').classList.add('hidden'); 
-    showYtControls(); 
-  }
-  else if(e.data===S.PAUSED){ 
-    ytIsPlaying=false; 
-    $('ytPlayPause').textContent='▶'; 
-    $('ytControls').classList.remove('hidden'); 
-    clearTimeout(ytControlsTimer); 
-  }
-}
-  else if(e.data===S.PLAYING){ ytIsPlaying=true; $('ytPlayPause').textContent='⏸'; $('ytBigPlay').classList.add('hidden'); showYtControls(); }
-  else if(e.data===S.PAUSED){ ytIsPlaying=false; $('ytPlayPause').textContent='▶'; $('ytControls').classList.remove('hidden'); clearTimeout(ytControlsTimer); }
 }
 
 function startYtTimer(){
@@ -1394,20 +1272,40 @@ function startYtTimer(){
   },1000);
 }
 
-/* ============================================
-   ✅ الفتح التلقائي بعد 50%
-   ============================================ */
-let _lastSave=0;
-let _autoUnlockedVideos = new Set();
+/* ============ XP & PROGRESS ============ */
+async function awardVideoXp(){
+  if(_videoXpAwarded) return;
+  if(!CURRENT_VIDEO || !USER) return;
+  _videoXpAwarded = true;
+  const videoId = parseInt(CURRENT_VIDEO.video_id);
+  console.log('🎬 إضافة XP للفيديو:', videoId, 'للمستخدم:', USER.username);
+  try{
+    const {data, error} = await sb.rpc('award_video_xp', {
+      p_username: USER.username,
+      p_video_id: videoId,
+      p_xp_amount: XP_PER_VIDEO
+    });
+    if(error){ console.error('❌', error.message); return; }
+    const res = Array.isArray(data) ? data[0] : data;
+    if(res && res.ok){
+      console.log('✅ +10 XP — الجديد:', res.new_xp);
+      toast('+10 XP 🎬','ok','⭐');
+      USER.xp = res.new_xp;
+      USER.videos_watched = (USER.videos_watched || 0) + 1;
+      try{ updateMiniXp(); }catch(e){}
+      try{ renderProfile(); }catch(e){}
+    } else if(res && res.error === 'already_awarded'){
+      console.log('ℹ️ XP اتحسب قبل كده');
+    }
+  }catch(e){ console.error('❌ award xp:', e); }
+}
 
 async function saveProgressSilently(v, pct){
   const now = Date.now();
   if(now - _lastSave < 5000) return;
   _lastSave = now;
-  
   const videoId = CURRENT_VIDEO?.video_id;
   if(!videoId) return;
-  
   try{
     if(!USER.video_progress) USER.video_progress = {};
     const prev = USER.video_progress[videoId] || {p:0,done:false};
@@ -1415,138 +1313,23 @@ async function saveProgressSilently(v, pct){
       p: Math.max(safeInt(prev.p,0), Math.round(pct)),
       done: prev.done || false
     };
-    
-    await sb.from('users')
-      .update({video_progress: USER.video_progress})
-      .eq('username', USER.username);
-    
+    await sb.from('users').update({video_progress: USER.video_progress}).eq('username', USER.username);
+    // الفتح التلقائي عند 50%
     const key = String(videoId);
     if(pct >= 50 && !_autoUnlockedVideos.has(key)){
       _autoUnlockedVideos.add(key);
-      console.log('🔓 محاولة فتح الفيديو التالي بعد', Math.round(pct) + '%', 'للفيديو', videoId);
-      
       try{
-        const {data: unlockData, error: unlockErr} = await sb.rpc('try_auto_unlock_next_video', {
+        const {data: unlockData} = await sb.rpc('try_auto_unlock_next_video', {
           p_student_username: USER.username,
           p_current_video_id: parseInt(videoId)
         });
-        
-        console.log('📥 نتيجة RPC:', unlockData, 'خطأ:', unlockErr);
-        
-        if(unlockErr){
-          console.error('❌ خطأ في الفتح:', unlockErr.message);
-          return;
-        }
-        
         const res = Array.isArray(unlockData) ? unlockData[0] : unlockData;
         if(res && res.ok && res.unlocked_video_id){
-          console.log('✅ تم فتح الفيديو التالي:', res.unlocked_video_id);
-          toast('🎬 تم فتح الفيديو التالي! أكمل المشاهدة','ok','🔓');
-          if(CURRENT_INSTRUCTOR) setTimeout(()=>loadInstructorVideos(), 500);
-        } else if(res && res.message === 'no_next_video'){
-          console.log('ℹ️ مفيش فيديو تالي');
-        } else {
-          console.warn('⚠️ نتيجة غير متوقعة:', res);
+          toast('🎬 تم فتح الفيديو التالي!','ok','🔓');
         }
-      }catch(e){ console.warn('❌ auto unlock error:', e); }
+      }catch(e){}
     }
   }catch(e){ console.warn('save progress error:', e); }
-}
-/* ============ إضافة XP لما الفيديو يخلص ============ */
-let _videoXpAwarded = false;
-
-async function awardVideoXpIfDone(){
-  if(_videoXpAwarded) return;
-  if(!CURRENT_VIDEO || !USER) return;
-  
-  _videoXpAwarded = true;
-  
-  const videoId = parseInt(CURRENT_VIDEO.video_id);
-  console.log('🎬 محاولة إضافة XP للفيديو:', videoId, 'للمستخدم:', USER.username);
-  
-  try{
-    const {data, error} = await sb.rpc('award_video_xp', {
-      p_username: USER.username,
-      p_video_id: videoId,
-      p_xp_amount: 10
-    });
-    
-    console.log('📥 نتيجة:', data, 'خطأ:', error);
-    
-    if(error){
-      console.error('❌ خطأ:', error.message);
-      return;
-    }
-    
-    const res = Array.isArray(data) ? data[0] : data;
-    
-    if(res && res.ok){
-      console.log('✅ تم إضافة 10 XP — الرصيد الجديد:', res.new_xp);
-      toast('+10 XP 🎬','ok','⭐');
-      USER.xp = res.new_xp;
-      USER.videos_watched = (USER.videos_watched || 0) + 1;
-      try{ updateMiniXp(); }catch(e){}
-    } else if(res && res.error === 'already_awarded'){
-      console.log('ℹ️ XP اتحسب قبل كده');
-    } else {
-      console.warn('⚠️ نتيجة غير متوقعة:', res);
-    }
-  }catch(e){
-    console.error('❌ خطأ في المحاولة:', e);
-  }
-}
-async function markProgress(pct,done){
-  const v=CURRENT_VIDEO;if(!v)return;
-  
-  /* تسجيل التقدم */
-  if(pct >= UNLOCK_THRESHOLD && CURRENT_INSTRUCTOR){
-    try{
-      await sb.rpc('client_log_activity',{
-        p_username:USER.username,
-        p_activity_type:'video_progress',
-        p_details:JSON.stringify({
-          video_id: v.video_id,
-          video_title: v.title,
-          progress: Math.round(pct),
-          instructor: CURRENT_INSTRUCTOR.instructor_username
-        }),
-        p_user_agent:navigator.userAgent.slice(0,200)
-      });
-    }catch(e){}
-  }
-  
-  /* ✅ إضافة XP لما الفيديو يخلص */
-  if(done === true){
-    try{
-      const {data, error} = await sb.rpc('award_video_xp', {
-        p_username: USER.username,
-        p_video_id: parseInt(v.video_id),
-        p_xp_amount: 10
-      });
-      
-      if(error){
-        console.warn('award xp error:', error);
-        return;
-      }
-      
-      const res = Array.isArray(data) ? data[0] : data;
-      
-      if(res && res.ok){
-        console.log('✅ تم إضافة 10 XP — الرصيد الجديد:', res.new_xp);
-        toast('+10 XP 🎬','ok','⭐');
-        
-        /* تحديث USER المحلي */
-        USER.xp = res.new_xp;
-        USER.videos_watched = (USER.videos_watched || 0) + 1;
-        
-        /* تحديث الواجهة */
-        try{ updateMiniXp(); }catch(e){}
-        try{ renderProfile(); }catch(e){}
-      } else if(res && res.error === 'already_awarded'){
-        console.log('ℹ️ XP اتحسب قبل كده للفيديو ده');
-      }
-    }catch(e){ console.warn('award xp exception:', e); }
-  }
 }
 
 function closeVideo(){
@@ -1645,24 +1428,12 @@ function renderStars(v){
   });
 }
 function hoverStars(n){document.querySelectorAll('#starRate button').forEach(b=>b.classList.toggle('on',+b.dataset.n<=n));}
-async function loadRating(v){
-  $('mAvgRate').textContent = '0.0';
-  $('mRateCount').textContent = 'لا تقييمات';
-}
 async function rateVideo(v,n){
   const ratings=USER.ratings&&typeof USER.ratings==='object'?USER.ratings:{};
   ratings[v.video_id]=n;USER.ratings=ratings;
   try{await sb.from('users').update({ratings}).eq('username',USER.username);}catch(e){}
   renderStars(v);toast(`قيّمت الفيديو ${n} نجوم`,'ok','⭐');
 }
-
-/* ============ COMMENTS ============ */
-async function loadComments(v){
-  $('cmList').innerHTML='<div class="empty"><div class="e">💬</div><p>التعليقات قريباً</p></div>';
-}
-$('cmSend').onclick=()=>{
-  toast('التعليقات مش مفعلة حالياً','info');
-};
 
 /* ============ LEADERBOARD ============ */
 async function loadLeaderboard(){
@@ -1709,9 +1480,7 @@ $('notifBtn').onclick=async()=>{
 };
 document.addEventListener('click',e=>{if(!$('notifPanel').contains(e.target)&&e.target.closest('#notifBtn')===null)$('notifPanel').classList.remove('open');});
 
-/* ============================================
-   ✅ SOCIAL — بأيقونات SVG احترافية
-   ============================================ */
+/* ============ SOCIAL ============ */
 const SOCIAL_SVG = {
   facebook: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>',
   instagram: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>',
@@ -1728,7 +1497,6 @@ async function loadSocial(){
     const {data,error}=await sb.rpc('get_site_settings');
     if(!error) cfg = (Array.isArray(data)?data[0]:data) || {};
   }catch(e){}
-  
   cfg = Object.assign({
     facebook: 'https://www.facebook.com/share/1BwVV1hoks/',
     instagram: 'https://www.instagram.com/sayedhassan.2009',
@@ -1738,7 +1506,6 @@ async function loadSocial(){
     telegram_channel: 'https://t.me/sayoda_elgadar',
     website: 'https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/'
   }, cfg || {});
-
   const SOCIAL_META = {
     facebook: { name: 'فيسبوك', color: '#1877F2' },
     instagram: { name: 'انستجرام', color: '#E4405F' },
@@ -1748,41 +1515,22 @@ async function loadSocial(){
     telegram_channel: { name: 'قناة تليجرام', color: '#0088CC' },
     website: { name: 'الموقع الرسمي', color: '#19aaff' }
   };
-
   const order = ['telegram','telegram_channel','whatsapp','facebook','instagram','tiktok','website'];
-
   const renderBtn = (k, style='sup-btn') => {
     const m = SOCIAL_META[k] || {name: k, color: '#19aaff'};
     const svg = SOCIAL_SVG[k] || SOCIAL_SVG.website;
     return `<a class="${style}" href="${esc(cfg[k])}" target="_blank" rel="noopener noreferrer">
-      <span class="ic" style="background:${m.color}15;color:${m.color};border:1px solid ${m.color}40">
-        ${svg}
-      </span>
-      <div>
-        <div>${m.name}</div>
-        <small style="color:var(--muted)">اضغط للتواصل</small>
-      </div>
+      <span class="ic" style="background:${m.color}15;color:${m.color};border:1px solid ${m.color}40">${svg}</span>
+      <div><div>${m.name}</div><small style="color:var(--muted)">اضغط للتواصل</small></div>
     </a>`;
   };
-
-  if($('supportBtns')){
-    const btns = order.filter(k=>cfg[k]).map(k=>renderBtn(k)).join('');
-    $('supportBtns').innerHTML = btns || '<div class="empty">لا قنوات متاحة</div>';
-  }
-  
-  if($('socialBtns')){
-    const btns = order.filter(k=>cfg[k]).map(k=>renderBtn(k)).join('');
-    $('socialBtns').innerHTML = btns || '<div class="empty">لا قنوات متاحة</div>';
-  }
-  
+  if($('supportBtns')){ const btns = order.filter(k=>cfg[k]).map(k=>renderBtn(k)).join(''); $('supportBtns').innerHTML = btns || '<div class="empty">لا قنوات متاحة</div>'; }
+  if($('socialBtns')){ const btns = order.filter(k=>cfg[k]).map(k=>renderBtn(k)).join(''); $('socialBtns').innerHTML = btns || '<div class="empty">لا قنوات متاحة</div>'; }
   if($('socialFooter')){
     $('socialFooter').innerHTML = order.filter(k=>cfg[k]).map(k=>{
       const m = SOCIAL_META[k]||{name:k,color:'#19aaff'};
       const svg = SOCIAL_SVG[k] || SOCIAL_SVG.website;
-      return `<a class="social-ic" href="${esc(cfg[k])}" target="_blank" rel="noopener noreferrer" title="${m.name}"
-                 style="color:${m.color};border-color:${m.color}40;background:${m.color}15">
-        ${svg}
-      </a>`;
+      return `<a class="social-ic" href="${esc(cfg[k])}" target="_blank" rel="noopener noreferrer" title="${m.name}" style="color:${m.color};border-color:${m.color}40;background:${m.color}15">${svg}</a>`;
     }).join('');
   }
 }
@@ -1792,16 +1540,10 @@ async function checkSession(){
   try{
     const s = JSON.parse(localStorage.getItem('sayoda_session')||'null');
     if(!s || !s.username || !s.token) return;
-    
-    const {data, error} = await sb.rpc('validate_session', {
-      p_username: s.username,
-      p_token: s.token
-    });
-    
+    const {data, error} = await sb.rpc('validate_session', { p_username: s.username, p_token: s.token });
     if(error) return;
-    
     if(data === false){
-      console.log('🚫 الجلسة انتهت — تم الدخول من جهاز آخر');
+      console.log('🚫 الجلسة انتهت');
       localStorage.removeItem('sayoda_session');
       sessionStorage.removeItem('sayoda_admin_pass');
       sessionStorage.removeItem('sayoda_instructor_pass');
@@ -1812,7 +1554,6 @@ async function checkSession(){
 
 function showSessionEndedModal(){
   if(document.getElementById('sessionEndedModal')) return;
-  
   const modal = document.createElement('div');
   modal.id = 'sessionEndedModal';
   modal.innerHTML = `
@@ -1820,29 +1561,18 @@ function showSessionEndedModal(){
     <div class="sem-box">
       <div class="sem-icon">🔐</div>
       <h2 class="sem-title">انتهت الجلسة</h2>
-      <p class="sem-desc">
-        تم تسجيل الدخول لحسابك من جهاز آخر<br>
-        سيتم تسجيل خروجك من هذا الجهاز
-      </p>
-      <button class="sem-btn" onclick="location.replace('./login.html')">
-        🔑 تسجيل الدخول مرة أخرى
-      </button>
-      <div class="sem-timer">
-        سيتم التحويل خلال <span id="semCount">10</span> ثانية
-      </div>
+      <p class="sem-desc">تم تسجيل الدخول لحسابك من جهاز آخر<br>سيتم تسجيل خروجك من هذا الجهاز</p>
+      <button class="sem-btn" onclick="location.replace('./login.html')">🔑 تسجيل الدخول مرة أخرى</button>
+      <div class="sem-timer">سيتم التحويل خلال <span id="semCount">10</span> ثانية</div>
     </div>
   `;
   document.body.appendChild(modal);
-  
   let count = 10;
   const timer = setInterval(() => {
     count--;
     const el = document.getElementById('semCount');
     if(el) el.textContent = count;
-    if(count <= 0){
-      clearInterval(timer);
-      location.replace('./login.html');
-    }
+    if(count <= 0){ clearInterval(timer); location.replace('./login.html'); }
   }, 1000);
 }
 
@@ -1856,7 +1586,6 @@ async function init(){
 }
 init();
 
-/* تشغيل التحقق من الجلسة */
 checkSession();
 setInterval(checkSession, 30000);
 
