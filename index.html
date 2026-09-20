@@ -15,24 +15,20 @@
 <meta property="og:title" content="CYBER FORCE | منصة تعلم الأمن السيبراني" />
 <meta property="og:description" content="تعلّم الأمن السيبراني بالعربي — منصة احترافية بمحتوى عالي الجودة، مدربين خبراء، ونظام تعليمي تفاعلي." />
 <meta property="og:image" content="https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/og-image.png" />
-<meta property="og:image:secure_url" content="https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/og-image.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="CYBER FORCE - منصة الأمن السيبراني" />
 <meta property="og:url" content="https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/" />
 <meta property="og:locale" content="ar_EG" />
 
 <!-- ============ Twitter Card ============ -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="CYBER FORCE | منصة تعلم الأمن السيبراني" />
-<meta name="twitter:description" content="تعلّم الأمن السيبراني بالعربي — منصة احترافية بمحتوى عالي الجودة، مدربين خبراء، ونظام تعليمي تفاعلي." />
+<meta name="twitter:description" content="تعلّم الأمن السيبراني بالعربي — منصة احترافية بمحتوى عالي الجودة." />
 <meta name="twitter:image" content="https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/og-image.png" />
 
 <!-- ============ إضافات ============ -->
-<meta name="description" content="منصة CYBER FORCE - تعلّم الأمن السيبراني بالعربي مع أفضل المدربين. محتوى احترافي، شارات، ونظام تعليمي تفاعلي." />
-<meta name="keywords" content="أمن سيبراني, تعلم الهكر, اختراق أخلاقي, cybersecurity, CYBER FORCE, دورات أمن معلومات" />
+<meta name="description" content="منصة CYBER FORCE - تعلّم الأمن السيبراني بالعربي مع أفضل المدربين." />
 <meta name="author" content="EL-sayed Hasan" />
-<meta name="robots" content="index, follow" />
 
 <link rel="manifest" href="./manifest.json" />
 <link rel="icon" href="./logo.png" />
@@ -245,8 +241,7 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px;width:100%;box-sizing
 .watermark{position:absolute;z-index:5;pointer-events:none;
   font-family:'Tajawal',sans-serif;font-weight:900;
   color:rgba(255,255,255,.22);text-shadow:0 0 8px rgba(0,0,0,.5);
-  white-space:nowrap;letter-spacing:1px;
-  -webkit-user-select:none;user-select:none;pointer-events:none}
+  white-space:nowrap;letter-spacing:1px}
 .wm-tl{top:8px;left:12px;font-size:13px}
 .wm-tr{top:8px;right:12px;font-size:11px;color:rgba(255,213,74,.28)}
 .wm-bl{bottom:8px;left:12px;font-size:10px;color:rgba(25,170,255,.25)}
@@ -602,11 +597,13 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 const safeInt=(n,def=0)=>{const v=parseInt(n,10);return Number.isFinite(v)?v:def;};
 
 /* ============ فك تشفير URL يوتيوب ============ */
-function cfDecrypt(encoded, key='CF_SECRET_2026_9a8b7c'){
+const CF_SECRET_KEY = 'CF_SECRET_2026_9a8b7c';
+
+function cfDecrypt(encoded){
   if(!encoded) return '';
   try{
     const binary = atob(encoded);
-    const keyBytes = new TextEncoder().encode(key);
+    const keyBytes = new TextEncoder().encode(CF_SECRET_KEY);
     const result = new Uint8Array(binary.length);
     for(let i = 0; i < binary.length; i++){
       result[i] = binary.charCodeAt(i) ^ keyBytes[i % keyBytes.length];
@@ -1095,6 +1092,7 @@ function renderInstructorVideos(){
     const realIdx = INSTRUCTOR_VIDEOS.indexOf(v);
     const isUnlocked = v.is_unlocked === true;
     
+    /* ✅ فك تشفير الرابط */
     const ytUrl = cfDecrypt(v.encrypted_url);
     const thumb = v.thumbnail || (() => {
       const m = (ytUrl||'').match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
@@ -1316,6 +1314,7 @@ async function openVideo(v){
   $('ytProgressFill').style.width='0%';
   ytIsPlaying=false;
 
+  /* ✅ فك تشفير الرابط */
   const realUrl = cfDecrypt(v.encrypted_url);
   const vid = (realUrl||'').match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
   const ytId = v.youtube_id || (vid ? vid[1] : '');

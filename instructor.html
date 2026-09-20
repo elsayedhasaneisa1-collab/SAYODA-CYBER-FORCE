@@ -7,7 +7,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <title>لوحة المدرب | CYBER FORCE</title>
 <link rel="manifest" href="./manifest.json" />
-<link rel="icon" href="./logog.png" />
+<link rel="icon" href="./logogg.png" />
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -258,6 +258,25 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 .site-footer a{color:var(--green);font-weight:900;text-decoration:none;transition:.2s}
 .site-footer a:hover{color:var(--green-3);text-shadow:0 0 20px rgba(40,209,124,.5)}
 
+/* ============ SESSION ENDED MODAL ============ */
+#sessionEndedModal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;animation:semFadeIn .3s ease-out}
+.sem-overlay{position:absolute;inset:0;background:rgba(2,8,18,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.sem-box{position:relative;z-index:1;width:100%;max-width:420px;background:linear-gradient(160deg,rgba(6,26,15,.98),rgba(4,20,12,.98));border:1px solid rgba(40,209,124,.35);border-radius:24px;padding:36px 28px 28px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 80px rgba(40,209,124,.2),0 0 0 1px rgba(255,255,255,.05) inset;animation:semPop .5s cubic-bezier(.2,.9,.3,1.4);overflow:hidden}
+.sem-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--green),transparent);animation:semGlow 2s ease-in-out infinite}
+@keyframes semGlow{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes semFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes semPop{from{opacity:0;transform:translateY(30px) scale(.9)}to{opacity:1;transform:none}}
+.sem-icon{width:80px;height:80px;margin:0 auto 18px;border-radius:50%;background:linear-gradient(135deg,rgba(255,77,109,.15),rgba(40,209,124,.15));border:2px solid rgba(255,77,109,.4);display:grid;place-items:center;font-size:36px;animation:semPulse 2s ease-in-out infinite;box-shadow:0 0 40px rgba(255,77,109,.4)}
+@keyframes semPulse{0%,100%{transform:scale(1);box-shadow:0 0 40px rgba(255,77,109,.4)}50%{transform:scale(1.05);box-shadow:0 0 60px rgba(255,77,109,.6)}}
+.sem-title{font-size:22px;font-weight:900;color:#fff;margin-bottom:12px;background:linear-gradient(135deg,#ff4d6d,#ff6b8a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:.5px}
+.sem-desc{color:var(--muted);font-size:14px;line-height:1.8;margin-bottom:24px}
+.sem-btn{width:100%;padding:15px 22px;border:none;border-radius:14px;font-size:15px;font-weight:900;color:#02140a;cursor:pointer;background:linear-gradient(135deg,var(--green),var(--green-3));box-shadow:0 10px 30px rgba(40,209,124,.4);transition:transform .15s,box-shadow .25s;letter-spacing:.5px}
+.sem-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(40,209,124,.6)}
+.sem-btn:active{transform:translateY(0)}
+.sem-timer{margin-top:16px;font-size:12px;color:var(--muted)}
+.sem-timer span{color:var(--green);font-weight:900;font-size:14px}
+@media(max-width:560px){.sem-box{padding:28px 20px 22px}.sem-icon{width:64px;height:64px;font-size:28px}.sem-title{font-size:18px}.sem-desc{font-size:13px}}
+
 @media(max-width:560px){
   .stats{grid-template-columns:repeat(2,1fr)}
   .stat .n{font-size:24px}
@@ -277,7 +296,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 <!-- GATE -->
 <div class="gate" id="gate">
   <div class="box">
-    <img src="./logog.png" onerror="this.style.display='none'" alt="logo">
+    <img src="./logogg.png" onerror="this.style.display='none'" alt="logo">
     <h2>🎬 لوحة المدرب</h2>
     <p>أدخل كلمة مرور المدرب للوصول إلى لوحتك</p>
     <input type="password" id="gatePass" placeholder="كلمة المرور" autocomplete="current-password" />
@@ -290,7 +309,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 
 <header>
   <div class="hl">
-    <img src="./logog.png" onerror="this.style.display='none'">
+    <img src="./logogg.png" onerror="this.style.display='none'">
     <div class="ht">
       CYBER <span>INSTRUCTOR</span>
       <small>✨ لوحة المدرب</small>
@@ -344,7 +363,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
         📼 قائمة الفيديوهات
         <button class="btn sm ghost" id="refreshVideosBtn" style="margin-right:auto">🔄 تحديث</button>
       </h3>
-      <div class="filters" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
         <button class="btn sm ghost filter-btn active" data-filter="all">الكل</button>
         <button class="btn sm ghost filter-btn" data-filter="approved">✅ معتمد</button>
         <button class="btn sm ghost filter-btn" data-filter="pending">⏳ قيد المراجعة</button>
@@ -482,7 +501,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 <script> 
 <script>
 /* ============================================
-   CYBER FORCE — Instructor Panel (Green Theme)
+   CYBER FORCE — Instructor Panel
    ============================================ */
 const SUPABASE_URL="https://brawrhpvtnzvvrzkguic.supabase.co";
 const SUPABASE_KEY="sb_publishable_Q8fBS3nVZqgvfd6diaul8A_cMvHUFtN";
@@ -562,7 +581,6 @@ function fmtDate(t){
     return d.toLocaleDateString('ar-EG',{day:'numeric',month:'short',year:'numeric'});
   }catch(e){return''}
 }
-
 function ensurePass(){
   if(!PASS) PASS=sessionStorage.getItem('sayoda_instructor_pass');
   if(!PASS){
