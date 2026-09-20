@@ -1313,6 +1313,7 @@ function startYtTimer(){
 }
 
 let _lastSave=0;
+let _lastAutoUnlock = 0;
 async function saveProgressSilently(v, pct){
   const now = Date.now();
   if(now - _lastSave < 5000) return;
@@ -1332,6 +1333,25 @@ async function saveProgressSilently(v, pct){
     await sb.from('users')
       .update({video_progress: USER.video_progress})
       .eq('username', USER.username);
+    
+    /* ✅ لو وصل 50% → نفتح الفيديو التالي تلقائياً */
+    if(pct >= 50 && now - _lastAutoUnlock > 60000){
+      _lastAutoUnlock = now;
+      try{
+        const {data: unlockData, error: unlockErr} = await sb.rpc('try_auto_unlock_next_video', {
+          p_student_username: USER.username,
+          p_current_video_id: videoId
+        });
+        
+        if(!unlockErr){
+          const res = Array.isArray(unlockData) ? unlockData[0] : unlockData;
+          if(res && res.ok && res.unlocked_video_id){
+            console.log('✅ تم فتح الفيديو التالي:', res.unlocked_video_id);
+            toast('🎬 تم فتح الفيديو التالي! أكمل المشاهدة','ok','🔓');
+          }
+        }
+      }catch(e){ console.warn('auto unlock error:', e); }
+    }
   }catch(e){ console.warn('save progress error:', e); }
 }
 
