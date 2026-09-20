@@ -27,7 +27,6 @@
 <meta name="twitter:title" content="CYBER FORCE | منصة تعلم الأمن السيبراني" />
 <meta name="twitter:description" content="تعلّم الأمن السيبراني بالعربي — منصة احترافية بمحتوى عالي الجودة، مدربين خبراء، ونظام تعليمي تفاعلي." />
 <meta name="twitter:image" content="https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/og-image.png" />
-<meta name="twitter:image:alt" content="CYBER FORCE - منصة الأمن السيبراني" />
 
 <!-- ============ إضافات ============ -->
 <meta name="description" content="منصة CYBER FORCE - تعلّم الأمن السيبراني بالعربي مع أفضل المدربين. محتوى احترافي، شارات، ونظام تعليمي تفاعلي." />
@@ -360,6 +359,25 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
 .sup-btn > div{min-width:0;flex:1}
 .sup-btn small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
 
+/* ============ SESSION ENDED MODAL ============ */
+#sessionEndedModal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;animation:semFadeIn .3s ease-out}
+.sem-overlay{position:absolute;inset:0;background:rgba(2,8,18,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.sem-box{position:relative;z-index:1;width:100%;max-width:420px;background:linear-gradient(160deg,rgba(12,22,44,.98),rgba(6,16,36,.98));border:1px solid rgba(25,170,255,.35);border-radius:24px;padding:36px 28px 28px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 80px rgba(25,170,255,.2),0 0 0 1px rgba(255,255,255,.05) inset;animation:semPop .5s cubic-bezier(.2,.9,.3,1.4);overflow:hidden}
+.sem-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--blue),transparent);animation:semGlow 2s ease-in-out infinite}
+@keyframes semGlow{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes semFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes semPop{from{opacity:0;transform:translateY(30px) scale(.9)}to{opacity:1;transform:none}}
+.sem-icon{width:80px;height:80px;margin:0 auto 18px;border-radius:50%;background:linear-gradient(135deg,rgba(255,77,109,.15),rgba(25,170,255,.15));border:2px solid rgba(255,77,109,.4);display:grid;place-items:center;font-size:36px;animation:semPulse 2s ease-in-out infinite;box-shadow:0 0 40px rgba(255,77,109,.4)}
+@keyframes semPulse{0%,100%{transform:scale(1);box-shadow:0 0 40px rgba(255,77,109,.4)}50%{transform:scale(1.05);box-shadow:0 0 60px rgba(255,77,109,.6)}}
+.sem-title{font-size:22px;font-weight:900;color:#fff;margin-bottom:12px;background:linear-gradient(135deg,#ff4d6d,#ff6b8a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:.5px}
+.sem-desc{color:var(--muted);font-size:14px;line-height:1.8;margin-bottom:24px}
+.sem-btn{width:100%;padding:15px 22px;border:none;border-radius:14px;font-size:15px;font-weight:900;color:#021226;cursor:pointer;background:linear-gradient(135deg,var(--blue),var(--blue-2));box-shadow:0 10px 30px rgba(25,170,255,.4);transition:transform .15s,box-shadow .25s;letter-spacing:.5px}
+.sem-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(25,170,255,.6)}
+.sem-btn:active{transform:translateY(0)}
+.sem-timer{margin-top:16px;font-size:12px;color:var(--muted)}
+.sem-timer span{color:var(--blue);font-weight:900;font-size:14px}
+@media(max-width:560px){.sem-box{padding:28px 20px 22px}.sem-icon{width:64px;height:64px;font-size:28px}.sem-title{font-size:18px}.sem-desc{font-size:13px}}
+
 @media(max-width:560px){
   .hd-title small{display:none}
   .mini-xp{padding:4px 8px;font-size:11px}
@@ -370,7 +388,7 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
   .sec-title{font-size:18px}
 }
 </style>
-</head> 
+</head>
 <body>
 
 <header>
@@ -569,7 +587,8 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
 
 <nav class="bottom-nav" id="bottomNav"></nav>
 <div id="toasts"></div>
-<canvas id="confetti"></canvas> 
+<canvas id="confetti"></canvas>
+<script> 
 <script>
 /* ============================================
    CYBER FORCE — index.html
@@ -581,6 +600,23 @@ const $=id=>document.getElementById(id);
 const clean=s=>String(s==null?'':s).replace(/[<>]/g,'').trim();
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeInt=(n,def=0)=>{const v=parseInt(n,10);return Number.isFinite(v)?v:def;};
+
+/* ============ فك تشفير URL يوتيوب ============ */
+function cfDecrypt(encoded, key='CF_SECRET_2026_9a8b7c'){
+  if(!encoded) return '';
+  try{
+    const binary = atob(encoded);
+    const keyBytes = new TextEncoder().encode(key);
+    const result = new Uint8Array(binary.length);
+    for(let i = 0; i < binary.length; i++){
+      result[i] = binary.charCodeAt(i) ^ keyBytes[i % keyBytes.length];
+    }
+    return new TextDecoder().decode(result);
+  }catch(e){
+    console.warn('decrypt error:', e);
+    return '';
+  }
+}
 
 /* ============ HELPERS للنسبة ============ */
 function getVideoProgressPct(videoId){
@@ -964,7 +1000,6 @@ async function openInstructor(username){
     return;
   }
   
-  /* ✅ حدّث تقدم الطالب قبل عرض الفيديوهات */
   try{
     const {data:uData} = await sb.from('users')
       .select('video_progress')
@@ -1059,8 +1094,10 @@ function renderInstructorVideos(){
   $('ivGrid').innerHTML = list.map((v, idx) => {
     const realIdx = INSTRUCTOR_VIDEOS.indexOf(v);
     const isUnlocked = v.is_unlocked === true;
+    
+    const ytUrl = cfDecrypt(v.encrypted_url);
     const thumb = v.thumbnail || (() => {
-      const m = (v.youtube_url||'').match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
+      const m = (ytUrl||'').match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
       return m ? `https://i.ytimg.com/vi/${m[1]}/hqdefault.jpg` : './sayed.png';
     })();
 
@@ -1279,7 +1316,8 @@ async function openVideo(v){
   $('ytProgressFill').style.width='0%';
   ytIsPlaying=false;
 
-  const vid = (v.youtube_url||'').match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
+  const realUrl = cfDecrypt(v.encrypted_url);
+  const vid = (realUrl||'').match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
   const ytId = v.youtube_id || (vid ? vid[1] : '');
 
   if(ytPlayer && ytPlayer.destroy){ try{ ytPlayer.destroy(); }catch(e){} }
@@ -1339,7 +1377,7 @@ function startYtTimer(){
 }
 
 /* ============================================
-   ✅ الفتح التلقائي المُصلح
+   ✅ الفتح التلقائي بعد 50%
    ============================================ */
 let _lastSave=0;
 let _autoUnlockedVideos = new Set();
@@ -1364,7 +1402,6 @@ async function saveProgressSilently(v, pct){
       .update({video_progress: USER.video_progress})
       .eq('username', USER.username);
     
-    /* ✅ الفتح التلقائي — مرة واحدة لكل فيديو */
     const key = String(videoId);
     if(pct >= 50 && !_autoUnlockedVideos.has(key)){
       _autoUnlockedVideos.add(key);
@@ -1657,15 +1694,6 @@ async function loadSocial(){
   }
 }
 
-/* ============ INIT ============ */
-async function init(){
-  buildNav();
-  await loadUser();
-  await Promise.all([loadInstructors(), loadNotifs(), loadSocial()]);
-  loadYtApi();
-  go('instructors');
-}
-init();
 /* ============ SESSION VALIDATION ============ */
 async function checkSession(){
   try{
@@ -1679,19 +1707,66 @@ async function checkSession(){
     
     if(error) return;
     
-    /* ✅ لو الجلسة اتحذفت (دخل من جهاز تاني) */
     if(data === false){
       console.log('🚫 الجلسة انتهت — تم الدخول من جهاز آخر');
       localStorage.removeItem('sayoda_session');
-      alert('⚠️ تم تسجيل الدخول من جهاز آخر\nسيتم تسجيل خروجك من هذا الجهاز');
-      location.replace('./login.html');
+      sessionStorage.removeItem('sayoda_admin_pass');
+      sessionStorage.removeItem('sayoda_instructor_pass');
+      showSessionEndedModal();
     }
   }catch(e){}
 }
 
-/* شغل فوراً + كل 30 ثانية */
+function showSessionEndedModal(){
+  if(document.getElementById('sessionEndedModal')) return;
+  
+  const modal = document.createElement('div');
+  modal.id = 'sessionEndedModal';
+  modal.innerHTML = `
+    <div class="sem-overlay"></div>
+    <div class="sem-box">
+      <div class="sem-icon">🔐</div>
+      <h2 class="sem-title">انتهت الجلسة</h2>
+      <p class="sem-desc">
+        تم تسجيل الدخول لحسابك من جهاز آخر<br>
+        سيتم تسجيل خروجك من هذا الجهاز
+      </p>
+      <button class="sem-btn" onclick="location.replace('./login.html')">
+        🔑 تسجيل الدخول مرة أخرى
+      </button>
+      <div class="sem-timer">
+        سيتم التحويل خلال <span id="semCount">10</span> ثانية
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  
+  let count = 10;
+  const timer = setInterval(() => {
+    count--;
+    const el = document.getElementById('semCount');
+    if(el) el.textContent = count;
+    if(count <= 0){
+      clearInterval(timer);
+      location.replace('./login.html');
+    }
+  }, 1000);
+}
+
+/* ============ INIT ============ */
+async function init(){
+  buildNav();
+  await loadUser();
+  await Promise.all([loadInstructors(), loadNotifs(), loadSocial()]);
+  loadYtApi();
+  go('instructors');
+}
+init();
+
+/* تشغيل التحقق من الجلسة */
 checkSession();
 setInterval(checkSession, 30000);
+
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
 }

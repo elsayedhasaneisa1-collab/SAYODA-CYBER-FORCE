@@ -7,7 +7,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <title>لوحة المدرب | CYBER FORCE</title>
 <link rel="manifest" href="./manifest.json" />
-<link rel="icon" href="./logogg.png" />
+<link rel="icon" href="./logog.png" />
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -90,7 +90,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
   background:linear-gradient(90deg,transparent,var(--green),transparent);opacity:.5}
 .card h3{font-size:16px;font-weight:900;margin-bottom:16px;color:var(--green);
-  display:flex;align-items:center;gap:8px}
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .card h3::before{content:'';width:4px;height:18px;border-radius:2px;
   background:linear-gradient(180deg,var(--green),var(--green-2))}
 
@@ -123,7 +123,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 .list-item{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:13px;
   background:rgba(6,26,15,.6);border:1px solid var(--border-soft);margin-bottom:9px;
   flex-wrap:wrap;transition:.2s;width:100%;box-sizing:border-box}
-.list-item:hover{border-color:var(--green);background:rgba(6,26,15,.85);transform:translateX(-3px)}
+.list-item:hover{border-color:var(--green);background:rgba(6,26,15,.85)}
 .li-main{flex:1;min-width:150px}
 .li-main b{font-size:15px;color:var(--txt);font-weight:800}
 .li-main small{display:block;color:var(--muted);font-size:12px;margin-top:3px;line-height:1.5;word-break:break-word}
@@ -166,12 +166,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
   border:1px solid var(--border);border-radius:24px;padding:34px 26px;width:100%;max-width:440px;
   text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(40,209,124,.15);box-sizing:border-box}
 .gate img{
-  width:200px;
-  max-width:80%;
-  height:auto;
-  margin:0 auto 18px;
-  display:block;
-  object-fit:contain;
+  width:200px;max-width:80%;height:auto;margin:0 auto 18px;display:block;object-fit:contain;
   filter:drop-shadow(0 0 25px rgba(40,209,124,.75)) drop-shadow(0 0 10px rgba(40,209,124,.5));
   animation:float 4s ease-in-out infinite;
 }
@@ -182,7 +177,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 .gate p{color:var(--muted);font-size:13px;margin-bottom:22px;line-height:1.6}
 .gate input{width:100%;padding:15px;border-radius:13px;border:1px solid var(--border);
   background:rgba(2,10,6,.7);color:var(--txt);outline:none;text-align:center;font-size:16px;
-  margin-bottom:12px;transition:.2s;-webkit-user-select:text;user-select:text;box-sizing:border-box}
+  margin-bottom:12px;transition:.2s;box-sizing:border-box}
 .gate input:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(40,209,124,.15)}
 .gate .btn{margin-bottom:8px}
 
@@ -211,6 +206,19 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
   background:var(--green-soft);border:1px solid var(--border-soft);font-size:11px;font-weight:800;color:var(--green)}
 .st-stat.green{background:rgba(40,209,124,.12);border-color:rgba(40,209,124,.3);color:#28d17c}
 .st-stat.warn{background:rgba(255,149,0,.12);border-color:rgba(255,149,0,.3);color:#ff9500}
+.st-stat.blue{background:rgba(25,170,255,.12);border-color:rgba(25,170,255,.3);color:#19aaff}
+
+/* ============ VIDEO CARD ============ */
+.vid-card{background:linear-gradient(160deg,rgba(6,26,15,.92),rgba(4,20,12,.85));
+  border:1px solid var(--border-soft);border-radius:16px;padding:14px;margin-bottom:12px;
+  transition:.25s;display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.vid-card:hover{border-color:var(--green);box-shadow:0 8px 24px rgba(40,209,124,.1)}
+.vid-thumb{width:120px;height:70px;border-radius:10px;object-fit:cover;
+  border:1px solid var(--border-soft);flex-shrink:0;background:var(--bg-3)}
+.vid-info{flex:1;min-width:180px}
+.vid-info b{font-size:15px;font-weight:900;color:var(--txt);display:block;margin-bottom:4px}
+.vid-info small{font-size:11px;color:var(--muted);display:block;margin-bottom:8px;line-height:1.5}
+.vid-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
 
 /* ============ MODAL ============ */
 .modal{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);
@@ -244,6 +252,12 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 .modal-foot{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:8px;flex-shrink:0}
 .modal-foot .btn{flex:1}
 
+/* ============ FOOTER ============ */
+.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);font-size:12px;
+  position:relative;z-index:1;border-top:1px solid var(--border-soft);margin-top:20px}
+.site-footer a{color:var(--green);font-weight:900;text-decoration:none;transition:.2s}
+.site-footer a:hover{color:var(--green-3);text-shadow:0 0 20px rgba(40,209,124,.5)}
+
 @media(max-width:560px){
   .stats{grid-template-columns:repeat(2,1fr)}
   .stat .n{font-size:24px}
@@ -254,6 +268,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
   .modal-box{max-height:92vh}
   .gate img{width:160px}
   .gate .box{padding:28px 20px}
+  .vid-thumb{width:90px;height:55px}
 }
 </style>
 </head>
@@ -262,7 +277,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 <!-- GATE -->
 <div class="gate" id="gate">
   <div class="box">
-    <img src="./logogg.png" onerror="this.style.display='none'" alt="logo">
+    <img src="./logog.png" onerror="this.style.display='none'" alt="logo">
     <h2>🎬 لوحة المدرب</h2>
     <p>أدخل كلمة مرور المدرب للوصول إلى لوحتك</p>
     <input type="password" id="gatePass" placeholder="كلمة المرور" autocomplete="current-password" />
@@ -275,7 +290,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 
 <header>
   <div class="hl">
-    <img src="./logogg.png" onerror="this.style.display='none'">
+    <img src="./logog.png" onerror="this.style.display='none'">
     <div class="ht">
       CYBER <span>INSTRUCTOR</span>
       <small>✨ لوحة المدرب</small>
@@ -312,27 +327,37 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
       <p style="color:var(--muted);font-size:13px;line-height:1.7">
         مرحباً بك في لوحة المدرب! من هنا تقدر:
         <br>• ترفع فيديوهاتك (بعدها تنتظر موافقة الإدارة)
-        <br>• تشوف طلبات الطلاب وتفتحلهم الفيديوهات
-        <br>• تعدّل رقم واتسابك
-        <br>• تتابع تقدم كل طالب
+        <br>• تدير فيديوهاتك (تشوف حالتها أو تحذفها)
+        <br>• تشوف طلبات الطلاب + نشاطاتهم + XP
+        <br>• تعدّل بياناتك (النبذة والتخصص والواتساب)
       </p>
     </div>
   </div>
 
-  <!-- REQUESTS (Students) -->
-  <div class="panel" id="p-requests">
-    <div class="sec-title">📥 طلبات الطلاب</div>
-    <div class="sec-sub">اضغط على أي طالب لعرض تفاصيله وإدارة وصوله</div>
+  <!-- MY VIDEOS -->
+  <div class="panel" id="p-videos">
+    <div class="sec-title">🎬 فيديوهاتي</div>
+    <div class="sec-sub">إدارة كل الفيديوهات اللي رفعتها</div>
 
-    <div class="card" style="background:linear-gradient(160deg,rgba(40,209,124,.08),rgba(6,26,15,.92))">
-      <h3>💡 إزاي يشتغل النظام؟</h3>
-      <p style="color:var(--muted);font-size:13px;line-height:1.8">
-        1. اضغط على حساب الطالب → هيفتحلك مربع تفاصيله
-        <br>2. اضغط <b style="color:var(--green)">"🔓 فتح الفيديوهات"</b> → الفيديو الأول يفتح
-        <br>3. لما الطالب يوصل <b style="color:#28d17c">50%</b> → الفيديو التالي يفتح تلقائياً
-        <br>4. لو عايز تقفل الفيديوهات → اضغط <b style="color:#ff4d6d">"🔒 غلق الفيديوهات"</b>
-      </p>
+    <div class="card">
+      <h3>
+        📼 قائمة الفيديوهات
+        <button class="btn sm ghost" id="refreshVideosBtn" style="margin-right:auto">🔄 تحديث</button>
+      </h3>
+      <div class="filters" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+        <button class="btn sm ghost filter-btn active" data-filter="all">الكل</button>
+        <button class="btn sm ghost filter-btn" data-filter="approved">✅ معتمد</button>
+        <button class="btn sm ghost filter-btn" data-filter="pending">⏳ قيد المراجعة</button>
+        <button class="btn sm ghost filter-btn" data-filter="rejected">❌ مرفوض</button>
+      </div>
+      <div id="myVideosList"></div>
     </div>
+  </div>
+
+  <!-- STUDENTS -->
+  <div class="panel" id="p-students">
+    <div class="sec-title">👥 طلابي</div>
+    <div class="sec-sub">تقدم كل طالب + XP + نشاطه</div>
 
     <div class="card">
       <h3>📋 قائمة الطلاب
@@ -373,6 +398,25 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     <div class="sec-title">⚙️ الإعدادات</div>
 
     <div class="card">
+      <h3>👤 معلومات الحساب</h3>
+      <div class="frm">
+        <div>
+          <label>اسم المستخدم (ثابت)</label>
+          <input id="accUsername" disabled style="opacity:.6;cursor:not-allowed" />
+        </div>
+        <div>
+          <label>التخصص</label>
+          <input id="accSpecialty" placeholder="مثال: اختراق أخلاقي" />
+        </div>
+        <div>
+          <label>النبذة</label>
+          <textarea id="accBio" placeholder="مدرب أمن سيبراني..." style="min-height:80px"></textarea>
+        </div>
+        <button class="btn" id="saveProfileBtn">💾 حفظ البيانات</button>
+      </div>
+    </div>
+
+    <div class="card">
       <h3>📞 رقم الواتساب</h3>
       <p style="color:var(--muted);font-size:13px;margin-bottom:14px;line-height:1.6">
         ده الرقم اللي الطلاب هيبعتوا عليه عشان يفتحوا فيديوهاتك.
@@ -387,28 +431,14 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
         <button class="btn" id="saveWhatsappBtn">💾 حفظ الرقم</button>
       </div>
     </div>
-
-    <div class="card">
-      <h3>ℹ️ معلومات الحساب</h3>
-      <div style="display:grid;gap:10px">
-        <div style="padding:12px;background:rgba(2,10,6,.5);border:1px solid var(--border-soft);border-radius:12px">
-          <div style="font-size:11px;color:var(--muted);margin-bottom:4px">اسم المستخدم</div>
-          <div style="font-weight:900;font-size:15px" id="accUsername">—</div>
-        </div>
-        <div style="padding:12px;background:rgba(2,10,6,.5);border:1px solid var(--border-soft);border-radius:12px">
-          <div style="font-size:11px;color:var(--muted);margin-bottom:4px">التخصص</div>
-          <div style="font-weight:900;font-size:15px" id="accSpecialty">—</div>
-        </div>
-        <div style="padding:12px;background:rgba(2,10,6,.5);border:1px solid var(--border-soft);border-radius:12px">
-          <div style="font-size:11px;color:var(--muted);margin-bottom:4px">نبذة</div>
-          <div style="font-weight:600;font-size:13px" id="accBio">—</div>
-        </div>
-      </div>
-    </div>
   </div>
 
 </div>
 </div>
+
+<footer class="site-footer">
+  © 2026 جميع الحقوق محفوظة <a href="https://t.me/sayoda_elgadar" target="_blank" rel="noopener noreferrer">EL-sayed Hasan</a>
+</footer>
 
 <!-- STUDENT MODAL -->
 <div class="modal" id="studentModal">
@@ -448,7 +478,8 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
   </div>
 </div>
 
-<div id="toasts"></div> 
+<div id="toasts"></div>
+<script> 
 <script>
 /* ============================================
    CYBER FORCE — Instructor Panel (Green Theme)
@@ -481,6 +512,7 @@ let PASS=sessionStorage.getItem('sayoda_instructor_pass')||null;
 let MY_VIDEOS=[];
 let STUDENTS=[];
 let VM_CURRENT_STUDENT=null;
+let ACTIVE_FILTER='all';
 
 /* SESSION */
 function getSession(){try{return JSON.parse(localStorage.getItem('sayoda_session')||'null')}catch(e){return null}}
@@ -517,15 +549,20 @@ function toast(m,t='ok'){
 /* HELPERS */
 function fmtDate(t){
   try{
-    const d=new Date(t);
-    const diff=Math.floor((Date.now()-d)/1000);
-    if(diff<60)return 'الآن';
-    if(diff<3600)return `منذ ${Math.floor(diff/60)} دقيقة`;
-    if(diff<86400)return `منذ ${Math.floor(diff/3600)} ساعة`;
-    if(diff<604800)return `منذ ${Math.floor(diff/86400)} يوم`;
+    let dateStr = String(t);
+    if(!dateStr.includes('Z') && !dateStr.includes('+') && !dateStr.match(/[+-]\d{2}:?\d{2}$/)){
+      dateStr = dateStr.replace(' ', 'T') + 'Z';
+    }
+    const d = new Date(dateStr);
+    const diff = Math.floor((Date.now() - d.getTime()) / 1000);
+    if(diff < 60) return 'الآن';
+    if(diff < 3600) return `منذ ${Math.floor(diff/60)} دقيقة`;
+    if(diff < 86400) return `منذ ${Math.floor(diff/3600)} ساعة`;
+    if(diff < 604800) return `منذ ${Math.floor(diff/86400)} يوم`;
     return d.toLocaleDateString('ar-EG',{day:'numeric',month:'short',year:'numeric'});
   }catch(e){return''}
 }
+
 function ensurePass(){
   if(!PASS) PASS=sessionStorage.getItem('sayoda_instructor_pass');
   if(!PASS){
@@ -539,6 +576,9 @@ function ensurePass(){
 function ytIdOf(url){
   const m = String(url||'').match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
   return m ? m[1] : '';
+}
+function thumbOf(v){
+  return v.thumbnail || (ytIdOf(v.youtube_url) ? `https://i.ytimg.com/vi/${ytIdOf(v.youtube_url)}/mqdefault.jpg` : './sayed.png');
 }
 
 /* GATE */
@@ -579,15 +619,16 @@ $('gatePass').addEventListener('keydown',e=>{if(e.key==='Enter')$('gateBtn').cli
 /* TABS */
 const TABS=[
   {id:'dash',t:'📊 الإحصائيات'},
-  {id:'requests',t:'📥 الطلبات'},
+  {id:'videos',t:'🎬 فيديوهاتي'},
+  {id:'students',t:'👥 طلابي'},
   {id:'add',t:'➕ إضافة فيديو'},
   {id:'settings',t:'⚙️ الإعدادات'}
 ];
 
 function buildTabs(){
-  const pendingCount = STUDENTS.filter(s => s.status === 'pending').length;
+  const pendingStudents = STUDENTS.filter(s => s.status === 'pending').length;
   $('tabs').innerHTML = TABS.map((t,i) => {
-    const badge = (t.id === 'requests' && pendingCount > 0) ? `<span class="badge">${pendingCount}</span>` : '';
+    const badge = (t.id === 'students' && pendingStudents > 0) ? `<span class="badge">${pendingStudents}</span>` : '';
     return `<button class="tab ${i===0?'active':''}" data-t="${t.id}">${t.t}${badge}</button>`;
   }).join('');
   
@@ -596,7 +637,8 @@ function buildTabs(){
     b.classList.add('active');
     document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
     $('p-'+b.dataset.t).classList.add('active');
-    if(b.dataset.t==='requests') loadStudents();
+    if(b.dataset.t==='videos') renderMyVideos();
+    if(b.dataset.t==='students') renderStudents();
     if(b.dataset.t==='settings') loadSettings();
   });
 }
@@ -608,6 +650,7 @@ async function init(){
   await Promise.all([loadMyVideos(), loadStudents()]);
   renderStats();
   loadSettings();
+  setupFilters();
 }
 
 /* STATS */
@@ -632,19 +675,142 @@ function renderStats(){
   `).join('');
 }
 
-/* LOAD VIDEOS (internal reference) */
+/* LOAD VIDEOS */
 async function loadMyVideos(){
   if(!ensurePass()) return;
+  $('myVideosList').innerHTML='<div class="skel"></div><div class="skel"></div>';
   try{
-    const {data, error} = await sb.rpc('instructor_get_my_videos',{p_username: INSTRUCTOR.username, p_password: PASS});
+    const {data, error} = await sb.rpc('instructor_get_my_videos_v2',{
+      p_username: INSTRUCTOR.username,
+      p_password: PASS
+    });
     if(error) throw error;
     MY_VIDEOS = Array.isArray(data) ? data : [];
   }catch(e){
     console.error('loadMyVideos error:',e);
     MY_VIDEOS=[];
+    toast('تعذّر تحميل الفيديوهات','err');
   }
+  renderMyVideos();
   renderStats();
 }
+
+function renderMyVideos(){
+  const list = ACTIVE_FILTER === 'all'
+    ? MY_VIDEOS
+    : MY_VIDEOS.filter(v => v.status === ACTIVE_FILTER);
+
+  if(!list.length){
+    $('myVideosList').innerHTML = `
+      <div class="empty">
+        <div class="e">🎬</div>
+        <p>${ACTIVE_FILTER === 'all' ? 'لا يوجد فيديوهات بعد — ابدأ برفع أول فيديو!' : 'لا يوجد فيديوهات في هذه الحالة'}</p>
+      </div>`;
+    return;
+  }
+
+  $('myVideosList').innerHTML = list.map(v => {
+    const statusMap = {
+      approved: {cls:'on', txt:'✅ معتمد'},
+      pending: {cls:'warn', txt:'⏳ قيد المراجعة'},
+      rejected: {cls:'off', txt:'❌ مرفوض'}
+    };
+    const st = statusMap[v.status] || statusMap.pending;
+
+    return `<div class="vid-card">
+      <img class="vid-thumb" src="${esc(thumbOf(v))}" onerror="this.src='./sayed.png'" alt="">
+      <div class="vid-info">
+        <b>${esc(v.title)}</b>
+        <small>${esc((v.description||'بدون وصف').slice(0,100))}</small>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+          <span class="pill ${st.cls}">${st.txt}</span>
+          <span class="pill gold">${esc(v.category||'عام')}</span>
+          <span class="st-stat">👁 ${safeInt(v.views)}</span>
+          <span class="st-stat">🕐 ${fmtDate(v.created_at)}</span>
+        </div>
+        ${v.status==='rejected' && v.rejection_reason ? `
+          <div style="margin-top:8px;padding:8px 12px;border-radius:10px;background:rgba(255,77,109,.12);
+                      border:1px solid rgba(255,77,109,.3);font-size:12px;color:#ff9db0">
+            <b>سبب الرفض:</b> ${esc(v.rejection_reason)}
+          </div>` : ''}
+        <div class="vid-actions">
+          <button class="btn sm danger" data-del-vid="${v.video_id}">🗑 حذف</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  $('myVideosList').querySelectorAll('[data-del-vid]').forEach(b => {
+    b.onclick = () => deleteMyVideo(b.dataset.delVid);
+  });
+}
+
+/* FILTERS */
+function setupFilters(){
+  document.querySelectorAll('.filter-btn').forEach(b=>{
+    b.onclick=()=>{
+      document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      document.querySelectorAll('.filter-btn').forEach(x=>{
+        if(x.classList.contains('active')){
+          x.style.background='linear-gradient(135deg,var(--green),var(--green-3))';
+          x.style.color='#02140a';
+          x.style.borderColor='transparent';
+        } else {
+          x.style.background='transparent';
+          x.style.color='var(--green)';
+          x.style.borderColor='var(--border)';
+        }
+      });
+      ACTIVE_FILTER = b.dataset.filter;
+      renderMyVideos();
+    };
+  });
+  const fb = document.querySelector('.filter-btn.active');
+  if(fb){
+    fb.style.background='linear-gradient(135deg,var(--green),var(--green-3))';
+    fb.style.color='#02140a';
+    fb.style.borderColor='transparent';
+  }
+}
+
+/* DELETE VIDEO */
+async function deleteMyVideo(videoId){
+  if(!ensurePass()) return;
+  const v = MY_VIDEOS.find(x => String(x.video_id) === String(videoId));
+  if(!v) return;
+
+  if(!confirm(`⚠️ حذف الفيديو "${v.title}"؟\n\nلا يمكن التراجع!`)) return;
+
+  try{
+    const {data, error} = await sb.rpc('instructor_delete_my_video', {
+      p_username: INSTRUCTOR.username,
+      p_password: PASS,
+      p_video_id: parseInt(videoId)
+    });
+    if(error) throw error;
+    const res = Array.isArray(data) ? data[0] : data;
+
+    if(res && res.ok){
+      toast('✅ تم حذف الفيديو','ok');
+      MY_VIDEOS = MY_VIDEOS.filter(x => String(x.video_id) !== String(videoId));
+      renderMyVideos();
+      renderStats();
+    } else {
+      const errMap = {
+        'not_instructor': 'ليس لديك صلاحية',
+        'video_not_found': 'الفيديو غير موجود',
+        'not_owner': 'هذا الفيديو ليس لك'
+      };
+      toast('فشل: ' + (errMap[res?.error] || res?.error || 'خطأ'),'err');
+    }
+  }catch(e){
+    console.error('delete video error:', e);
+    toast('فشل الحذف: ' + (e.message||''),'err');
+  }
+}
+
+$('refreshVideosBtn').onclick = () => { loadMyVideos(); toast('تم التحديث'); };
 
 /* ADD VIDEO */
 $('addVidBtn').onclick = async () => {
@@ -674,6 +840,7 @@ $('addVidBtn').onclick = async () => {
       else toast('✅ تم رفع الفيديو — في انتظار مراجعة الإدارة','ok');
       ['vTitle','vDesc','vUrl','vCat','vThumb'].forEach(i=>$(i).value='');
       await loadMyVideos();
+      document.querySelector('[data-t="videos"]').click();
     } else {
       const errMsg = {'not_instructor':'ليس لديك صلاحية','title_required':'العنوان مطلوب','url_required':'الرابط مطلوب'}[res?.error] || 'فشل الرفع';
       toast(errMsg,'err');
@@ -687,7 +854,7 @@ async function loadStudents(){
   if(!ensurePass()) return;
   $('studentsList').innerHTML='<div class="skel"></div><div class="skel"></div>';
   try{
-    const {data, error} = await sb.rpc('instructor_get_students', {
+    const {data, error} = await sb.rpc('instructor_get_students_detailed', {
       p_instructor_username: INSTRUCTOR.username,
       p_instructor_password: PASS
     });
@@ -734,13 +901,16 @@ function renderStudents(q=''){
         <div class="st-av">${esc(firstChar)}</div>
         <div class="st-info">
           <h4>👤 ${esc(s.student_username)}</h4>
-          <small>🕐 ${fmtDate(s.created_at)}</small>
+          <small>🕐 آخر زيارة: ${s.last_visit ? fmtDate(s.last_visit) : '—'}</small>
         </div>
         ${statusPill}
       </div>
       <div class="st-stats">
-        <span class="st-stat">📹 إجمالي: ${totalApproved}</span>
-        ${unlockedCount > 0 ? `<span class="st-stat green">🔓 فتحت له: ${unlockedCount}</span>` : ''}
+        <span class="st-stat blue">💎 ${safeInt(s.xp)} XP</span>
+        <span class="st-stat">${esc(s.level||'مبتدئ')}</span>
+        <span class="st-stat green">🎬 ${safeInt(s.videos_watched)}</span>
+        <span class="st-stat warn">🔥 ${safeInt(s.streak)}</span>
+        <span class="st-stat green">🔓 ${unlockedCount}/${totalApproved}</span>
       </div>
     </div>`;
   }).join('');
@@ -768,7 +938,6 @@ async function openStudentModal(studentUsername){
   
   const unlockedCount = safeInt(student.unlocked_count);
   const totalVideos = MY_VIDEOS.filter(v => v.status === 'approved').length;
-  const isActive = student.status === 'active';
   const isPending = student.status === 'pending';
   
   $('smInfo').innerHTML = `
@@ -776,6 +945,10 @@ async function openStudentModal(studentUsername){
       <div class="info-item">
         <div class="lbl">👤 الطالب</div>
         <div class="val">${esc(studentUsername)}</div>
+      </div>
+      <div class="info-item">
+        <div class="lbl">💎 XP</div>
+        <div class="val">${safeInt(student.xp)}</div>
       </div>
       <div class="info-item">
         <div class="lbl">📊 الحالة</div>
@@ -788,8 +961,20 @@ async function openStudentModal(studentUsername){
         <div class="val">${unlockedCount} / ${totalVideos}</div>
       </div>
       <div class="info-item">
-        <div class="lbl">🕐 تاريخ الطلب</div>
-        <div class="val" style="font-size:11px">${fmtDate(student.created_at)}</div>
+        <div class="lbl">🎬 فيديوهات</div>
+        <div class="val">${safeInt(student.videos_watched)}</div>
+      </div>
+      <div class="info-item">
+        <div class="lbl">🔥 أيام</div>
+        <div class="val">${safeInt(student.streak)}</div>
+      </div>
+      <div class="info-item">
+        <div class="lbl">🏅 المستوى</div>
+        <div class="val" style="font-size:12px">${esc(student.level||'مبتدئ')}</div>
+      </div>
+      <div class="info-item">
+        <div class="lbl">🕐 آخر زيارة</div>
+        <div class="val" style="font-size:11px">${student.last_visit ? fmtDate(student.last_visit) : '—'}</div>
       </div>
     </div>
   `;
@@ -904,9 +1089,9 @@ $('studentModal').onclick = (e) => {
 /* SETTINGS */
 async function loadSettings(){
   try{
-    $('accUsername').textContent = INSTRUCTOR.username || '—';
-    $('accSpecialty').textContent = INSTRUCTOR.specialty || '—';
-    $('accBio').textContent = INSTRUCTOR.bio || '—';
+    $('accUsername').value = INSTRUCTOR.username || '';
+    $('accSpecialty').value = INSTRUCTOR.specialty || '';
+    $('accBio').value = INSTRUCTOR.bio || '';
     
     const {data} = await sb.from('users')
       .select('whatsapp')
@@ -920,6 +1105,42 @@ async function loadSettings(){
   }
 }
 
+/* SAVE PROFILE */
+$('saveProfileBtn').onclick = async () => {
+  if(!ensurePass()) return;
+  const spec = clean($('accSpecialty').value);
+  const bio = clean($('accBio').value);
+  
+  const btn = $('saveProfileBtn');
+  btn.disabled = true; btn.textContent = '...';
+  
+  try{
+    const {data, error} = await sb.rpc('instructor_update_profile', {
+      p_username: INSTRUCTOR.username,
+      p_password: PASS,
+      p_bio: bio,
+      p_specialty: spec
+    });
+    
+    if(error) throw error;
+    const res = Array.isArray(data) ? data[0] : data;
+    
+    if(res && res.ok){
+      toast('✅ تم حفظ البيانات','ok');
+      INSTRUCTOR.specialty = spec;
+      INSTRUCTOR.bio = bio;
+    } else {
+      toast('فشل: ' + (res?.error||'خطأ'),'err');
+    }
+  }catch(e){
+    console.error('save profile error:', e);
+    toast('فشل: ' + (e.message||''),'err');
+  }finally{
+    btn.disabled = false; btn.textContent = '💾 حفظ البيانات';
+  }
+};
+
+/* SAVE WHATSAPP */
 $('saveWhatsappBtn').onclick = async () => {
   if(!ensurePass()) return;
   const wa = clean($('myWhatsapp').value).replace(/\D/g, '');
@@ -958,7 +1179,6 @@ $('saveWhatsappBtn').onclick = async () => {
   }
 };
 
-/* SERVICE WORKER */
 /* ============ SESSION VALIDATION ============ */
 async function checkSession(){
   try{
@@ -976,14 +1196,51 @@ async function checkSession(){
       console.log('🚫 الجلسة انتهت');
       localStorage.removeItem('sayoda_session');
       sessionStorage.removeItem('sayoda_instructor_pass');
-      alert('⚠️ تم تسجيل الدخول من جهاز آخر\nسيتم تسجيل خروجك من هذا الجهاز');
-      location.replace('./login.html');
+      showSessionEndedModal();
     }
   }catch(e){}
 }
 
+function showSessionEndedModal(){
+  if(document.getElementById('sessionEndedModal')) return;
+  
+  const modal = document.createElement('div');
+  modal.id = 'sessionEndedModal';
+  modal.innerHTML = `
+    <div class="sem-overlay"></div>
+    <div class="sem-box">
+      <div class="sem-icon">🔐</div>
+      <h2 class="sem-title">انتهت الجلسة</h2>
+      <p class="sem-desc">
+        تم تسجيل الدخول لحسابك من جهاز آخر<br>
+        سيتم تسجيل خروجك من هذا الجهاز
+      </p>
+      <button class="sem-btn" onclick="location.replace('./login.html')">
+        🔑 تسجيل الدخول مرة أخرى
+      </button>
+      <div class="sem-timer">
+        سيتم التحويل خلال <span id="semCount">10</span> ثانية
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  
+  let count = 10;
+  const timer = setInterval(() => {
+    count--;
+    const el = document.getElementById('semCount');
+    if(el) el.textContent = count;
+    if(count <= 0){
+      clearInterval(timer);
+      location.replace('./login.html');
+    }
+  }, 1000);
+}
+
 checkSession();
 setInterval(checkSession, 30000);
+
+/* SERVICE WORKER */
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
 }
