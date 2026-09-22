@@ -185,6 +185,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
   margin-bottom:12px;transition:.2s;box-sizing:border-box}
 .gate input:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(255,215,0,.15)}
 .gate .btn{margin-bottom:8px}
+.gate-msg{font-size:13px;font-weight:700;margin-bottom:12px;min-height:20px;color:var(--danger)}
 
 .live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#28d17c;
   margin-left:6px;animation:blink 1.5s infinite;box-shadow:0 0 10px #28d17c}
@@ -245,6 +246,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     <h2>🔐 لوحة التحكم الذهبية</h2>
     <p>أدخل كلمة مرور المدير للوصول إلى اللوحة</p>
     <input type="password" id="gatePass" placeholder="كلمة المرور" autocomplete="current-password" />
+    <div class="gate-msg" id="gateMsg"></div>
     <button class="btn" style="width:100%" id="gateBtn">🔓 دخول</button>
     <button class="btn ghost" style="width:100%" onclick="location.href='./index.html'">← رجوع للمنصة</button>
   </div>
@@ -522,7 +524,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 <div id="toasts"></div> 
 <script>
 /* ============================================
-   CYBER FORCE ADMIN — JavaScript
+   CYBER FORCE ADMIN — JavaScript (SECURED)
    ============================================ */
 const SUPABASE_URL="https://brawrhpvtnzvvrzkguic.supabase.co";
 const SUPABASE_KEY="sb_publishable_Q8fBS3nVZqgvfd6diaul8A_cMvHUFtN";
@@ -540,6 +542,7 @@ let LIVE_TIMER=null, DASH_TIMER=null;
 let LOG_FILTER_TYPE='', LOG_FILTER_USER='';
 let UAM_CURRENT_USER=null;
 let ADMIN_IS_INSTRUCTOR=false;
+let _verifyRetries=0;
 
 const BAN_FEATURES=[
   {k:'comments',t:'التعليقات'},
@@ -580,6 +583,53 @@ function getSession(){try{return JSON.parse(localStorage.getItem('sayoda_session
 const SESSION=getSession();
 if(!SESSION||!SESSION.username){location.replace('./login.html');}
 else if(SESSION.role!=='admin'){location.replace('./index.html');}
+
+/* ============ 🛡️ VERIFY ADMIN SESSION (طبقة حماية جديدة) ============ */
+async function verifyAdminSession(silent=false){
+  try{
+    if(!SESSION || !SESSION.token) return false;
+
+    const { data, error } = await sb.rpc('verify_admin_session', {
+      p_token: SESSION.token
+    });
+
+    if(error){
+      console.warn('verify_admin_session error:', error);
+      return false;
+    }
+
+    const res = Array.isArray(data) ? data[0] : data;
+
+    if(!res || !res.ok){
+      const code = res && res.error;
+
+      if(code === 'invalid_token' || code === 'user_not_found'){
+        if(!silent) toast('🚫 الجلسة انتهت — أعد تسجيل الدخول','err');
+        try{ localStorage.removeItem('sayoda_session'); }catch(e){}
+        try{ sessionStorage.removeItem('sayoda_admin_pass'); }catch(e){}
+        setTimeout(()=>location.replace('./login.html'), 1500);
+        return false;
+      }
+
+      if(code === 'not_admin'){
+        if(!silent) toast('🚫 هذا الحساب ليس أدمن','err');
+        try{ localStorage.removeItem('sayoda_session'); }catch(e){}
+        try{ sessionStorage.removeItem('sayoda_admin_pass'); }catch(e){}
+        setTimeout(()=>location.replace('./index.html'), 1500);
+        return false;
+      }
+
+      return false;
+    }
+
+    // ✅ تحديث بيانات الأدمن
+    ADMIN_IS_INSTRUCTOR = res.is_instructor === true;
+    return true;
+  }catch(e){
+    console.error('verifyAdminSession catch:', e);
+    return false;
+  }
+}
 
 /* ============ AUTO LOGOUT ============ */
 let IDLE_TIMER=null;
@@ -639,52 +689,68 @@ function ensurePass(){
   }
   return true;
 }
+function gateMsg(msg,type='err'){
+  const el = $('gateMsg');
+  if(!el) return;
+  el.textContent = msg;
+  el.style.color = type === 'ok' ? '#28d17c' : '#ff4d6d';
+}
 
 /* ============ GATE ============ */
 $('gateBtn').onclick=async()=>{
   const p=$('gatePass').value;
-  if(!p) return toast('أدخل كلمة المرور','err');
-  const btn=$('gateBtn'); btn.disabled=true; btn.textContent='...';
+  if(!p){ gateMsg('⚠️ أدخل كلمة المرور'); return; }
+
+  const btn=$('gateBtn');
+  btn.disabled=true;
+  btn.textContent='جاري التحقق...';
+  gateMsg('');
+
   try{
+    // 1. تحقق من الباسورد
     const {data,error}=await sb.rpc('admin_verify_password',{
       p_username:SESSION.username, p_password:p
     });
     if(error) throw error;
     const res=Array.isArray(data)?data[0]:data;
-    if(res && res.ok){
-      ADMIN={username:SESSION.username};
-      PASS=p;
-      sessionStorage.setItem('sayoda_admin_pass',p);
 
-      try{
-        const {data:uData} = await sb.from('users')
-          .select('is_instructor')
-          .eq('username', SESSION.username)
-          .limit(1);
-        ADMIN_IS_INSTRUCTOR = uData && uData[0] && uData[0].is_instructor === true;
-        if(ADMIN_IS_INSTRUCTOR){
-          $('insPanelBtn').style.display='grid';
-        }
-      }catch(e){}
-
-      try{
-        await sb.rpc('client_log_activity',{
-          p_username:ADMIN.username,
-          p_activity_type:'admin_action',
-          p_details:jsonbDetails({action:'admin_login'}),
-          p_user_agent:navigator.userAgent.slice(0,200)
-        });
-      }catch(e){}
-      $('gate').style.display='none';
-      $('app').style.display='block';
-      resetIdle();
-      init();
-    } else {
-      toast('كلمة مرور خاطئة','err');
+    if(!res || !res.ok){
+      gateMsg('❌ كلمة المرور غير صحيحة');
+      return;
     }
+
+    // 2. 🛡️ تحقق إضافي من التوكن في السيرفر
+    const sessionOK = await verifyAdminSession(false);
+    if(!sessionOK){
+      return;
+    }
+
+    // 3. كل حاجة تمام — احفظ الجلسة
+    ADMIN={username:SESSION.username};
+    PASS=p;
+    sessionStorage.setItem('sayoda_admin_pass',p);
+
+    if(ADMIN_IS_INSTRUCTOR){
+      $('insPanelBtn').style.display='grid';
+    }
+
+    try{
+      await sb.rpc('client_log_activity',{
+        p_username:ADMIN.username,
+        p_activity_type:'admin_action',
+        p_details:jsonbDetails({action:'admin_login'}),
+        p_user_agent:navigator.userAgent.slice(0,200)
+      });
+    }catch(e){}
+
+    $('gate').style.display='none';
+    $('app').style.display='block';
+    resetIdle();
+    init();
+
   }catch(e){
     console.error('Gate error:',e);
-    toast('خطأ في الاتصال','err');
+    gateMsg('⚠️ خطأ في الاتصال');
   }finally{
     btn.disabled=false; btn.textContent='🔓 دخول';
   }
@@ -720,12 +786,25 @@ function buildTabs(){
 /* ============ INIT ============ */
 async function init(){
   if(!ensurePass()) return;
+
+  // 🛡️ تحقق من التوكن
+  const ok = await verifyAdminSession(false);
+  if(!ok) return;
+
   buildTabs();
   await Promise.all([loadUsers(),loadVideos()]);
   await loadStats();
   await loadActivityLog();
   await loadOnlineUsers();
   startLiveUpdates();
+
+  // 🛡️ فحص دوري كل 60 ثانية
+  setInterval(async ()=>{
+    const ok = await verifyAdminSession(true);
+    if(!ok){
+      // طرد
+    }
+  }, 60000);
 }
 
 /* ============ STATS ============ */
@@ -1767,7 +1846,7 @@ $('saveSocialBtn').onclick=async()=>{
   }
 };
 
-/* ============ SESSION VALIDATION ============ */
+/* ============ SESSION VALIDATION (دورية) ============ */
 async function checkSession(){
   try{
     const s = JSON.parse(localStorage.getItem('sayoda_session')||'null');
