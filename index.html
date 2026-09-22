@@ -6,22 +6,37 @@
 <meta name="theme-color" content="#020812" />
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
-<title>CYBER FORCE</title>
+<title>CYBER FORCE | منصة تعلّم الأمن السيبراني</title>
 
-<!-- Open Graph -->
+<!-- ============ Open Graph (WhatsApp / Facebook) ============ -->
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="CYBER FORCE" />
-<meta property="og:title" content="CYBER FORCE | منصة تعلم الأمن السيبراني" />
-<meta property="og:description" content="تعلّم الأمن السيبراني بالعربي — منصة احترافية بمحتوى عالي الجودة." />
+<meta property="og:title" content="CYBER FORCE | منصة تعلّم الأمن السيبراني" />
+<meta property="og:description" content="🎓 تعلّم الأمن السيبراني بالعربي — محتوى احترافي، فيديوهات، وشارات تحفيزية." />
 <meta property="og:image" content="https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/og-image.png" />
+<meta property="og:image:secure_url" content="https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/og-image.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="CYBER FORCE" />
 <meta property="og:url" content="https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/" />
 <meta property="og:locale" content="ar_EG" />
+
+<!-- ============ Twitter Card ============ -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="CYBER FORCE | منصة تعلم الأمن السيبراني" />
-<meta name="twitter:description" content="تعلّم الأمن السيبراني بالعربي." />
+<meta name="twitter:site" content="@cyberforce" />
+<meta name="twitter:creator" content="@sayedhasan_R" />
+<meta name="twitter:title" content="CYBER FORCE | منصة تعلّم الأمن السيبراني" />
+<meta name="twitter:description" content="🎓 تعلّم الأمن السيبراني بالعربي." />
 <meta name="twitter:image" content="https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/og-image.png" />
+<meta name="twitter:image:alt" content="CYBER FORCE" />
+
+<!-- ============ إضافات ============ -->
 <meta name="description" content="منصة CYBER FORCE - تعلّم الأمن السيبراني بالعربي." />
+<meta name="keywords" content="أمن سيبراني, تعلم, هاكينج, اختراق أخلاقي, cyber security, arabic" />
 <meta name="author" content="EL-sayed Hasan" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/" />
 
 <link rel="manifest" href="./manifest.json" />
 <link rel="icon" href="./logo.png" />
@@ -29,6 +44,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 :root{
   --blue:#19aaff; --blue-2:#0b7fd4; --blue-soft:rgba(25,170,255,.14);
@@ -192,6 +208,116 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px;width:100%;box-sizing
 .back-info{flex:1;min-width:0}
 .back-info h3{font-size:16px;font-weight:900;color:var(--gold)}
 .back-info small{font-size:11px;color:var(--muted);display:block;margin-top:2px}
+
+/* ============ INSTRUCTOR TABS ============ */
+.iv-tabs{
+  display:flex;gap:6px;background:var(--card);
+  border:1px solid var(--border);border-radius:12px;
+  padding:5px;margin-bottom:14px;overflow-x:auto;
+  scrollbar-width:none;
+}
+.iv-tabs::-webkit-scrollbar{display:none}
+.iv-tab{
+  flex:1;min-width:fit-content;padding:11px 16px;border-radius:9px;
+  font-weight:800;font-size:13px;color:var(--muted);transition:.2s;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  white-space:nowrap;cursor:pointer;border:none;background:transparent;
+  font-family:inherit;
+}
+.iv-tab:hover{color:var(--blue)}
+.iv-tab.active{
+  background:linear-gradient(135deg,var(--blue),var(--blue-2));
+  color:#021226;box-shadow:0 6px 18px rgba(25,170,255,.3);
+}
+.iv-tab-content{display:none;animation:fade .3s}
+.iv-tab-content.active{display:block}
+
+/* ============ STUDENT POLLS ============ */
+.student-poll{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:18px;margin-bottom:14px;
+  transition:.25s;
+}
+.student-poll:hover{border-color:var(--blue)}
+.student-poll .sp-question{
+  font-size:16px;font-weight:900;margin-bottom:6px;
+  display:flex;align-items:start;gap:8px;
+}
+.student-poll .sp-question .ic{color:var(--blue);flex-shrink:0}
+.student-poll .sp-meta{
+  display:flex;gap:12px;flex-wrap:wrap;font-size:11px;
+  color:var(--muted);font-weight:700;margin-bottom:14px;
+}
+.student-poll .sp-meta .timer{color:var(--warn);font-weight:900}
+.student-poll .sp-options{
+  display:flex;flex-direction:column;gap:8px;margin-bottom:12px;
+}
+.sp-option{
+  padding:12px 14px;border-radius:11px;
+  background:rgba(3,10,22,.5);border:1px solid var(--border);
+  color:var(--txt);font-weight:700;font-size:14px;
+  cursor:pointer;transition:.2s;text-align:right;
+  display:flex;align-items:center;gap:10px;
+  position:relative;overflow:hidden;font-family:inherit;
+}
+.sp-option:hover{border-color:var(--blue);background:var(--blue-soft)}
+.sp-option.selected{
+  border-color:var(--blue);
+  background:linear-gradient(135deg,rgba(25,170,255,.15),rgba(11,127,212,.08));
+  box-shadow:0 0 0 3px rgba(25,170,255,.15);
+}
+.sp-option.voted{cursor:not-allowed}
+.sp-option .circle{
+  width:20px;height:20px;border-radius:50%;
+  border:2px solid var(--muted);flex-shrink:0;
+  display:grid;place-items:center;font-size:11px;
+  transition:.2s;
+}
+.sp-option.selected .circle{
+  border-color:var(--blue);background:var(--blue);color:#021226;
+}
+.sp-option .txt{flex:1}
+.sp-option .cnt{
+  font-size:12px;color:var(--muted);font-weight:900;
+}
+.sp-option .pct-badge{
+  padding:2px 8px;border-radius:8px;
+  background:rgba(25,170,255,.15);color:var(--blue);
+  font-size:11px;font-weight:900;
+}
+
+.sp-results{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.sp-result-row{
+  padding:12px 14px;border-radius:11px;
+  background:rgba(3,10,22,.4);border:1px solid var(--border);
+  position:relative;overflow:hidden;
+}
+.sp-result-bar{
+  position:absolute;top:0;right:0;bottom:0;
+  background:linear-gradient(90deg,var(--blue),var(--blue-3));
+  opacity:.2;transition:width .8s;
+}
+.sp-result-txt{
+  position:relative;z-index:1;
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:13px;font-weight:800;
+}
+.sp-result-txt .txt{color:var(--txt)}
+.sp-result-txt .pct{color:var(--blue)}
+
+.sp-voted-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 12px;border-radius:10px;
+  background:rgba(40,209,124,.15);
+  border:1px solid rgba(40,209,124,.3);
+  color:var(--ok);font-size:11px;font-weight:900;
+  margin-bottom:12px;
+}
+
+.sp-total-votes{
+  text-align:center;font-size:12px;color:var(--muted);
+  font-weight:700;margin-top:8px;
+}
 
 .vid-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;width:100%;box-sizing:border-box}
 @media(max-width:400px){.vid-grid{grid-template-columns:1fr}}
@@ -380,7 +506,6 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
 .sem-timer span{color:var(--blue);font-weight:900;font-size:14px}
 @media(max-width:560px){.sem-box{padding:28px 20px 22px}.sem-icon{width:64px;height:64px;font-size:28px}.sem-title{font-size:18px}.sem-desc{font-size:13px}}
 
-/* ============ شاشة التحذير المرعبة ============ */
 #devtoolsWarning{
   position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;padding:20px;
   background:radial-gradient(circle at 50% 50%,rgba(255,0,0,.3),transparent 60%),linear-gradient(180deg,rgba(20,0,0,.98),rgba(0,0,0,.99));
@@ -388,10 +513,7 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
   animation:dangerPulse 2s ease-in-out infinite;overflow:hidden;
 }
 #devtoolsWarning.open{display:flex}
-@keyframes dangerPulse{
-  0%,100%{background-color:rgba(20,0,0,.98)}
-  50%{background-color:rgba(40,0,0,.98)}
-}
+@keyframes dangerPulse{0%,100%{background-color:rgba(20,0,0,.98)}50%{background-color:rgba(40,0,0,.98)}}
 #devtoolsWarning::before{
   content:'';position:absolute;inset:0;
   background:
@@ -400,61 +522,23 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
   animation:gridPulse 3s linear infinite;pointer-events:none;
 }
 @keyframes gridPulse{from{transform:translateY(0)}to{transform:translateY(42px)}}
-
-.dt-box{
-  position:relative;z-index:2;max-width:560px;width:100%;
-  background:linear-gradient(160deg,rgba(40,0,0,.95),rgba(20,0,0,.98));
-  border:2px solid #ff0000;border-radius:24px;padding:44px 32px 36px;text-align:center;
-  box-shadow:0 0 80px rgba(255,0,0,.5),0 0 120px rgba(255,0,0,.3),inset 0 0 60px rgba(255,0,0,.1);
-  animation:shakeBox .5s ease-in-out infinite alternate, boxGlow 2s ease-in-out infinite;
-}
-@keyframes shakeBox{
-  0%{transform:translate(0,0) rotate(0deg)}
-  100%{transform:translate(2px,-2px) rotate(.5deg)}
-}
-@keyframes boxGlow{
-  0%,100%{box-shadow:0 0 80px rgba(255,0,0,.5),0 0 120px rgba(255,0,0,.3),inset 0 0 60px rgba(255,0,0,.1)}
-  50%{box-shadow:0 0 120px rgba(255,0,0,.8),0 0 180px rgba(255,0,0,.5),inset 0 0 80px rgba(255,0,0,.15)}
-}
-.dt-skull{
-  font-size:90px;margin-bottom:14px;
-  animation:skullShake .3s ease-in-out infinite alternate;
-  filter:drop-shadow(0 0 30px rgba(255,0,0,.8));
-}
-@keyframes skullShake{
-  0%{transform:scale(1) rotate(-3deg)}
-  100%{transform:scale(1.1) rotate(3deg)}
-}
-.dt-title{
-  font-size:32px;font-weight:900;color:#ff0000;margin-bottom:16px;letter-spacing:2px;
-  text-shadow:0 0 20px rgba(255,0,0,.9),0 0 40px rgba(255,0,0,.6),0 0 60px rgba(255,0,0,.4);
-  animation:textPulse 1s ease-in-out infinite;
-}
+.dt-box{position:relative;z-index:2;max-width:560px;width:100%;background:linear-gradient(160deg,rgba(40,0,0,.95),rgba(20,0,0,.98));border:2px solid #ff0000;border-radius:24px;padding:44px 32px 36px;text-align:center;box-shadow:0 0 80px rgba(255,0,0,.5),0 0 120px rgba(255,0,0,.3),inset 0 0 60px rgba(255,0,0,.1);animation:shakeBox .5s ease-in-out infinite alternate, boxGlow 2s ease-in-out infinite}
+@keyframes shakeBox{0%{transform:translate(0,0) rotate(0deg)}100%{transform:translate(2px,-2px) rotate(.5deg)}}
+@keyframes boxGlow{0%,100%{box-shadow:0 0 80px rgba(255,0,0,.5),0 0 120px rgba(255,0,0,.3),inset 0 0 60px rgba(255,0,0,.1)}50%{box-shadow:0 0 120px rgba(255,0,0,.8),0 0 180px rgba(255,0,0,.5),inset 0 0 80px rgba(255,0,0,.15)}}
+.dt-skull{font-size:90px;margin-bottom:14px;animation:skullShake .3s ease-in-out infinite alternate;filter:drop-shadow(0 0 30px rgba(255,0,0,.8))}
+@keyframes skullShake{0%{transform:scale(1) rotate(-3deg)}100%{transform:scale(1.1) rotate(3deg)}}
+.dt-title{font-size:32px;font-weight:900;color:#ff0000;margin-bottom:16px;letter-spacing:2px;text-shadow:0 0 20px rgba(255,0,0,.9),0 0 40px rgba(255,0,0,.6),0 0 60px rgba(255,0,0,.4);animation:textPulse 1s ease-in-out infinite}
 @keyframes textPulse{0%,100%{opacity:1}50%{opacity:.7}}
 .dt-desc{color:#ffb0b0;font-size:16px;line-height:2;margin-bottom:24px;font-weight:700}
 .dt-desc b{color:#ff0000;font-weight:900;font-size:18px}
-.dt-warning-list{
-  text-align:right;background:rgba(0,0,0,.5);border:1px solid rgba(255,0,0,.4);
-  border-radius:14px;padding:16px 20px;margin-bottom:24px;font-size:14px;line-height:2;
-  color:#ffb0b0;font-weight:700;
-}
+.dt-warning-list{text-align:right;background:rgba(0,0,0,.5);border:1px solid rgba(255,0,0,.4);border-radius:14px;padding:16px 20px;margin-bottom:24px;font-size:14px;line-height:2;color:#ffb0b0;font-weight:700}
 .dt-warning-list li{list-style:none;padding-right:24px;position:relative}
 .dt-warning-list li::before{content:'⚠️';position:absolute;right:0;top:0}
 .dt-countdown{font-size:14px;color:#ffb0b0;margin-bottom:16px;font-weight:800}
-.dt-countdown span{
-  color:#ff0000;font-size:20px;font-weight:900;display:inline-block;min-width:30px;
-  animation:textPulse .5s ease-in-out infinite;
-}
-.dt-btn{
-  display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
-  padding:16px 22px;border:none;border-radius:14px;font-size:16px;font-weight:900;color:#fff;
-  cursor:pointer;background:linear-gradient(135deg,#ff0000,#8b0000);
-  box-shadow:0 10px 30px rgba(255,0,0,.5);transition:transform .15s,box-shadow .25s;
-  letter-spacing:.5px;
-}
+.dt-countdown span{color:#ff0000;font-size:20px;font-weight:900;display:inline-block;min-width:30px;animation:textPulse .5s ease-in-out infinite}
+.dt-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:16px 22px;border:none;border-radius:14px;font-size:16px;font-weight:900;color:#fff;cursor:pointer;background:linear-gradient(135deg,#ff0000,#8b0000);box-shadow:0 10px 30px rgba(255,0,0,.5);transition:transform .15s,box-shadow .25s;letter-spacing:.5px}
 .dt-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(255,0,0,.7)}
 .dt-footer{margin-top:20px;font-size:11px;color:rgba(255,150,150,.6);line-height:1.7}
-
 @media(max-width:560px){
   .dt-box{padding:32px 22px 28px}
   .dt-skull{font-size:70px}
@@ -558,15 +642,35 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
       </div>
       <button class="icon-btn" id="contactInstructorBtn" title="تواصل مع المدرب">📱</button>
     </div>
-    <div class="card" style="margin-bottom:14px;padding:12px 16px">
-      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-        <span class="ins-stat gold" id="ivVideosCount">📹 0 فيديو</span>
-        <span class="ins-stat green" id="ivUnlockedCount">🔓 0 مفتوح</span>
-        <span class="ins-stat" id="ivStatus">⏳ في انتظار الموافقة</span>
+
+    <!-- Instructor Tabs -->
+    <div class="iv-tabs" id="ivTabs">
+      <button class="iv-tab active" data-ivtab="videos">📹 الفيديوهات</button>
+      <button class="iv-tab" data-ivtab="polls" id="pollsTabBtn" style="display:none">🗳️ استطلاع رأي</button>
+    </div>
+
+    <!-- TAB: Videos -->
+    <div class="iv-tab-content active" id="ivtab-videos">
+      <div class="card" style="margin-bottom:14px;padding:12px 16px">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <span class="ins-stat gold" id="ivVideosCount">📹 0 فيديو</span>
+          <span class="ins-stat green" id="ivUnlockedCount">🔓 0 مفتوح</span>
+          <span class="ins-stat" id="ivStatus">⏳ في انتظار الموافقة</span>
+        </div>
+      </div>
+      <div class="filters" id="ivFilters"></div>
+      <div class="vid-grid" id="ivGrid"></div>
+    </div>
+
+    <!-- TAB: Polls -->
+    <div class="iv-tab-content" id="ivtab-polls">
+      <div id="studentPollsList">
+        <div class="empty">
+          <div class="e">🗳️</div>
+          <p>جاري التحميل...</p>
+        </div>
       </div>
     </div>
-    <div class="filters" id="ivFilters"></div>
-    <div class="vid-grid" id="ivGrid"></div>
   </section>
 
   <section class="page" id="page-leaderboard">
@@ -608,13 +712,8 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
   <div class="modal-inner">
     <div class="player-box">
       <button class="modal-close" id="closeVid">✕</button>
-      
-      <!-- ✅ Watermark متحرك -->
       <div class="watermark wm-moving" id="wmMoving">—</div>
-      
-      <!-- شعار ثابت في الوسط -->
       <div class="watermark wm-center" id="wmCenter">CYBER FORCE</div>
-      
       <div id="ytPlayer"></div>
       <div class="player-shield"></div>
       <div class="yt-big-play" id="ytBigPlay">
@@ -665,7 +764,6 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
 <div id="toasts"></div>
 <canvas id="confetti"></canvas>
 
-<!-- ✅ شاشة التحذير المرعبة -->
 <div id="devtoolsWarning">
   <div class="dt-box">
     <div class="dt-skull">💀</div>
@@ -694,7 +792,7 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
   </div>
 </div>
 
-<script> 
+<script>
 /* ============================================
    CYBER FORCE — index.html
    ============================================ */
@@ -711,7 +809,6 @@ const CF_SECRET_KEY = 'CF_SECRET_2026_9a8b7c';
 const UNLOCK_THRESHOLD = 50;
 const XP_PER_VIDEO = 10;
 
-/* ============ فك تشفير URL ============ */
 function cfDecrypt(encoded){
   if(!encoded) return '';
   try{
@@ -723,7 +820,6 @@ function cfDecrypt(encoded){
     }
     return new TextDecoder().decode(result);
   }catch(e){
-    console.warn('decrypt error:', e);
     return '';
   }
 }
@@ -742,43 +838,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='PrintScreen'){e.preventDefault();try{navigator.clipboard.writeText('');}catch(err){}}
 });
 
-/* ============ حمايات إضافية ============ */
-document.addEventListener('keyup', e => {
-  if(e.key === 'PrintScreen'){
-    try{ navigator.clipboard.writeText(''); }catch(err){}
-    toast('⚠️ تصوير الشاشة ممنوع','err','🚫');
-  }
-});
-
-document.addEventListener('keydown', e => {
-  if(e.altKey && e.key === 'PrintScreen'){
-    e.preventDefault();
-    try{ navigator.clipboard.writeText(''); }catch(err){}
-    toast('⚠️ تصوير الشاشة ممنوع','err','🚫');
-    return false;
-  }
-  if(e.metaKey && e.shiftKey && ['3','4','5'].includes(e.key)){
-    e.preventDefault();
-    try{ navigator.clipboard.writeText(''); }catch(err){}
-    toast('⚠️ تصوير الشاشة ممنوع','err','🚫');
-    return false;
-  }
-  if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's'){
-    e.preventDefault();
-    toast('⚠️ حفظ الصفحة ممنوع','err','🚫');
-    return false;
-  }
-});
-
-window.addEventListener('beforeprint', e => { e.preventDefault(); return false; });
-window.onbeforeprint = () => false;
-try{ window.print = () => false; }catch(e){}
-
-document.addEventListener('drag', e => {
-  if(e.target.closest('.player-box')) e.preventDefault();
-});
-
-/* ============ كشف DevTools — شاشة مرعبة ============ */
+/* ============ DEVTOOLS WARNING ============ */
 let _devtoolsTriggered = false;
 let _devtoolsCountdown = null;
 let _devtoolsCheckInterval = null;
@@ -806,35 +866,28 @@ async function logSecurityBreach(type){
       }),
       p_user_agent: navigator.userAgent.slice(0, 200)
     });
-  }catch(e){ console.warn('log breach error:', e); }
+  }catch(e){}
 }
 
 function showDevtoolsWarning(){
   if(_devtoolsTriggered) return;
   _devtoolsTriggered = true;
-
   const el = document.getElementById('devtoolsWarning');
   if(!el) return;
   el.classList.add('open');
-
   logSecurityBreach('devtools_open');
-
-  // صوت تحذير
   try{
     const a = new (window.AudioContext || window.webkitAudioContext)();
     const o = a.createGain();
     const s = a.createOscillator();
-    s.type = 'sawtooth';
-    s.frequency.value = 200;
+    s.type = 'sawtooth'; s.frequency.value = 200;
     s.connect(o); o.connect(a.destination);
     o.gain.setValueAtTime(0.0001, a.currentTime);
     o.gain.exponentialRampToValueAtTime(0.15, a.currentTime + 0.1);
     o.gain.exponentialRampToValueAtTime(0.0001, a.currentTime + 1.2);
     s.start(a.currentTime); s.stop(a.currentTime + 1.3);
   }catch(e){}
-
   if(navigator.vibrate) navigator.vibrate([300, 100, 300, 100, 300]);
-
   let count = 10;
   clearInterval(_devtoolsCountdown);
   _devtoolsCountdown = setInterval(() => {
@@ -852,11 +905,9 @@ function showDevtoolsWarning(){
 function startDevtoolsDetection(){
   clearInterval(_devtoolsCheckInterval);
   _devtoolsCheckInterval = setInterval(() => {
-    // تجاهل للأدمن
     try{
       if(typeof USER !== 'undefined' && USER && USER.role === 'admin') return;
     }catch(e){}
-    
     if(detectDevToolsOpen() && !_devtoolsTriggered){
       showDevtoolsWarning();
     }
@@ -1116,27 +1167,23 @@ $('copyRefBtn').onclick=()=>{
   navigator.clipboard.writeText(c).then(()=>toast('تم نسخ كود الدعوة','ok')).catch(()=>toast('انسخ يدوياً: '+c,'info'));
 };
 
-/* ============ Watermark المتحرك ============ */
+/* ============ WATERMARK ============ */
 function setWatermarks(){
   const phone = USER.phone || USER_PHONE || '—';
   const user = USER.username || '';
-  
   const wm = $('wmMoving');
   if(wm){
     wm.textContent = '📱 ' + phone + ' | ' + user;
     startWatermarkAnimation();
   }
-  
   const wmCenter = $('wmCenter');
   if(wmCenter) wmCenter.textContent = 'CYBER FORCE';
 }
 
 function startWatermarkAnimation(){
   stopWatermarkAnimation();
-  
   const wm = $('wmMoving');
   if(!wm) return;
-  
   const positions = [
     {top:'8%',  right:'8%',  left:'auto'},
     {top:'8%',  right:'auto',left:'8%'},
@@ -1146,7 +1193,6 @@ function startWatermarkAnimation(){
     {top:'45%', right:'8%',  left:'auto'},
     {top:'20%', right:'auto',left:'45%'}
   ];
-  
   let idx = 0;
   const move = () => {
     const pos = positions[idx];
@@ -1155,7 +1201,6 @@ function startWatermarkAnimation(){
     wm.style.left = pos.left;
     idx = (idx + 1) % positions.length;
   };
-  
   move();
   _wmTimer = setInterval(move, 3000);
 }
@@ -1267,6 +1312,22 @@ async function openInstructor(username){
     $('ivStatus').style.color = '#ff4d6d';
   }
   ACTIVE_CAT = 'all';
+
+  // إظهار/إخفاء تبويب الاستطلاع
+  const pollsTab = $('pollsTabBtn');
+  if(CURRENT_INSTRUCTOR.subscription_status === 'active'){
+    pollsTab.style.display = 'flex';
+  } else {
+    pollsTab.style.display = 'none';
+  }
+
+  // إعادة تعيين التبويب النشط للفيديوهات
+  document.querySelectorAll('.iv-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.iv-tab-content').forEach(c => c.classList.remove('active'));
+  const firstTab = document.querySelector('.iv-tab[data-ivtab="videos"]');
+  if(firstTab) firstTab.classList.add('active');
+  $('ivtab-videos').classList.add('active');
+
   await loadInstructorVideos();
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   $('page-instructor-videos').classList.add('active');
@@ -1389,6 +1450,170 @@ function renderInstructorVideos(){
       else requestUnlockForVideo(v);
     };
   });
+}
+
+/* ============ INSTRUCTOR TABS ============ */
+document.addEventListener('click', e => {
+  const tab = e.target.closest('.iv-tab');
+  if(!tab) return;
+  
+  document.querySelectorAll('.iv-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.iv-tab-content').forEach(c => c.classList.remove('active'));
+  tab.classList.add('active');
+  document.getElementById('ivtab-' + tab.dataset.ivtab).classList.add('active');
+  
+  if(tab.dataset.ivtab === 'polls'){
+    loadStudentPolls();
+  }
+});
+
+/* ============ LOAD STUDENT POLLS ============ */
+async function loadStudentPolls(){
+  const container = $('studentPollsList');
+  if(!container) return;
+  container.innerHTML = `
+    <div class="skel skel-card"></div>
+    <div class="skel skel-card"></div>
+  `;
+
+  try{
+    const { data, error } = await sb.rpc('get_instructor_polls', {
+      p_instructor_username: CURRENT_INSTRUCTOR.instructor_username,
+      p_username: USER.username
+    });
+
+    if(error) throw error;
+    const polls = Array.isArray(data) ? data : [];
+
+    if(!polls.length){
+      container.innerHTML = `
+        <div class="empty">
+          <div class="e">🗳️</div>
+          <p>لا يوجد استطلاعات حالياً</p>
+          <p style="font-size:12px;margin-top:6px">المدرب لسه منشورش استطلاع</p>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = polls.map(p => renderStudentPoll(p)).join('');
+
+    container.querySelectorAll('.sp-option').forEach(opt => {
+      opt.onclick = () => {
+        if(opt.classList.contains('voted')) return;
+        votePoll(opt.dataset.poll, +opt.dataset.option);
+      };
+    });
+
+  }catch(e){
+    console.error('loadStudentPolls error:', e);
+    container.innerHTML = `
+      <div class="empty">
+        <div class="e">⚠️</div>
+        <p>تعذّر التحميل</p>
+      </div>
+    `;
+  }
+}
+
+function renderStudentPoll(p){
+  const options = Array.isArray(p.options) ? p.options : [];
+  const votes = p.votes || {};
+  const total = safeInt(p.total_votes);
+  const myVote = p.my_vote !== null && p.my_vote !== undefined ? p.my_vote : null;
+  const hasVoted = myVote !== null;
+
+  let timeLeft = '';
+  if(p.ends_at){
+    const diffMs = new Date(p.ends_at) - new Date();
+    if(diffMs > 0){
+      const hours = Math.floor(diffMs / (1000*60*60));
+      if(hours >= 24){
+        const days = Math.floor(hours / 24);
+        timeLeft = `${days} يوم متبقي`;
+      } else if(hours >= 1){
+        timeLeft = `${hours} ساعة متبقية`;
+      } else {
+        const mins = Math.floor(diffMs / (1000*60));
+        timeLeft = `${mins} دقيقة متبقية`;
+      }
+    }
+  }
+
+  return `
+    <div class="student-poll">
+      <div class="sp-question">
+        <span class="ic">🗳️</span>
+        <span>${esc(p.question)}</span>
+      </div>
+      <div class="sp-meta">
+        <span>👥 ${total} صوت</span>
+        ${timeLeft ? `<span class="timer">⏱️ ${timeLeft}</span>` : ''}
+      </div>
+
+      ${hasVoted ? `
+        <div class="sp-voted-badge">
+          ✅ صوّتت بالفعل
+        </div>
+        <div class="sp-results">
+          ${options.map(opt => {
+            const cnt = safeInt(votes[opt.id]);
+            const pct = total > 0 ? Math.round((cnt / total) * 100) : 0;
+            const isMyVote = opt.id === myVote;
+            return `
+              <div class="sp-result-row" style="${isMyVote ? 'border-color:var(--blue);' : ''}">
+                <div class="sp-result-bar" style="width:${pct}%"></div>
+                <div class="sp-result-txt">
+                  <span class="txt">${isMyVote ? '✅ ' : ''}${esc(opt.text)}</span>
+                  <span class="pct">${pct}% (${cnt})</span>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+        <div class="sp-total-votes">
+          إجمالي الأصوات: ${total}
+        </div>
+      ` : `
+        <div class="sp-options">
+          ${options.map(opt => `
+            <button class="sp-option" data-poll="${p.id}" data-option="${opt.id}">
+              <span class="circle"></span>
+              <span class="txt">${esc(opt.text)}</span>
+            </button>
+          `).join('')}
+        </div>
+      `}
+    </div>
+  `;
+}
+
+async function votePoll(pollId, optionId){
+  try{
+    const { data, error } = await sb.rpc('vote_poll', {
+      p_poll_id: parseInt(pollId),
+      p_username: USER.username,
+      p_option_id: optionId
+    });
+
+    if(error) throw error;
+    const res = Array.isArray(data) ? data[0] : data;
+
+    if(!res || !res.ok){
+      const code = res && res.error;
+      if(code === 'poll_closed') toast('⏱️ الاستطلاع انتهى', 'err');
+      else if(code === 'not_subscribed') toast('🔒 لازم تكون مشترك', 'err');
+      else toast('تعذّر التصويت', 'err');
+      return;
+    }
+
+    toast(res.updated ? '✅ تم تحديث صوتك' : '✅ تم تسجيل صوتك', 'ok');
+    await loadStudentPolls();
+
+  }catch(e){
+    console.error('votePoll error:', e);
+    toast('خطأ: ' + (e.message || ''), 'err');
+  }
 }
 
 /* ============ REQUEST UNLOCK ============ */
@@ -1575,7 +1800,6 @@ async function awardVideoXp(){
   if(!CURRENT_VIDEO || !USER) return;
   _videoXpAwarded = true;
   const videoId = parseInt(CURRENT_VIDEO.video_id);
-  console.log('🎬 إضافة XP للفيديو:', videoId);
   try{
     const {data, error} = await sb.rpc('award_video_xp', {
       p_username: USER.username,
@@ -1585,14 +1809,11 @@ async function awardVideoXp(){
     if(error){ console.error('❌', error.message); return; }
     const res = Array.isArray(data) ? data[0] : data;
     if(res && res.ok){
-      console.log('✅ +10 XP — الجديد:', res.new_xp);
       toast('+10 XP 🎬','ok','⭐');
       USER.xp = res.new_xp;
       USER.videos_watched = (USER.videos_watched || 0) + 1;
       try{ updateMiniXp(); }catch(e){}
       try{ renderProfile(); }catch(e){}
-    } else if(res && res.error === 'already_awarded'){
-      console.log('ℹ️ XP اتحسب قبل كده');
     }
   }catch(e){ console.error('❌ award xp:', e); }
 }
@@ -1616,12 +1837,7 @@ async function saveProgressSilently(v, pct){
     if(pct >= 50 && !_autoUnlockedVideos.has(viewKey)){
       _autoUnlockedVideos.add(viewKey);
       try{
-        const {data: viewData} = await sb.rpc('increment_video_view', {
-          p_username: USER.username,
-          p_video_id: parseInt(videoId)
-        });
-        const vRes = Array.isArray(viewData) ? viewData[0] : viewData;
-        if(vRes && vRes.ok) console.log('👁 زيادة العداد:', vRes.new_views);
+        await sb.rpc('increment_video_view', { p_username: USER.username, p_video_id: parseInt(videoId) });
       }catch(e){}
     }
 
@@ -1639,7 +1855,7 @@ async function saveProgressSilently(v, pct){
         }
       }catch(e){}
     }
-  }catch(e){ console.warn('save progress error:', e); }
+  }catch(e){}
 }
 
 function closeVideo(){
@@ -1652,7 +1868,7 @@ function closeVideo(){
 }
 $('closeVid').onclick=closeVideo;
 
-/* ============ أزرار المشغل ============ */
+/* ============ PLAYER CONTROLS ============ */
 document.addEventListener('click',e=>{
   const t=e.target.closest('button');
   if(!t)return;
@@ -1854,7 +2070,6 @@ async function checkSession(){
     const {data, error} = await sb.rpc('validate_session', { p_username: s.username, p_token: s.token });
     if(error) return;
     if(data === false){
-      console.log('🚫 الجلسة انتهت');
       localStorage.removeItem('sayoda_session');
       sessionStorage.removeItem('sayoda_admin_pass');
       sessionStorage.removeItem('sayoda_instructor_pass');
