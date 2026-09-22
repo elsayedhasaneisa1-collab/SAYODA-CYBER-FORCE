@@ -7,7 +7,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <title>لوحة المدرب | CYBER FORCE</title>
 <link rel="manifest" href="./manifest.json" />
-<link rel="icon" href="./logogg.png" />
+<link rel="icon" href="./logog.png" />
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -262,7 +262,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 /* ============ SESSION ENDED MODAL ============ */
 #sessionEndedModal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;animation:semFadeIn .3s ease-out}
 .sem-overlay{position:absolute;inset:0;background:rgba(2,8,18,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-.sem-box{position:relative;z-index:1;width:100%;max-width:420px;background:linear-gradient(160deg,rgba(6,26,15,.98),rgba(4,20,12,.98));border:1px solid rgba(40,209,124,.35);border-radius:24px;padding:36px 28px 28px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 80px rgba(40,209,124,.2),0 0 0 1px rgba(255,255,255,.05) inset;animation:semPop .5s cubic-bezier(.2,.9,.3,1.4);overflow:hidden}
+.sem-box{position:relative;z-index:1;width:100%;max-width:420px;background:linear-gradient(160deg,rgba(6,26,15,.98),rgba(4,20,12,.98));border:1px solid rgba(40,209,124,.35);border-radius:24px;padding:36px 28px 28px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 80px rgba(40,209,124,.2);animation:semPop .5s cubic-bezier(.2,.9,.3,1.4);overflow:hidden}
 .sem-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--green),transparent);animation:semGlow 2s ease-in-out infinite}
 @keyframes semGlow{0%,100%{opacity:.5}50%{opacity:1}}
 @keyframes semFadeIn{from{opacity:0}to{opacity:1}}
@@ -297,7 +297,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 <!-- GATE -->
 <div class="gate" id="gate">
   <div class="box">
-    <img src="./logogg.png" onerror="this.style.display='none'" alt="logo">
+    <img src="./logog.png" onerror="this.style.display='none'" alt="logo">
     <h2>🎬 لوحة المدرب</h2>
     <p>أدخل كلمة مرور المدرب للوصول إلى لوحتك</p>
     <input type="password" id="gatePass" placeholder="كلمة المرور" autocomplete="current-password" />
@@ -310,7 +310,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 
 <header>
   <div class="hl">
-    <img src="./logogg.png" onerror="this.style.display='none'">
+    <img src="./logog.png" onerror="this.style.display='none'">
     <div class="ht">
       CYBER <span>INSTRUCTOR</span>
       <small>✨ لوحة المدرب</small>
@@ -458,7 +458,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 </div>
 
 <footer class="site-footer">
-  © 2026 جميع الحقوق محفوظة <a href="https://t.me/sayoda_elgadar" target="_blank" rel="noopener noreferrer">EL-sayed Hasan</a>
+  © 2026 جميع الحقوق محفوظة <a href="https://elsayedhasaneisa1-collab.github.io/team-cyber-force-/" target="_blank" rel="noopener noreferrer">EL-sayed Hasan</a>
 </footer>
 
 <!-- STUDENT MODAL -->
@@ -500,7 +500,7 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 </div>
 
 <div id="toasts"></div>
-<script>
+<script> 
 /* ============================================
    CYBER FORCE — Instructor Panel
    ============================================ */
@@ -512,7 +512,7 @@ const clean=s=>String(s==null?'':s).replace(/[<>]/g,'').trim();
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeInt=(n,d=0)=>{const v=parseInt(n,10);return Number.isFinite(v)?v:d};
 
-/* حمايات */
+/* ============ الحمايات ============ */
 document.addEventListener('contextmenu',e=>e.preventDefault());
 document.addEventListener('dragstart',e=>e.preventDefault());
 document.addEventListener('selectstart',e=>{if(!e.target.closest('input,textarea,select'))e.preventDefault();});
@@ -526,7 +526,84 @@ document.addEventListener('keydown',e=>{
   if(e.key==='PrintScreen'){e.preventDefault();try{navigator.clipboard.writeText('');}catch(err){}}
 });
 
-/* STATE */
+/* ============ رسالة مرعبة في Console ============ */
+(function(){
+  const style1 = 'color:#ff0000;font-size:48px;font-weight:900;text-shadow:0 0 20px rgba(255,0,0,.8);font-family:Tajawal,sans-serif;';
+  const style2 = 'color:#ffb700;font-size:22px;font-weight:900;font-family:Tajawal,sans-serif;';
+  const style3 = 'color:#ff4d6d;font-size:16px;font-weight:900;font-family:Tajawal,sans-serif;';
+  const style4 = 'color:#7ec79e;font-size:14px;font-weight:700;font-family:Tajawal,sans-serif;';
+
+  console.clear();
+  console.log('%c☠️ 🚨 STOP! 🚨 ☠️', style1);
+  console.log('%c═══════════════════════════════════════', style3);
+  console.log('%c⚠️ تحذير أمني خطير ⚠️', style2);
+  console.log('%c═══════════════════════════════════════', style3);
+  console.log('%c🚫 أنت تحاول فتح Console لوحة المدرب!', style3);
+  console.log('%c🚫 كل تحركاتك مسجلة ومتابعة من الإدارة.', style4);
+  console.log('%c🚫 أي محاولة للتلاعب = حظر دائم.', style4);
+  console.log('%c🚫 تم تسجيل: IP + UserAgent + Screen + الوقت', style4);
+  console.log('%c═══════════════════════════════════════', style3);
+  console.log('%c💀 مكانك مش هنا!', style2);
+  console.log('%c🔒 لو محتاج حاجة تواصل مع الإدارة:', style4);
+  console.log('%c👉 https://elsayedhasaneisa1-collab.github.io/team-cyber-force-/', style4);
+  console.log('%c═══════════════════════════════════════', style3);
+  console.log('%c☠️ YOU HAVE BEEN WARNED ☠️', style1);
+
+  // تسجيل الحدث
+  setTimeout(async () => {
+    try {
+      const s = JSON.parse(localStorage.getItem('sayoda_session') || 'null');
+      const username = s?.username || 'unknown';
+      await sb.rpc('client_log_activity', {
+        p_username: username,
+        p_activity_type: 'security_breach',
+        p_details: JSON.stringify({
+          type: 'instructor_console_open',
+          url: location.href,
+          userAgent: navigator.userAgent.slice(0, 200),
+          timestamp: new Date().toISOString(),
+          screen: screen.width + 'x' + screen.height
+        }),
+        p_user_agent: navigator.userAgent.slice(0, 200)
+      });
+    } catch (e) {}
+  }, 1000);
+})();
+
+/* ============ كشف DevTools ============ */
+let _devtoolsTriggered = false;
+function detectDevToolsOpen(){
+  const threshold = 160;
+  return ((window.outerWidth - window.innerWidth) > threshold ||
+          (window.outerHeight - window.innerHeight) > threshold);
+}
+
+setInterval(() => {
+  if (detectDevToolsOpen() && !_devtoolsTriggered) {
+    _devtoolsTriggered = true;
+    console.clear();
+    console.log('%c☠️🚨 STOP! 🚨☠️', 'color:#ff0000;font-size:48px;font-weight:900;');
+    console.log('%c⚠️ تم رصد محاولة اختراق لوحة المدرب', 'color:#ffb700;font-size:22px;font-weight:900;');
+    console.log('%c🔒 تم تسجيل كل حاجة — انتظر الإجراءات', 'color:#ff4d6d;font-size:16px;font-weight:900;');
+    // تسجيل الحدث
+    try {
+      const s = JSON.parse(localStorage.getItem('sayoda_session') || 'null');
+      const username = s?.username || 'unknown';
+      sb.rpc('client_log_activity', {
+        p_username: username,
+        p_activity_type: 'security_breach',
+        p_details: JSON.stringify({
+          type: 'instructor_devtools',
+          url: location.href,
+          timestamp: new Date().toISOString()
+        }),
+        p_user_agent: navigator.userAgent.slice(0, 200)
+      }).catch(()=>{});
+    } catch (e) {}
+  }
+}, 1500);
+
+/* ============ STATE ============ */
 let INSTRUCTOR=null;
 let PASS=sessionStorage.getItem('sayoda_instructor_pass')||null;
 let MY_VIDEOS=[];
@@ -534,12 +611,12 @@ let STUDENTS=[];
 let VM_CURRENT_STUDENT=null;
 let ACTIVE_FILTER='all';
 
-/* SESSION */
+/* ============ SESSION ============ */
 function getSession(){try{return JSON.parse(localStorage.getItem('sayoda_session')||'null')}catch(e){return null}}
 const SESSION=getSession();
 if(!SESSION||!SESSION.username){location.replace('./login.html');}
 
-/* AUTO LOGOUT */
+/* ============ AUTO LOGOUT ============ */
 let IDLE_TIMER=null;
 const IDLE_MS=60*60*1000;
 function resetIdle(){
@@ -557,7 +634,7 @@ async function logoutInstructor(){
 }
 $('logoutBtn').onclick=logoutInstructor;
 
-/* TOAST */
+/* ============ TOAST ============ */
 function toast(m,t='ok'){
   const e=document.createElement('div');
   e.className='toast '+t;
@@ -566,7 +643,7 @@ function toast(m,t='ok'){
   setTimeout(()=>{e.style.opacity='0';setTimeout(()=>e.remove(),300)},3200);
 }
 
-/* HELPERS */
+/* ============ HELPERS ============ */
 function fmtDate(t){
   try{
     let dateStr = String(t);
@@ -600,7 +677,7 @@ function thumbOf(v){
   return v.thumbnail || (ytIdOf(v.youtube_url) ? `https://i.ytimg.com/vi/${ytIdOf(v.youtube_url)}/mqdefault.jpg` : './sayed.png');
 }
 
-/* GATE */
+/* ============ GATE ============ */
 $('gateBtn').onclick=async()=>{
   const p=$('gatePass').value;
   if(!p) return toast('أدخل كلمة المرور','err');
@@ -635,7 +712,7 @@ $('gateBtn').onclick=async()=>{
 };
 $('gatePass').addEventListener('keydown',e=>{if(e.key==='Enter')$('gateBtn').click();});
 
-/* TABS */
+/* ============ TABS ============ */
 const TABS=[
   {id:'dash',t:'📊 الإحصائيات'},
   {id:'videos',t:'🎬 فيديوهاتي'},
@@ -662,7 +739,7 @@ function buildTabs(){
   });
 }
 
-/* INIT */
+/* ============ INIT ============ */
 async function init(){
   if(!ensurePass()) return;
   buildTabs();
@@ -670,9 +747,10 @@ async function init(){
   renderStats();
   loadSettings();
   setupFilters();
+  startSessionCheck();
 }
 
-/* STATS */
+/* ============ STATS ============ */
 function renderStats(){
   const total = MY_VIDEOS.filter(v=>v.status==='approved').length;
   const pending = MY_VIDEOS.filter(v=>v.status==='pending').length;
@@ -694,7 +772,73 @@ function renderStats(){
   `).join('');
 }
 
-/* LOAD VIDEOS */
+/* ============ SESSION CHECK ============ */
+let _sessionTimer = null;
+
+async function checkSession(){
+  try{
+    const s = JSON.parse(localStorage.getItem('sayoda_session')||'null');
+    if(!s || !s.username || !s.token) return;
+    
+    const {data, error} = await sb.rpc('validate_session', {
+      p_username: s.username,
+      p_token: s.token
+    });
+    
+    if(error) return;
+    
+    if(data === false){
+      console.log('🚫 الجلسة انتهت — تم الدخول من جهاز آخر');
+      localStorage.removeItem('sayoda_session');
+      sessionStorage.removeItem('sayoda_instructor_pass');
+      sessionStorage.removeItem('sayoda_admin_pass');
+      showSessionEndedModal();
+    }
+  }catch(e){}
+}
+
+function startSessionCheck(){
+  if(_sessionTimer) clearInterval(_sessionTimer);
+  checkSession();
+  _sessionTimer = setInterval(checkSession, 30000);
+}
+
+function showSessionEndedModal(){
+  if(document.getElementById('sessionEndedModal')) return;
+  
+  const modal = document.createElement('div');
+  modal.id = 'sessionEndedModal';
+  modal.innerHTML = `
+    <div class="sem-overlay"></div>
+    <div class="sem-box">
+      <div class="sem-icon">🔐</div>
+      <h2 class="sem-title">انتهت الجلسة</h2>
+      <p class="sem-desc">
+        تم تسجيل الدخول لحسابك من جهاز آخر<br>
+        سيتم تسجيل خروجك من هذا الجهاز
+      </p>
+      <button class="sem-btn" onclick="location.replace('./login.html')">
+        🔑 تسجيل الدخول مرة أخرى
+      </button>
+      <div class="sem-timer">
+        سيتم التحويل خلال <span id="semCount">10</span> ثانية
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  
+  let count = 10;
+  const timer = setInterval(() => {
+    count--;
+    const el = document.getElementById('semCount');
+    if(el) el.textContent = count;
+    if(count <= 0){
+      clearInterval(timer);
+      location.replace('./login.html');
+    }
+  }, 1000);
+}
+/* ============ LOAD VIDEOS ============ */
 async function loadMyVideos(){
   if(!ensurePass()) return;
   $('myVideosList').innerHTML='<div class="skel"></div><div class="skel"></div>';
@@ -764,7 +908,7 @@ function renderMyVideos(){
   });
 }
 
-/* FILTERS */
+/* ============ FILTERS ============ */
 function setupFilters(){
   document.querySelectorAll('.filter-btn').forEach(b=>{
     b.onclick=()=>{
@@ -793,7 +937,7 @@ function setupFilters(){
   }
 }
 
-/* DELETE VIDEO */
+/* ============ DELETE VIDEO ============ */
 async function deleteMyVideo(videoId){
   if(!ensurePass()) return;
   const v = MY_VIDEOS.find(x => String(x.video_id) === String(videoId));
@@ -831,7 +975,7 @@ async function deleteMyVideo(videoId){
 
 $('refreshVideosBtn').onclick = () => { loadMyVideos(); toast('تم التحديث'); };
 
-/* ADD VIDEO */
+/* ============ ADD VIDEO ============ */
 $('addVidBtn').onclick = async () => {
   if(!ensurePass()) return;
   const title = clean($('vTitle').value);
@@ -868,7 +1012,7 @@ $('addVidBtn').onclick = async () => {
   finally{ btn.disabled=false; btn.textContent='📤 رفع الفيديو للمراجعة'; }
 };
 
-/* STUDENTS */
+/* ============ STUDENTS ============ */
 async function loadStudents(){
   if(!ensurePass()) return;
   $('studentsList').innerHTML='<div class="skel"></div><div class="skel"></div>';
@@ -942,7 +1086,7 @@ function renderStudents(q=''){
 $('studentSearch').oninput = e => renderStudents(e.target.value);
 $('refreshStudentsBtn').onclick = () => { loadStudents(); toast('تم التحديث'); };
 
-/* STUDENT MODAL */
+/* ============ STUDENT MODAL ============ */
 async function openStudentModal(studentUsername){
   if(!ensurePass()) return;
   
@@ -992,10 +1136,10 @@ async function openStudentModal(studentUsername){
         <div class="val" style="font-size:12px">${esc(student.level||'مبتدئ')}</div>
       </div>
       <div class="info-item">
-  <div class="lbl">🕐 آخر دخول</div>
-  <div class="val" style="font-size:11px">${student.last_login ? fmtDate(student.last_login) : '—'}</div>
- </div> 
-</div>
+        <div class="lbl">🕐 آخر دخول</div>
+        <div class="val" style="font-size:11px">${student.last_login ? fmtDate(student.last_login) : '—'}</div>
+      </div>
+    </div>
   `;
   
   $('studentModal').classList.add('open');
@@ -1006,13 +1150,13 @@ $('smOpenAll').onclick = async () => {
   if(!VM_CURRENT_STUDENT) return;
   
   const approvedVideos = MY_VIDEOS
-  .filter(v => v.status === 'approved')
-  .sort((a, b) => new Date(a.created_at) - new Date(b.created_at)); // ✅ الأقدم الأول
-
-if(!approvedVideos.length){
-  toast('لا يوجد فيديوهات معتمدة','err');
-  return;
-}
+    .filter(v => v.status === 'approved')
+    .sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+  
+  if(!approvedVideos.length){
+    toast('لا يوجد فيديوهات معتمدة','err');
+    return;
+  }
   
   const firstVideo = approvedVideos[0];
   const btn = $('smOpenAll');
@@ -1108,7 +1252,7 @@ $('studentModal').onclick = (e) => {
   }
 };
 
-/* SETTINGS */
+/* ============ SETTINGS ============ */
 async function loadSettings(){
   try{
     $('accUsername').value = INSTRUCTOR.username || '';
@@ -1127,7 +1271,7 @@ async function loadSettings(){
   }
 }
 
-/* SAVE PROFILE (مع تغيير الاسم) */
+/* SAVE PROFILE */
 $('saveProfileBtn').onclick = async () => {
   if(!ensurePass()) return;
   const newUsername = clean($('accUsername').value);
@@ -1136,7 +1280,6 @@ $('saveProfileBtn').onclick = async () => {
   
   const usernameChanged = newUsername && newUsername !== INSTRUCTOR.username;
   
-  /* لو فيه تغيير في الاسم → validation + تأكيد */
   if(usernameChanged){
     if(!/^[A-Za-z0-9_]+$/.test(newUsername)){
       return toast('اسم المستخدم: حروف إنجليزية وأرقام و _ فقط','err');
@@ -1158,7 +1301,6 @@ $('saveProfileBtn').onclick = async () => {
   btn.disabled = true; btn.textContent = '...';
   
   try{
-    /* 1) تغيير الاسم */
     if(usernameChanged){
       const {data: nameData, error: nameErr} = await sb.rpc('instructor_change_username', {
         p_current_username: INSTRUCTOR.username,
@@ -1182,21 +1324,18 @@ $('saveProfileBtn').onclick = async () => {
         return;
       }
       
-      /* تحديث الجلسة والاسم */
       INSTRUCTOR.username = newUsername;
       const s = getSession();
       if(s){ s.username = newUsername; localStorage.setItem('sayoda_session', JSON.stringify(s)); }
       
       toast('✅ تم تغيير اسمك إلى ' + newUsername,'ok');
       
-      /* لو مفيش تغيير في spec/bio → خروج تلقائي */
       if(spec === INSTRUCTOR.specialty && bio === INSTRUCTOR.bio){
         setTimeout(()=>location.replace('./login.html'), 2000);
         return;
       }
     }
     
-    /* 2) تحديث النبذة والتخصص */
     if(spec !== INSTRUCTOR.specialty || bio !== INSTRUCTOR.bio){
       const {data, error} = await sb.rpc('instructor_update_profile', {
         p_username: INSTRUCTOR.username,
@@ -1265,67 +1404,6 @@ $('saveWhatsappBtn').onclick = async () => {
     btn.disabled = false; btn.textContent = '💾 حفظ الرقم';
   }
 };
-
-/* ============ SESSION VALIDATION ============ */
-async function checkSession(){
-  try{
-    const s = JSON.parse(localStorage.getItem('sayoda_session')||'null');
-    if(!s || !s.username || !s.token) return;
-    
-    const {data, error} = await sb.rpc('validate_session', {
-      p_username: s.username,
-      p_token: s.token
-    });
-    
-    if(error) return;
-    
-    if(data === false){
-      console.log('🚫 الجلسة انتهت');
-      localStorage.removeItem('sayoda_session');
-      sessionStorage.removeItem('sayoda_instructor_pass');
-      showSessionEndedModal();
-    }
-  }catch(e){}
-}
-
-function showSessionEndedModal(){
-  if(document.getElementById('sessionEndedModal')) return;
-  
-  const modal = document.createElement('div');
-  modal.id = 'sessionEndedModal';
-  modal.innerHTML = `
-    <div class="sem-overlay"></div>
-    <div class="sem-box">
-      <div class="sem-icon">🔐</div>
-      <h2 class="sem-title">انتهت الجلسة</h2>
-      <p class="sem-desc">
-        تم تسجيل الدخول لحسابك من جهاز آخر<br>
-        سيتم تسجيل خروجك من هذا الجهاز
-      </p>
-      <button class="sem-btn" onclick="location.replace('./login.html')">
-        🔑 تسجيل الدخول مرة أخرى
-      </button>
-      <div class="sem-timer">
-        سيتم التحويل خلال <span id="semCount">10</span> ثانية
-      </div>
-    </div>
-  `;
-  document.body.appendChild(modal);
-  
-  let count = 10;
-  const timer = setInterval(() => {
-    count--;
-    const el = document.getElementById('semCount');
-    if(el) el.textContent = count;
-    if(count <= 0){
-      clearInterval(timer);
-      location.replace('./login.html');
-    }
-  }, 1000);
-}
-
-checkSession();
-setInterval(checkSession, 30000);
 
 /* SERVICE WORKER */
 if('serviceWorker' in navigator){
