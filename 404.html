@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#020812" />
+<title>404 — الصفحة غير موجودة | CYBER FORCE</title>
+<link rel="manifest" href="./manifest.json" />
+<link rel="icon" href="./logo.png" />
+<link rel="apple-touch-icon" href="./logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --blue:#19aaff; --blue-2:#0b7fd4; --blue-3:#00d4ff;
+  --blue-soft:rgba(25,170,255,.14);
+  --bg:#020812; --bg-2:#061024;
+  --txt:#eaf4ff; --muted:#93a7c4;
+  --gold:#ffd54a;
+  --danger:#ff4d6d;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;-moz-user-select:none;user-select:none}
+html,body{height:100%;overflow:hidden}
+body{
+  background:var(--bg); color:var(--txt);
+  display:flex; align-items:center; justify-content:center;
+  padding:20px; position:relative; overflow:hidden;
+}
+
+.bg-layer{
+  position:fixed;inset:0;z-index:0;
+  background:url('./bg.png') center/cover no-repeat;
+  filter:brightness(.35) saturate(1.2);
+  animation:bgZoom 20s ease-in-out infinite alternate;
+}
+@keyframes bgZoom{
+  from{transform:scale(1.05) translate(0,0)}
+  to{transform:scale(1.15) translate(-2%,2%)}
+}
+.bg-overlay{
+  position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(circle at 20% 30%,rgba(25,170,255,.25),transparent 50%),
+    radial-gradient(circle at 80% 70%,rgba(255,77,109,.15),transparent 50%),
+    linear-gradient(180deg,rgba(2,8,18,.7),rgba(2,8,18,.95));
+}
+
+.grid-fx{
+  position:fixed;inset:0;z-index:1;opacity:.3;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(25,170,255,.15) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(25,170,255,.15) 1px,transparent 1px);
+  background-size:50px 50px;
+  mask-image:radial-gradient(ellipse at center,#000 20%,transparent 70%);
+  -webkit-mask-image:radial-gradient(ellipse at center,#000 20%,transparent 70%);
+  animation:gridMove 15s linear infinite;
+}
+@keyframes gridMove{
+  from{background-position:0 0}
+  to{background-position:50px 50px}
+}
+
+.glow-line{
+  position:fixed;left:0;right:0;height:1px;z-index:1;pointer-events:none;
+  background:linear-gradient(90deg,transparent,var(--blue),transparent);
+  opacity:.3;
+  animation:lineMove 8s ease-in-out infinite;
+}
+.glow-line.l1{top:20%;animation-delay:0s}
+.glow-line.l2{top:60%;animation-delay:3s}
+@keyframes lineMove{
+  0%,100%{opacity:.15;transform:scaleX(.5)}
+  50%{opacity:.4;transform:scaleX(1)}
+}
+
+.card{
+  position:relative;z-index:5;
+  width:100%;max-width:520px;
+  background:rgba(12,22,44,.65);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid rgba(25,170,255,.25);
+  border-radius:28px;
+  padding:44px 32px 36px;
+  text-align:center;
+  box-shadow:
+    0 30px 80px rgba(0,0,0,.6),
+    0 0 0 1px rgba(255,255,255,.03) inset,
+    0 0 80px rgba(25,170,255,.15);
+  animation:cardIn .8s cubic-bezier(.2,.9,.3,1.4);
+  overflow:hidden;
+}
+@keyframes cardIn{
+  from{opacity:0;transform:translateY(40px) scale(.94)}
+  to{opacity:1;transform:none}
+}
+
+.card::before{
+  content:'';position:absolute;inset:-2px;
+  border-radius:30px;padding:2px;
+  background:conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    var(--blue) 60deg,
+    var(--blue-3) 120deg,
+    transparent 180deg,
+    var(--blue) 240deg,
+    var(--blue-3) 300deg,
+    transparent 360deg
+  );
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  animation:rotateBorder 6s linear infinite;
+  pointer-events:none;
+}
+@keyframes rotateBorder{
+  to{transform:rotate(360deg)}
+}
+
+.error-num{
+  font-size:130px;
+  font-weight:900;
+  line-height:1;
+  margin-bottom:8px;
+  background:linear-gradient(135deg,var(--blue) 0%,var(--blue-3) 50%,var(--blue-2) 100%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  letter-spacing:-6px;
+  filter:drop-shadow(0 0 40px rgba(25,170,255,.6));
+  animation:glitch 3s ease-in-out infinite;
+  position:relative;
+}
+.error-num span{
+  display:inline-block;
+  animation:floatNum 3s ease-in-out infinite;
+}
+.error-num span:nth-child(1){animation-delay:0s}
+.error-num span:nth-child(2){animation-delay:.15s}
+.error-num span:nth-child(3){animation-delay:.3s}
+@keyframes floatNum{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+@keyframes glitch{
+  0%,90%,100%{transform:translate(0)}
+  92%{transform:translate(-3px,2px)}
+  94%{transform:translate(3px,-2px)}
+  96%{transform:translate(-2px,-2px)}
+  98%{transform:translate(2px,2px)}
+}
+
+.lock-icon{
+  width:90px;height:90px;
+  margin:0 auto 18px;
+  border-radius:50%;
+  background:linear-gradient(135deg,rgba(255,77,109,.15),rgba(25,170,255,.15));
+  border:2px solid rgba(255,77,109,.4);
+  display:grid;place-items:center;
+  font-size:42px;
+  animation:pulseGlow 2.5s ease-in-out infinite;
+  box-shadow:0 0 40px rgba(255,77,109,.4);
+}
+@keyframes pulseGlow{
+  0%,100%{transform:scale(1);box-shadow:0 0 40px rgba(255,77,109,.4)}
+  50%{transform:scale(1.06);box-shadow:0 0 70px rgba(255,77,109,.7)}
+}
+
+.title{
+  font-size:26px;
+  font-weight:900;
+  margin-bottom:14px;
+  background:linear-gradient(135deg,#fff,var(--blue-3));
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  letter-spacing:.5px;
+}
+
+.desc{
+  color:var(--muted);
+  font-size:15px;
+  line-height:1.9;
+  margin-bottom:28px;
+  padding:0 8px;
+}
+
+.actions{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  width:100%;
+  padding:16px 22px;
+  border:none;
+  border-radius:14px;
+  font-size:15px;
+  font-weight:900;
+  color:#021226;
+  cursor:pointer;
+  text-decoration:none;
+  letter-spacing:.5px;
+  transition:transform .15s,box-shadow .25s;
+  position:relative;
+  overflow:hidden;
+}
+.btn::before{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.3) 50%,transparent 70%);
+  transform:translateX(-100%);
+  transition:transform .6s;
+}
+.btn:hover::before{transform:translateX(100%)}
+.btn:hover{transform:translateY(-2px)}
+
+.btn-primary{
+  background:linear-gradient(135deg,var(--blue),var(--blue-2));
+  box-shadow:0 10px 30px rgba(25,170,255,.4);
+}
+.btn-primary:hover{box-shadow:0 14px 40px rgba(25,170,255,.6)}
+
+.btn-team{
+  background:linear-gradient(135deg,var(--gold),#ff9800);
+  color:#3a2600;
+  box-shadow:0 10px 30px rgba(255,213,74,.4);
+}
+.btn-team:hover{box-shadow:0 14px 40px rgba(255,213,74,.6)}
+
+.btn-ghost{
+  background:transparent;
+  border:1px solid rgba(25,170,255,.35);
+  color:var(--blue);
+}
+.btn-ghost:hover{background:rgba(25,170,255,.1);border-color:var(--blue)}
+
+.btn .ic{
+  font-size:20px;
+  display:inline-block;
+}
+
+.foot{
+  margin-top:22px;
+  padding-top:18px;
+  border-top:1px solid rgba(25,170,255,.15);
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.7;
+}
+.foot a{
+  color:var(--blue);
+  font-weight:900;
+  text-decoration:none;
+  transition:.2s;
+}
+.foot a:hover{color:var(--blue-3);text-shadow:0 0 20px rgba(25,170,255,.5)}
+
+.particles{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.particle{
+  position:absolute;
+  width:3px;height:3px;
+  background:var(--blue);
+  border-radius:50%;
+  box-shadow:0 0 10px var(--blue);
+  animation:floatUp linear infinite;
+  opacity:0;
+}
+@keyframes floatUp{
+  0%{transform:translateY(100vh) scale(0);opacity:0}
+  10%{opacity:1}
+  90%{opacity:1}
+  100%{transform:translateY(-10vh) scale(1);opacity:0}
+}
+
+@media(max-width:560px){
+  .card{padding:34px 22px 28px;border-radius:22px}
+  .error-num{font-size:96px;letter-spacing:-4px}
+  .lock-icon{width:74px;height:74px;font-size:34px}
+  .title{font-size:22px}
+  .desc{font-size:14px;margin-bottom:22px}
+  .btn{padding:14px 18px;font-size:14px}
+}
+
+@media(max-width:380px){
+  .error-num{font-size:80px}
+  .title{font-size:20px}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-layer"></div>
+<div class="bg-overlay"></div>
+<div class="grid-fx"></div>
+<div class="glow-line l1"></div>
+<div class="glow-line l2"></div>
+
+<div class="particles" id="particles"></div>
+
+<div class="card">
+  
+  <div class="lock-icon">🚫</div>
+  
+  <div class="error-num">
+    <span>4</span><span>0</span><span>4</span>
+  </div>
+  
+  <h1 class="title">الصفحة غير موجودة</h1>
+  
+  <p class="desc">
+    عذراً، الصفحة اللي بتدور عليها<br>
+    مش موجودة أو اتنقلت لمكان تاني 🔍
+    <br><br>
+    <span style="color:var(--blue);font-weight:800">CYBER FORCE</span>
+    <br>
+    <small style="font-size:12px">لو عندك مشكلة، تواصل معنا</small>
+  </p>
+  
+  <div class="actions">
+    <a href="./index.html" class="btn btn-primary">
+      <span class="ic">🏠</span>
+      <span>الرجوع للصفحة الرئيسية</span>
+    </a>
+    
+    <a href="https://elsayedhasaneisa1-collab.github.io/team-cyber-force-/" target="_blank" rel="noopener noreferrer" class="btn btn-team">
+      <span class="ic">👥</span>
+      <span>فريق CYBER FORCE</span>
+    </a>
+    
+    <button onclick="history.back()" class="btn btn-ghost">
+      <span class="ic">←</span>
+      <span>رجوع للصفحة السابقة</span>
+    </button>
+  </div>
+  
+  <div class="foot">
+    © 2026 جميع الحقوق محفوظة 
+    <a href="https://elsayedhasaneisa1-collab.github.io/team-cyber-force-/" target="_blank" rel="noopener noreferrer">EL-sayed Hasan</a>
+  </div>
+  
+</div>
+
+<script>
+(function(){
+  const container = document.getElementById('particles');
+  const count = window.innerWidth < 600 ? 15 : 30;
+  
+  for(let i = 0; i < count; i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (8 + Math.random() * 12) + 's';
+    p.style.animationDelay = Math.random() * 8 + 's';
+    p.style.opacity = Math.random() * 0.6 + 0.2;
+    
+    const colors = ['#19aaff', '#00d4ff', '#ffd54a', '#ff4d6d'];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    p.style.background = color;
+    p.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}`;
+    
+    container.appendChild(p);
+  }
+})();
+</script>
+
+</body>
+</html>
