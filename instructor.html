@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<meta name="theme-color" content="#020812" />
+<meta name="theme-color" content="#021208" />
 <title>لوحة المدرب | CYBER FORCE</title>
 <link rel="manifest" href="./manifest.json" />
 <link rel="icon" href="./logo.png" />
@@ -15,22 +15,28 @@
 
 <style>
 :root{
-  --blue:#19aaff; --blue-2:#0b7fd4; --blue-3:#00d4ff;
-  --blue-soft:rgba(25,170,255,.14);
-  --gold:#ffd700; --gold-2:#ffb700;
-  --gold-soft:rgba(255,215,0,.12);
-  --bg:#020812; --bg-2:#061024; --bg-3:#0a1730;
-  --card:rgba(12,22,44,.72); --card-solid:#0b1428;
-  --border:rgba(25,170,255,.18); --border-gold:rgba(255,215,0,.25);
-  --txt:#eaf4ff; --muted:#93a7c4;
-  --danger:#ff4d6d; --ok:#28d17c; --warn:#ffb020;
-  --radius:16px; --shadow:0 20px 60px rgba(0,0,0,.45);
+  /* ألوان سايبر خضراء */
+  --green:#00ff88;
+  --green-2:#00cc6a;
+  --green-3:#00ffaa;
+  --green-soft:rgba(0,255,136,.12);
+  --green-glow:rgba(0,255,136,.4);
+  
+  --bg:#021208; --bg-2:#041a0c; --bg-3:#062410;
+  --card:rgba(6,24,14,.85); --card-solid:#041a0c;
+  --border:rgba(0,255,136,.22); --border-soft:rgba(0,255,136,.12);
+  --txt:#e6ffee; --muted:#7fa890;
+  --danger:#ff4d6d; --ok:#28d17c; --warn:#ffb020; --gold:#ffd54a;
+  --radius:16px; --shadow:0 20px 60px rgba(0,0,0,.6);
 }
 [data-theme="light"]{
-  --bg:#eef4fc; --bg-2:#ffffff; --bg-3:#f3f7fd;
-  --card:rgba(255,255,255,.85); --card-solid:#ffffff;
-  --border:rgba(11,127,212,.22); --txt:#0a1b34; --muted:#5a708f;
-  --shadow:0 18px 50px rgba(20,60,120,.14);
+  --bg:#f0fff7; --bg-2:#ffffff; --bg-3:#e6fff0;
+  --card:rgba(255,255,255,.9); --card-solid:#ffffff;
+  --border:rgba(0,180,90,.25); --border-soft:rgba(0,180,90,.15);
+  --txt:#0a2414; --muted:#4a7059;
+  --green:#00b359; --green-2:#009944; --green-3:#00cc6a;
+  --green-soft:rgba(0,180,90,.1);
+  --shadow:0 18px 50px rgba(0,80,40,.15);
 }
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:hidden}
@@ -40,12 +46,12 @@ body{
 }
 [data-theme="dark"] body{
   background:
-    radial-gradient(circle at 15% 10%,rgba(255,215,0,.08),transparent 40%),
-    radial-gradient(circle at 85% 90%,rgba(25,170,255,.08),transparent 40%),
+    radial-gradient(circle at 15% 10%,rgba(0,255,136,.10),transparent 40%),
+    radial-gradient(circle at 85% 90%,rgba(0,204,106,.08),transparent 40%),
     var(--bg);
 }
 ::-webkit-scrollbar{width:8px;height:8px}
-::-webkit-scrollbar-thumb{background:linear-gradient(var(--gold),var(--blue));border-radius:20px}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--green),var(--green-2));border-radius:20px}
 ::-webkit-scrollbar-track{background:transparent}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
@@ -59,36 +65,36 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 }
 .gate::before{
   content:'';position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(circle at 50% 30%,rgba(255,215,0,.15),transparent 60%);
+  background:radial-gradient(circle at 50% 30%,rgba(0,255,136,.15),transparent 60%);
 }
 .gate-box{
-  position:relative;background:linear-gradient(160deg,rgba(26,18,6,.98),rgba(20,13,0,.98));
-  border:1px solid var(--border-gold);border-radius:26px;padding:36px 28px;
+  position:relative;background:linear-gradient(160deg,rgba(4,26,12,.98),rgba(2,18,8,.98));
+  border:1px solid var(--border);border-radius:26px;padding:36px 28px;
   width:100%;max-width:450px;text-align:center;
-  box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(255,215,0,.15);
+  box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(0,255,136,.15);
 }
 .gate-box img{
   width:100px;height:100px;object-fit:contain;margin:0 auto 18px;display:block;
-  filter:drop-shadow(0 0 28px rgba(255,215,0,.8));
+  filter:drop-shadow(0 0 28px rgba(0,255,136,.8));
   animation:float 4s ease-in-out infinite;
 }
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .gate-box h2{
   font-size:22px;font-weight:900;margin-bottom:8px;
-  background:linear-gradient(135deg,var(--gold),var(--gold-2));
+  background:linear-gradient(135deg,var(--green),var(--green-3));
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
 .gate-box p{color:var(--muted);font-size:13px;margin-bottom:22px;line-height:1.6}
 .gate-box input{
   width:100%;padding:15px;border-radius:13px;
-  border:1px solid var(--border-gold);background:rgba(3,10,22,.7);
+  border:1px solid var(--border);background:rgba(2,18,8,.7);
   color:var(--txt);outline:none;text-align:center;font-size:16px;
   margin-bottom:12px;transition:.2s;
   font-family:inherit;direction:ltr;
 }
 .gate-box input:focus{
-  border-color:var(--gold);
-  box-shadow:0 0 0 4px rgba(255,215,0,.15);
+  border-color:var(--green);
+  box-shadow:0 0 0 4px rgba(0,255,136,.15);
 }
 .gate-msg{
   font-size:13px;font-weight:700;margin-bottom:12px;
@@ -96,20 +102,13 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 }
 .gate-btn{
   width:100%;padding:14px 22px;border:none;border-radius:12px;
-  background:linear-gradient(135deg,var(--gold),var(--gold-2));
-  color:#0a0600;font-weight:900;font-size:15px;
-  transition:.2s;box-shadow:0 10px 30px rgba(255,215,0,.3);
+  background:linear-gradient(135deg,var(--green),var(--green-2));
+  color:#021208;font-weight:900;font-size:15px;
+  transition:.2s;box-shadow:0 10px 30px rgba(0,255,136,.3);
   cursor:pointer;font-family:inherit;
 }
-.gate-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(255,215,0,.5)}
+.gate-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,255,136,.5)}
 .gate-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.gate-btn.loading::after{
-  content:'';display:inline-block;width:14px;height:14px;
-  border:2px solid rgba(10,6,0,.3);border-top-color:#0a0600;
-  border-radius:50%;animation:spin .7s linear infinite;
-  margin-right:8px;vertical-align:middle;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
 
 #appContent{display:none}
 #appContent.show{display:block}
@@ -119,34 +118,34 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
   position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
   gap:10px;padding:10px 16px;background:var(--card);
   backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--border-gold);min-height:62px;
+  border-bottom:1px solid var(--border);min-height:62px;
 }
 .hd-left{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
-.hd-left img{width:38px;height:38px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(255,215,0,.6));flex-shrink:0}
+.hd-left img{width:38px;height:38px;object-fit:contain;filter:drop-shadow(0 0 10px rgba(0,255,136,.6));flex-shrink:0}
 .hd-title{font-weight:900;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hd-title span{color:var(--gold)}
+.hd-title span{color:var(--green)}
 .hd-title small{display:block;font-size:9px;color:var(--muted);font-weight:600;margin-top:1px}
 .hd-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
 .icon-btn{
-  width:40px;height:40px;border-radius:12px;border:1px solid var(--border-gold);
-  background:var(--gold-soft);color:var(--gold);display:grid;place-items:center;
+  width:40px;height:40px;border-radius:12px;border:1px solid var(--border);
+  background:var(--green-soft);color:var(--green);display:grid;place-items:center;
   transition:.2s;font-size:18px;flex-shrink:0;
 }
-.icon-btn:hover{background:var(--gold);color:#0a0600;transform:translateY(-2px)}
+.icon-btn:hover{background:var(--green);color:#021208;transform:translateY(-2px)}
 
 /* ============ MAIN ============ */
 .main{max-width:1100px;margin:0 auto;padding:20px 16px}
 
 .welcome-card{
-  background:linear-gradient(135deg,rgba(255,215,0,.14),rgba(25,170,255,.06));
-  border:1px solid var(--border-gold);border-radius:20px;padding:20px;
+  background:linear-gradient(135deg,rgba(0,255,136,.14),rgba(0,204,106,.05));
+  border:1px solid var(--border);border-radius:20px;padding:20px;
   display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap;
 }
 .welcome-av{
   width:70px;height:70px;border-radius:50%;
-  background:linear-gradient(135deg,var(--gold),var(--gold-2));
+  background:linear-gradient(135deg,var(--green),var(--green-2));
   display:grid;place-items:center;font-size:30px;font-weight:900;
-  color:#0a0600;flex-shrink:0;box-shadow:0 0 24px rgba(255,215,0,.5);
+  color:#021208;flex-shrink:0;box-shadow:0 0 24px rgba(0,255,136,.5);
 }
 .welcome-info{flex:1;min-width:180px}
 .welcome-info h1{font-size:20px;font-weight:900}
@@ -154,8 +153,8 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 .welcome-badge{
   display:inline-flex;align-items:center;gap:6px;margin-top:8px;
   padding:4px 12px;border-radius:20px;
-  background:var(--gold-soft);border:1px solid var(--border-gold);
-  font-weight:800;font-size:12px;color:var(--gold);
+  background:var(--green-soft);border:1px solid var(--border);
+  font-weight:800;font-size:12px;color:var(--green);
 }
 
 .stats-grid{
@@ -169,15 +168,15 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 }
 .stat-card::before{
   content:'';position:absolute;top:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--gold),var(--blue));opacity:.7;
+  background:linear-gradient(90deg,var(--green),var(--green-3));opacity:.7;
 }
-.stat-card:hover{transform:translateY(-3px);border-color:var(--gold)}
+.stat-card:hover{transform:translateY(-3px);border-color:var(--green)}
 .stat-card .ic{font-size:26px;margin-bottom:6px;display:block;opacity:.9}
-.stat-card .n{font-size:24px;font-weight:900;color:var(--gold);line-height:1.2}
+.stat-card .n{font-size:24px;font-weight:900;color:var(--green);line-height:1.2}
 .stat-card .l{font-size:11px;color:var(--muted);font-weight:700;margin-top:4px}
 
 .tabs{
-  display:flex;gap:6px;background:var(--card);border:1px solid var(--border-gold);
+  display:flex;gap:6px;background:var(--card);border:1px solid var(--border);
   border-radius:14px;padding:6px;margin-bottom:20px;overflow-x:auto;
   scrollbar-width:none;
 }
@@ -186,40 +185,40 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
   flex:1;min-width:fit-content;padding:12px 18px;border-radius:10px;
   font-weight:800;font-size:13px;color:var(--muted);transition:.2s;
   display:flex;align-items:center;justify-content:center;gap:6px;
-  white-space:nowrap;
+  white-space:nowrap;background:transparent;border:none;
 }
-.tab:hover{color:var(--gold)}
+.tab:hover{color:var(--green)}
 .tab.active{
-  background:linear-gradient(135deg,var(--gold),var(--gold-2));
-  color:#0a0600;box-shadow:0 6px 18px rgba(255,215,0,.3);
+  background:linear-gradient(135deg,var(--green),var(--green-2));
+  color:#021208;box-shadow:0 6px 18px rgba(0,255,136,.3);
 }
 .tab-content{display:none;animation:fade .3s}
 .tab-content.active{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
 .card{
-  background:var(--card);border:1px solid var(--border-gold);
+  background:var(--card);border:1px solid var(--border);
   border-radius:var(--radius);padding:20px;margin-bottom:16px;
   box-shadow:var(--shadow);
 }
 .card h3{
-  font-size:16px;font-weight:900;margin-bottom:16px;color:var(--gold);
+  font-size:16px;font-weight:900;margin-bottom:16px;color:var(--green);
   display:flex;align-items:center;gap:8px;
 }
 .card h3::before{
   content:'';width:4px;height:18px;border-radius:2px;
-  background:linear-gradient(180deg,var(--gold),var(--gold-2));
+  background:linear-gradient(180deg,var(--green),var(--green-2));
 }
 
 .field{margin-bottom:12px}
-.field label{display:block;font-size:12px;font-weight:700;margin-bottom:6px;color:#cfe3fb}
+.field label{display:block;font-size:12px;font-weight:700;margin-bottom:6px;color:#b8ffd9}
 .field input,.field textarea,.field select{
   width:100%;padding:13px 16px;border-radius:12px;
-  background:rgba(3,10,22,.6);border:1px solid var(--border-gold);
+  background:rgba(2,18,8,.6);border:1px solid var(--border);
   color:var(--txt);font-size:14px;outline:none;transition:.2s;font-family:inherit;
 }
 .field input:focus,.field textarea:focus,.field select:focus{
-  border-color:var(--gold);box-shadow:0 0 0 4px rgba(255,215,0,.12);
+  border-color:var(--green);box-shadow:0 0 0 4px rgba(0,255,136,.12);
 }
 .field textarea{min-height:80px;resize:vertical}
 .field select{cursor:pointer;-webkit-appearance:none;appearance:none}
@@ -227,25 +226,23 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 
 .btn{
   padding:13px 22px;border-radius:12px;
-  background:linear-gradient(135deg,var(--gold),var(--gold-2));
-  color:#0a0600;font-size:14px;font-weight:900;
-  transition:.2s;box-shadow:0 8px 24px rgba(255,215,0,.3);
+  background:linear-gradient(135deg,var(--green),var(--green-2));
+  color:#021208;font-size:14px;font-weight:900;
+  transition:.2s;box-shadow:0 8px 24px rgba(0,255,136,.3);
   display:inline-flex;align-items:center;justify-content:center;gap:6px;
   font-family:inherit;
 }
-.btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,215,0,.4)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,255,136,.4)}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .btn.full{width:100%}
-.btn.blue{background:linear-gradient(135deg,var(--blue),var(--blue-2));color:#fff;box-shadow:0 8px 24px rgba(25,170,255,.3)}
-.btn.blue:hover{box-shadow:0 12px 32px rgba(25,170,255,.5)}
+.btn.blue{background:linear-gradient(135deg,#19aaff,#0b7fd4);color:#fff;box-shadow:0 8px 24px rgba(25,170,255,.3)}
 .btn.danger{background:linear-gradient(135deg,var(--danger),#c62348);color:#fff;box-shadow:0 8px 24px rgba(255,77,109,.3)}
-.btn.danger:hover{box-shadow:0 12px 32px rgba(255,77,109,.5)}
-.btn.ghost{background:transparent;border:1px solid var(--border-gold);color:var(--gold);box-shadow:none}
-.btn.ghost:hover{background:var(--gold-soft)}
+.btn.ghost{background:transparent;border:1px solid var(--border);color:var(--green);box-shadow:none}
+.btn.ghost:hover{background:var(--green-soft)}
 .btn.sm{padding:8px 14px;font-size:12px;border-radius:9px}
 .btn .spinner{
-  width:16px;height:16px;border:2px solid rgba(10,6,0,.3);
-  border-top-color:#0a0600;border-radius:50%;
+  width:16px;height:16px;border:2px solid rgba(2,18,8,.3);
+  border-top-color:#021208;border-radius:50%;
   animation:spin .7s linear infinite;display:inline-block;
 }
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -267,15 +264,15 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 }
 .duration-btn{
   padding:12px 8px;border-radius:12px;
-  background:rgba(3,10,22,.6);border:1px solid var(--border-gold);
+  background:rgba(2,18,8,.6);border:1px solid var(--border);
   color:var(--muted);font-weight:800;font-size:12px;
   transition:.2s;text-align:center;font-family:inherit;cursor:pointer;
 }
-.duration-btn:hover{border-color:var(--gold);color:var(--gold)}
+.duration-btn:hover{border-color:var(--green);color:var(--green)}
 .duration-btn.active{
-  background:linear-gradient(135deg,var(--gold),var(--gold-2));
-  color:#0a0600;border-color:transparent;
-  box-shadow:0 6px 18px rgba(255,215,0,.3);
+  background:linear-gradient(135deg,var(--green),var(--green-2));
+  color:#021208;border-color:transparent;
+  box-shadow:0 6px 18px rgba(0,255,136,.3);
 }
 .duration-btn .ic{display:block;font-size:18px;margin-bottom:3px}
 
@@ -283,29 +280,29 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 #customDateBox.show{display:block;animation:fade .3s}
 
 .poll-item{
-  background:rgba(3,10,22,.4);border:1px solid var(--border-gold);
+  background:rgba(2,18,8,.4);border:1px solid var(--border);
   border-radius:14px;padding:16px;margin-bottom:12px;transition:.25s;
 }
-.poll-item:hover{border-color:var(--gold)}
+.poll-item:hover{border-color:var(--green)}
 .poll-item .question{
   font-size:15px;font-weight:900;color:var(--txt);margin-bottom:12px;
   display:flex;align-items:start;gap:8px;
 }
-.poll-item .question .icon{color:var(--gold);flex-shrink:0}
+.poll-item .question .icon{color:var(--green);flex-shrink:0}
 .poll-meta{
   display:flex;gap:12px;flex-wrap:wrap;font-size:11px;
   color:var(--muted);font-weight:700;margin-bottom:12px;
 }
 .poll-meta span{display:flex;align-items:center;gap:4px}
-.poll-meta .timer{color:var(--gold);font-weight:900}
+.poll-meta .timer{color:var(--green);font-weight:900}
 .poll-results{display:flex;flex-direction:column;gap:8px;margin-top:12px}
 .poll-result-row{
-  background:rgba(25,170,255,.06);border-radius:10px;padding:10px 12px;
+  background:rgba(0,255,136,.06);border-radius:10px;padding:10px 12px;
   position:relative;overflow:hidden;
 }
 .poll-result-bar{
   position:absolute;top:0;right:0;bottom:0;
-  background:linear-gradient(90deg,var(--blue),var(--blue-3));
+  background:linear-gradient(90deg,var(--green),var(--green-3));
   opacity:.25;transition:width .6s;
 }
 .poll-result-txt{
@@ -314,14 +311,14 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
   font-size:13px;font-weight:700;
 }
 .poll-result-txt .txt{color:var(--txt)}
-.poll-result-txt .pct{color:var(--gold);font-weight:900}
+.poll-result-txt .pct{color:var(--green);font-weight:900}
 
 .video-item{
   display:flex;gap:12px;padding:12px;border-radius:12px;
-  background:rgba(3,10,22,.4);border:1px solid var(--border-gold);
+  background:rgba(2,18,8,.4);border:1px solid var(--border);
   margin-bottom:10px;align-items:center;transition:.2s;flex-wrap:wrap;
 }
-.video-item:hover{border-color:var(--gold)}
+.video-item:hover{border-color:var(--green)}
 .video-thumb{
   width:80px;height:60px;border-radius:10px;object-fit:cover;
   background:var(--bg-3);flex-shrink:0;
@@ -338,14 +335,14 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 
 .student-item{
   display:flex;gap:12px;padding:12px;border-radius:12px;
-  background:rgba(3,10,22,.4);border:1px solid var(--border-gold);
+  background:rgba(2,18,8,.4);border:1px solid var(--border);
   margin-bottom:10px;align-items:center;transition:.2s;flex-wrap:wrap;
 }
-.student-item:hover{border-color:var(--gold)}
+.student-item:hover{border-color:var(--green)}
 .student-av{
   width:44px;height:44px;border-radius:50%;
-  background:linear-gradient(135deg,var(--blue),var(--blue-2));
-  color:#fff;font-weight:900;font-size:18px;
+  background:linear-gradient(135deg,var(--green),var(--green-2));
+  color:#021208;font-weight:900;font-size:18px;
   display:grid;place-items:center;flex-shrink:0;
 }
 .student-info{flex:1;min-width:150px}
@@ -362,7 +359,7 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 .empty p{font-size:14px;line-height:1.6}
 
 .skel{
-  background:linear-gradient(90deg,var(--bg-3) 25%,rgba(255,215,0,.06) 50%,var(--bg-3) 75%);
+  background:linear-gradient(90deg,var(--bg-3) 25%,rgba(0,255,136,.06) 50%,var(--bg-3) 75%);
   background-size:200% 100%;animation:shimmer 1.3s infinite;border-radius:12px;
   height:70px;margin-bottom:10px;
 }
@@ -375,15 +372,15 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 }
 .toast{
   padding:13px 16px;border-radius:12px;
-  background:linear-gradient(135deg,rgba(12,22,44,.98),rgba(6,16,36,.98));
+  background:linear-gradient(135deg,rgba(4,26,12,.98),rgba(2,18,8,.98));
   box-shadow:0 20px 60px rgba(0,0,0,.5);
   display:flex;gap:10px;align-items:center;
   font-weight:700;font-size:13px;pointer-events:auto;
   animation:toastIn .35s;
 }
-.toast.ok{border:1px solid rgba(40,209,124,.5);color:#7ff0b8}
+.toast.ok{border:1px solid rgba(0,255,136,.5);color:#7fffc4}
 .toast.err{border:1px solid rgba(255,77,109,.5);color:#ff9db0}
-.toast.info{border:1px solid rgba(255,215,0,.5);color:#ffe680}
+.toast.info{border:1px solid rgba(0,255,136,.5);color:#a0ffd0}
 .toast .ic{font-size:20px;flex-shrink:0}
 @keyframes toastIn{from{opacity:0;transform:translateY(-20px) scale(.95)}to{opacity:1;transform:none}}
 
@@ -405,7 +402,7 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 </head>
 <body>
 
-<!-- ============ GATE (البوابة) ============ -->
+<!-- GATE -->
 <div class="gate" id="gate">
   <div class="gate-box">
     <img src="./logo.png" alt="logo" onerror="this.style.display='none'">
@@ -417,10 +414,9 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
   </div>
 </div>
 
-<!-- ============ APP CONTENT ============ -->
+<!-- APP -->
 <div id="appContent">
 
-  <!-- HEADER -->
   <header class="header">
     <div class="hd-left">
       <img src="./logo.png" alt="logo" onerror="this.style.display='none'">
@@ -433,7 +429,6 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
     </div>
   </header>
 
-  <!-- MAIN -->
   <main class="main">
 
     <div class="welcome-card">
@@ -459,9 +454,8 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
       <button class="tab" data-tab="profile">👤 ملفي</button>
     </div>
 
-    <!-- ============ TAB: POLLS ============ -->
+    <!-- TAB: POLLS -->
     <div class="tab-content active" id="tab-polls">
-      
       <div class="card">
         <h3>➕ إنشاء استطلاع جديد</h3>
         
@@ -495,7 +489,7 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
             </small>
           </div>
 
-          <small style="font-size:11px;color:var(--muted);display:block;margin-top:8px;padding:8px 12px;background:rgba(255,215,0,.08);border-radius:8px;border:1px solid rgba(255,215,0,.2)">
+          <small style="font-size:11px;color:var(--muted);display:block;margin-top:8px;padding:8px 12px;background:rgba(0,255,136,.08);border-radius:8px;border:1px solid rgba(0,255,136,.2)">
             🗑️ <b>ملاحظة:</b> بعد انتهاء الوقت، هيتمسح الاستطلاع تلقائياً
           </small>
         </div>
@@ -510,12 +504,10 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
           <div class="skel"></div>
         </div>
       </div>
-
     </div>
 
-    <!-- ============ TAB: VIDEOS ============ -->
+    <!-- TAB: VIDEOS -->
     <div class="tab-content" id="tab-videos">
-      
       <div class="card">
         <h3>➕ إضافة فيديو جديد</h3>
         
@@ -552,10 +544,9 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
           <div class="skel"></div>
         </div>
       </div>
-
     </div>
 
-    <!-- ============ TAB: STUDENTS ============ -->
+    <!-- TAB: STUDENTS -->
     <div class="tab-content" id="tab-students">
       <div class="card">
         <h3>👥 الطلاب المشتركين</h3>
@@ -566,7 +557,7 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
       </div>
     </div>
 
-    <!-- ============ TAB: PROFILE ============ -->
+    <!-- TAB: PROFILE -->
     <div class="tab-content" id="tab-profile">
       <div class="card">
         <h3>👤 بياناتي</h3>
@@ -605,7 +596,7 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 
 <script>
 /* ============================================
-   INSTRUCTOR DASHBOARD (SECURED)
+   INSTRUCTOR DASHBOARD (Green Cyber Edition)
    ============================================ */
 const SUPABASE_URL = "https://brawrhpvtnzvvrzkguic.supabase.co";
 const SUPABASE_KEY = "sb_publishable_Q8fBS3nVZqgvfd6diaul8A_cMvHUFtN";
@@ -619,7 +610,17 @@ let USER = null;
 let POLL_OPTIONS = ['', ''];
 let SELECTED_HOURS = 72;
 
-/* ============ THEME ============ */
+/* SESSION */
+function getSession(){
+  try{ return JSON.parse(localStorage.getItem('sayoda_session')||'null'); }
+  catch(e){ return null; }
+}
+const SESSION = getSession();
+if(!SESSION || !SESSION.username || !SESSION.token){
+  location.replace('./login.html');
+}
+
+/* THEME */
 (function initTheme(){
   const t = localStorage.getItem('sayoda_theme') || 'dark';
   document.documentElement.setAttribute('data-theme', t);
@@ -636,7 +637,7 @@ $('themeBtn').onclick = () => {
   updateThemeBtn(nx);
 };
 
-/* ============ TOAST ============ */
+/* TOAST */
 function toast(msg, type='info', duration=3500){
   const icons = { ok:'✅', err:'⚠️', info:'ℹ️' };
   const el = document.createElement('div');
@@ -651,29 +652,25 @@ function toast(msg, type='info', duration=3500){
   }, duration);
 }
 
-/* ============ GATE FUNCTIONS ============ */
-function showGateError(msg){
-  $('gateMsg').textContent = msg;
-}
+/* GATE */
+function showGateError(msg){ $('gateMsg').textContent = msg; }
 function hideGate(){
   $('gate').style.display = 'none';
   $('appContent').classList.add('show');
 }
 
-/* ============ GATE SUBMIT ============ */
 $('gateBtn').onclick = async () => {
   const password = $('gatePass').value;
   if(!password){
     return showGateError('⚠️ أدخل كلمة المرور');
   }
   if(!SESSION || !SESSION.username){
-    return showGateError('⚠️ الجلسة منتهية — أعد تسجيل الدخول');
+    return showGateError('⚠️ الجلسة منتهية');
   }
 
   const btn = $('gateBtn');
   btn.disabled = true;
-  btn.classList.add('loading');
-  btn.textContent = 'جاري التحقق';
+  btn.textContent = 'جاري التحقق...';
   showGateError('');
 
   try{
@@ -694,7 +691,6 @@ $('gateBtn').onclick = async () => {
       return;
     }
 
-    // ✅ نجح — احفظ الباسورد في sessionStorage
     sessionStorage.setItem('sayoda_instructor_pass', password);
     hideGate();
     await init();
@@ -704,7 +700,6 @@ $('gateBtn').onclick = async () => {
     showGateError('⚠️ خطأ في الاتصال');
   }finally{
     btn.disabled = false;
-    btn.classList.remove('loading');
     btn.textContent = '🔓 دخول';
   }
 };
@@ -713,30 +708,19 @@ $('gatePass').addEventListener('keydown', e => {
   if(e.key === 'Enter') $('gateBtn').click();
 });
 
-/* ============ SESSION CHECK ============ */
-function getSession(){
-  try{ return JSON.parse(localStorage.getItem('sayoda_session')||'null'); }
-  catch(e){ return null; }
-}
-const SESSION = getSession();
-
-if(!SESSION || !SESSION.username || !SESSION.token){
-  location.replace('./login.html');
-}
-
-/* ============ THEME BTN (placeholder before gate) ============ */
+/* BUTTONS */
 $('homeBtn').onclick = () => location.href = './index.html';
 $('logoutBtn').onclick = async () => {
   if(!confirm('تسجيل الخروج؟')) return;
   try{
-    if(SESSION && SESSION.token) await sb.rpc('secure_logout', { p_token: SESSION.token });
+    if(SESSION.token) await sb.rpc('secure_logout', { p_token: SESSION.token });
   }catch(e){}
   localStorage.removeItem('sayoda_session');
   sessionStorage.removeItem('sayoda_instructor_pass');
   location.replace('./login.html');
 };
 
-/* ============ TABS ============ */
+/* TABS */
 document.querySelectorAll('.tab').forEach(tab => {
   tab.onclick = () => {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -750,18 +734,16 @@ document.querySelectorAll('.tab').forEach(tab => {
   };
 });
 
-/* ============ DURATION SELECTOR ============ */
+/* DURATION */
 document.querySelectorAll('.duration-btn').forEach(btn => {
   btn.onclick = () => {
     document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-
     const val = btn.dataset.hours;
     if(val === 'custom'){
       $('customDateBox').classList.add('show');
       const tomorrow = new Date(Date.now() + 24*60*60*1000);
-      const iso = tomorrow.toISOString().slice(0, 16);
-      $('pollCustomDate').value = iso;
+      $('pollCustomDate').value = tomorrow.toISOString().slice(0, 16);
       SELECTED_HOURS = 'custom';
     } else {
       $('customDateBox').classList.remove('show');
@@ -770,80 +752,48 @@ document.querySelectorAll('.duration-btn').forEach(btn => {
   };
 });
 
-/* ============ POLL OPTIONS ============ */
+/* POLL OPTIONS */
 function renderPollOptions(){
   const container = $('pollOptionsList');
   container.innerHTML = POLL_OPTIONS.map((val, i) => `
     <div class="poll-option-row">
       <input type="text" placeholder="الخيار ${i+1}" value="${esc(val)}" data-idx="${i}" maxlength="100" />
-      ${POLL_OPTIONS.length > 2 ? `<button type="button" data-del="${i}" title="حذف">✕</button>` : ''}
+      ${POLL_OPTIONS.length > 2 ? `<button type="button" data-del="${i}">✕</button>` : ''}
     </div>
   `).join('');
 
   container.querySelectorAll('input').forEach(inp => {
-    inp.oninput = (e) => {
-      POLL_OPTIONS[+e.target.dataset.idx] = e.target.value;
-    };
+    inp.oninput = (e) => { POLL_OPTIONS[+e.target.dataset.idx] = e.target.value; };
   });
-
   container.querySelectorAll('[data-del]').forEach(btn => {
-    btn.onclick = () => {
-      POLL_OPTIONS.splice(+btn.dataset.del, 1);
-      renderPollOptions();
-    };
+    btn.onclick = () => { POLL_OPTIONS.splice(+btn.dataset.del, 1); renderPollOptions(); };
   });
 }
 
 $('addOptionBtn').onclick = () => {
-  if(POLL_OPTIONS.length >= 6){
-    toast('الحد الأقصى 6 خيارات', 'err');
-    return;
-  }
+  if(POLL_OPTIONS.length >= 6){ toast('الحد الأقصى 6 خيارات', 'err'); return; }
   POLL_OPTIONS.push('');
   renderPollOptions();
 };
 
-/* ============ INIT ============ */
+/* INIT */
 async function init(){
   try{
-    // ✅ 1. تحقق من التوكن في السيرفر
-    const { data: verifyData, error: verifyErr } = await sb.rpc('verify_instructor_session', {
-      p_token: SESSION.token
-    });
-
-    if(verifyErr) throw verifyErr;
-    const vRes = Array.isArray(verifyData) ? verifyData[0] : verifyData;
-
-    if(!vRes || !vRes.ok){
-      const errCode = vRes && vRes.error;
-      if(errCode === 'invalid_token' || errCode === 'user_not_found'){
-        try{ localStorage.removeItem('sayoda_session'); }catch(e){}
-        try{ sessionStorage.removeItem('sayoda_instructor_pass'); }catch(e){}
-        location.replace('./login.html');
-        return;
-      }
-      if(errCode === 'not_instructor'){
-        toast('🚫 هذا الحساب ليس مدرب', 'err', 4000);
-        setTimeout(() => location.replace('./index.html'), 2000);
-        return;
-      }
-      toast('⚠️ تعذّر التحقق من الجلسة', 'err');
-      return;
-    }
-
-    // ✅ 2. جلب بيانات المدرب
-    const { data: userData, error: userErr } = await sb.from('users')
+    const { data, error } = await sb.from('users')
       .select('id, username, role, is_instructor, specialty, bio, whatsapp, phone, xp')
       .eq('username', SESSION.username)
       .limit(1);
+    
+    if(error) throw error;
+    if(!data || !data[0]){ toast('تعذّر تحميل البيانات', 'err'); return; }
 
-    if(userErr) throw userErr;
-    if(!userData || !userData[0]){
-      toast('تعذّر تحميل البيانات', 'err');
+    USER = data[0];
+    const isIns = USER.role === 'instructor' || (USER.role === 'admin' && USER.is_instructor === true);
+    if(!isIns){
+      toast('هذه الصفحة للمدربين فقط', 'err');
+      setTimeout(() => location.replace('./index.html'), 1500);
       return;
     }
-
-    USER = userData[0];
 
     $('welcomeAv').textContent = USER.username[0].toUpperCase();
     $('welcomeName').textContent = USER.username;
@@ -854,12 +804,12 @@ async function init(){
     await Promise.all([loadPolls(), loadVideos(), loadStudents(), loadStats()]);
 
   }catch(e){
-    console.error('init error:', e);
-    toast('⚠️ خطأ في التحميل', 'err');
+    console.error(e);
+    toast('خطأ في التحميل', 'err');
   }
 }
 
-/* ============ STATS ============ */
+/* STATS */
 async function loadStats(){
   try{
     const { count: vidCount } = await sb.from('videos')
@@ -888,39 +838,28 @@ async function loadStats(){
   }catch(e){ console.warn('stats error:', e); }
 }
 
-/* ============ CREATE POLL ============ */
+/* CREATE POLL */
 $('createPollBtn').onclick = async () => {
   const question = clean($('pollQuestion').value);
-  
-  if(!question || question.length < 3){
-    return toast('اكتب سؤال (3 أحرف على الأقل)', 'err');
-  }
+  if(!question || question.length < 3){ return toast('اكتب سؤال (3 أحرف على الأقل)', 'err'); }
   
   const validOptions = POLL_OPTIONS.map(o => clean(o)).filter(o => o.length > 0);
-  if(validOptions.length < 2){
-    return toast('محتاج خيارين على الأقل', 'err');
-  }
+  if(validOptions.length < 2){ return toast('محتاج خيارين على الأقل', 'err'); }
 
   const options = validOptions.map((text, i) => ({ id: i, text }));
 
   let hours = 0;
   if(SELECTED_HOURS === 'custom'){
     const customDate = $('pollCustomDate').value;
-    if(!customDate){
-      return toast('اختر التاريخ والوقت', 'err');
-    }
+    if(!customDate) return toast('اختر التاريخ والوقت', 'err');
     const diffMs = new Date(customDate).getTime() - Date.now();
-    if(diffMs < 60*1000){
-      return toast('الوقت المحدد لازم يكون في المستقبل', 'err');
-    }
+    if(diffMs < 60*1000) return toast('الوقت المحدد لازم يكون في المستقبل', 'err');
     hours = Math.ceil(diffMs / (1000*60*60));
   } else {
     hours = SELECTED_HOURS;
   }
 
-  if(hours < 1){
-    return toast('المدة يجب أن تكون ساعة على الأقل', 'err');
-  }
+  if(hours < 1) return toast('المدة يجب أن تكون ساعة على الأقل', 'err');
 
   const btn = $('createPollBtn');
   btn.disabled = true;
@@ -942,14 +881,12 @@ $('createPollBtn').onclick = async () => {
       if(code === 'question_short') toast('السؤال قصير جداً', 'err');
       else if(code === 'need_options') toast('محتاج خيارين على الأقل', 'err');
       else if(code === 'not_instructor') toast('مش مسموح', 'err');
-      else if(code === 'invalid_duration') toast('مدة غير صالحة', 'err');
       else toast('تعذّر إنشاء الاستطلاع', 'err');
       return;
     }
 
     const endsAt = new Date(res.ends_at);
     const hoursLeft = Math.round((endsAt - Date.now()) / (1000*60*60));
-    
     toast(`✅ تم النشر — ينتهي بعد ${hoursLeft} ساعة`, 'ok', 5000);
     
     $('pollQuestion').value = '';
@@ -967,7 +904,7 @@ $('createPollBtn').onclick = async () => {
   }
 };
 
-/* ============ LOAD POLLS ============ */
+/* LOAD POLLS */
 async function loadPolls(){
   $('pollsList').innerHTML = '<div class="skel"></div><div class="skel"></div>';
 
@@ -985,14 +922,12 @@ async function loadPolls(){
         <div class="empty">
           <div class="e">🗳️</div>
           <p>لا يوجد استطلاعات نشطة</p>
-          <p style="font-size:12px;margin-top:6px">ابدأ بإنشاء استطلاع من الأعلى</p>
         </div>
       `;
       return;
     }
 
     $('pollsList').innerHTML = polls.map(p => renderPollItem(p)).join('');
-
     $('pollsList').querySelectorAll('[data-del-poll]').forEach(btn => {
       btn.onclick = () => deletePoll(btn.dataset.delPoll);
     });
@@ -1008,23 +943,14 @@ function renderPollItem(p){
   const votes = p.votes || {};
   const total = safeInt(p.total_votes);
 
-  const endDate = p.ends_at ? new Date(p.ends_at) : null;
-  const now = new Date();
   let timeLeft = '—';
-  
-  if(endDate){
-    const diffMs = endDate - now;
+  if(p.ends_at){
+    const diffMs = new Date(p.ends_at) - new Date();
     if(diffMs > 0){
       const hours = Math.floor(diffMs / (1000*60*60));
-      const mins = Math.floor((diffMs % (1000*60*60)) / (1000*60));
-      if(hours >= 24){
-        const days = Math.floor(hours / 24);
-        timeLeft = `${days} يوم`;
-      } else if(hours >= 1){
-        timeLeft = `${hours} ساعة`;
-      } else {
-        timeLeft = `${mins} دقيقة`;
-      }
+      if(hours >= 24) timeLeft = Math.floor(hours / 24) + ' يوم';
+      else if(hours >= 1) timeLeft = hours + ' ساعة';
+      else timeLeft = Math.floor(diffMs / (1000*60)) + ' دقيقة';
     }
   }
 
@@ -1083,7 +1009,7 @@ async function deletePoll(pollId){
   }
 }
 
-/* ============ VIDEOS ============ */
+/* VIDEOS */
 async function loadVideos(){
   $('videosList').innerHTML = '<div class="skel"></div><div class="skel"></div>';
 
@@ -1097,12 +1023,7 @@ async function loadVideos(){
     const vids = data || [];
 
     if(!vids.length){
-      $('videosList').innerHTML = `
-        <div class="empty">
-          <div class="e">🎬</div>
-          <p>لا توجد فيديوهات بعد</p>
-        </div>
-      `;
+      $('videosList').innerHTML = `<div class="empty"><div class="e">🎬</div><p>لا توجد فيديوهات بعد</p></div>`;
       return;
     }
 
@@ -1135,17 +1056,11 @@ $('addVideoBtn').onclick = async () => {
   const url = clean($('vidUrl').value);
   const cat = clean($('vidCat').value) || 'عام';
 
-  if(!title || title.length < 3){
-    return toast('اكتب عنوان الفيديو', 'err');
-  }
-  if(!url){
-    return toast('الصق رابط الفيديو', 'err');
-  }
+  if(!title || title.length < 3) return toast('اكتب عنوان الفيديو', 'err');
+  if(!url) return toast('الصق رابط الفيديو', 'err');
 
   const ytMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|v\/)|youtu\.be\/)([\w-]{11})/);
-  if(!ytMatch){
-    return toast('رابط يوتيوب غير صالح', 'err');
-  }
+  if(!ytMatch) return toast('رابط يوتيوب غير صالح', 'err');
   const youtubeId = ytMatch[1];
 
   const btn = $('addVideoBtn');
@@ -1154,26 +1069,16 @@ $('addVideoBtn').onclick = async () => {
 
   try{
     const { error } = await sb.from('videos').insert({
-      title,
-      description: desc,
-      youtube_url: url,
-      youtube_id: youtubeId,
-      category: cat,
+      title, description: desc,
+      youtube_url: url, youtube_id: youtubeId, category: cat,
       thumbnail: `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`,
-      instructor_id: USER.id,
-      created_by: USER.username,
-      status: 'pending',
-      published: false,
-      views: 0
+      instructor_id: USER.id, created_by: USER.username,
+      status: 'pending', published: false, views: 0
     });
 
     if(error) throw error;
-
     toast('✅ تم إرسال الفيديو للأدمن', 'ok');
-    $('vidTitle').value = '';
-    $('vidDesc').value = '';
-    $('vidUrl').value = '';
-    $('vidCat').value = '';
+    ['vidTitle','vidDesc','vidUrl','vidCat'].forEach(i => $(i).value = '');
     await loadVideos();
     await loadStats();
 
@@ -1186,7 +1091,7 @@ $('addVideoBtn').onclick = async () => {
   }
 };
 
-/* ============ STUDENTS ============ */
+/* STUDENTS */
 async function loadStudents(){
   $('studentsList').innerHTML = '<div class="skel"></div><div class="skel"></div>';
 
@@ -1200,12 +1105,7 @@ async function loadStudents(){
     const subs = data || [];
 
     if(!subs.length){
-      $('studentsList').innerHTML = `
-        <div class="empty">
-          <div class="e">👥</div>
-          <p>لا يوجد طلاب مشتركين بعد</p>
-        </div>
-      `;
+      $('studentsList').innerHTML = `<div class="empty"><div class="e">👥</div><p>لا يوجد طلاب مشتركين بعد</p></div>`;
       return;
     }
 
@@ -1232,7 +1132,7 @@ async function loadStudents(){
   }
 }
 
-/* ============ PROFILE ============ */
+/* PROFILE */
 function loadProfile(){
   if(!USER) return;
   $('profileUsername').value = USER.username;
@@ -1264,7 +1164,6 @@ $('saveProfileBtn').onclick = async () => {
     USER.specialty = specialty;
     USER.bio = bio;
     USER.whatsapp = whatsapp;
-
     $('welcomeSpecialty').textContent = '🎯 ' + (specialty || 'مدرب');
 
     toast('✅ تم حفظ البيانات', 'ok');
@@ -1277,7 +1176,7 @@ $('saveProfileBtn').onclick = async () => {
   }
 };
 
-/* ============ AUTO-CHECK GATE ============ */
+/* AUTO-CHECK GATE */
 (function autoCheckGate(){
   if(sessionStorage.getItem('sayoda_instructor_pass')){
     hideGate();
