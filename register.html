@@ -73,7 +73,6 @@ body{
   font-size:14px;transition:.25s;outline:none;font-family:inherit;}
 .field input:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(25,170,255,.15);}
 .field input:disabled{opacity:.7;cursor:not-allowed}
-.field input.verified{border-color:var(--ok);background:rgba(40,209,124,.08)}
 
 .toggle-eye{position:absolute;left:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;display:flex;transition:.2s;border-radius:6px;z-index:3}
 .toggle-eye:hover{color:var(--blue);background:rgba(25,170,255,.1)}
@@ -81,106 +80,11 @@ body{
 .hint{font-size:11px;color:var(--muted);margin-top:4px;display:block;line-height:1.5}
 .hint b{color:var(--gold)}
 
-/* ============ EMAIL SECTION (Step 7) ============ */
-.email-section{
-  margin-top:16px;padding:14px;border-radius:14px;
-  background:rgba(25,170,255,.06);border:1px solid rgba(25,170,255,.25);
-  transition:.3s;
-}
-.email-section.verified{
-  background:rgba(40,209,124,.08);
-  border-color:rgba(40,209,124,.4);
-}
-.email-section .section-title{
-  display:flex;align-items:center;gap:8px;
-  font-size:13px;font-weight:900;color:var(--blue-3);
-  margin-bottom:10px;
-}
-.email-section .section-title .num{
-  width:22px;height:22px;border-radius:50%;
-  background:linear-gradient(135deg,var(--blue),var(--blue-2));
-  color:#021226;display:grid;place-items:center;
-  font-size:11px;font-weight:900;flex-shrink:0;
-}
-.email-section.verified .section-title{color:var(--ok)}
-.email-section.verified .section-title .num{background:linear-gradient(135deg,#28d17c,#1fa562);color:#fff}
-
-.verify-btn{
-  width:100%;padding:11px;border-radius:10px;border:none;cursor:pointer;
-  background:linear-gradient(135deg,var(--blue),var(--blue-2));color:#021226;
-  font-size:13px;font-weight:800;transition:.2s;
-  display:flex;align-items:center;justify-content:center;gap:6px;
-  margin-top:8px;
-}
-.verify-btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(25,170,255,.4)}
-.verify-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-
-.email-verify-box{
-  margin-top:12px;padding:12px;border-radius:12px;
-  background:rgba(3,10,22,.5);border:1px solid rgba(25,170,255,.2);
-  display:none;
-}
-.email-verify-box.show{display:block;animation:fadeIn .3s}
-@keyframes fadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
-
-.code-wrap{
-  display:flex;gap:6px;justify-content:center;
-  margin:14px 0 10px;direction:ltr;
-}
-.code-cell{
-  width:44px;height:52px;border-radius:11px;
-  background:rgba(3,10,22,.8);border:2px solid var(--border);
-  color:var(--txt);font-size:22px;font-weight:900;
-  text-align:center;outline:none;transition:.2s;
-  font-family:monospace;
-}
-.code-cell:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(25,170,255,.2)}
-.code-cell.filled{border-color:var(--blue-3);background:rgba(25,170,255,.1)}
-
-.verify-row{display:flex;gap:8px;margin-top:10px}
-.verify-row .verify-btn{flex:1;margin-top:0}
-.resend-btn{
-  padding:11px 14px;border-radius:10px;border:1px solid var(--border);
-  background:transparent;color:var(--blue);cursor:pointer;
-  font-size:12px;font-weight:700;transition:.2s;white-space:nowrap;
-}
-.resend-btn:hover{background:rgba(25,170,255,.1)}
-.resend-btn:disabled{opacity:.4;cursor:not-allowed}
-
-.timer-line{
-  text-align:center;font-size:12px;color:var(--muted);
-  margin-top:8px;font-weight:600;
-}
-.timer-line b{color:var(--blue-3);font-family:monospace;font-size:13px}
-
-.spam-warning{
-  margin-top:12px;padding:12px 14px;border-radius:12px;
-  background:linear-gradient(135deg,rgba(255,149,0,.12),rgba(255,149,0,.06));
-  border:1px solid rgba(255,149,0,.35);
-  animation:pulse-warn 2.5s ease-in-out infinite;
-}
-@keyframes pulse-warn{0%,100%{box-shadow:0 0 0 0 rgba(255,149,0,0)}50%{box-shadow:0 0 0 6px rgba(255,149,0,.08)}}
-.spam-warning .title{
-  display:flex;align-items:center;gap:8px;
-  font-size:12px;font-weight:900;color:#ffb700;margin-bottom:8px;
-}
-.spam-warning .title .icon{font-size:18px;animation:ring 2s ease-in-out infinite}
-@keyframes ring{0%,100%{transform:rotate(0)}25%{transform:rotate(-15deg)}75%{transform:rotate(15deg)}}
-.spam-warning ol{
-  margin:0;padding-right:18px;
-  font-size:11px;color:#ffd98a;line-height:1.8;font-weight:600;
-}
-.spam-warning ol li{margin-bottom:3px}
-.spam-warning ol li b{color:#fff;background:rgba(255,149,0,.25);padding:1px 6px;border-radius:4px}
-.spam-warning .foot{
-  font-size:11px;color:#ffb700;margin-top:8px;font-weight:700;
-  border-top:1px dashed rgba(255,149,0,.3);padding-top:8px;
-}
-
 .strength{height:4px;border-radius:4px;background:rgba(3,10,22,.6);margin-top:6px;overflow:hidden;border:1px solid var(--border)}
 .strength i{display:block;height:100%;width:0%;transition:width .3s,background .3s;background:var(--danger)}
 .strength-text{font-size:11px;font-weight:700;margin-top:4px;display:block;text-align:right;transition:.3s}
 
+/* ============ TOGGLE SECTIONS ============ */
 .toggle-section{margin-bottom:12px;padding:10px 12px;border-radius:12px;
   background:rgba(3,10,22,.5);border:1px solid rgba(255,215,0,.2);transition:.2s}
 .toggle-section.blue{border-color:rgba(25,170,255,.25);background:rgba(25,170,255,.05)}
@@ -226,11 +130,13 @@ body{
 .foot{margin-top:20px;text-align:center;font-size:11px;color:var(--muted);line-height:1.6}
 .foot b{color:var(--blue)}
 
+/* ============ WELCOME OVERLAY ============ */
 .welcome-overlay{position:fixed;inset:0;z-index:9999;
   background:linear-gradient(135deg,rgba(2,8,18,.98),rgba(11,127,212,.3));
   backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   display:none;align-items:center;justify-content:center;padding:20px;animation:fadeIn .4s;}
 .welcome-overlay.show{display:flex}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .welcome-box{text-align:center;color:var(--txt);animation:welcomePop .6s cubic-bezier(.2,.9,.3,1.4);}
 @keyframes welcomePop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}
 .welcome-avatar{width:110px;height:110px;border-radius:50%;margin:0 auto 18px;
@@ -251,6 +157,7 @@ body{
 @keyframes welcomeLoad{to{width:100%}}
 .welcome-sub{color:var(--muted);font-size:12px;margin-top:12px;}
 
+/* ============ TOAST ============ */
 #toasts{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:10000;
   display:flex;flex-direction:column;gap:10px;width:calc(100% - 32px);max-width:420px;pointer-events:none;}
 .toast{
@@ -268,7 +175,6 @@ body{
 @keyframes toastIn{from{opacity:0;transform:translateY(-20px) scale(.95)}to{opacity:1;transform:none}}
 
 @media(max-width:420px){
-  .code-cell{width:38px;height:46px;font-size:18px;border-radius:9px}
   .card{padding:20px 14px;border-radius:18px}
   .logo-wrap img{width:60px;height:60px}
   body{padding:12px 10px 60px}
@@ -378,65 +284,7 @@ body{
       </div>
     </div>
 
-    <!-- 7. 📧 الإيميل + OTP -->
-    <div class="email-section" id="emailSection">
-      <div class="section-title">
-        <span class="num">7</span>
-        <span>📧 تأكيد البريد الإلكتروني <span style="color:var(--danger)">*</span></span>
-      </div>
-
-      <div class="field" style="margin-bottom:0">
-        <div class="input-box">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          <input type="email" id="email" placeholder="example@gmail.com" required autocomplete="email" dir="ltr" />
-        </div>
-        <small class="hint">هنتأكد منه — لأنه هيستخدم لاستعادة كلمة المرور</small>
-      </div>
-
-      <button type="button" class="verify-btn" id="sendOtpBtn" style="display:none">
-        📨 إرسال كود التحقق
-      </button>
-
-      <div class="email-verify-box" id="emailVerifyBox">
-        <div style="text-align:center;font-size:12px;color:var(--blue-3);font-weight:700;margin-bottom:8px">
-          ✉️ بعتنا كود على بريدك — اكتبه هنا
-        </div>
-
-        <div class="code-wrap" id="codeWrap">
-          <input type="text" class="code-cell" maxlength="1" inputmode="numeric" data-idx="0" />
-          <input type="text" class="code-cell" maxlength="1" inputmode="numeric" data-idx="1" />
-          <input type="text" class="code-cell" maxlength="1" inputmode="numeric" data-idx="2" />
-          <input type="text" class="code-cell" maxlength="1" inputmode="numeric" data-idx="3" />
-          <input type="text" class="code-cell" maxlength="1" inputmode="numeric" data-idx="4" />
-          <input type="text" class="code-cell" maxlength="1" inputmode="numeric" data-idx="5" />
-        </div>
-
-        <div class="timer-line">⏱️ ينتهي الكود بعد <b id="timer">10:00</b></div>
-
-        <div class="verify-row">
-          <button type="button" class="verify-btn" id="verifyCodeBtn">✅ تأكيد</button>
-          <button type="button" class="resend-btn" id="resendOtpBtn">🔄 إعادة</button>
-        </div>
-
-        <div class="spam-warning">
-          <div class="title">
-            <span class="icon">📭</span>
-            <span>مش لاقي الكود؟ بص في الـ Spam!</span>
-          </div>
-          <ol>
-            <li>افتح تطبيق <b>Gmail</b></li>
-            <li>من القائمة الجانبية اضغط <b>Spam</b></li>
-            <li>لو لقيت رسالة من <b>CYBER FORCE</b>، افتحها</li>
-            <li>اضغط <b>Not Spam</b> عشان الجاي يوصلك عادي</li>
-          </ol>
-          <div class="foot">
-            💡 لو مش لاقيها في Spam، استنى دقيقة وجرب تعمل <b>تحديث</b> للبريد
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 8. زر الإنشاء -->
+    <!-- 7. زر الإنشاء -->
     <button type="submit" class="btn" id="submitBtn" style="margin-top:16px">✨ إنشاء الحساب</button>
     <button type="button" class="btn-ghost" onclick="location.href='./login.html'">← لدي حساب بالفعل</button>
   </form>
@@ -466,11 +314,6 @@ const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const $ = id => document.getElementById(id);
 const clean = s => String(s||'').replace(/[<>]/g,'').trim();
 
-let emailVerified = false;
-let codeTimer = null;
-let timerSeconds = 600;
-let currentEmail = '';
-
 /* ============ TOAST ============ */
 function toast(msg, type='info', duration=3500){
   const icons = { ok:'✅', err:'⚠️', info:'ℹ️' };
@@ -492,7 +335,10 @@ function toast(msg, type='info', duration=3500){
     const s = JSON.parse(localStorage.getItem('sayoda_session') || 'null');
     if(!s || !s.username || !s.token) return;
     const { data, error } = await sb.rpc('verify_session', { p_token: s.token });
-    if(error || !data || !data.ok){ localStorage.removeItem('sayoda_session'); return; }
+    if(error || !data || !data.ok){
+      localStorage.removeItem('sayoda_session');
+      return;
+    }
     const role = data.role || s.role || 'student';
     if(role === 'admin') location.replace('./admin.html');
     else if(role === 'instructor') location.replace('./instructor.html');
@@ -500,15 +346,14 @@ function toast(msg, type='info', duration=3500){
   }catch(e){}
 })();
 
-/* ============ SHOW MSG ============ */
-function showMsg(t, type='err'){
+/* ============ HELPERS ============ */
+function showMsg(t, type){
   const m = $('msg');
   m.className = 'msg ' + type;
   m.textContent = t;
   setTimeout(() => { m.scrollIntoView({ behavior:'smooth', block:'center' }); }, 100);
 }
 
-/* ============ HELPERS ============ */
 function toWhatsappFormat(phone){
   let p = String(phone||'').replace(/\D/g,'');
   if(!p) return '';
@@ -554,182 +399,6 @@ $('refCode').addEventListener('input', e => { e.target.value = e.target.value.to
 $('insCode').addEventListener('input', e => { e.target.value = e.target.value.toUpperCase().replace(/\s/g,''); });
 $('phone').addEventListener('input', e => { e.target.value = e.target.value.replace(/[^0-9]/g,''); });
 
-/* ============ EMAIL INPUT ============ */
-$('email').addEventListener('input', e => {
-  const val = e.target.value.trim();
-  const valid = /^[^@]+@[^@]+\.[^@]+$/.test(val);
-  if(valid && !emailVerified){ $('sendOtpBtn').style.display = 'flex'; }
-  else { $('sendOtpBtn').style.display = 'none'; }
-  if(val !== currentEmail){
-    emailVerified = false;
-    $('emailVerifyBox').classList.remove('show');
-    $('email').classList.remove('verified');
-    $('emailSection').classList.remove('verified');
-  }
-});
-
-/* ============ SEND OTP ============ */
-$('sendOtpBtn').onclick = async () => {
-  const email = clean($('email').value).toLowerCase();
-  if(!/^[^@]+@[^@]+\.[^@]+$/.test(email)){ return showMsg('⚠️ أدخل بريد إلكتروني صحيح', 'err'); }
-
-  const btn = $('sendOtpBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<span style="width:16px;height:16px;border:2px solid rgba(2,18,38,.3);border-top-color:#021226;border-radius:50%;animation:spin .7s linear infinite;display:inline-block"></span>';
-
-  try{
-    const { data, error } = await sb.rpc('request_email_verification', { p_email: email });
-    if(error) throw new Error(error.message);
-    const res = Array.isArray(data) ? data[0] : data;
-
-    if(!res || !res.ok){
-      const code = res && res.error;
-      if(code === 'email_taken') showMsg('❌ البريد الإلكتروني مستخدم بالفعل', 'err');
-      else if(code === 'too_many_requests') showMsg('🚫 طلبت كتير! استنى 15 دقيقة', 'err');
-      else if(code === 'invalid_email') showMsg('⚠️ البريد الإلكتروني غير صحيح', 'err');
-      else showMsg('⚠️ حدث خطأ، جرب تاني', 'err');
-      btn.disabled = false;
-      btn.innerHTML = '📨 إرسال كود التحقق';
-      return;
-    }
-
-    const fnRes = await fetch(`${SUPABASE_URL}/functions/v1/send-otp-email`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, code: res.code })
-    });
-
-    const fnData = await fnRes.json();
-    if(!fnRes.ok || !fnData.ok){
-      console.error('Email send failed:', fnData);
-      showMsg('⚠️ فشل إرسال الإيميل — جرب تاني', 'err');
-      btn.disabled = false;
-      btn.innerHTML = '📨 إرسال كود التحقق';
-      return;
-    }
-
-    currentEmail = email;
-    showMsg('✅ تم إرسال الكود! شوف بريدك (أو Spam)', 'ok');
-    toast('📧 شيك بريدك الإلكتروني', 'ok', 4000);
-    $('emailVerifyBox').classList.add('show');
-    $('sendOtpBtn').style.display = 'none';
-    $('email').disabled = true;
-    startTimer();
-    setTimeout(() => { document.querySelector('.code-cell')?.focus(); }, 400);
-
-  }catch(e){
-    console.error('sendOtp error:', e);
-    showMsg('⚠️ ' + (e.message || 'حدث خطأ'), 'err');
-  }finally{
-    btn.disabled = false;
-    btn.innerHTML = '📨 إرسال كود التحقق';
-  }
-};
-
-/* ============ CODE CELLS ============ */
-const codeCells = document.querySelectorAll('.code-cell');
-codeCells.forEach((cell, idx) => {
-  cell.addEventListener('input', e => {
-    let v = e.target.value.replace(/\D/g, '');
-    if(v.length > 1) v = v.charAt(0);
-    e.target.value = v;
-    e.target.classList.toggle('filled', !!v);
-    if(v && idx < codeCells.length - 1) codeCells[idx + 1].focus();
-  });
-  cell.addEventListener('keydown', e => {
-    if(e.key === 'Backspace' && !e.target.value && idx > 0){
-      codeCells[idx - 1].focus();
-      codeCells[idx - 1].value = '';
-      codeCells[idx - 1].classList.remove('filled');
-    }
-    if(e.key === 'Enter' && getCode().length === 6) $('verifyCodeBtn').click();
-  });
-  cell.addEventListener('paste', e => {
-    e.preventDefault();
-    const paste = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 6);
-    if(!paste) return;
-    for(let i = 0; i < paste.length && i < 6; i++){
-      codeCells[i].value = paste[i];
-      codeCells[i].classList.toggle('filled', true);
-    }
-    if(paste.length === 6) $('verifyCodeBtn').focus();
-    else codeCells[Math.min(paste.length, 5)].focus();
-  });
-});
-
-function getCode(){ return Array.from(codeCells).map(c => c.value).join(''); }
-function clearCode(){ codeCells.forEach(c => { c.value = ''; c.classList.remove('filled'); }); }
-
-/* ============ TIMER ============ */
-function startTimer(){
-  clearInterval(codeTimer);
-  timerSeconds = 600;
-  updateTimerUI();
-  codeTimer = setInterval(() => {
-    timerSeconds--;
-    updateTimerUI();
-    if(timerSeconds <= 0){ clearInterval(codeTimer); $('timer').textContent = '00:00'; $('timer').style.color = 'var(--danger)'; }
-  }, 1000);
-}
-function updateTimerUI(){
-  const m = Math.floor(timerSeconds / 60);
-  const s = timerSeconds % 60;
-  $('timer').textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
-  $('timer').style.color = timerSeconds < 60 ? 'var(--danger)' : 'var(--blue-3)';
-}
-
-/* ============ VERIFY CODE ============ */
-$('verifyCodeBtn').onclick = async () => {
-  const code = getCode();
-  if(code.length !== 6){ return showMsg('⚠️ أدخل الكود المكوّن من 6 أرقام', 'err'); }
-
-  const btn = $('verifyCodeBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<span style="width:16px;height:16px;border:2px solid rgba(2,18,38,.3);border-top-color:#021226;border-radius:50%;animation:spin .7s linear infinite;display:inline-block"></span>';
-
-  try{
-    const { data, error } = await sb.rpc('verify_email_code', { p_email: currentEmail, p_code: code });
-    if(error) throw new Error(error.message);
-    const res = Array.isArray(data) ? data[0] : data;
-
-    if(!res || !res.ok){
-      showMsg('❌ الكود غير صحيح أو منتهي — جرب تاني', 'err');
-      clearCode();
-      codeCells[0].focus();
-      return;
-    }
-
-    emailVerified = true;
-    clearInterval(codeTimer);
-    $('email').classList.add('verified');
-    $('emailVerifyBox').classList.remove('show');
-    $('emailSection').classList.add('verified');
-    $('emailSection').querySelector('.section-title').innerHTML = '<span class="num">✓</span><span>✅ تم تأكيد البريد الإلكتروني</span>';
-
-    showMsg('✅ تم تأكيد البريد — اضغط "إنشاء الحساب"', 'ok');
-    toast('🎉 تم تأكيد البريد!', 'ok');
-    setTimeout(() => $('submitBtn').focus(), 300);
-
-  }catch(e){
-    console.error('verify error:', e);
-    showMsg('⚠️ ' + (e.message || 'حدث خطأ'), 'err');
-  }finally{
-    btn.disabled = false;
-    btn.innerHTML = '✅ تأكيد';
-  }
-};
-
-/* ============ RESEND ============ */
-$('resendOtpBtn').onclick = () => {
-  if($('resendOtpBtn').disabled) return;
-  $('email').disabled = false;
-  $('emailVerifyBox').classList.remove('show');
-  $('sendOtpBtn').style.display = 'flex';
-  clearInterval(codeTimer);
-  clearCode();
-  toast('📧 جاهز لإعادة الإرسال', 'info');
-};
-
 /* ============ WELCOME ============ */
 function showWelcome(username, role){
   const avatar = $('welcomeAvatar');
@@ -755,7 +424,6 @@ function showWelcome(username, role){
 /* ============ SUBMIT ============ */
 $('registerForm').addEventListener('submit', async e => {
   e.preventDefault();
-  if(!emailVerified){ return showMsg('⚠️ لازم تأكد البريد الإلكتروني الأول', 'err'); }
 
   const username = clean($('username').value);
   const phone = clean($('phone').value);
@@ -778,7 +446,7 @@ $('registerForm').addEventListener('submit', async e => {
 
   try{
     const { data, error } = await sb.rpc('secure_register', {
-      p_username: username, p_password: password, p_email: currentEmail
+      p_username: username, p_password: password
     });
     if(error) throw error;
     const res = Array.isArray(data) ? data[0] : data;
@@ -786,8 +454,6 @@ $('registerForm').addEventListener('submit', async e => {
     if(!res || !res.ok){
       const code = res && res.error;
       if(code === 'username_exists') showMsg('❌ اسم المستخدم موجود بالفعل', 'err');
-      else if(code === 'email_taken') showMsg('❌ البريد مستخدم بالفعل', 'err');
-      else if(code === 'email_not_verified') showMsg('❌ البريد غير مؤكد — أعد التحقق', 'err');
       else if(code === 'username_short') showMsg('⚠️ اسم المستخدم قصير', 'err');
       else if(code === 'password_short') showMsg('⚠️ كلمة المرور قصيرة', 'err');
       else showMsg('⚠️ تعذّر إنشاء الحساب', 'err');
@@ -812,7 +478,7 @@ $('registerForm').addEventListener('submit', async e => {
     try{
       await sb.rpc('client_log_activity', {
         p_username: username, p_activity_type: 'register',
-        p_details: JSON.stringify({ email: currentEmail, phone, hasReferral: !!refCode, becameInstructor }),
+        p_details: JSON.stringify({ phone, hasReferral: !!refCode, becameInstructor }),
         p_user_agent: navigator.userAgent.slice(0,200)
       });
     }catch(err){}

@@ -7,10 +7,12 @@
 <title>تسجيل الدخول | CYBER FORCE</title>
 
 <meta property="og:type" content="website" />
+<meta property="og:site_name" content="CYBER FORCE" />
 <meta property="og:title" content="تسجيل الدخول | CYBER FORCE" />
-<meta property="og:description" content="سجّل دخولك لمنصة CYBER FORCE." />
+<meta property="og:description" content="سجّل دخولك لمنصة CYBER FORCE التعليمية للأمن السيبراني." />
 <meta property="og:image" content="https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/og-image.png" />
 <meta property="og:url" content="https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/login.html" />
+<meta property="og:locale" content="ar_EG" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="description" content="تسجيل الدخول لمنصة CYBER FORCE." />
 <meta name="author" content="EL-sayed Hasan" />
@@ -29,21 +31,28 @@
   --bg:#020812; --bg-2:#061024;
   --card:rgba(12,22,44,.72); --border:rgba(25,170,255,.22);
   --txt:#eaf4ff; --muted:#9fb3cc; --danger:#ff4d6d; --ok:#28d17c;
+  --whatsapp:#25D366;
 }
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif;-webkit-tap-highlight-color:transparent}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;-moz-user-select:none;user-select:none}
 html,body{height:100%;overflow-x:hidden}
-body{background:var(--bg);color:var(--txt);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;position:relative;}
+body{
+  background:var(--bg); color:var(--txt); min-height:100vh;
+  display:flex; align-items:center; justify-content:center; padding:20px;
+  position:relative;
+}
 
 .bg-layer{position:fixed;inset:0;z-index:0;background:url('./bg.png') center/cover no-repeat;filter:brightness(.42) saturate(1.1);}
 .bg-overlay{position:fixed;inset:0;z-index:1;pointer-events:none;
   background:radial-gradient(circle at 50% 20%,rgba(25,170,255,.18),transparent 55%),
     linear-gradient(180deg,rgba(2,8,18,.55),rgba(2,8,18,.92));}
 .grid-fx{position:fixed;inset:0;z-index:1;opacity:.25;pointer-events:none;
-  background-image:linear-gradient(rgba(25,170,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(25,170,255,.12) 1px,transparent 1px);
+  background-image:linear-gradient(rgba(25,170,255,.12) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(25,170,255,.12) 1px,transparent 1px);
   background-size:44px 44px;
   mask-image:radial-gradient(circle at 50% 30%,#000 20%,transparent 75%);
   -webkit-mask-image:radial-gradient(circle at 50% 30%,#000 20%,transparent 75%);}
 
+/* ============ ROBOT ============ */
 .robot-stage{position:fixed;bottom:-300px;left:50%;transform:translateX(-50%);z-index:100;pointer-events:none;opacity:0;animation:robotStageAnim 9s ease-in-out .5s forwards;}
 @keyframes robotStageAnim{0%{opacity:0;bottom:-300px}11%{opacity:1;bottom:20px}25%{opacity:1;bottom:20px}35%{opacity:1;bottom:20px}50%{opacity:1;bottom:100px}65%{opacity:0;bottom:calc(100vh + 100px)}100%{opacity:0;bottom:calc(100vh + 100px)}}
 .robot{width:200px;height:240px;filter:drop-shadow(0 0 30px rgba(25,170,255,.5));}
@@ -68,9 +77,10 @@ body{background:var(--bg);color:var(--txt);min-height:100vh;display:flex;align-i
 @keyframes armWaveL{0%,100%{transform:rotate(0)}50%{transform:rotate(10deg)}}
 @keyframes armWaveR{0%,100%{transform:rotate(0)}50%{transform:rotate(-10deg)}}
 
+/* ============ CARD ============ */
 .card{position:relative;z-index:2;width:100%;max-width:440px;background:var(--card);
-  backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid var(--border);
-  border-radius:28px;padding:36px 28px;
+  backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+  border:1px solid var(--border);border-radius:28px;padding:36px 28px;
   box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.03) inset,0 0 80px rgba(25,170,255,.1);
   animation:pop .6s cubic-bezier(.2,.9,.3,1.4);}
 @keyframes pop{from{opacity:0;transform:translateY(30px) scale(.96)}to{opacity:1;transform:none}}
@@ -89,7 +99,8 @@ body{background:var(--bg);color:var(--txt);min-height:100vh;display:flex;align-i
 .input-box{position:relative}
 .input-box svg{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--blue);opacity:.8;pointer-events:none}
 .field input{width:100%;padding:14px 44px 14px 44px;border-radius:14px;
-  background:rgba(3,10,22,.7);border:1px solid var(--border);color:var(--txt);font-size:15px;transition:.25s;outline:none;}
+  background:rgba(3,10,22,.7);border:1px solid var(--border);color:var(--txt);
+  font-size:15px;transition:.25s;outline:none;-webkit-user-select:text;user-select:text;}
 .field input:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(25,170,255,.15),0 0 20px rgba(25,170,255,.2);}
 .toggle-eye{position:absolute;left:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;padding:6px;display:flex;transition:.2s;border-radius:8px;}
 .toggle-eye:hover{color:var(--blue);background:rgba(25,170,255,.1)}
@@ -97,7 +108,7 @@ body{background:var(--bg);color:var(--txt);min-height:100vh;display:flex;align-i
 .row-actions{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;font-size:13px;gap:10px;flex-wrap:wrap}
 .remember{display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--muted);font-weight:600;user-select:none}
 .remember input{width:18px;height:18px;accent-color:var(--blue);cursor:pointer}
-.forgot-link{color:var(--blue);text-decoration:none;font-weight:700;transition:.2s;cursor:pointer;white-space:nowrap}
+.forgot-link{color:var(--blue);text-decoration:none;font-weight:700;transition:.2s;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:4px}
 .forgot-link:hover{color:var(--blue-3);text-decoration:underline}
 
 .btn{width:100%;padding:15px;border:none;border-radius:14px;cursor:pointer;
@@ -162,6 +173,7 @@ body{background:var(--bg);color:var(--txt);min-height:100vh;display:flex;align-i
 .toast.ok{border-color:rgba(40,209,124,.5);color:#7ff0b8}
 .toast.err{border-color:rgba(255,77,109,.5);color:#ff9db0}
 .toast.info{border-color:rgba(25,170,255,.5);color:#7fccff}
+.toast.wa{border-color:rgba(37,211,102,.5);color:#7ff0b8;background:linear-gradient(135deg,rgba(37,211,102,.15),rgba(6,16,36,.98))}
 .toast .ic{font-size:22px;flex-shrink:0}
 @keyframes toastIn{from{opacity:0;transform:translateY(-20px) scale(.95)}to{opacity:1;transform:none}}
 
@@ -249,7 +261,10 @@ body{background:var(--bg);color:var(--txt);min-height:100vh;display:flex;align-i
         <input type="checkbox" id="rememberMe" />
         <span>تذكرني</span>
       </label>
-      <a href="./forgot-password.html" class="forgot-link">نسيت كلمة المرور؟</a>
+      <a class="forgot-link" id="forgotLink">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        نسيت كلمة المرور؟
+      </a>
     </div>
 
     <button type="submit" class="btn" id="submitBtn">تسجيل الدخول</button>
@@ -260,7 +275,6 @@ body{background:var(--bg);color:var(--txt);min-height:100vh;display:flex;align-i
   <div class="foot">© 2026 جميع الحقوق محفوظة <b>CYBER FORCE</b></div>
 </div>
 
-<!-- Welcome -->
 <div class="welcome-overlay" id="welcomeOverlay">
   <div class="welcome-box">
     <div class="welcome-avatar" id="welcomeAvatar">👤</div>
@@ -282,12 +296,15 @@ const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const MAX_ATTEMPTS = 5;
 const LOCK_MS = 5 * 60 * 1000;
 
+/* ⚠️ رقم واتساب الدعم الفني (بصيغة دولية بدون +) */
+const SUPPORT_WHATSAPP = "201128351702";
+
 const $ = id => document.getElementById(id);
 const clean = s => String(s||'').replace(/[<>]/g,'').trim();
 
 /* ============ TOASTS ============ */
 function toast(msg, type='info', duration=3500){
-  const icons = { ok:'✅', err:'⚠️', info:'ℹ️' };
+  const icons = { ok:'✅', err:'⚠️', info:'ℹ️', wa:'💬' };
   const el = document.createElement('div');
   el.className = 'toast ' + type;
   el.innerHTML = `<span class="ic">${icons[type]||'ℹ️'}</span><span>${msg}</span>`;
@@ -305,7 +322,6 @@ function toast(msg, type='info', duration=3500){
   try{
     const s = JSON.parse(localStorage.getItem('sayoda_session') || 'null');
     if(!s || !s.username || !s.token) return;
-
     const { data, error } = await sb.rpc('verify_session', { p_token: s.token });
     if(error || !data || !data.ok){
       localStorage.removeItem('sayoda_session');
@@ -315,7 +331,7 @@ function toast(msg, type='info', duration=3500){
     if(role === 'admin') location.replace('./admin.html');
     else if(role === 'instructor') location.replace('./instructor.html');
     else location.replace('./index.html');
-  }catch(e){ console.warn('Session check error:', e); }
+  }catch(e){}
 })();
 
 /* ============ REMEMBER ME ============ */
@@ -326,9 +342,32 @@ if(rememberedUser){
   setTimeout(() => $('password').focus(), 300);
 }
 
+/* ============ TOGGLE EYE ============ */
 $('toggleEye').onclick = () => {
   const p = $('password');
   p.type = p.type === 'password' ? 'text' : 'password';
+};
+
+/* ============ FORGOT PASSWORD → WHATSAPP ============ */
+$('forgotLink').onclick = () => {
+  const username = clean($('username').value) || '(لم أدخل اسمي)';
+
+  const msg = `السلام عليكم 👋
+أنا مستخدم في منصة CYBER FORCE
+
+👤 اسم المستخدم: ${username}
+❓ نسيت كلمة المرور
+🔑 محتاج مساعدة في استعادتها
+
+شكراً 🙏`;
+
+  const encodedMsg = encodeURIComponent(msg);
+  const url = `https://wa.me/${SUPPORT_WHATSAPP}?text=${encodedMsg}`;
+
+  toast('جاري فتح واتساب...', 'wa', 3000);
+  setTimeout(() => {
+    window.open(url, '_blank');
+  }, 500);
 };
 
 /* ============ RIPPLE ============ */
