@@ -231,23 +231,39 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px;width:100%;box-sizing
 .player-box iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
 .player-shield{position:absolute;inset:0;z-index:3;background:transparent}
 
+.player-box::after{
+  content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.02) 2px,rgba(0,0,0,.02) 4px);
+  mix-blend-mode:multiply;
+}
+.player-box *{
+  -webkit-user-select:none !important;
+  user-select:none !important;
+  -webkit-touch-callout:none !important;
+}
+
 .watermark{position:absolute;z-index:5;pointer-events:none;
   font-family:'Tajawal',sans-serif;font-weight:900;
   color:rgba(255,255,255,.22);text-shadow:0 0 8px rgba(0,0,0,.5);
-  white-space:nowrap;letter-spacing:1px}
-.wm-tl{top:8px;left:12px;font-size:13px}
-.wm-tr{top:8px;right:12px;font-size:11px;color:rgba(255,213,74,.28)}
-.wm-bl{bottom:8px;left:12px;font-size:10px;color:rgba(25,170,255,.25)}
+  white-space:nowrap;letter-spacing:1px;-webkit-user-select:none;user-select:none}
+
+.wm-moving{
+  position:absolute;top:15%;right:15%;z-index:6;pointer-events:none;
+  font-family:'Tajawal',sans-serif;font-weight:900;
+  font-size:14px;color:rgba(255,213,74,.4);
+  text-shadow:0 0 10px rgba(0,0,0,.8),0 0 20px rgba(255,213,74,.4);
+  letter-spacing:1px;padding:6px 12px;border-radius:8px;
+  background:rgba(2,8,18,.3);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  transition:top 1.2s ease-in-out,right 1.2s ease-in-out,left 1.2s ease-in-out;
+  white-space:nowrap;-webkit-user-select:none;user-select:none;
+  animation:wmPulse 3s ease-in-out infinite;
+}
+@keyframes wmPulse{0%,100%{opacity:.55}50%{opacity:.9}}
+
 .wm-center{top:50%;left:50%;transform:translate(-50%,-50%);
   font-size:36px;opacity:.08;color:#fff;font-weight:900;letter-spacing:4px;text-align:center}
-@media(max-width:600px){
-  .wm-tl{font-size:11px}
-  .wm-tr{font-size:9px}
-  .wm-bl{font-size:8px}
-  .wm-center{font-size:24px}
-}
 
-.yt-controls{position:absolute;bottom:0;left:0;right:0;z-index:6;
+.yt-controls{position:absolute;bottom:0;left:0;right:0;z-index:7;
   background:linear-gradient(to top,rgba(0,0,0,.92),rgba(0,0,0,.6) 60%,transparent);
   padding:12px 14px 10px;transition:transform .3s,opacity .3s}
 .yt-controls.hidden{transform:translateY(100%);opacity:0;pointer-events:none}
@@ -266,7 +282,7 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px;width:100%;box-sizing
 .yt-big-play.hidden{opacity:0;pointer-events:none}
 .yt-big-play .circle{width:80px;height:80px;border-radius:50%;background:var(--blue);display:grid;place-items:center;font-size:30px;color:#021226;box-shadow:0 0 40px rgba(25,170,255,.7);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
-.modal-close{position:absolute;top:10px;left:10px;z-index:7;width:36px;height:36px;border-radius:10px;border:none;background:rgba(2,8,18,.7);color:#fff;font-size:20px;display:grid;place-items:center}
+.modal-close{position:absolute;top:10px;left:10px;z-index:8;width:36px;height:36px;border-radius:10px;border:none;background:rgba(2,8,18,.7);color:#fff;font-size:20px;display:grid;place-items:center}
 .modal-pad{padding:16px}
 @media(max-width:500px){
   .yt-btn{width:32px;height:32px;font-size:14px}
@@ -360,12 +376,91 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
 .sem-desc{color:var(--muted);font-size:14px;line-height:1.8;margin-bottom:24px}
 .sem-btn{width:100%;padding:15px 22px;border:none;border-radius:14px;font-size:15px;font-weight:900;color:#021226;cursor:pointer;background:linear-gradient(135deg,var(--blue),var(--blue-2));box-shadow:0 10px 30px rgba(25,170,255,.4);transition:transform .15s,box-shadow .25s;letter-spacing:.5px}
 .sem-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(25,170,255,.6)}
-.sem-btn:active{transform:translateY(0)}
 .sem-timer{margin-top:16px;font-size:12px;color:var(--muted)}
 .sem-timer span{color:var(--blue);font-weight:900;font-size:14px}
 @media(max-width:560px){.sem-box{padding:28px 20px 22px}.sem-icon{width:64px;height:64px;font-size:28px}.sem-title{font-size:18px}.sem-desc{font-size:13px}}
 
+/* ============ شاشة التحذير المرعبة ============ */
+#devtoolsWarning{
+  position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;padding:20px;
+  background:radial-gradient(circle at 50% 50%,rgba(255,0,0,.3),transparent 60%),linear-gradient(180deg,rgba(20,0,0,.98),rgba(0,0,0,.99));
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  animation:dangerPulse 2s ease-in-out infinite;overflow:hidden;
+}
+#devtoolsWarning.open{display:flex}
+@keyframes dangerPulse{
+  0%,100%{background-color:rgba(20,0,0,.98)}
+  50%{background-color:rgba(40,0,0,.98)}
+}
+#devtoolsWarning::before{
+  content:'';position:absolute;inset:0;
+  background:
+    repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(255,0,0,.1) 40px,rgba(255,0,0,.1) 42px),
+    repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(255,0,0,.1) 40px,rgba(255,0,0,.1) 42px);
+  animation:gridPulse 3s linear infinite;pointer-events:none;
+}
+@keyframes gridPulse{from{transform:translateY(0)}to{transform:translateY(42px)}}
+
+.dt-box{
+  position:relative;z-index:2;max-width:560px;width:100%;
+  background:linear-gradient(160deg,rgba(40,0,0,.95),rgba(20,0,0,.98));
+  border:2px solid #ff0000;border-radius:24px;padding:44px 32px 36px;text-align:center;
+  box-shadow:0 0 80px rgba(255,0,0,.5),0 0 120px rgba(255,0,0,.3),inset 0 0 60px rgba(255,0,0,.1);
+  animation:shakeBox .5s ease-in-out infinite alternate, boxGlow 2s ease-in-out infinite;
+}
+@keyframes shakeBox{
+  0%{transform:translate(0,0) rotate(0deg)}
+  100%{transform:translate(2px,-2px) rotate(.5deg)}
+}
+@keyframes boxGlow{
+  0%,100%{box-shadow:0 0 80px rgba(255,0,0,.5),0 0 120px rgba(255,0,0,.3),inset 0 0 60px rgba(255,0,0,.1)}
+  50%{box-shadow:0 0 120px rgba(255,0,0,.8),0 0 180px rgba(255,0,0,.5),inset 0 0 80px rgba(255,0,0,.15)}
+}
+.dt-skull{
+  font-size:90px;margin-bottom:14px;
+  animation:skullShake .3s ease-in-out infinite alternate;
+  filter:drop-shadow(0 0 30px rgba(255,0,0,.8));
+}
+@keyframes skullShake{
+  0%{transform:scale(1) rotate(-3deg)}
+  100%{transform:scale(1.1) rotate(3deg)}
+}
+.dt-title{
+  font-size:32px;font-weight:900;color:#ff0000;margin-bottom:16px;letter-spacing:2px;
+  text-shadow:0 0 20px rgba(255,0,0,.9),0 0 40px rgba(255,0,0,.6),0 0 60px rgba(255,0,0,.4);
+  animation:textPulse 1s ease-in-out infinite;
+}
+@keyframes textPulse{0%,100%{opacity:1}50%{opacity:.7}}
+.dt-desc{color:#ffb0b0;font-size:16px;line-height:2;margin-bottom:24px;font-weight:700}
+.dt-desc b{color:#ff0000;font-weight:900;font-size:18px}
+.dt-warning-list{
+  text-align:right;background:rgba(0,0,0,.5);border:1px solid rgba(255,0,0,.4);
+  border-radius:14px;padding:16px 20px;margin-bottom:24px;font-size:14px;line-height:2;
+  color:#ffb0b0;font-weight:700;
+}
+.dt-warning-list li{list-style:none;padding-right:24px;position:relative}
+.dt-warning-list li::before{content:'⚠️';position:absolute;right:0;top:0}
+.dt-countdown{font-size:14px;color:#ffb0b0;margin-bottom:16px;font-weight:800}
+.dt-countdown span{
+  color:#ff0000;font-size:20px;font-weight:900;display:inline-block;min-width:30px;
+  animation:textPulse .5s ease-in-out infinite;
+}
+.dt-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
+  padding:16px 22px;border:none;border-radius:14px;font-size:16px;font-weight:900;color:#fff;
+  cursor:pointer;background:linear-gradient(135deg,#ff0000,#8b0000);
+  box-shadow:0 10px 30px rgba(255,0,0,.5);transition:transform .15s,box-shadow .25s;
+  letter-spacing:.5px;
+}
+.dt-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(255,0,0,.7)}
+.dt-footer{margin-top:20px;font-size:11px;color:rgba(255,150,150,.6);line-height:1.7}
+
 @media(max-width:560px){
+  .dt-box{padding:32px 22px 28px}
+  .dt-skull{font-size:70px}
+  .dt-title{font-size:24px}
+  .dt-desc{font-size:14px}
+  .dt-warning-list{font-size:12px;padding:12px 16px}
   .hd-title small{display:none}
   .mini-xp{padding:4px 8px;font-size:11px}
   main{padding:14px 12px 30px}
@@ -506,17 +601,20 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
 
 <footer class="site-footer">
   <div class="social-row" id="socialFooter"></div>
-  <div>© 2026 جميع الحقوق محفوظة <a href="https://t.me/sayoda_elgadar" target="_blank" rel="noopener noreferrer" style="color:var(--gold);font-weight:900">EL-sayed Hasan</a></div>
+  <div>© 2026 جميع الحقوق محفوظة <a href="https://elsayedhasaneisa1-collab.github.io/team-cyber-force-/" target="_blank" rel="noopener noreferrer" style="color:var(--gold);font-weight:900">EL-sayed Hasan</a></div>
 </footer>
 
 <div class="modal" id="vidModal">
   <div class="modal-inner">
     <div class="player-box">
       <button class="modal-close" id="closeVid">✕</button>
-      <div class="watermark wm-tl" id="wmTL">—</div>
-      <div class="watermark wm-tr" id="wmTR">CYBER FORCE</div>
-      <div class="watermark wm-bl" id="wmBL">—</div>
+      
+      <!-- ✅ Watermark متحرك -->
+      <div class="watermark wm-moving" id="wmMoving">—</div>
+      
+      <!-- شعار ثابت في الوسط -->
       <div class="watermark wm-center" id="wmCenter">CYBER FORCE</div>
+      
       <div id="ytPlayer"></div>
       <div class="player-shield"></div>
       <div class="yt-big-play" id="ytBigPlay">
@@ -566,6 +664,36 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
 <nav class="bottom-nav" id="bottomNav"></nav>
 <div id="toasts"></div>
 <canvas id="confetti"></canvas>
+
+<!-- ✅ شاشة التحذير المرعبة -->
+<div id="devtoolsWarning">
+  <div class="dt-box">
+    <div class="dt-skull">💀</div>
+    <h2 class="dt-title">🚨 تحذير أمني 🚨</h2>
+    <p class="dt-desc">
+      تم رصد محاولة <b>اختراق غير مصرح بها</b><br>
+      على منصة <b>CYBER FORCE</b>
+    </p>
+    <ul class="dt-warning-list">
+      <li>تم تسجيل عنوان IP الخاص بك</li>
+      <li>تم تسجيل نوع الجهاز والمتصفح</li>
+      <li>تم تسجيل الوقت والتاريخ</li>
+      <li>تم إرسال تقرير للإدارة</li>
+      <li>حسابك معرض للحظر الدائم</li>
+    </ul>
+    <div class="dt-countdown">
+      سيتم تسجيل خروجك خلال <span id="dtCountdown">10</span> ثانية
+    </div>
+    <button class="dt-btn" onclick="location.href='./login.html'">
+      🔒 الخروج الآن
+    </button>
+    <div class="dt-footer">
+      شركة CYBER FORCE © 2026<br>
+      جميع محاولات الاختراق تُتابع قانونياً
+    </div>
+  </div>
+</div>
+
 <script> 
 /* ============================================
    CYBER FORCE — index.html
@@ -614,6 +742,127 @@ document.addEventListener('keydown',e=>{
   if(e.key==='PrintScreen'){e.preventDefault();try{navigator.clipboard.writeText('');}catch(err){}}
 });
 
+/* ============ حمايات إضافية ============ */
+document.addEventListener('keyup', e => {
+  if(e.key === 'PrintScreen'){
+    try{ navigator.clipboard.writeText(''); }catch(err){}
+    toast('⚠️ تصوير الشاشة ممنوع','err','🚫');
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if(e.altKey && e.key === 'PrintScreen'){
+    e.preventDefault();
+    try{ navigator.clipboard.writeText(''); }catch(err){}
+    toast('⚠️ تصوير الشاشة ممنوع','err','🚫');
+    return false;
+  }
+  if(e.metaKey && e.shiftKey && ['3','4','5'].includes(e.key)){
+    e.preventDefault();
+    try{ navigator.clipboard.writeText(''); }catch(err){}
+    toast('⚠️ تصوير الشاشة ممنوع','err','🚫');
+    return false;
+  }
+  if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's'){
+    e.preventDefault();
+    toast('⚠️ حفظ الصفحة ممنوع','err','🚫');
+    return false;
+  }
+});
+
+window.addEventListener('beforeprint', e => { e.preventDefault(); return false; });
+window.onbeforeprint = () => false;
+try{ window.print = () => false; }catch(e){}
+
+document.addEventListener('drag', e => {
+  if(e.target.closest('.player-box')) e.preventDefault();
+});
+
+/* ============ كشف DevTools — شاشة مرعبة ============ */
+let _devtoolsTriggered = false;
+let _devtoolsCountdown = null;
+let _devtoolsCheckInterval = null;
+
+function detectDevToolsOpen(){
+  const threshold = 160;
+  const widthDiff = window.outerWidth - window.innerWidth;
+  const heightDiff = window.outerHeight - window.innerHeight;
+  return (widthDiff > threshold || heightDiff > threshold);
+}
+
+async function logSecurityBreach(type){
+  try{
+    const username = (typeof USER !== 'undefined' && USER?.username) || 
+                     (typeof SESSION !== 'undefined' && SESSION?.username) || 'unknown';
+    await sb.rpc('client_log_activity', {
+      p_username: username,
+      p_activity_type: 'security_breach',
+      p_details: JSON.stringify({
+        type: type,
+        url: location.href,
+        userAgent: navigator.userAgent.slice(0, 200),
+        timestamp: new Date().toISOString(),
+        screen: `${screen.width}x${screen.height}`
+      }),
+      p_user_agent: navigator.userAgent.slice(0, 200)
+    });
+  }catch(e){ console.warn('log breach error:', e); }
+}
+
+function showDevtoolsWarning(){
+  if(_devtoolsTriggered) return;
+  _devtoolsTriggered = true;
+
+  const el = document.getElementById('devtoolsWarning');
+  if(!el) return;
+  el.classList.add('open');
+
+  logSecurityBreach('devtools_open');
+
+  // صوت تحذير
+  try{
+    const a = new (window.AudioContext || window.webkitAudioContext)();
+    const o = a.createGain();
+    const s = a.createOscillator();
+    s.type = 'sawtooth';
+    s.frequency.value = 200;
+    s.connect(o); o.connect(a.destination);
+    o.gain.setValueAtTime(0.0001, a.currentTime);
+    o.gain.exponentialRampToValueAtTime(0.15, a.currentTime + 0.1);
+    o.gain.exponentialRampToValueAtTime(0.0001, a.currentTime + 1.2);
+    s.start(a.currentTime); s.stop(a.currentTime + 1.3);
+  }catch(e){}
+
+  if(navigator.vibrate) navigator.vibrate([300, 100, 300, 100, 300]);
+
+  let count = 10;
+  clearInterval(_devtoolsCountdown);
+  _devtoolsCountdown = setInterval(() => {
+    count--;
+    const cd = document.getElementById('dtCountdown');
+    if(cd) cd.textContent = count;
+    if(count <= 0){
+      clearInterval(_devtoolsCountdown);
+      try{ localStorage.removeItem('sayoda_session'); }catch(e){}
+      location.replace('./login.html');
+    }
+  }, 1000);
+}
+
+function startDevtoolsDetection(){
+  clearInterval(_devtoolsCheckInterval);
+  _devtoolsCheckInterval = setInterval(() => {
+    // تجاهل للأدمن
+    try{
+      if(typeof USER !== 'undefined' && USER && USER.role === 'admin') return;
+    }catch(e){}
+    
+    if(detectDevToolsOpen() && !_devtoolsTriggered){
+      showDevtoolsWarning();
+    }
+  }, 800);
+}
+
 /* ============ STATE ============ */
 let USER=null;
 let INSTRUCTORS=[];
@@ -637,6 +886,7 @@ let USER_PHONE='';
 let _videoXpAwarded = false;
 let _lastSave = 0;
 let _autoUnlockedVideos = new Set();
+let _wmTimer = null;
 
 const LEVELS=[
   {min:0,name:'مبتدئ',emoji:'🌱'},
@@ -865,6 +1115,57 @@ $('copyRefBtn').onclick=()=>{
   const c=USER._refcode||$('refCode').textContent;
   navigator.clipboard.writeText(c).then(()=>toast('تم نسخ كود الدعوة','ok')).catch(()=>toast('انسخ يدوياً: '+c,'info'));
 };
+
+/* ============ Watermark المتحرك ============ */
+function setWatermarks(){
+  const phone = USER.phone || USER_PHONE || '—';
+  const user = USER.username || '';
+  
+  const wm = $('wmMoving');
+  if(wm){
+    wm.textContent = '📱 ' + phone + ' | ' + user;
+    startWatermarkAnimation();
+  }
+  
+  const wmCenter = $('wmCenter');
+  if(wmCenter) wmCenter.textContent = 'CYBER FORCE';
+}
+
+function startWatermarkAnimation(){
+  stopWatermarkAnimation();
+  
+  const wm = $('wmMoving');
+  if(!wm) return;
+  
+  const positions = [
+    {top:'8%',  right:'8%',  left:'auto'},
+    {top:'8%',  right:'auto',left:'8%'},
+    {top:'85%', right:'auto',left:'8%'},
+    {top:'85%', right:'8%',  left:'auto'},
+    {top:'45%', right:'auto',left:'8%'},
+    {top:'45%', right:'8%',  left:'auto'},
+    {top:'20%', right:'auto',left:'45%'}
+  ];
+  
+  let idx = 0;
+  const move = () => {
+    const pos = positions[idx];
+    wm.style.top = pos.top;
+    wm.style.right = pos.right;
+    wm.style.left = pos.left;
+    idx = (idx + 1) % positions.length;
+  };
+  
+  move();
+  _wmTimer = setInterval(move, 3000);
+}
+
+function stopWatermarkAnimation(){
+  if(_wmTimer){
+    clearInterval(_wmTimer);
+    _wmTimer = null;
+  }
+}
 
 /* ============ INSTRUCTORS LIST ============ */
 async function loadInstructors(){
@@ -1179,19 +1480,16 @@ function showYtControls(){
   ytControlsTimer=setTimeout(()=>{if(ytIsPlaying) c.classList.add('hidden');},3000);
 }
 
-function setWatermarks(){
-  const phone = USER.phone || USER_PHONE || '—';
-  const user = USER.username || '';
-  const ts = new Date().toLocaleString('ar-EG', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
-  $('wmTL').textContent = '📱 ' + phone;
-  $('wmTR').textContent = 'CYBER FORCE | ' + user;
-  $('wmBL').textContent = '🕐 ' + ts;
-  $('wmCenter').textContent = 'CYBER FORCE';
-}
-
 async function openVideo(v){
   CURRENT_VIDEO = v;
   _videoXpAwarded = false;
+  
+  if(detectDevToolsOpen() && !_devtoolsTriggered){
+    showDevtoolsWarning();
+    return;
+  }
+  startDevtoolsDetection();
+  
   setWatermarks();
   $('mTitle').textContent = v.title || '';
   $('mDesc').textContent = v.description || '';
@@ -1314,7 +1612,6 @@ async function saveProgressSilently(v, pct){
     };
     await sb.from('users').update({video_progress: USER.video_progress}).eq('username', USER.username);
 
-    /* ✅ زيادة عدد المشاهدات عند 50% (مرة واحدة لكل طالب) */
     const viewKey = 'view_'+videoId;
     if(pct >= 50 && !_autoUnlockedVideos.has(viewKey)){
       _autoUnlockedVideos.add(viewKey);
@@ -1324,13 +1621,10 @@ async function saveProgressSilently(v, pct){
           p_video_id: parseInt(videoId)
         });
         const vRes = Array.isArray(viewData) ? viewData[0] : viewData;
-        if(vRes && vRes.ok){
-          console.log('👁 زيادة العداد:', vRes.new_views);
-        }
-      }catch(e){ console.warn('increment view error:', e); }
+        if(vRes && vRes.ok) console.log('👁 زيادة العداد:', vRes.new_views);
+      }catch(e){}
     }
 
-    /* ✅ الفتح التلقائي عند 50% */
     const key = String(videoId);
     if(pct >= 50 && !_autoUnlockedVideos.has(key)){
       _autoUnlockedVideos.add(key);
@@ -1352,6 +1646,7 @@ function closeVideo(){
   $('vidModal').classList.remove('open');
   document.body.style.overflow='';
   clearInterval(ytTimeTimer);clearTimeout(ytControlsTimer);
+  stopWatermarkAnimation();
   if(ytPlayerReady&&ytPlayer&&ytPlayer.stopVideo){try{ytPlayer.stopVideo();}catch(e){}}
   setTimeout(()=>loadInstructorVideos(), 500);
 }
@@ -1598,6 +1893,7 @@ async function init(){
   await loadUser();
   await Promise.all([loadInstructors(), loadNotifs(), loadSocial()]);
   loadYtApi();
+  startDevtoolsDetection();
   go('instructors');
 }
 init();
