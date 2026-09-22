@@ -185,7 +185,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
   margin-bottom:12px;transition:.2s;box-sizing:border-box}
 .gate input:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(255,215,0,.15)}
 .gate .btn{margin-bottom:8px}
-.gate-msg{font-size:13px;font-weight:700;margin-bottom:12px;min-height:20px;color:var(--danger)}
 
 .live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#28d17c;
   margin-left:6px;animation:blink 1.5s infinite;box-shadow:0 0 10px #28d17c}
@@ -223,6 +222,24 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
 .modal-foot{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:8px;flex-shrink:0}
 .modal-foot .btn{flex:1}
 
+/* ============ SESSION ENDED MODAL ============ */
+#sessionEndedModal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;animation:semFadeIn .3s ease-out}
+.sem-overlay{position:absolute;inset:0;background:rgba(2,8,18,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.sem-box{position:relative;z-index:1;width:100%;max-width:420px;background:linear-gradient(160deg,rgba(12,22,44,.98),rgba(6,16,36,.98));border:1px solid rgba(25,170,255,.35);border-radius:24px;padding:36px 28px 28px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 80px rgba(25,170,255,.2);animation:semPop .5s cubic-bezier(.2,.9,.3,1.4);overflow:hidden}
+.sem-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,#19aaff,transparent);animation:semGlow 2s ease-in-out infinite}
+@keyframes semGlow{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes semFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes semPop{from{opacity:0;transform:translateY(30px) scale(.9)}to{opacity:1;transform:none}}
+.sem-icon{width:80px;height:80px;margin:0 auto 18px;border-radius:50%;background:linear-gradient(135deg,rgba(255,77,109,.15),rgba(25,170,255,.15));border:2px solid rgba(255,77,109,.4);display:grid;place-items:center;font-size:36px;animation:semPulse 2s ease-in-out infinite;box-shadow:0 0 40px rgba(255,77,109,.4)}
+@keyframes semPulse{0%,100%{transform:scale(1);box-shadow:0 0 40px rgba(255,77,109,.4)}50%{transform:scale(1.05);box-shadow:0 0 60px rgba(255,77,109,.6)}}
+.sem-title{font-size:22px;font-weight:900;color:#fff;margin-bottom:12px;background:linear-gradient(135deg,#ff4d6d,#ff6b8a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:.5px}
+.sem-desc{color:var(--muted);font-size:14px;line-height:1.8;margin-bottom:24px}
+.sem-btn{width:100%;padding:15px 22px;border:none;border-radius:14px;font-size:15px;font-weight:900;color:#021226;cursor:pointer;background:linear-gradient(135deg,#19aaff,#0b7fd4);box-shadow:0 10px 30px rgba(25,170,255,.4);transition:transform .15s,box-shadow .25s;letter-spacing:.5px}
+.sem-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(25,170,255,.6)}
+.sem-timer{margin-top:16px;font-size:12px;color:var(--muted)}
+.sem-timer span{color:#19aaff;font-weight:900;font-size:14px}
+@media(max-width:560px){.sem-box{padding:28px 20px 22px}.sem-icon{width:64px;height:64px;font-size:28px}.sem-title{font-size:18px}.sem-desc{font-size:13px}}
+
 @media(max-width:560px){
   .stats{grid-template-columns:repeat(2,1fr)}
   .stat .n{font-size:24px}
@@ -246,7 +263,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     <h2>🔐 لوحة التحكم الذهبية</h2>
     <p>أدخل كلمة مرور المدير للوصول إلى اللوحة</p>
     <input type="password" id="gatePass" placeholder="كلمة المرور" autocomplete="current-password" />
-    <div class="gate-msg" id="gateMsg"></div>
     <button class="btn" style="width:100%" id="gateBtn">🔓 دخول</button>
     <button class="btn ghost" style="width:100%" onclick="location.href='./index.html'">← رجوع للمنصة</button>
   </div>
@@ -403,28 +419,6 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
     </div>
   </div>
 
-  <!-- VIDEOS -->
-  <div class="panel" id="p-videos">
-    <div class="sec-title">🎬 إدارة الفيديوهات</div>
-    <div class="card">
-      <h3>➕ إضافة فيديو جديد (نشر فوري)</h3>
-      <div class="frm">
-        <div><label>عنوان الفيديو</label><input id="vTitle" placeholder="مثال: مقدمة في الأمن السيبراني" /></div>
-        <div><label>وصف الفيديو</label><textarea id="vDesc" placeholder="وصف مختصر..."></textarea></div>
-        <div><label>رابط يوتيوب</label><input id="vUrl" placeholder="https://youtu.be/..." /></div>
-        <div class="row2">
-          <div><label>التصنيف</label><input id="vCat" placeholder="مثال: مبتدئ" /></div>
-          <div><label>صورة مصغّرة (اختياري)</label><input id="vThumb" placeholder="https://..." /></div>
-        </div>
-        <button class="btn" id="addVidBtn">➕ إضافة الفيديو</button>
-      </div>
-    </div>
-    <div class="card">
-      <h3>📼 الفيديوهات الحالية</h3>
-      <div id="adminVidList"></div>
-    </div>
-  </div>
-
   <!-- NOTIFS -->
   <div class="panel" id="p-notifs">
     <div class="sec-title">📢 الإشعارات</div>
@@ -521,10 +515,11 @@ header{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-
   </div>
 </div>
 
-<div id="toasts"></div> 
+<div id="toasts"></div>
+
 <script>
 /* ============================================
-   CYBER FORCE ADMIN — JavaScript (SECURED)
+   CYBER FORCE ADMIN
    ============================================ */
 const SUPABASE_URL="https://brawrhpvtnzvvrzkguic.supabase.co";
 const SUPABASE_KEY="sb_publishable_Q8fBS3nVZqgvfd6diaul8A_cMvHUFtN";
@@ -542,7 +537,6 @@ let LIVE_TIMER=null, DASH_TIMER=null;
 let LOG_FILTER_TYPE='', LOG_FILTER_USER='';
 let UAM_CURRENT_USER=null;
 let ADMIN_IS_INSTRUCTOR=false;
-let _verifyRetries=0;
 
 const BAN_FEATURES=[
   {k:'comments',t:'التعليقات'},
@@ -584,33 +578,22 @@ const SESSION=getSession();
 if(!SESSION||!SESSION.username){location.replace('./login.html');}
 else if(SESSION.role!=='admin'){location.replace('./index.html');}
 
-/* ============ 🛡️ VERIFY ADMIN SESSION (طبقة حماية جديدة) ============ */
+/* ============ VERIFY ADMIN SESSION ============ */
 async function verifyAdminSession(silent=false){
   try{
     if(!SESSION || !SESSION.token) return false;
-
-    const { data, error } = await sb.rpc('verify_admin_session', {
-      p_token: SESSION.token
-    });
-
-    if(error){
-      console.warn('verify_admin_session error:', error);
-      return false;
-    }
-
+    const { data, error } = await sb.rpc('verify_admin_session', { p_token: SESSION.token });
+    if(error){ console.warn('verify_admin_session error:', error); return false; }
     const res = Array.isArray(data) ? data[0] : data;
-
     if(!res || !res.ok){
       const code = res && res.error;
-
       if(code === 'invalid_token' || code === 'user_not_found'){
-        if(!silent) toast('🚫 الجلسة انتهت — أعد تسجيل الدخول','err');
+        if(!silent) toast('🚫 الجلسة انتهت','err');
         try{ localStorage.removeItem('sayoda_session'); }catch(e){}
         try{ sessionStorage.removeItem('sayoda_admin_pass'); }catch(e){}
-        setTimeout(()=>location.replace('./login.html'), 1500);
+        showSessionEndedModal();
         return false;
       }
-
       if(code === 'not_admin'){
         if(!silent) toast('🚫 هذا الحساب ليس أدمن','err');
         try{ localStorage.removeItem('sayoda_session'); }catch(e){}
@@ -618,11 +601,8 @@ async function verifyAdminSession(silent=false){
         setTimeout(()=>location.replace('./index.html'), 1500);
         return false;
       }
-
       return false;
     }
-
-    // ✅ تحديث بيانات الأدمن
     ADMIN_IS_INSTRUCTOR = res.is_instructor === true;
     return true;
   }catch(e){
@@ -689,25 +669,38 @@ function ensurePass(){
   }
   return true;
 }
-function gateMsg(msg,type='err'){
-  const el = $('gateMsg');
-  if(!el) return;
-  el.textContent = msg;
-  el.style.color = type === 'ok' ? '#28d17c' : '#ff4d6d';
+
+/* ============ SESSION ENDED MODAL ============ */
+function showSessionEndedModal(){
+  if(document.getElementById('sessionEndedModal')) return;
+  const modal = document.createElement('div');
+  modal.id = 'sessionEndedModal';
+  modal.innerHTML = `
+    <div class="sem-overlay"></div>
+    <div class="sem-box">
+      <div class="sem-icon">🔐</div>
+      <h2 class="sem-title">انتهت الجلسة</h2>
+      <p class="sem-desc">تم تسجيل الدخول لحسابك من جهاز آخر<br>سيتم تسجيل خروجك من هذا الجهاز</p>
+      <button class="sem-btn" onclick="location.replace('./login.html')">🔑 تسجيل الدخول مرة أخرى</button>
+      <div class="sem-timer">سيتم التحويل خلال <span id="semCount">10</span> ثانية</div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  let count = 10;
+  const timer = setInterval(() => {
+    count--;
+    const el = document.getElementById('semCount');
+    if(el) el.textContent = count;
+    if(count <= 0){ clearInterval(timer); location.replace('./login.html'); }
+  }, 1000);
 }
 
 /* ============ GATE ============ */
 $('gateBtn').onclick=async()=>{
   const p=$('gatePass').value;
-  if(!p){ gateMsg('⚠️ أدخل كلمة المرور'); return; }
-
-  const btn=$('gateBtn');
-  btn.disabled=true;
-  btn.textContent='جاري التحقق...';
-  gateMsg('');
-
+  if(!p) return toast('أدخل كلمة المرور','err');
+  const btn=$('gateBtn'); btn.disabled=true; btn.textContent='...';
   try{
-    // 1. تحقق من الباسورد
     const {data,error}=await sb.rpc('admin_verify_password',{
       p_username:SESSION.username, p_password:p
     });
@@ -715,17 +708,14 @@ $('gateBtn').onclick=async()=>{
     const res=Array.isArray(data)?data[0]:data;
 
     if(!res || !res.ok){
-      gateMsg('❌ كلمة المرور غير صحيحة');
+      toast('كلمة مرور خاطئة','err');
       return;
     }
 
-    // 2. 🛡️ تحقق إضافي من التوكن في السيرفر
+    // تحقق من التوكن
     const sessionOK = await verifyAdminSession(false);
-    if(!sessionOK){
-      return;
-    }
+    if(!sessionOK) return;
 
-    // 3. كل حاجة تمام — احفظ الجلسة
     ADMIN={username:SESSION.username};
     PASS=p;
     sessionStorage.setItem('sayoda_admin_pass',p);
@@ -750,19 +740,18 @@ $('gateBtn').onclick=async()=>{
 
   }catch(e){
     console.error('Gate error:',e);
-    gateMsg('⚠️ خطأ في الاتصال');
+    toast('خطأ في الاتصال','err');
   }finally{
     btn.disabled=false; btn.textContent='🔓 دخول';
   }
 };
 $('gatePass').addEventListener('keydown',e=>{if(e.key==='Enter')$('gateBtn').click();});
 
-/* ============ TABS ============ */
+/* ============ TABS (بدون تبويب الفيديوهات) ============ */
 const TABS=[
   {id:'dash',t:'📊 الإحصائيات'},
   {id:'users',t:'👥 الحسابات'},
   {id:'instructors',t:'👨‍🏫 المدربين'},
-  {id:'videos',t:'🎬 الفيديوهات'},
   {id:'notifs',t:'📢 الإشعارات'},
   {id:'bans',t:'🚫 الحظر'},
   {id:'settings',t:'⚙️ الإعدادات'}
@@ -787,7 +776,6 @@ function buildTabs(){
 async function init(){
   if(!ensurePass()) return;
 
-  // 🛡️ تحقق من التوكن
   const ok = await verifyAdminSession(false);
   if(!ok) return;
 
@@ -798,12 +786,9 @@ async function init(){
   await loadOnlineUsers();
   startLiveUpdates();
 
-  // 🛡️ فحص دوري كل 60 ثانية
+  // فحص دوري كل 60 ثانية
   setInterval(async ()=>{
-    const ok = await verifyAdminSession(true);
-    if(!ok){
-      // طرد
-    }
+    await verifyAdminSession(true);
   }, 60000);
 }
 
@@ -1570,81 +1555,12 @@ async function delUser(un){
   }catch(e){toast('فشل الحذف','err');}
 }
 
-/* ============ VIDEOS ============ */
+/* ============ VIDEOS (للاستخدام في User Access Modal فقط) ============ */
 async function loadVideos(){
   try{
     const {data}=await sb.from('videos').select('*').order('created_at',{ascending:false});
     VIDEOS=data||[];
   }catch(e){VIDEOS=[];}
-  $('adminVidList').innerHTML=VIDEOS.length?VIDEOS.map(v=>{
-    const statusMap = {
-      approved:{cls:'on', txt:'✅ معتمد'},
-      pending:{cls:'warn', txt:'⏳ مراجعة'},
-      rejected:{cls:'off', txt:'❌ مرفوض'}
-    };
-    const st = statusMap[v.status] || statusMap.approved;
-    return `<div class="list-item">
-      <div class="li-main">
-        <b>${esc(v.title)}</b>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;align-items:center">
-          <span class="pill ${st.cls}">${st.txt}</span>
-          <small>${esc(v.category||'عام')} · 👁 ${v.views||0}</small>
-        </div>
-      </div>
-      <div class="li-actions">
-        <button class="btn sm danger" data-vid="${v.id}">🗑 حذف</button>
-      </div>
-    </div>`;
-  }).join(''):'<div class="empty"><div class="e">🎬</div><p>لا فيديوهات</p></div>';
-
-  $('adminVidList').querySelectorAll('[data-vid]').forEach(b=>b.onclick=()=>delVid(b.dataset.vid));
-}
-
-$('addVidBtn').onclick=async()=>{
-  if(!ensurePass()) return;
-  const title=clean($('vTitle').value),desc=clean($('vDesc').value),url=clean($('vUrl').value),
-        cat=clean($('vCat').value),thumb=clean($('vThumb').value);
-  if(!title||!url)return toast('العنوان والرابط مطلوبان','err');
-  const btn=$('addVidBtn');btn.disabled=true;btn.textContent='...';
-  try{
-    const {error}=await sb.rpc('admin_add_video',{
-      p_username:ADMIN.username,p_password:PASS,
-      p_title:title,p_description:desc,p_youtube_url:url,
-      p_category:cat||'عام',p_thumbnail:thumb||null
-    });
-    if(error)throw error;
-    toast('تم إضافة الفيديو');
-    ['vTitle','vDesc','vUrl','vCat','vThumb'].forEach(i=>$(i).value='');
-    VIDEOS=[];
-    loadVideos();
-    try{
-      await sb.rpc('client_log_activity',{
-        p_username:ADMIN.username,p_activity_type:'admin_action',
-        p_details:jsonbDetails({action:'add_video',title}),
-        p_user_agent:navigator.userAgent.slice(0,200)
-      });
-    }catch(e){}
-  }catch(e){toast('فشل الإضافة: '+(e.message||''),'err');}
-  finally{btn.disabled=false;btn.textContent='➕ إضافة الفيديو';}
-};
-
-async function delVid(id){
-  if(!ensurePass()) return;
-  if(!confirm('حذف الفيديو؟'))return;
-  try{
-    const {error}=await sb.rpc('admin_delete_video',{p_username:ADMIN.username,p_password:PASS,p_video_id:id});
-    if(error)throw error;
-    toast('تم الحذف');
-    VIDEOS=[];
-    loadVideos();
-    try{
-      await sb.rpc('client_log_activity',{
-        p_username:ADMIN.username,p_activity_type:'admin_action',
-        p_details:jsonbDetails({action:'delete_video',id}),
-        p_user_agent:navigator.userAgent.slice(0,200)
-      });
-    }catch(e){}
-  }catch(e){toast('فشل الحذف','err');}
 }
 
 /* ============ NOTIFS ============ */
@@ -1787,12 +1703,10 @@ async function toggleBan(un,feature){
       p_username:ADMIN.username,p_password:PASS,p_target_user:un,p_feature:feature
     });
     if(error) throw error;
-    const u=USERS.find(x=>x.username===un);
-    if(u){
-      let b=Array.isArray(u.banned_features)?u.banned_features:[];
-      b=b.includes(feature)?b.filter(f=>f!==feature):[...b,feature];
-      u.banned_features=b;
-    }
+    
+    // ✅ تحديث البيانات من الداتابيز
+    await loadUsers();
+    
     renderBans($('banSearch').value);
     toast('تم تحديث الحظر');
   }catch(e){
@@ -1846,7 +1760,7 @@ $('saveSocialBtn').onclick=async()=>{
   }
 };
 
-/* ============ SESSION VALIDATION (دورية) ============ */
+/* ============ SESSION VALIDATION ============ */
 async function checkSession(){
   try{
     const s = JSON.parse(localStorage.getItem('sayoda_session')||'null');
@@ -1863,8 +1777,7 @@ async function checkSession(){
       console.log('🚫 الجلسة انتهت');
       localStorage.removeItem('sayoda_session');
       sessionStorage.removeItem('sayoda_admin_pass');
-      alert('⚠️ تم تسجيل الدخول من جهاز آخر\nسيتم تسجيل خروجك من هذا الجهاز');
-      location.replace('./login.html');
+      showSessionEndedModal();
     }
   }catch(e){}
 }
