@@ -566,7 +566,7 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
 <nav class="bottom-nav" id="bottomNav"></nav>
 <div id="toasts"></div>
 <canvas id="confetti"></canvas>
-<script>
+<script> 
 /* ============================================
    CYBER FORCE — index.html
    ============================================ */
@@ -1112,7 +1112,7 @@ async function requestUnlockForVideo(video){
     'الفيديو: ' + (video.title || '') + '\n\n' +
     'منتظر ردك 🙏'
   );
-  if(!instructorWA){ toast('⚠️ المدرب لسه مسجلش رقم واتساب — تواصل مع الإدارة','err'); return; }
+  if(!instructorWA){ toast('⚠️ المدرب لسه مسجلش رقم واتساب','err'); return; }
   const waUrl = 'https://wa.me/' + instructorWA + '?text=' + msg;
   showWhatsappModal(instructorName, instructorWA, waUrl);
 }
@@ -1191,7 +1191,7 @@ function setWatermarks(){
 
 async function openVideo(v){
   CURRENT_VIDEO = v;
-  _videoXpAwarded = false; // reset
+  _videoXpAwarded = false;
   setWatermarks();
   $('mTitle').textContent = v.title || '';
   $('mDesc').textContent = v.description || '';
@@ -1277,7 +1277,7 @@ async function awardVideoXp(){
   if(!CURRENT_VIDEO || !USER) return;
   _videoXpAwarded = true;
   const videoId = parseInt(CURRENT_VIDEO.video_id);
-  console.log('🎬 إضافة XP للفيديو:', videoId, 'للمستخدم:', USER.username);
+  console.log('🎬 إضافة XP للفيديو:', videoId);
   try{
     const {data, error} = await sb.rpc('award_video_xp', {
       p_username: USER.username,
@@ -1313,7 +1313,24 @@ async function saveProgressSilently(v, pct){
       done: prev.done || false
     };
     await sb.from('users').update({video_progress: USER.video_progress}).eq('username', USER.username);
-    // الفتح التلقائي عند 50%
+
+    /* ✅ زيادة عدد المشاهدات عند 50% (مرة واحدة لكل طالب) */
+    const viewKey = 'view_'+videoId;
+    if(pct >= 50 && !_autoUnlockedVideos.has(viewKey)){
+      _autoUnlockedVideos.add(viewKey);
+      try{
+        const {data: viewData} = await sb.rpc('increment_video_view', {
+          p_username: USER.username,
+          p_video_id: parseInt(videoId)
+        });
+        const vRes = Array.isArray(viewData) ? viewData[0] : viewData;
+        if(vRes && vRes.ok){
+          console.log('👁 زيادة العداد:', vRes.new_views);
+        }
+      }catch(e){ console.warn('increment view error:', e); }
+    }
+
+    /* ✅ الفتح التلقائي عند 50% */
     const key = String(videoId);
     if(pct >= 50 && !_autoUnlockedVideos.has(key)){
       _autoUnlockedVideos.add(key);
