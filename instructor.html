@@ -532,6 +532,14 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
         </div>
 
         <div class="field">
+          <label>🖼️ غلاف الفيديو (اختياري)</label>
+          <input type="text" id="vidThumb" placeholder="https://example.com/image.jpg" dir="ltr" />
+          <small style="font-size:11px;color:var(--muted);display:block;margin-top:4px">
+            📁 رابط صورة أو مسارها من جذر الموقع
+          </small>
+        </div>
+
+        <div class="field">
           <label>التصنيف</label>
           <input type="text" id="vidCat" placeholder="مثال: مبتدئ" maxlength="50" />
         </div>
@@ -1031,11 +1039,11 @@ async function loadVideos(){
     $('videosList').innerHTML = vids.map(v => {
       const statusClass = v.status === 'approved' ? 'approved' : v.status === 'rejected' ? 'rejected' : 'pending';
       const statusTxt = v.status === 'approved' ? '✅ معتمد' : v.status === 'rejected' ? '❌ مرفوض' : '⏳ مراجعة';
-      const thumb = v.thumbnail || (v.youtube_id ? `https://i.ytimg.com/vi/${v.youtube_id}/mqdefault.jpg` : './logogg.png');
+      const thumb = v.thumbnail || (v.youtube_id ? `https://i.ytimg.com/vi/${v.youtube_id}/mqdefault.jpg` : './sayed.png');
       
       return `
         <div class="video-item">
-          <img class="video-thumb" src="${esc(thumb)}" onerror="this.src='./logogg.png'" alt="" />
+          <img class="video-thumb" src="${esc(thumb)}" onerror="this.src='./sayed.png'" alt="" />
           <div class="video-info">
             <h4>${esc(v.title)}</h4>
             <small>👁️ ${safeInt(v.views)} · ${esc(v.category||'عام')}</small>
@@ -1066,7 +1074,7 @@ async function deleteMyVideo(videoId){
     const { error } = await sb.from('videos')
       .delete()
       .eq('id', parseInt(videoId))
-      .eq('instructor_id', USER.id); // ✅ تأكد إن المدرب يمسح فيديوهاته بس
+      .eq('instructor_id', USER.id);
 
     if(error) throw error;
 
@@ -1095,6 +1103,7 @@ $('addVideoBtn').onclick = async () => {
   const title = clean($('vidTitle').value);
   const desc = clean($('vidDesc').value);
   const url = clean($('vidUrl').value);
+  const thumbInput = clean($('vidThumb').value);
   const cat = clean($('vidCat').value) || 'عام';
 
   if(!title || title.length < 3) return toast('اكتب عنوان الفيديو', 'err');
@@ -1104,22 +1113,31 @@ $('addVideoBtn').onclick = async () => {
   if(!ytMatch) return toast('رابط يوتيوب غير صالح', 'err');
   const youtubeId = ytMatch[1];
 
+  // ✅ لو المستخدم مدخلش غلاف → نستخدم sayed.png بدون ما نقوله
+  const finalThumb = thumbInput || './sayed.png';
+
   const btn = $('addVideoBtn');
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>';
 
   try{
     const { error } = await sb.from('videos').insert({
-      title, description: desc,
-      youtube_url: url, youtube_id: youtubeId, category: cat,
-      thumbnail: `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`,
-      instructor_id: USER.id, created_by: USER.username,
-      status: 'pending', published: false, views: 0
+      title,
+      description: desc,
+      youtube_url: url,
+      youtube_id: youtubeId,
+      category: cat,
+      thumbnail: finalThumb,  // ← الغلاف
+      instructor_id: USER.id,
+      created_by: USER.username,
+      status: 'pending',
+      published: false,
+      views: 0
     });
 
     if(error) throw error;
     toast('✅ تم إرسال الفيديو للأدمن', 'ok');
-    ['vidTitle','vidDesc','vidUrl','vidCat'].forEach(i => $(i).value = '');
+    ['vidTitle','vidDesc','vidUrl','vidThumb','vidCat'].forEach(i => $(i).value = '');
     await loadVideos();
     await loadStats();
 
