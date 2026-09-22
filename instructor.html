@@ -6,8 +6,8 @@
 <meta name="theme-color" content="#020812" />
 <title>لوحة المدرب | CYBER FORCE</title>
 <link rel="manifest" href="./manifest.json" />
-<link rel="icon" href="./logogg.png" />
-<link rel="apple-touch-icon" href="./logogg.png" />
+<link rel="icon" href="./logo.png" />
+<link rel="apple-touch-icon" href="./logo.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
@@ -52,7 +52,69 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 img{max-width:100%;-webkit-user-drag:none;pointer-events:none}
 input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:text}
 
-/* HEADER */
+/* ============ GATE ============ */
+.gate{
+  position:fixed;inset:0;z-index:500;
+  background:var(--bg);display:grid;place-items:center;padding:20px;
+}
+.gate::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 50% 30%,rgba(255,215,0,.15),transparent 60%);
+}
+.gate-box{
+  position:relative;background:linear-gradient(160deg,rgba(26,18,6,.98),rgba(20,13,0,.98));
+  border:1px solid var(--border-gold);border-radius:26px;padding:36px 28px;
+  width:100%;max-width:450px;text-align:center;
+  box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(255,215,0,.15);
+}
+.gate-box img{
+  width:100px;height:100px;object-fit:contain;margin:0 auto 18px;display:block;
+  filter:drop-shadow(0 0 28px rgba(255,215,0,.8));
+  animation:float 4s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.gate-box h2{
+  font-size:22px;font-weight:900;margin-bottom:8px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-2));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.gate-box p{color:var(--muted);font-size:13px;margin-bottom:22px;line-height:1.6}
+.gate-box input{
+  width:100%;padding:15px;border-radius:13px;
+  border:1px solid var(--border-gold);background:rgba(3,10,22,.7);
+  color:var(--txt);outline:none;text-align:center;font-size:16px;
+  margin-bottom:12px;transition:.2s;
+  font-family:inherit;direction:ltr;
+}
+.gate-box input:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 4px rgba(255,215,0,.15);
+}
+.gate-msg{
+  font-size:13px;font-weight:700;margin-bottom:12px;
+  min-height:20px;color:var(--danger);
+}
+.gate-btn{
+  width:100%;padding:14px 22px;border:none;border-radius:12px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-2));
+  color:#0a0600;font-weight:900;font-size:15px;
+  transition:.2s;box-shadow:0 10px 30px rgba(255,215,0,.3);
+  cursor:pointer;font-family:inherit;
+}
+.gate-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(255,215,0,.5)}
+.gate-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.gate-btn.loading::after{
+  content:'';display:inline-block;width:14px;height:14px;
+  border:2px solid rgba(10,6,0,.3);border-top-color:#0a0600;
+  border-radius:50%;animation:spin .7s linear infinite;
+  margin-right:8px;vertical-align:middle;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+#appContent{display:none}
+#appContent.show{display:block}
+
+/* ============ HEADER ============ */
 .header{
   position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
   gap:10px;padding:10px 16px;background:var(--card);
@@ -72,10 +134,9 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 }
 .icon-btn:hover{background:var(--gold);color:#0a0600;transform:translateY(-2px)}
 
-/* MAIN */
+/* ============ MAIN ============ */
 .main{max-width:1100px;margin:0 auto;padding:20px 16px}
 
-/* WELCOME */
 .welcome-card{
   background:linear-gradient(135deg,rgba(255,215,0,.14),rgba(25,170,255,.06));
   border:1px solid var(--border-gold);border-radius:20px;padding:20px;
@@ -97,7 +158,6 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
   font-weight:800;font-size:12px;color:var(--gold);
 }
 
-/* STATS */
 .stats-grid{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
   gap:12px;margin-bottom:20px;
@@ -116,7 +176,6 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 .stat-card .n{font-size:24px;font-weight:900;color:var(--gold);line-height:1.2}
 .stat-card .l{font-size:11px;color:var(--muted);font-weight:700;margin-top:4px}
 
-/* TABS */
 .tabs{
   display:flex;gap:6px;background:var(--card);border:1px solid var(--border-gold);
   border-radius:14px;padding:6px;margin-bottom:20px;overflow-x:auto;
@@ -138,7 +197,6 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 .tab-content.active{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
-/* CARD */
 .card{
   background:var(--card);border:1px solid var(--border-gold);
   border-radius:var(--radius);padding:20px;margin-bottom:16px;
@@ -153,7 +211,6 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
   background:linear-gradient(180deg,var(--gold),var(--gold-2));
 }
 
-/* FIELDS */
 .field{margin-bottom:12px}
 .field label{display:block;font-size:12px;font-weight:700;margin-bottom:6px;color:#cfe3fb}
 .field input,.field textarea,.field select{
@@ -168,13 +225,13 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 .field select{cursor:pointer;-webkit-appearance:none;appearance:none}
 .field select option{background:var(--card-solid);color:var(--txt)}
 
-/* BUTTONS */
 .btn{
   padding:13px 22px;border-radius:12px;
   background:linear-gradient(135deg,var(--gold),var(--gold-2));
   color:#0a0600;font-size:14px;font-weight:900;
   transition:.2s;box-shadow:0 8px 24px rgba(255,215,0,.3);
   display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  font-family:inherit;
 }
 .btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,215,0,.4)}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
@@ -193,7 +250,6 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* POLL OPTIONS */
 .poll-options-list{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
 .poll-option-row{display:flex;gap:8px;align-items:center}
 .poll-option-row input{flex:1}
@@ -205,7 +261,6 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 }
 .poll-option-row button:hover{background:var(--danger);color:#fff}
 
-/* DURATION GRID */
 .duration-grid{
   display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));
   gap:8px;margin-bottom:12px;
@@ -214,7 +269,7 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
   padding:12px 8px;border-radius:12px;
   background:rgba(3,10,22,.6);border:1px solid var(--border-gold);
   color:var(--muted);font-weight:800;font-size:12px;
-  transition:.2s;text-align:center;
+  transition:.2s;text-align:center;font-family:inherit;cursor:pointer;
 }
 .duration-btn:hover{border-color:var(--gold);color:var(--gold)}
 .duration-btn.active{
@@ -224,11 +279,9 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 }
 .duration-btn .ic{display:block;font-size:18px;margin-bottom:3px}
 
-/* CUSTOM DATE */
 #customDateBox{display:none;margin-top:10px}
 #customDateBox.show{display:block;animation:fade .3s}
 
-/* POLL ITEM */
 .poll-item{
   background:rgba(3,10,22,.4);border:1px solid var(--border-gold);
   border-radius:14px;padding:16px;margin-bottom:12px;transition:.25s;
@@ -263,7 +316,6 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 .poll-result-txt .txt{color:var(--txt)}
 .poll-result-txt .pct{color:var(--gold);font-weight:900}
 
-/* VIDEO ITEM */
 .video-item{
   display:flex;gap:12px;padding:12px;border-radius:12px;
   background:rgba(3,10,22,.4);border:1px solid var(--border-gold);
@@ -284,7 +336,6 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 .video-status.pending{background:rgba(255,176,32,.15);color:var(--warn);border:1px solid rgba(255,176,32,.3)}
 .video-status.rejected{background:rgba(255,77,109,.15);color:var(--danger);border:1px solid rgba(255,77,109,.3)}
 
-/* STUDENT ITEM */
 .student-item{
   display:flex;gap:12px;padding:12px;border-radius:12px;
   background:rgba(3,10,22,.4);border:1px solid var(--border-gold);
@@ -306,14 +357,10 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 .status-badge.active{background:rgba(40,209,124,.15);color:var(--ok);border:1px solid rgba(40,209,124,.3)}
 .status-badge.pending{background:rgba(255,176,32,.15);color:var(--warn);border:1px solid rgba(255,176,32,.3)}
 
-/* EMPTY */
-.empty{
-  text-align:center;padding:40px 20px;color:var(--muted);
-}
+.empty{text-align:center;padding:40px 20px;color:var(--muted)}
 .empty .e{font-size:52px;margin-bottom:10px;opacity:.6}
 .empty p{font-size:14px;line-height:1.6}
 
-/* SKELETON */
 .skel{
   background:linear-gradient(90deg,var(--bg-3) 25%,rgba(255,215,0,.06) 50%,var(--bg-3) 75%);
   background-size:200% 100%;animation:shimmer 1.3s infinite;border-radius:12px;
@@ -321,7 +368,6 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 }
 @keyframes shimmer{to{background-position:-200% 0}}
 
-/* TOAST */
 #toasts{
   position:fixed;top:20px;left:50%;transform:translateX(-50%);
   z-index:10000;display:flex;flex-direction:column;gap:10px;
@@ -341,7 +387,6 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 .toast .ic{font-size:20px;flex-shrink:0}
 @keyframes toastIn{from{opacity:0;transform:translateY(-20px) scale(.95)}to{opacity:1;transform:none}}
 
-/* RESPONSIVE */
 @media(max-width:640px){
   .main{padding:14px 12px}
   .welcome-card{padding:16px}
@@ -354,217 +399,213 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
   .video-item{padding:10px}
   .video-thumb{width:60px;height:45px}
   .duration-grid{grid-template-columns:repeat(3,1fr)}
+  .gate-box{padding:28px 20px}
 }
 </style>
 </head>
 <body>
 
-<!-- ============ HEADER ============ -->
-<header class="header">
-  <div class="hd-left">
-    <img src="./logogg.png" alt="logo" onerror="this.style.display='none'">
-    <div class="hd-title">لوحة <span>المدرب</span><small>CYBER FORCE</small></div>
+<!-- ============ GATE (البوابة) ============ -->
+<div class="gate" id="gate">
+  <div class="gate-box">
+    <img src="./logo.png" alt="logo" onerror="this.style.display='none'">
+    <h2>🎬 بوابة المدرب</h2>
+    <p>أدخل كلمة المرور للدخول على لوحة المدرب</p>
+    <input type="password" id="gatePass" placeholder="كلمة المرور" autocomplete="current-password" />
+    <div class="gate-msg" id="gateMsg"></div>
+    <button class="gate-btn" id="gateBtn">🔓 دخول</button>
   </div>
-  <div class="hd-right">
-    <button class="icon-btn" id="homeBtn" title="الرئيسية">🏠</button>
-    <button class="icon-btn" id="themeBtn" title="الوضع">🌙</button>
-    <button class="icon-btn" id="logoutBtn" title="خروج">🚪</button>
-  </div>
-</header>
+</div>
 
-<!-- ============ MAIN ============ -->
-<main class="main">
+<!-- ============ APP CONTENT ============ -->
+<div id="appContent">
 
-  <!-- Welcome -->
-  <div class="welcome-card">
-    <div class="welcome-av" id="welcomeAv">?</div>
-    <div class="welcome-info">
-      <h1>أهلاً <span id="welcomeName">—</span> 🎬</h1>
-      <p>لوحة تحكم المدرب — إدارة الفيديوهات والاستطلاعات</p>
-      <span class="welcome-badge" id="welcomeSpecialty">🎯 مدرب</span>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="hd-left">
+      <img src="./logo.png" alt="logo" onerror="this.style.display='none'">
+      <div class="hd-title">لوحة <span>المدرب</span><small>CYBER FORCE</small></div>
     </div>
-  </div>
+    <div class="hd-right">
+      <button class="icon-btn" id="homeBtn" title="الرئيسية">🏠</button>
+      <button class="icon-btn" id="themeBtn" title="الوضع">🌙</button>
+      <button class="icon-btn" id="logoutBtn" title="خروج">🚪</button>
+    </div>
+  </header>
 
-  <!-- Stats -->
-  <div class="stats-grid">
-    <div class="stat-card"><span class="ic">🎬</span><div class="n" id="statVideos">0</div><div class="l">فيديوهات</div></div>
-    <div class="stat-card"><span class="ic">👥</span><div class="n" id="statStudents">0</div><div class="l">طلاب مشتركين</div></div>
-    <div class="stat-card"><span class="ic">🗳️</span><div class="n" id="statPolls">0</div><div class="l">استطلاعات نشطة</div></div>
-    <div class="stat-card"><span class="ic">👁️</span><div class="n" id="statViews">0</div><div class="l">مشاهدات</div></div>
-  </div>
+  <!-- MAIN -->
+  <main class="main">
 
-  <!-- Tabs -->
-  <div class="tabs">
-    <button class="tab active" data-tab="polls">🗳️ الاستطلاعات</button>
-    <button class="tab" data-tab="videos">🎬 الفيديوهات</button>
-    <button class="tab" data-tab="students">👥 الطلاب</button>
-    <button class="tab" data-tab="profile">👤 ملفي</button>
-  </div>
+    <div class="welcome-card">
+      <div class="welcome-av" id="welcomeAv">?</div>
+      <div class="welcome-info">
+        <h1>أهلاً <span id="welcomeName">—</span> 🎬</h1>
+        <p>لوحة تحكم المدرب — إدارة الفيديوهات والاستطلاعات</p>
+        <span class="welcome-badge" id="welcomeSpecialty">🎯 مدرب</span>
+      </div>
+    </div>
 
-  <!-- ============ TAB: POLLS ============ -->
-  <div class="tab-content active" id="tab-polls">
-    
-    <!-- Create Poll -->
-    <div class="card">
-      <h3>➕ إنشاء استطلاع جديد</h3>
+    <div class="stats-grid">
+      <div class="stat-card"><span class="ic">🎬</span><div class="n" id="statVideos">0</div><div class="l">فيديوهات</div></div>
+      <div class="stat-card"><span class="ic">👥</span><div class="n" id="statStudents">0</div><div class="l">طلاب مشتركين</div></div>
+      <div class="stat-card"><span class="ic">🗳️</span><div class="n" id="statPolls">0</div><div class="l">استطلاعات نشطة</div></div>
+      <div class="stat-card"><span class="ic">👁️</span><div class="n" id="statViews">0</div><div class="l">مشاهدات</div></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="polls">🗳️ الاستطلاعات</button>
+      <button class="tab" data-tab="videos">🎬 الفيديوهات</button>
+      <button class="tab" data-tab="students">👥 الطلاب</button>
+      <button class="tab" data-tab="profile">👤 ملفي</button>
+    </div>
+
+    <!-- ============ TAB: POLLS ============ -->
+    <div class="tab-content active" id="tab-polls">
       
-      <div class="field">
-        <label>السؤال</label>
-        <input type="text" id="pollQuestion" placeholder="مثال: إيه الموضوع اللي عايزه بعد كده؟" maxlength="200" />
-      </div>
-
-      <div class="field">
-        <label>الخيارات (2-6)</label>
-        <div class="poll-options-list" id="pollOptionsList"></div>
-        <button class="btn ghost sm" id="addOptionBtn" type="button">➕ إضافة خيار</button>
-      </div>
-
-      <div class="field">
-        <label>⏱️ مدة الاستطلاع</label>
-        <div class="duration-grid" id="durationGrid">
-          <button type="button" class="duration-btn" data-hours="1">
-            <span class="ic">⚡</span>ساعة
-          </button>
-          <button type="button" class="duration-btn" data-hours="6">
-            <span class="ic">🕐</span>6 ساعات
-          </button>
-          <button type="button" class="duration-btn" data-hours="24">
-            <span class="ic">📅</span>يوم
-          </button>
-          <button type="button" class="duration-btn active" data-hours="72">
-            <span class="ic">📆</span>3 أيام
-          </button>
-          <button type="button" class="duration-btn" data-hours="168">
-            <span class="ic">🗓️</span>أسبوع
-          </button>
-          <button type="button" class="duration-btn" data-hours="720">
-            <span class="ic">📊</span>شهر
-          </button>
-          <button type="button" class="duration-btn" data-hours="custom">
-            <span class="ic">⚙️</span>مخصص
-          </button>
+      <div class="card">
+        <h3>➕ إنشاء استطلاع جديد</h3>
+        
+        <div class="field">
+          <label>السؤال</label>
+          <input type="text" id="pollQuestion" placeholder="مثال: إيه الموضوع اللي عايزه بعد كده؟" maxlength="200" />
         </div>
 
-        <!-- Custom Date -->
-        <div id="customDateBox">
-          <input type="datetime-local" id="pollCustomDate" />
-          <small style="font-size:11px;color:var(--muted);display:block;margin-top:6px">
-            اختر التاريخ والوقت اللي ينتهي فيه الاستطلاع
+        <div class="field">
+          <label>الخيارات (2-6)</label>
+          <div class="poll-options-list" id="pollOptionsList"></div>
+          <button class="btn ghost sm" id="addOptionBtn" type="button">➕ إضافة خيار</button>
+        </div>
+
+        <div class="field">
+          <label>⏱️ مدة الاستطلاع</label>
+          <div class="duration-grid" id="durationGrid">
+            <button type="button" class="duration-btn" data-hours="1"><span class="ic">⚡</span>ساعة</button>
+            <button type="button" class="duration-btn" data-hours="6"><span class="ic">🕐</span>6 ساعات</button>
+            <button type="button" class="duration-btn" data-hours="24"><span class="ic">📅</span>يوم</button>
+            <button type="button" class="duration-btn active" data-hours="72"><span class="ic">📆</span>3 أيام</button>
+            <button type="button" class="duration-btn" data-hours="168"><span class="ic">🗓️</span>أسبوع</button>
+            <button type="button" class="duration-btn" data-hours="720"><span class="ic">📊</span>شهر</button>
+            <button type="button" class="duration-btn" data-hours="custom"><span class="ic">⚙️</span>مخصص</button>
+          </div>
+
+          <div id="customDateBox">
+            <input type="datetime-local" id="pollCustomDate" />
+            <small style="font-size:11px;color:var(--muted);display:block;margin-top:6px">
+              اختر التاريخ والوقت اللي ينتهي فيه الاستطلاع
+            </small>
+          </div>
+
+          <small style="font-size:11px;color:var(--muted);display:block;margin-top:8px;padding:8px 12px;background:rgba(255,215,0,.08);border-radius:8px;border:1px solid rgba(255,215,0,.2)">
+            🗑️ <b>ملاحظة:</b> بعد انتهاء الوقت، هيتمسح الاستطلاع تلقائياً
           </small>
         </div>
 
-        <small style="font-size:11px;color:var(--muted);display:block;margin-top:8px;padding:8px 12px;background:rgba(255,215,0,.08);border-radius:8px;border:1px solid rgba(255,215,0,.2)">
-          🗑️ <b>ملاحظة:</b> بعد انتهاء الوقت، هيتمسح الاستطلاع تلقائياً
-        </small>
+        <button class="btn full" id="createPollBtn">🗳️ نشر الاستطلاع</button>
       </div>
 
-      <button class="btn full" id="createPollBtn">🗳️ نشر الاستطلاع</button>
-    </div>
-
-    <!-- My Polls -->
-    <div class="card">
-      <h3>📋 استطلاعاتي النشطة</h3>
-      <div id="pollsList">
-        <div class="skel"></div>
-        <div class="skel"></div>
+      <div class="card">
+        <h3>📋 استطلاعاتي النشطة</h3>
+        <div id="pollsList">
+          <div class="skel"></div>
+          <div class="skel"></div>
+        </div>
       </div>
+
     </div>
 
-  </div>
-
-  <!-- ============ TAB: VIDEOS ============ -->
-  <div class="tab-content" id="tab-videos">
-    
-    <div class="card">
-      <h3>➕ إضافة فيديو جديد</h3>
+    <!-- ============ TAB: VIDEOS ============ -->
+    <div class="tab-content" id="tab-videos">
       
-      <div class="field">
-        <label>عنوان الفيديو</label>
-        <input type="text" id="vidTitle" placeholder="مثال: مقدمة في الأمن السيبراني" maxlength="200" />
+      <div class="card">
+        <h3>➕ إضافة فيديو جديد</h3>
+        
+        <div class="field">
+          <label>عنوان الفيديو</label>
+          <input type="text" id="vidTitle" placeholder="مثال: مقدمة في الأمن السيبراني" maxlength="200" />
+        </div>
+
+        <div class="field">
+          <label>الوصف</label>
+          <textarea id="vidDesc" placeholder="وصف مختصر..." maxlength="500"></textarea>
+        </div>
+
+        <div class="field">
+          <label>رابط يوتيوب</label>
+          <input type="text" id="vidUrl" placeholder="https://youtu.be/..." dir="ltr" />
+        </div>
+
+        <div class="field">
+          <label>التصنيف</label>
+          <input type="text" id="vidCat" placeholder="مثال: مبتدئ" maxlength="50" />
+        </div>
+
+        <button class="btn full" id="addVideoBtn">🎬 إضافة الفيديو</button>
+        <p style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center">
+          ⏳ الفيديو هيروح للأدمن للمراجعة قبل النشر
+        </p>
       </div>
 
-      <div class="field">
-        <label>الوصف</label>
-        <textarea id="vidDesc" placeholder="وصف مختصر..." maxlength="500"></textarea>
+      <div class="card">
+        <h3>📼 فيديوهاتي</h3>
+        <div id="videosList">
+          <div class="skel"></div>
+          <div class="skel"></div>
+        </div>
       </div>
 
-      <div class="field">
-        <label>رابط يوتيوب</label>
-        <input type="text" id="vidUrl" placeholder="https://youtu.be/..." dir="ltr" />
-      </div>
-
-      <div class="field">
-        <label>التصنيف</label>
-        <input type="text" id="vidCat" placeholder="مثال: مبتدئ" maxlength="50" />
-      </div>
-
-      <button class="btn full" id="addVideoBtn">🎬 إضافة الفيديو</button>
-      <p style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center">
-        ⏳ الفيديو هيروح للأدمن للمراجعة قبل النشر
-      </p>
     </div>
 
-    <div class="card">
-      <h3>📼 فيديوهاتي</h3>
-      <div id="videosList">
-        <div class="skel"></div>
-        <div class="skel"></div>
+    <!-- ============ TAB: STUDENTS ============ -->
+    <div class="tab-content" id="tab-students">
+      <div class="card">
+        <h3>👥 الطلاب المشتركين</h3>
+        <div id="studentsList">
+          <div class="skel"></div>
+          <div class="skel"></div>
+        </div>
       </div>
     </div>
 
-  </div>
+    <!-- ============ TAB: PROFILE ============ -->
+    <div class="tab-content" id="tab-profile">
+      <div class="card">
+        <h3>👤 بياناتي</h3>
+        
+        <div class="field">
+          <label>اسم المستخدم</label>
+          <input type="text" id="profileUsername" disabled />
+        </div>
 
-  <!-- ============ TAB: STUDENTS ============ -->
-  <div class="tab-content" id="tab-students">
-    <div class="card">
-      <h3>👥 الطلاب المشتركين</h3>
-      <div id="studentsList">
-        <div class="skel"></div>
-        <div class="skel"></div>
+        <div class="field">
+          <label>التخصص</label>
+          <input type="text" id="profileSpecialty" placeholder="مثال: اختراق أخلاقي" maxlength="100" />
+        </div>
+
+        <div class="field">
+          <label>نبذة شخصية</label>
+          <textarea id="profileBio" placeholder="اكتب نبذة قصيرة عنك..." maxlength="500"></textarea>
+        </div>
+
+        <div class="field">
+          <label>رقم الواتساب</label>
+          <input type="tel" id="profileWhatsapp" placeholder="201xxxxxxxxx" maxlength="15" dir="ltr" />
+          <small style="font-size:11px;color:var(--muted);display:block;margin-top:4px">
+            بصيغة دولية بدون + وبدون 0 (مثال: 201041254010)
+          </small>
+        </div>
+
+        <button class="btn full" id="saveProfileBtn">💾 حفظ البيانات</button>
       </div>
     </div>
-  </div>
 
-  <!-- ============ TAB: PROFILE ============ -->
-  <div class="tab-content" id="tab-profile">
-    <div class="card">
-      <h3>👤 بياناتي</h3>
-      
-      <div class="field">
-        <label>اسم المستخدم</label>
-        <input type="text" id="profileUsername" disabled />
-      </div>
+  </main>
+</div>
 
-      <div class="field">
-        <label>التخصص</label>
-        <input type="text" id="profileSpecialty" placeholder="مثال: اختراق أخلاقي" maxlength="100" />
-      </div>
-
-      <div class="field">
-        <label>نبذة شخصية</label>
-        <textarea id="profileBio" placeholder="اكتب نبذة قصيرة عنك..." maxlength="500"></textarea>
-      </div>
-
-      <div class="field">
-        <label>رقم الواتساب</label>
-        <input type="tel" id="profileWhatsapp" placeholder="201xxxxxxxxx" maxlength="15" dir="ltr" />
-        <small style="font-size:11px;color:var(--muted);display:block;margin-top:4px">
-          بصيغة دولية بدون + وبدون 0 (مثال: 201041254010)
-        </small>
-      </div>
-
-      <button class="btn full" id="saveProfileBtn">💾 حفظ البيانات</button>
-    </div>
-  </div>
-
-</main>
-
-<!-- ============ TOASTS ============ -->
 <div id="toasts"></div>
 
 <script>
 /* ============================================
-   INSTRUCTOR DASHBOARD
+   INSTRUCTOR DASHBOARD (SECURED)
    ============================================ */
 const SUPABASE_URL = "https://brawrhpvtnzvvrzkguic.supabase.co";
 const SUPABASE_KEY = "sb_publishable_Q8fBS3nVZqgvfd6diaul8A_cMvHUFtN";
@@ -574,21 +615,11 @@ const clean = s => String(s||'').replace(/[<>]/g,'').trim();
 const esc = s => String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeInt = (n, d=0) => { const v = parseInt(n, 10); return Number.isFinite(v) ? v : d; };
 
-/* SESSION */
-function getSession(){
-  try{ return JSON.parse(localStorage.getItem('sayoda_session')||'null'); }
-  catch(e){ return null; }
-}
-const SESSION = getSession();
-if(!SESSION || !SESSION.username || !SESSION.token){
-  location.replace('./login.html');
-}
-
 let USER = null;
 let POLL_OPTIONS = ['', ''];
 let SELECTED_HOURS = 72;
 
-/* THEME */
+/* ============ THEME ============ */
 (function initTheme(){
   const t = localStorage.getItem('sayoda_theme') || 'dark';
   document.documentElement.setAttribute('data-theme', t);
@@ -605,7 +636,7 @@ $('themeBtn').onclick = () => {
   updateThemeBtn(nx);
 };
 
-/* TOAST */
+/* ============ TOAST ============ */
 function toast(msg, type='info', duration=3500){
   const icons = { ok:'✅', err:'⚠️', info:'ℹ️' };
   const el = document.createElement('div');
@@ -620,18 +651,92 @@ function toast(msg, type='info', duration=3500){
   }, duration);
 }
 
-/* BUTTONS */
+/* ============ GATE FUNCTIONS ============ */
+function showGateError(msg){
+  $('gateMsg').textContent = msg;
+}
+function hideGate(){
+  $('gate').style.display = 'none';
+  $('appContent').classList.add('show');
+}
+
+/* ============ GATE SUBMIT ============ */
+$('gateBtn').onclick = async () => {
+  const password = $('gatePass').value;
+  if(!password){
+    return showGateError('⚠️ أدخل كلمة المرور');
+  }
+  if(!SESSION || !SESSION.username){
+    return showGateError('⚠️ الجلسة منتهية — أعد تسجيل الدخول');
+  }
+
+  const btn = $('gateBtn');
+  btn.disabled = true;
+  btn.classList.add('loading');
+  btn.textContent = 'جاري التحقق';
+  showGateError('');
+
+  try{
+    const { data, error } = await sb.rpc('instructor_verify_password', {
+      p_username: SESSION.username,
+      p_password: password
+    });
+
+    if(error) throw error;
+    const res = Array.isArray(data) ? data[0] : data;
+
+    if(!res || !res.ok){
+      const code = res && res.error;
+      if(code === 'wrong_password') showGateError('❌ كلمة المرور غير صحيحة');
+      else if(code === 'not_instructor') showGateError('🚫 هذا الحساب ليس مدرب');
+      else if(code === 'inactive') showGateError('⛔ الحساب موقوف');
+      else showGateError('⚠️ حدث خطأ');
+      return;
+    }
+
+    // ✅ نجح — احفظ الباسورد في sessionStorage
+    sessionStorage.setItem('sayoda_instructor_pass', password);
+    hideGate();
+    await init();
+
+  }catch(e){
+    console.error('gate error:', e);
+    showGateError('⚠️ خطأ في الاتصال');
+  }finally{
+    btn.disabled = false;
+    btn.classList.remove('loading');
+    btn.textContent = '🔓 دخول';
+  }
+};
+
+$('gatePass').addEventListener('keydown', e => {
+  if(e.key === 'Enter') $('gateBtn').click();
+});
+
+/* ============ SESSION CHECK ============ */
+function getSession(){
+  try{ return JSON.parse(localStorage.getItem('sayoda_session')||'null'); }
+  catch(e){ return null; }
+}
+const SESSION = getSession();
+
+if(!SESSION || !SESSION.username || !SESSION.token){
+  location.replace('./login.html');
+}
+
+/* ============ THEME BTN (placeholder before gate) ============ */
 $('homeBtn').onclick = () => location.href = './index.html';
 $('logoutBtn').onclick = async () => {
   if(!confirm('تسجيل الخروج؟')) return;
   try{
-    if(SESSION.token) await sb.rpc('secure_logout', { p_token: SESSION.token });
+    if(SESSION && SESSION.token) await sb.rpc('secure_logout', { p_token: SESSION.token });
   }catch(e){}
   localStorage.removeItem('sayoda_session');
+  sessionStorage.removeItem('sayoda_instructor_pass');
   location.replace('./login.html');
 };
 
-/* TABS */
+/* ============ TABS ============ */
 document.querySelectorAll('.tab').forEach(tab => {
   tab.onclick = () => {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -645,7 +750,7 @@ document.querySelectorAll('.tab').forEach(tab => {
   };
 });
 
-/* DURATION SELECTOR */
+/* ============ DURATION SELECTOR ============ */
 document.querySelectorAll('.duration-btn').forEach(btn => {
   btn.onclick = () => {
     document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('active'));
@@ -654,7 +759,6 @@ document.querySelectorAll('.duration-btn').forEach(btn => {
     const val = btn.dataset.hours;
     if(val === 'custom'){
       $('customDateBox').classList.add('show');
-      // Set default: tomorrow
       const tomorrow = new Date(Date.now() + 24*60*60*1000);
       const iso = tomorrow.toISOString().slice(0, 16);
       $('pollCustomDate').value = iso;
@@ -666,7 +770,7 @@ document.querySelectorAll('.duration-btn').forEach(btn => {
   };
 });
 
-/* POLL OPTIONS */
+/* ============ POLL OPTIONS ============ */
 function renderPollOptions(){
   const container = $('pollOptionsList');
   container.innerHTML = POLL_OPTIONS.map((val, i) => `
@@ -699,28 +803,47 @@ $('addOptionBtn').onclick = () => {
   renderPollOptions();
 };
 
-/* INIT */
+/* ============ INIT ============ */
 async function init(){
   try{
-    const { data, error } = await sb.from('users')
+    // ✅ 1. تحقق من التوكن في السيرفر
+    const { data: verifyData, error: verifyErr } = await sb.rpc('verify_instructor_session', {
+      p_token: SESSION.token
+    });
+
+    if(verifyErr) throw verifyErr;
+    const vRes = Array.isArray(verifyData) ? verifyData[0] : verifyData;
+
+    if(!vRes || !vRes.ok){
+      const errCode = vRes && vRes.error;
+      if(errCode === 'invalid_token' || errCode === 'user_not_found'){
+        try{ localStorage.removeItem('sayoda_session'); }catch(e){}
+        try{ sessionStorage.removeItem('sayoda_instructor_pass'); }catch(e){}
+        location.replace('./login.html');
+        return;
+      }
+      if(errCode === 'not_instructor'){
+        toast('🚫 هذا الحساب ليس مدرب', 'err', 4000);
+        setTimeout(() => location.replace('./index.html'), 2000);
+        return;
+      }
+      toast('⚠️ تعذّر التحقق من الجلسة', 'err');
+      return;
+    }
+
+    // ✅ 2. جلب بيانات المدرب
+    const { data: userData, error: userErr } = await sb.from('users')
       .select('id, username, role, is_instructor, specialty, bio, whatsapp, phone, xp')
       .eq('username', SESSION.username)
       .limit(1);
-    
-    if(error) throw error;
-    if(!data || !data[0]){
+
+    if(userErr) throw userErr;
+    if(!userData || !userData[0]){
       toast('تعذّر تحميل البيانات', 'err');
       return;
     }
 
-    USER = data[0];
-    
-    const isIns = USER.role === 'instructor' || (USER.role === 'admin' && USER.is_instructor === true);
-    if(!isIns){
-      toast('هذه الصفحة للمدربين فقط', 'err');
-      setTimeout(() => location.replace('./index.html'), 1500);
-      return;
-    }
+    USER = userData[0];
 
     $('welcomeAv').textContent = USER.username[0].toUpperCase();
     $('welcomeName').textContent = USER.username;
@@ -731,12 +854,12 @@ async function init(){
     await Promise.all([loadPolls(), loadVideos(), loadStudents(), loadStats()]);
 
   }catch(e){
-    console.error(e);
-    toast('خطأ في التحميل', 'err');
+    console.error('init error:', e);
+    toast('⚠️ خطأ في التحميل', 'err');
   }
 }
 
-/* STATS */
+/* ============ STATS ============ */
 async function loadStats(){
   try{
     const { count: vidCount } = await sb.from('videos')
@@ -762,12 +885,10 @@ async function loadStats(){
     const totalViews = (vidData||[]).reduce((sum, v) => sum + safeInt(v.views), 0);
     $('statViews').textContent = totalViews;
 
-  }catch(e){
-    console.warn('stats error:', e);
-  }
+  }catch(e){ console.warn('stats error:', e); }
 }
 
-/* CREATE POLL */
+/* ============ CREATE POLL ============ */
 $('createPollBtn').onclick = async () => {
   const question = clean($('pollQuestion').value);
   
@@ -782,7 +903,6 @@ $('createPollBtn').onclick = async () => {
 
   const options = validOptions.map((text, i) => ({ id: i, text }));
 
-  // حساب المدة
   let hours = 0;
   if(SELECTED_HOURS === 'custom'){
     const customDate = $('pollCustomDate').value;
@@ -790,7 +910,7 @@ $('createPollBtn').onclick = async () => {
       return toast('اختر التاريخ والوقت', 'err');
     }
     const diffMs = new Date(customDate).getTime() - Date.now();
-    if(diffMs < 60*1000){ // أقل من دقيقة
+    if(diffMs < 60*1000){
       return toast('الوقت المحدد لازم يكون في المستقبل', 'err');
     }
     hours = Math.ceil(diffMs / (1000*60*60));
@@ -827,7 +947,6 @@ $('createPollBtn').onclick = async () => {
       return;
     }
 
-    // حساب الوقت المتبقي
     const endsAt = new Date(res.ends_at);
     const hoursLeft = Math.round((endsAt - Date.now()) / (1000*60*60));
     
@@ -848,7 +967,7 @@ $('createPollBtn').onclick = async () => {
   }
 };
 
-/* LOAD POLLS */
+/* ============ LOAD POLLS ============ */
 async function loadPolls(){
   $('pollsList').innerHTML = '<div class="skel"></div><div class="skel"></div>';
 
@@ -964,7 +1083,7 @@ async function deletePoll(pollId){
   }
 }
 
-/* VIDEOS */
+/* ============ VIDEOS ============ */
 async function loadVideos(){
   $('videosList').innerHTML = '<div class="skel"></div><div class="skel"></div>';
 
@@ -990,11 +1109,11 @@ async function loadVideos(){
     $('videosList').innerHTML = vids.map(v => {
       const statusClass = v.status === 'approved' ? 'approved' : v.status === 'rejected' ? 'rejected' : 'pending';
       const statusTxt = v.status === 'approved' ? '✅ معتمد' : v.status === 'rejected' ? '❌ مرفوض' : '⏳ مراجعة';
-      const thumb = v.thumbnail || (v.youtube_id ? `https://i.ytimg.com/vi/${v.youtube_id}/mqdefault.jpg` : './logogg.png');
+      const thumb = v.thumbnail || (v.youtube_id ? `https://i.ytimg.com/vi/${v.youtube_id}/mqdefault.jpg` : './logo.png');
       
       return `
         <div class="video-item">
-          <img class="video-thumb" src="${esc(thumb)}" onerror="this.src='./logogg.png'" alt="" />
+          <img class="video-thumb" src="${esc(thumb)}" onerror="this.src='./logo.png'" alt="" />
           <div class="video-info">
             <h4>${esc(v.title)}</h4>
             <small>👁️ ${safeInt(v.views)} · ${esc(v.category||'عام')}</small>
@@ -1067,7 +1186,7 @@ $('addVideoBtn').onclick = async () => {
   }
 };
 
-/* STUDENTS */
+/* ============ STUDENTS ============ */
 async function loadStudents(){
   $('studentsList').innerHTML = '<div class="skel"></div><div class="skel"></div>';
 
@@ -1113,7 +1232,7 @@ async function loadStudents(){
   }
 }
 
-/* PROFILE */
+/* ============ PROFILE ============ */
 function loadProfile(){
   if(!USER) return;
   $('profileUsername').value = USER.username;
@@ -1158,8 +1277,13 @@ $('saveProfileBtn').onclick = async () => {
   }
 };
 
-/* INIT */
-init();
+/* ============ AUTO-CHECK GATE ============ */
+(function autoCheckGate(){
+  if(sessionStorage.getItem('sayoda_instructor_pass')){
+    hideGate();
+    init();
+  }
+})();
 
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
