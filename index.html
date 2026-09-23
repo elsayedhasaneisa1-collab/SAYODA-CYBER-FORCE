@@ -8,7 +8,7 @@
 <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
 <title>CYBER FORCE | منصة تعلّم الأمن السيبراني</title>
 
-<!-- ============ Open Graph (WhatsApp / Facebook) ============ -->
+<!-- Open Graph (WhatsApp / Facebook) -->
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="CYBER FORCE" />
 <meta property="og:title" content="CYBER FORCE | منصة تعلّم الأمن السيبراني" />
@@ -22,16 +22,11 @@
 <meta property="og:url" content="https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/" />
 <meta property="og:locale" content="ar_EG" />
 
-<!-- ============ Twitter Card ============ -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:site" content="@cyberforce" />
-<meta name="twitter:creator" content="@sayedhasan_R" />
 <meta name="twitter:title" content="CYBER FORCE | منصة تعلّم الأمن السيبراني" />
 <meta name="twitter:description" content="🎓 تعلّم الأمن السيبراني بالعربي." />
 <meta name="twitter:image" content="https://elsayedhasaneisa1-collab.github.io/SAYODA-CYBER-FORCE/og-image.png" />
-<meta name="twitter:image:alt" content="CYBER FORCE" />
 
-<!-- ============ إضافات ============ -->
 <meta name="description" content="منصة CYBER FORCE - تعلّم الأمن السيبراني بالعربي." />
 <meta name="keywords" content="أمن سيبراني, تعلم, هاكينج, اختراق أخلاقي, cyber security, arabic" />
 <meta name="author" content="EL-sayed Hasan" />
@@ -209,7 +204,7 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px;width:100%;box-sizing
 .back-info h3{font-size:16px;font-weight:900;color:var(--gold)}
 .back-info small{font-size:11px;color:var(--muted);display:block;margin-top:2px}
 
-/* ============ INSTRUCTOR TABS ============ */
+/* INSTRUCTOR TABS */
 .iv-tabs{
   display:flex;gap:6px;background:var(--card);
   border:1px solid var(--border);border-radius:12px;
@@ -232,7 +227,7 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px;width:100%;box-sizing
 .iv-tab-content{display:none;animation:fade .3s}
 .iv-tab-content.active{display:block}
 
-/* ============ STUDENT POLLS ============ */
+/* STUDENT POLLS */
 .student-poll{
   background:var(--card);border:1px solid var(--border);
   border-radius:16px;padding:18px;margin-bottom:14px;
@@ -368,26 +363,82 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px;width:100%;box-sizing
   -webkit-touch-callout:none !important;
 }
 
-.watermark{position:absolute;z-index:5;pointer-events:none;
-  font-family:'Tajawal',sans-serif;font-weight:900;
-  color:rgba(255,255,255,.22);text-shadow:0 0 8px rgba(0,0,0,.5);
-  white-space:nowrap;letter-spacing:1px;-webkit-user-select:none;user-select:none}
-
+/* ============ WATERMARK الصغير المتحرك ============ */
 .wm-moving{
   position:absolute;top:15%;right:15%;z-index:6;pointer-events:none;
   font-family:'Tajawal',sans-serif;font-weight:900;
-  font-size:14px;color:rgba(255,213,74,.4);
-  text-shadow:0 0 10px rgba(0,0,0,.8),0 0 20px rgba(255,213,74,.4);
-  letter-spacing:1px;padding:6px 12px;border-radius:8px;
-  background:rgba(2,8,18,.3);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
-  transition:top 1.2s ease-in-out,right 1.2s ease-in-out,left 1.2s ease-in-out;
+  font-size:10px;color:rgba(255,213,74,.15);
+  text-shadow:0 0 6px rgba(0,0,0,.4);
+  letter-spacing:1px;padding:4px 8px;border-radius:6px;
+  background:rgba(2,8,18,.15);
+  backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);
+  transition:top 1.5s ease-in-out,right 1.5s ease-in-out,left 1.5s ease-in-out;
   white-space:nowrap;-webkit-user-select:none;user-select:none;
-  animation:wmPulse 3s ease-in-out infinite;
+  animation:wmPulse 4s ease-in-out infinite;
 }
-@keyframes wmPulse{0%,100%{opacity:.55}50%{opacity:.9}}
+@keyframes wmPulse{0%,100%{opacity:.5}50%{opacity:.85}}
 
 .wm-center{top:50%;left:50%;transform:translate(-50%,-50%);
   font-size:36px;opacity:.08;color:#fff;font-weight:900;letter-spacing:4px;text-align:center}
+
+/* ============ WATERMARK الكبير (Screenshot) ============ */
+.wm-capture{
+  position:absolute;inset:0;z-index:99;
+  display:none;align-items:center;justify-content:center;
+  pointer-events:none;
+  background:rgba(2,8,18,.35);
+  backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+  animation:capIn .3s;
+}
+.wm-capture.show{display:flex}
+@keyframes capIn{from{opacity:0}to{opacity:1}}
+
+.wm-cap-box{
+  background:linear-gradient(135deg,rgba(0,0,0,.92),rgba(0,0,0,.85));
+  border:3px solid var(--gold);
+  border-radius:20px;
+  padding:24px 32px;
+  text-align:center;
+  box-shadow:0 0 60px rgba(255,215,0,.6),0 0 120px rgba(255,215,0,.3);
+  animation:capPop .4s cubic-bezier(.2,.9,.3,1.4);
+  min-width:280px;
+}
+@keyframes capPop{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+
+.wm-cap-platform{
+  font-size:28px;
+  color:var(--gold);
+  font-weight:900;
+  letter-spacing:2px;
+  margin-bottom:16px;
+  text-shadow:0 0 20px rgba(255,215,0,.8);
+}
+
+.wm-cap-user,
+.wm-cap-phone,
+.wm-cap-time{
+  font-size:18px;
+  font-weight:900;
+  color:#fff;
+  margin:8px 0;
+  text-shadow:0 0 10px rgba(0,0,0,.8);
+  direction:ltr;
+  letter-spacing:1px;
+}
+
+.wm-cap-phone{
+  font-size:22px;
+  color:var(--gold);
+  letter-spacing:3px;
+}
+
+.wm-cap-time{
+  font-size:14px;
+  color:#ddd;
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px dashed rgba(255,215,0,.3);
+}
 
 .yt-controls{position:absolute;bottom:0;left:0;right:0;z-index:7;
   background:linear-gradient(to top,rgba(0,0,0,.92),rgba(0,0,0,.6) 60%,transparent);
@@ -554,7 +605,7 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
   .sec-title{font-size:18px}
 }
 </style>
-</head>
+</head> 
 <body>
 
 <header>
@@ -708,12 +759,28 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
   <div>© 2026 جميع الحقوق محفوظة <a href="https://elsayedhasaneisa1-collab.github.io/team-cyber-force-/" target="_blank" rel="noopener noreferrer" style="color:var(--gold);font-weight:900">EL-sayed Hasan</a></div>
 </footer>
 
+<!-- ============ VIDEO MODAL ============ -->
 <div class="modal" id="vidModal">
   <div class="modal-inner">
     <div class="player-box">
       <button class="modal-close" id="closeVid">✕</button>
-      <div class="watermark wm-moving" id="wmMoving">—</div>
-      <div class="watermark wm-center" id="wmCenter">CYBER FORCE</div>
+      
+      <!-- ✅ Watermark متحرك (الرقم فقط، صغير) -->
+      <div class="wm-moving" id="wmMoving">—</div>
+      
+      <!-- شعار ثابت في الوسط -->
+      <div class="wm-center" id="wmCenter">CYBER FORCE</div>
+      
+      <!-- ✅ Watermark كبير (عند Screenshot) -->
+      <div class="wm-capture" id="wmCapture">
+        <div class="wm-cap-box">
+          <div class="wm-cap-platform">🛡️ CYBER FORCE</div>
+          <div class="wm-cap-user" id="wmCapUser">👤 —</div>
+          <div class="wm-cap-phone" id="wmCapPhone">📱 —</div>
+          <div class="wm-cap-time" id="wmCapTime">📅 —</div>
+        </div>
+      </div>
+      
       <div id="ytPlayer"></div>
       <div class="player-shield"></div>
       <div class="yt-big-play" id="ytBigPlay">
@@ -764,6 +831,7 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
 <div id="toasts"></div>
 <canvas id="confetti"></canvas>
 
+<!-- ============ DEVTOOLS WARNING ============ -->
 <div id="devtoolsWarning">
   <div class="dt-box">
     <div class="dt-skull">💀</div>
@@ -809,6 +877,7 @@ const CF_SECRET_KEY = 'CF_SECRET_2026_9a8b7c';
 const UNLOCK_THRESHOLD = 50;
 const XP_PER_VIDEO = 10;
 
+/* فك التشفير */
 function cfDecrypt(encoded){
   if(!encoded) return '';
   try{
@@ -820,6 +889,7 @@ function cfDecrypt(encoded){
     }
     return new TextDecoder().decode(result);
   }catch(e){
+    console.warn('decrypt error:', e);
     return '';
   }
 }
@@ -835,10 +905,70 @@ document.addEventListener('keydown',e=>{
   if(e.ctrlKey&&e.shiftKey&&['I','J','C','K'].includes(e.key.toUpperCase())){e.preventDefault();e.stopPropagation();return false;}
   if(e.ctrlKey&&['U','S','P'].includes(e.key.toUpperCase())){e.preventDefault();e.stopPropagation();return false;}
   if(e.metaKey&&e.altKey&&['I','J','C','U'].includes(e.key.toUpperCase())){e.preventDefault();e.stopPropagation();return false;}
-  if(e.key==='PrintScreen'){e.preventDefault();try{navigator.clipboard.writeText('');}catch(err){}}
 });
 
-/* ============ DEVTOOLS WARNING ============ */
+/* ============ كشف Screenshot + Watermark كبير ============ */
+let _captureTimer = null;
+
+document.addEventListener('keyup', e => {
+  if(e.key === 'PrintScreen'){
+    showCaptureWatermark();
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if(e.key === 'PrintScreen'){
+    showCaptureWatermark();
+    return;
+  }
+  if(e.metaKey && e.shiftKey && ['3','4','5'].includes(e.key)){
+    showCaptureWatermark();
+    return;
+  }
+  if(e.ctrlKey && e.shiftKey && e.key.toUpperCase() === 'S'){
+    showCaptureWatermark();
+    return;
+  }
+  if(e.altKey && e.key === 'PrintScreen'){
+    showCaptureWatermark();
+    return;
+  }
+});
+
+async function showCaptureWatermark(){
+  const cap = $('wmCapture');
+  if(!cap) return;
+
+  // املأ البيانات
+  const username = (typeof USER !== 'undefined' && USER?.username) || 'مستخدم';
+  const phone = (typeof USER !== 'undefined' && (USER.phone || USER_PHONE)) || '—';
+  
+  $('wmCapUser').textContent = '👤 ' + username;
+  $('wmCapPhone').textContent = '📱 ' + phone;
+  $('wmCapTime').textContent = '📅 ' + new Date().toLocaleString('ar-EG', {
+    year:'numeric', month:'2-digit', day:'2-digit',
+    hour:'2-digit', minute:'2-digit', second:'2-digit'
+  });
+
+  // اظهر
+  cap.classList.add('show');
+
+  // اخفي بعد 3 ثواني
+  clearTimeout(_captureTimer);
+  _captureTimer = setTimeout(() => cap.classList.remove('show'), 3000);
+
+  // سجل المحاولة
+  try{
+    await sb.rpc('client_log_activity',{
+      p_username: username,
+      p_activity_type: 'security_breach',
+      p_details: JSON.stringify({type:'screenshot_attempt', url: location.href}),
+      p_user_agent: navigator.userAgent.slice(0,200)
+    });
+  }catch(e){}
+}
+
+/* ============ كشف DevTools ============ */
 let _devtoolsTriggered = false;
 let _devtoolsCountdown = null;
 let _devtoolsCheckInterval = null;
@@ -866,28 +996,34 @@ async function logSecurityBreach(type){
       }),
       p_user_agent: navigator.userAgent.slice(0, 200)
     });
-  }catch(e){}
+  }catch(e){ console.warn('log breach error:', e); }
 }
 
 function showDevtoolsWarning(){
   if(_devtoolsTriggered) return;
   _devtoolsTriggered = true;
+
   const el = document.getElementById('devtoolsWarning');
   if(!el) return;
   el.classList.add('open');
+
   logSecurityBreach('devtools_open');
+
   try{
     const a = new (window.AudioContext || window.webkitAudioContext)();
     const o = a.createGain();
     const s = a.createOscillator();
-    s.type = 'sawtooth'; s.frequency.value = 200;
+    s.type = 'sawtooth';
+    s.frequency.value = 200;
     s.connect(o); o.connect(a.destination);
     o.gain.setValueAtTime(0.0001, a.currentTime);
     o.gain.exponentialRampToValueAtTime(0.15, a.currentTime + 0.1);
     o.gain.exponentialRampToValueAtTime(0.0001, a.currentTime + 1.2);
     s.start(a.currentTime); s.stop(a.currentTime + 1.3);
   }catch(e){}
+
   if(navigator.vibrate) navigator.vibrate([300, 100, 300, 100, 300]);
+
   let count = 10;
   clearInterval(_devtoolsCountdown);
   _devtoolsCountdown = setInterval(() => {
@@ -908,6 +1044,7 @@ function startDevtoolsDetection(){
     try{
       if(typeof USER !== 'undefined' && USER && USER.role === 'admin') return;
     }catch(e){}
+    
     if(detectDevToolsOpen() && !_devtoolsTriggered){
       showDevtoolsWarning();
     }
@@ -1170,12 +1307,14 @@ $('copyRefBtn').onclick=()=>{
 /* ============ WATERMARK ============ */
 function setWatermarks(){
   const phone = USER.phone || USER_PHONE || '—';
-  const user = USER.username || '';
+  
+  // ✅ صغير متحرك — الرقم فقط
   const wm = $('wmMoving');
   if(wm){
-    wm.textContent = '📱 ' + phone + ' | ' + user;
+    wm.textContent = phone;
     startWatermarkAnimation();
   }
+  
   const wmCenter = $('wmCenter');
   if(wmCenter) wmCenter.textContent = 'CYBER FORCE';
 }
@@ -1184,6 +1323,7 @@ function startWatermarkAnimation(){
   stopWatermarkAnimation();
   const wm = $('wmMoving');
   if(!wm) return;
+  
   const positions = [
     {top:'8%',  right:'8%',  left:'auto'},
     {top:'8%',  right:'auto',left:'8%'},
@@ -1193,6 +1333,7 @@ function startWatermarkAnimation(){
     {top:'45%', right:'8%',  left:'auto'},
     {top:'20%', right:'auto',left:'45%'}
   ];
+  
   let idx = 0;
   const move = () => {
     const pos = positions[idx];
@@ -1201,8 +1342,10 @@ function startWatermarkAnimation(){
     wm.style.left = pos.left;
     idx = (idx + 1) % positions.length;
   };
+  
   move();
-  _wmTimer = setInterval(move, 3000);
+  // ✅ كل 5 ثواني
+  _wmTimer = setInterval(move, 5000);
 }
 
 function stopWatermarkAnimation(){
