@@ -367,16 +367,21 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px;width:100%;box-sizing
 .wm-moving{
   position:absolute;top:15%;right:15%;z-index:6;pointer-events:none;
   font-family:'Tajawal',sans-serif;font-weight:900;
-  font-size:10px;color:rgba(255,213,74,.15);
-  text-shadow:0 0 6px rgba(0,0,0,.4);
-  letter-spacing:1px;padding:4px 8px;border-radius:6px;
-  background:rgba(2,8,18,.15);
-  backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);
+  font-size:14px;
+  color:rgba(255,255,255,.85);
+  text-shadow:
+    0 0 8px rgba(0,0,0,1),
+    0 0 4px rgba(0,0,0,1),
+    0 1px 2px rgba(0,0,0,1);
+  letter-spacing:2px;
+  padding:0;
+  background:none;
+  backdrop-filter:none;-webkit-backdrop-filter:none;
   transition:top 1.5s ease-in-out,right 1.5s ease-in-out,left 1.5s ease-in-out;
-  white-space:nowrap;-webkit-user-select:none;user-select:none;
-  animation:wmPulse 4s ease-in-out infinite;
+  white-space:nowrap;
+  -webkit-user-select:none;user-select:none;
+  opacity:.9;
 }
-@keyframes wmPulse{0%,100%{opacity:.5}50%{opacity:.85}}
 
 .wm-center{top:50%;left:50%;transform:translate(-50%,-50%);
   font-size:36px;opacity:.08;color:#fff;font-weight:900;letter-spacing:4px;text-align:center}
@@ -1307,14 +1312,11 @@ $('copyRefBtn').onclick=()=>{
 /* ============ WATERMARK ============ */
 function setWatermarks(){
   const phone = USER.phone || USER_PHONE || '—';
-  
-  // ✅ صغير متحرك — الرقم فقط
   const wm = $('wmMoving');
   if(wm){
     wm.textContent = phone;
     startWatermarkAnimation();
   }
-  
   const wmCenter = $('wmCenter');
   if(wmCenter) wmCenter.textContent = 'CYBER FORCE';
 }
