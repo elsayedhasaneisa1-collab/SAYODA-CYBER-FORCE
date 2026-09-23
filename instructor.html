@@ -1181,7 +1181,9 @@ function getCustomHours(){
   const d = safeInt(SD.days?.value, 0);
   const h = safeInt(SD.hours?.value, 0);
   const m = safeInt(SD.mins?.value, 0);
-  return (d * 24) + h + (m / 60);
+  // نحول الكل لساعات — وندور لأعلى رقم صحيح
+  const totalHours = (d * 24) + h + (m / 60);
+  return Math.max(1, Math.ceil(totalHours));
 }
 /* POLL OPTIONS */
 function renderPollOptions(){
