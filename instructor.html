@@ -426,6 +426,143 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
     font-size:20px;
   }
 }
+/* SMART DATE PICKER */
+#customDateBox{
+  display:none;
+  margin-top:10px;
+}
+#customDateBox.show{
+  display:block;
+  animation:fade .3s;
+}
+
+.smart-date{
+  background:rgba(0,255,136,.05);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.smart-date-header{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  font-weight:800;
+  color:var(--green);
+  padding-bottom:10px;
+  border-bottom:1px dashed var(--border-soft);
+  margin-bottom:4px;
+}
+.smart-date-header .ic{
+  font-size:18px;
+}
+
+.smart-date-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.smart-date-row label{
+  font-size:13px;
+  font-weight:800;
+  color:var(--txt);
+  flex:1;
+  text-align:right;
+}
+
+.smart-date-counter{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background:rgba(2,18,8,.6);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:4px;
+}
+.smart-date-counter button{
+  width:36px;
+  height:36px;
+  border-radius:8px;
+  background:rgba(0,255,136,.1);
+  border:1px solid var(--border-soft);
+  color:var(--green);
+  font-size:18px;
+  font-weight:900;
+  cursor:pointer;
+  transition:.2s;
+  display:grid;
+  place-items:center;
+  font-family:inherit;
+  line-height:1;
+  padding:0;
+}
+.smart-date-counter button:hover{
+  background:var(--green);
+  color:#021208;
+  transform:scale(1.05);
+}
+.smart-date-counter button:active{
+  transform:scale(.95);
+}
+.smart-date-counter input{
+  width:50px;
+  height:36px;
+  text-align:center;
+  background:transparent;
+  border:none;
+  color:var(--txt);
+  font-size:16px;
+  font-weight:900;
+  outline:none;
+  font-family:inherit;
+  -moz-appearance:textfield;
+}
+.smart-date-counter input::-webkit-outer-spin-button,
+.smart-date-counter input::-webkit-inner-spin-button{
+  -webkit-appearance:none;
+  margin:0;
+}
+
+.smart-date-preview{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:12px;
+  background:linear-gradient(135deg,rgba(0,255,136,.15),rgba(0,204,106,.08));
+  border:1px solid var(--green);
+  border-radius:12px;
+  margin-top:6px;
+}
+.smart-date-preview .lbl{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:700;
+}
+.smart-date-preview .val{
+  font-size:14px;
+  color:var(--green);
+  font-weight:900;
+  text-shadow:0 0 10px rgba(0,255,136,.4);
+}
+
+@media(max-width:480px){
+  .smart-date{
+    padding:14px;
+  }
+  .smart-date-counter button{
+    width:34px;
+    height:34px;
+  }
+  .smart-date-counter input{
+    width:44px;
+  }
+}
 /* MODAL */
 .modal{
   position:fixed;inset:0;z-index:600;
@@ -599,8 +736,45 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
           </div>
 
           <div id="customDateBox">
-            <input type="datetime-local" id="pollCustomDate" />
-          </div>
+  <div class="smart-date">
+    <div class="smart-date-header">
+      <span class="ic">⚙️</span>
+      <span>حدد المدة بدقة</span>
+    </div>
+    
+    <div class="smart-date-row">
+      <label>الأيام</label>
+      <div class="smart-date-counter">
+        <button type="button" data-step="-1" data-target="days">−</button>
+        <input type="number" id="sdDays" value="1" min="0" max="365" />
+        <button type="button" data-step="1" data-target="days">+</button>
+      </div>
+    </div>
+    
+    <div class="smart-date-row">
+      <label>الساعات</label>
+      <div class="smart-date-counter">
+        <button type="button" data-step="-1" data-target="hours">−</button>
+        <input type="number" id="sdHours" value="0" min="0" max="23" />
+        <button type="button" data-step="1" data-target="hours">+</button>
+      </div>
+    </div>
+    
+    <div class="smart-date-row">
+      <label>الدقائق</label>
+      <div class="smart-date-counter">
+        <button type="button" data-step="-5" data-target="mins">−</button>
+        <input type="number" id="sdMins" value="0" min="0" max="59" />
+        <button type="button" data-step="5" data-target="mins">+</button>
+      </div>
+    </div>
+    
+    <div class="smart-date-preview">
+      <span class="lbl">⏱️ ينتهي بعد:</span>
+      <span class="val" id="sdPreview">يوم واحد</span>
+    </div>
+  </div>
+</div>
 
           <small style="font-size:11px;color:var(--muted);display:block;margin-top:8px;padding:8px 12px;background:rgba(0,255,136,.08);border-radius:8px;border:1px solid rgba(0,255,136,.2)">
             🗑️ <b>ملاحظة:</b> بعد انتهاء الوقت، هيتمسح الاستطلاع تلقائياً
@@ -922,17 +1096,93 @@ document.querySelectorAll('.duration-btn').forEach(btn => {
     btn.classList.add('active');
     const val = btn.dataset.hours;
     if(val === 'custom'){
-      $('customDateBox').classList.add('show');
-      const tomorrow = new Date(Date.now() + 24*60*60*1000);
-      $('pollCustomDate').value = tomorrow.toISOString().slice(0, 16);
-      SELECTED_HOURS = 'custom';
-    } else {
+  $('customDateBox').classList.add('show');
+  // إعادة تعيين القيم
+  if(SD.days) SD.days.value = 1;
+  if(SD.hours) SD.hours.value = 0;
+  if(SD.mins) SD.mins.value = 0;
+  updateSmartPreview();
+  SELECTED_HOURS = 'custom';
+} else {
       $('customDateBox').classList.remove('show');
       SELECTED_HOURS = safeInt(val, 72);
     }
   };
 });
+/* ============ SMART DATE PICKER ============ */
+const SD = {
+  days: $('sdDays'),
+  hours: $('sdHours'),
+  mins: $('sdMins'),
+  preview: $('sdPreview')
+};
 
+function formatArabicDuration(d, h, m){
+  const parts = [];
+  if(d > 0) parts.push(d === 1 ? 'يوم' : d === 2 ? 'يومين' : d <= 10 ? `${d} أيام` : `${d} يوم`);
+  if(h > 0) parts.push(h === 1 ? 'ساعة' : h === 2 ? 'ساعتين' : h <= 10 ? `${h} ساعات` : `${h} ساعة`);
+  if(m > 0) parts.push(m === 1 ? 'دقيقة' : m === 2 ? 'دقيقتين' : m <= 10 ? `${m} دقائق` : `${m} دقيقة`);
+  if(parts.length === 0) return 'غير محدد';
+  return parts.join(' و ');
+}
+
+function updateSmartPreview(){
+  const d = safeInt(SD.days?.value, 0);
+  const h = safeInt(SD.hours?.value, 0);
+  const m = safeInt(SD.mins?.value, 0);
+  if(SD.preview){
+    SD.preview.textContent = formatArabicDuration(d, h, m);
+  }
+}
+
+// ربط أزرار + و -
+document.querySelectorAll('.smart-date-counter button').forEach(btn => {
+  btn.onclick = () => {
+    const target = btn.dataset.target;
+    const step = safeInt(btn.dataset.step, 1);
+    const input = SD[target];
+    if(!input) return;
+    let val = safeInt(input.value, 0) + step;
+    const min = safeInt(input.min, 0);
+    const max = safeInt(input.max, 999);
+    if(val < min) val = min;
+    if(val > max) val = max;
+    input.value = val;
+    updateSmartPreview();
+  };
+});
+
+// ربط الإدخال المباشر
+['days','hours','mins'].forEach(k => {
+  const inp = SD[k];
+  if(inp){
+    inp.oninput = () => {
+      let val = safeInt(inp.value, 0);
+      const min = safeInt(inp.min, 0);
+      const max = safeInt(inp.max, 999);
+      if(val < min) val = min;
+      if(val > max) val = max;
+      updateSmartPreview();
+    };
+    inp.onblur = () => {
+      let val = safeInt(inp.value, 0);
+      const min = safeInt(inp.min, 0);
+      const max = safeInt(inp.max, 999);
+      if(val < min) val = min;
+      if(val > max) val = max;
+      inp.value = val;
+    };
+  }
+});
+
+updateSmartPreview();
+
+function getCustomHours(){
+  const d = safeInt(SD.days?.value, 0);
+  const h = safeInt(SD.hours?.value, 0);
+  const m = safeInt(SD.mins?.value, 0);
+  return (d * 24) + h + (m / 60);
+}
 /* POLL OPTIONS */
 function renderPollOptions(){
   const container = $('pollOptionsList');
@@ -1713,15 +1963,12 @@ $('createPollBtn').onclick = async () => {
   const options = validOptions.map((text, i) => ({ id: i, text }));
 
   let hours = 0;
-  if(SELECTED_HOURS === 'custom'){
-    const customDate = $('pollCustomDate').value;
-    if(!customDate) return toast('اختر التاريخ والوقت', 'err');
-    const diffMs = new Date(customDate).getTime() - Date.now();
-    if(diffMs < 60*1000) return toast('الوقت المحدد لازم يكون في المستقبل', 'err');
-    hours = Math.ceil(diffMs / (1000*60*60));
-  } else {
-    hours = SELECTED_HOURS;
-  }
+if(SELECTED_HOURS === 'custom'){
+  hours = getCustomHours();
+  if(hours < 1) return toast('حدد مدة ساعة على الأقل', 'err');
+} else {
+  hours = SELECTED_HOURS;
+}
 
   if(hours < 1) return toast('المدة يجب أن تكون ساعة على الأقل', 'err');
 
