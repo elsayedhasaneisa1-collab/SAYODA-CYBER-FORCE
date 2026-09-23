@@ -345,7 +345,87 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
   50%{box-shadow:0 0 0 6px rgba(255,176,32,.08)}
 }
 .pending-alert .icon{font-size:24px;flex-shrink:0}
-
+/* DURATION GRID */
+.duration-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
+  gap:8px;
+  margin-top:8px;
+}
+.duration-btn{
+  padding:14px 12px;
+  border-radius:12px;
+  background:rgba(2,18,8,.6);
+  border:1.5px solid var(--border);
+  color:var(--txt);
+  font-family:inherit;
+  font-size:13px;
+  font-weight:800;
+  cursor:pointer;
+  transition:.22s;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  text-align:center;
+  min-height:70px;
+}
+.duration-btn .ic{
+  font-size:22px;
+  line-height:1;
+  display:block;
+}
+.duration-btn:hover{
+  border-color:var(--green);
+  background:var(--green-soft);
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(0,255,136,.15);
+}
+.duration-btn.active{
+  background:linear-gradient(135deg,var(--green),var(--green-2));
+  color:#021208;
+  border-color:transparent;
+  box-shadow:0 8px 24px rgba(0,255,136,.4);
+  transform:translateY(-2px);
+}
+.duration-btn.active .ic{
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,.2));
+}
+#customDateBox{
+  display:none;
+  margin-top:10px;
+}
+#customDateBox.show{
+  display:block;
+  animation:fade .3s;
+}
+#customDateBox input{
+  width:100%;
+  padding:13px 16px;
+  border-radius:12px;
+  background:rgba(2,18,8,.6);
+  border:1px solid var(--green);
+  color:var(--txt);
+  font-family:inherit;
+  font-size:14px;
+  outline:none;
+  box-shadow:0 0 0 4px rgba(0,255,136,.12);
+}
+@media(max-width:480px){
+  .duration-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:6px;
+  }
+  .duration-btn{
+    padding:12px 8px;
+    min-height:64px;
+    font-size:12px;
+  }
+  .duration-btn .ic{
+    font-size:20px;
+  }
+}
 /* MODAL */
 .modal{
   position:fixed;inset:0;z-index:600;
