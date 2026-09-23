@@ -224,6 +224,36 @@ main{max-width:1050px;margin:0 auto;padding:16px 14px 30px;width:100%;box-sizing
   background:linear-gradient(135deg,var(--blue),var(--blue-2));
   color:#021226;box-shadow:0 6px 18px rgba(25,170,255,.3);
 }
+/* TAB BADGE */
+.iv-tab{
+  position:relative;
+}
+.iv-tab .tab-badge{
+  position:absolute;
+  top:2px;
+  left:6px;
+  min-width:18px;
+  height:18px;
+  padding:0 5px;
+  border-radius:10px;
+  background:linear-gradient(135deg,#ff4d6d,#c62348);
+  color:#fff;
+  font-size:10px;
+  font-weight:900;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 0 10px rgba(255,77,109,.6);
+  animation:badgePulse 2s ease-in-out infinite;
+  z-index:2;
+}
+.iv-tab .tab-badge.show{
+  display:flex;
+}
+@keyframes badgePulse{
+  0%,100%{transform:scale(1);box-shadow:0 0 10px rgba(255,77,109,.6)}
+  50%{transform:scale(1.1);box-shadow:0 0 16px rgba(255,77,109,.9)}
+}
 .iv-tab-content{display:none;animation:fade .3s}
 .iv-tab-content.active{display:block}
 
@@ -702,7 +732,10 @@ footer.site-footer{text-align:center;padding:24px 16px 20px;color:var(--muted);f
     <!-- Instructor Tabs -->
     <div class="iv-tabs" id="ivTabs">
       <button class="iv-tab active" data-ivtab="videos">📹 الفيديوهات</button>
-      <button class="iv-tab" data-ivtab="polls" id="pollsTabBtn" style="display:none">🗳️ استطلاع رأي</button>
+      <button class="iv-tab" data-ivtab="polls" id="pollsTabBtn" style="display:none">
+  🗳️ استطلاع رأي
+  <span class="tab-badge" id="ivPollsBadge">0</span>
+</button>
     </div>
 
     <!-- TAB: Videos -->
@@ -1459,12 +1492,14 @@ async function openInstructor(username){
   ACTIVE_CAT = 'all';
 
   // إظهار/إخفاء تبويب الاستطلاع
-  const pollsTab = $('pollsTabBtn');
-  if(CURRENT_INSTRUCTOR.subscription_status === 'active'){
-    pollsTab.style.display = 'flex';
-  } else {
-    pollsTab.style.display = 'none';
-  }
+const pollsTab = $('pollsTabBtn');
+if(CURRENT_INSTRUCTOR.subscription_status === 'active'){
+  pollsTab.style.display = 'flex';
+  // ✅ نحدّث الـ Badge
+  await updateStudentPollsBadge();
+} else {
+  pollsTab.style.display = 'none';
+}
 
   // إعادة تعيين التبويب النشط للفيديوهات
   document.querySelectorAll('.iv-tab').forEach(t => t.classList.remove('active'));
@@ -1611,7 +1646,31 @@ document.addEventListener('click', e => {
     loadStudentPolls();
   }
 });
-
+/* ============ STUDENT POLLS BADGE ============ */
+async function updateStudentPollsBadge(){
+  try{
+    if(!CURRENT_INSTRUCTOR) return;
+    const { count, error } = await sb.from('polls')
+      .select('*', { count: 'exact', head: true })
+      .eq('instructor_username', CURRENT_INSTRUCTOR.instructor_username)
+      .eq('is_active', true);
+    
+    if(error) throw error;
+    
+    const badge = $('ivPollsBadge');
+    if(!badge) return;
+    
+    const num = safeInt(count, 0);
+    if(num > 0){
+      badge.textContent = num > 9 ? '9+' : num;
+      badge.classList.add('show');
+    } else {
+      badge.classList.remove('show');
+    }
+  }catch(e){
+    console.warn('updateStudentPollsBadge error:', e);
+  }
+}
 /* ============ LOAD STUDENT POLLS ============ */
 async function loadStudentPolls(){
   const container = $('studentPollsList');
@@ -1753,7 +1812,8 @@ async function votePoll(pollId, optionId){
     }
 
     toast(res.updated ? '✅ تم تحديث صوتك' : '✅ تم تسجيل صوتك', 'ok');
-    await loadStudentPolls();
+await loadStudentPolls();
+await updateStudentPollsBadge();
 
   }catch(e){
     console.error('votePoll error:', e);
