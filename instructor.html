@@ -634,7 +634,26 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
     </div>
   </div>
 </div>
-
+<!-- MODAL: Confirm -->
+<div class="modal" id="confirmModal">
+  <div class="modal-box" style="max-width:440px">
+    <div class="modal-head" style="border-bottom:none;padding-bottom:0">
+      <h3 id="cmfTitle" style="color:var(--green)">⚠️ تأكيد</h3>
+      <button class="close-btn" id="cmfClose">✕</button>
+    </div>
+    <div class="modal-body" style="padding-top:8px">
+      <div style="text-align:center;padding:8px 0 16px">
+        <div id="cmfIcon" style="font-size:56px;margin-bottom:14px;line-height:1">🔒</div>
+        <p id="cmfMessage" style="font-size:15px;font-weight:700;line-height:1.9;color:var(--txt);margin-bottom:8px"></p>
+        <p id="cmfSub" style="font-size:13px;color:var(--muted);line-height:1.7;margin-top:12px;padding:12px;background:rgba(0,255,136,.06);border-radius:10px;border:1px solid var(--border-soft)"></p>
+      </div>
+    </div>
+    <div style="padding:0 20px 20px;display:flex;gap:10px">
+      <button class="btn full" id="cmfOk" style="flex:2">✅ تأكيد</button>
+      <button class="btn ghost full" id="cmfCancel" style="flex:1">إلغاء</button>
+    </div>
+  </div>
+</div>
 <div id="toasts"></div>
 
 <script>
@@ -681,7 +700,40 @@ $('themeBtn').onclick = () => {
   localStorage.setItem('sayoda_theme', nx);
   updateThemeBtn(nx);
 };
-
+/* ============ CONFIRM MODAL ============ */
+function showConfirm({title='⚠️ تأكيد', icon='🔒', message='', sub='', okText='✅ تأكيد', cancelText='إلغاء', okClass=''}={}){
+  return new Promise((resolve) => {
+    const modal = $('confirmModal');
+    $('cmfTitle').textContent = title;
+    $('cmfIcon').textContent = icon;
+    $('cmfMessage').innerHTML = message;
+    $('cmfSub').textContent = sub;
+    $('cmfSub').style.display = sub ? 'block' : 'none';
+    
+    const okBtn = $('cmfOk');
+    const cancelBtn = $('cmfCancel');
+    const closeBtn = $('cmfClose');
+    
+    okBtn.textContent = okText;
+    cancelBtn.textContent = cancelText;
+    okBtn.className = 'btn full ' + okClass;
+    
+    modal.classList.add('open');
+    
+    const cleanup = () => {
+      modal.classList.remove('open');
+      okBtn.onclick = null;
+      cancelBtn.onclick = null;
+      closeBtn.onclick = null;
+      modal.onclick = null;
+    };
+    
+    okBtn.onclick = () => { cleanup(); resolve(true); };
+    cancelBtn.onclick = () => { cleanup(); resolve(false); };
+    closeBtn.onclick = () => { cleanup(); resolve(false); };
+    modal.onclick = (e) => { if(e.target === modal){ cleanup(); resolve(false); } };
+  });
+}
 /* TOAST */
 function toast(msg, type='info', duration=3500){
   const icons = { ok:'✅', err:'⚠️', info:'ℹ️' };
@@ -752,7 +804,15 @@ $('gatePass').addEventListener('keydown', e => {
 /* BUTTONS */
 $('homeBtn').onclick = () => location.href = './index.html';
 $('logoutBtn').onclick = async () => {
-  if(!confirm('تسجيل الخروج؟')) return;
+  const ok = await showConfirm({
+    title: '🚪 تسجيل الخروج',
+    icon: '🚪',
+    message: 'تسجيل الخروج من لوحة المدرب؟',
+    sub: 'هتحتاج تدخل كلمة المرور تاني.',
+    okText: '🚪 خروج',
+    okClass: 'danger'
+  });
+  if(!ok) return;
   try{
     if(SESSION.token) await sb.rpc('secure_logout', { p_token: SESSION.token });
   }catch(e){}
@@ -932,7 +992,15 @@ function renderVideos(){
 }
 
 async function deleteMyVideo(videoId){
-  if(!confirm('⚠️ حذف هذا الفيديو نهائياً؟')) return;
+  const ok = await showConfirm({
+    title: '⚠️ حذف الفيديو',
+    icon: '🗑️',
+    message: 'حذف هذا الفيديو نهائياً؟',
+    sub: 'لا يمكن التراجع عن هذه العملية.',
+    okText: '🗑️ حذف',
+    okClass: 'danger'
+  });
+  if(!ok) return;
   try{
     const { error } = await sb.from('videos')
       .delete()
@@ -1194,7 +1262,15 @@ async function handleStudentAction(action, username){
 }
 
 async function approveStudent(username){
-  if(!confirm(`✅ موافقة على "${username}"؟`)) return;
+  const ok = await showConfirm({
+    title: '✅ موافقة على الطالب',
+    icon: '✅',
+    message: `الموافقة على <b style="color:var(--green)">${esc(username)}</b>؟`,
+    sub: 'الطالب هيقدر يشوف فيديوهاتك.',
+    okText: '✅ موافقة',
+    okClass: 'ok'
+  });
+  if(!ok) return;
   try{
     const { error } = await sb.from('instructor_subscriptions')
       .update({ 
@@ -1215,7 +1291,15 @@ async function approveStudent(username){
 }
 
 async function rejectStudent(username){
-  if(!confirm(`❌ رفض "${username}"؟ سيتم حذف الطلب نهائياً`)) return;
+  const ok = await showConfirm({
+    title: '❌ رفض الطلب',
+    icon: '❌',
+    message: `رفض <b style="color:var(--danger)">${esc(username)}</b>؟`,
+    sub: 'سيتم حذف الطلب نهائياً ومش هيقدر يشوف فيديوهاتك.',
+    okText: '❌ رفض',
+    okClass: 'danger'
+  });
+  if(!ok) return;
   try{
     const { error } = await sb.from('instructor_subscriptions')
       .delete()
@@ -1234,7 +1318,14 @@ async function rejectStudent(username){
 
 /* 🔓 فتح أول فيديو */
 async function unlockFirstVideo(username){
-  if(!confirm(`🔓 فتح أول فيديو لـ "${username}"؟\n\nبعدها الفيديوهات هتفتح تلقائي بعد 50% من كل فيديو.`)) return;
+  const ok = await showConfirm({
+  title: '🔓 فتح أول فيديو',
+  icon: '🔓',
+  message: `فتح أول فيديو لـ <b style="color:var(--green)">${esc(username)}</b>؟`,
+  sub: 'بعدها الفيديوهات هتفتح تلقائي بعد 50% من كل فيديو.',
+  okText: '✅ فتح'
+});
+if(!ok) return;
 
   try{
     const { data, error } = await sb.rpc('instructor_unlock_first_video', {
@@ -1263,7 +1354,15 @@ async function unlockFirstVideo(username){
 
 /* 🔒 قفل كل الفيديوهات */
 async function lockStudentVideos(username){
-  if(!confirm(`🔒 قفل كل الفيديوهات عن "${username}"؟\n\nالطالب مش هيشوف أي فيديو لحد ما تفتحه تاني.`)) return;
+  const ok = await showConfirm({
+    title: '🔒 قفل الفيديوهات',
+    icon: '🔒',
+    message: `قفل كل الفيديوهات عن <b style="color:var(--danger)">${esc(username)}</b>؟`,
+    sub: 'الطالب مش هيشوف أي فيديو لحد ما تفتحه تاني.',
+    okText: '🔒 قفل',
+    okClass: 'danger'
+  });
+  if(!ok) return;
 
   try{
     const { data, error } = await sb.rpc('instructor_lock_videos', {
@@ -1495,7 +1594,15 @@ function renderPollItem(p){
 }
 
 async function deletePoll(pollId){
-  if(!confirm('حذف هذا الاستطلاع؟ سيتم حذف كل الأصوات أيضاً')) return;
+  const ok = await showConfirm({
+    title: '⚠️ حذف الاستطلاع',
+    icon: '🗑️',
+    message: 'حذف هذا الاستطلاع؟',
+    sub: 'سيتم حذف كل الأصوات أيضاً. لا يمكن التراجع.',
+    okText: '🗑️ حذف',
+    okClass: 'danger'
+  });
+  if(!ok) return;
   try{
     const { data, error } = await sb.rpc('delete_poll', {
       p_poll_id: parseInt(pollId),
