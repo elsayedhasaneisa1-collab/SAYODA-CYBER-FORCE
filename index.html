@@ -1932,9 +1932,16 @@ async function openVideo(v){
   $('ytProgressFill').style.width='0%';
   ytIsPlaying=false;
 
-  const realUrl = cfDecrypt(v.encrypted_url);
-  const vid = (realUrl||'').match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
-  const ytId = v.youtube_id || (vid ? vid[1] : '');
+  let ytId = v.youtube_id || '';
+if(!ytId){
+  const urlToCheck = v.youtube_url || cfDecrypt(v.encrypted_url) || '';
+  const m = urlToCheck.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);
+  if(m) ytId = m[1];
+}
+if(!ytId){
+  toast('⚠️ رابط الفيديو غير صالح', 'err');
+  return;
+}
 
   if(ytPlayer && ytPlayer.destroy){ try{ ytPlayer.destroy(); }catch(e){} }
   ytPlayer=null;
@@ -2215,6 +2222,94 @@ if($('cmInput')) $('cmInput').onkeydown = (e) => {
   if(e.key === 'Enter'){ e.preventDefault(); sendComment(); }
 };
 
+/* ============ COMMENTS ============ */
+async function loadComments(videoId){
+  const list = $('cmList');
+  if(!list) return;
+  list.innerHTML = '<div style="text-align:center;padding:10px;color:var(--muted);font-size:12px">جاري التحميل...</div>';
+  try{
+    const {data, error} = await sb
+      .from('comments')
+      .select('*')
+      .eq('video_id', String(videoId))
+      .order('time', {ascending: false})
+      .limit(50);
+    if(error) throw error;
+    if(!data || !data.length){
+      list.innerHTML = '<div style="text-align:center;padding:12px;color:var(--muted);font-size:12px">لا توجد تعليقات بعد — كن أول من يعلّق 💬</div>';
+      return;
+    }
+    list.innerHTML = data.map(c => `
+      <div class="cm">
+        <b>${esc(c.username || 'مستخدم')}</b>
+        <small>${c.time ? new Date(c.time).toLocaleDateString('ar-EG') : ''}</small>
+        <p>${esc(c.text || '')}</p>
+      </div>
+    `).join('');
+  }catch(e){
+    console.error('loadComments error:', e);
+    list.innerHTML = '<div style="text-align:center;padding:12px;color:var(--danger);font-size:12px">تعذّر تحميل التعليقات</div>';
+  }
+}
+
+async function sendComment(){
+  const input = $('cmInput');
+  const btn = $('cmSend');
+  if(!input || !CURRENT_VIDEO) return;
+  const text = (input.value || '').trim();
+  if(!text){
+    toast('اكتب تعليق أولاً','err');
+    return;
+  }
+  if(text.length > 300){
+    toast('التعليق طويل جداً','err');
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = '...';
+  try{
+    const {error} = await sb.from('comments').insert({
+      video_id: String(CURRENT_VIDEO.video_id),
+      username: USER.username,
+      text: text,
+      time: new Date().toISOString()
+    });
+    if(error) throw error;
+    input.value = '';
+    toast('تم إضافة تعليقك ✅','ok');
+    await loadComments(CURRENT_VIDEO.video_id);
+  }catch(e){
+    console.error('sendComment error:', e);
+    toast('تعذّر إرسال التعليق: ' + (e.message || ''),'err');
+  }finally{
+    btn.disabled = false;
+    btn.textContent = 'إرسال';
+  }
+}
+
+if($('cmSend')) $('cmSend').onclick = sendComment;
+if($('cmInput')) $('cmInput').onkeydown = (e) => {
+  if(e.key === 'Enter'){ e.preventDefault(); sendComment(); }
+};
+
+async function loadVideoRating(videoId){
+  try{
+    const { data } = await sb.from('videos')
+      .select('total_rating, rating_count')
+      .eq('id', parseInt(videoId))
+      .limit(1);
+    if(data && data[0]){
+      const avg = data[0].rating_count > 0 
+        ? (data[0].total_rating / data[0].rating_count).toFixed(1)
+        : '0.0';
+      if($('mAvgRate')) $('mAvgRate').textContent = avg;
+      if($('mRateCount')) $('mRateCount').textContent = 
+        data[0].rating_count > 0 ? `${data[0].rating_count} تقييم` : 'لا تقييمات';
+    }
+  }catch(e){
+    console.error('loadVideoRating error:', e);
+  }
+}
 
 function closeVideo(){
   $('vidModal').classList.remove('open');
