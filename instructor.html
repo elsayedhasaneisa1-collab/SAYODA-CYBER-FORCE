@@ -6,8 +6,8 @@
 <meta name="theme-color" content="#021208" />
 <title>لوحة المدرب | CYBER FORCE</title>
 <link rel="manifest" href="./manifest.json" />
-<link rel="icon" href="./logo.png" />
-<link rel="apple-touch-icon" href="./logo.png" />
+<link rel="icon" href="./logogg.png" />
+<link rel="apple-touch-icon" href="./logogg.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
@@ -241,6 +241,7 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 .btn.danger{background:linear-gradient(135deg,var(--danger),#c62348);color:#fff;box-shadow:0 8px 24px rgba(255,77,109,.3)}
 .btn.danger:hover{box-shadow:0 12px 32px rgba(255,77,109,.5)}
 .btn.ok{background:linear-gradient(135deg,#28d17c,#1fa562);color:#fff;box-shadow:0 8px 24px rgba(40,209,124,.3)}
+.btn.ok:hover{box-shadow:0 12px 32px rgba(40,209,124,.5)}
 .btn.ghost{background:transparent;border:1px solid var(--border);color:var(--green);box-shadow:none}
 .btn.ghost:hover{background:var(--green-soft)}
 .btn.sm{padding:8px 14px;font-size:12px;border-radius:9px}
@@ -251,148 +252,142 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 
-.poll-options-list{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
-.poll-option-row{display:flex;gap:8px;align-items:center}
-.poll-option-row input{flex:1}
-.poll-option-row button{
-  width:38px;height:38px;border-radius:10px;
-  background:rgba(255,77,109,.15);color:var(--danger);
-  border:1px solid rgba(255,77,109,.3);flex-shrink:0;
-  display:grid;place-items:center;font-size:16px;transition:.2s;
+/* STUDENT CARD */
+.student-card{
+  background:linear-gradient(160deg,rgba(6,24,14,.95),rgba(2,18,8,.85));
+  border:1px solid var(--border);
+  border-radius:16px;padding:18px;margin-bottom:14px;
+  transition:.25s;position:relative;overflow:hidden;
 }
-.poll-option-row button:hover{background:var(--danger);color:#fff}
+.student-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--green),var(--green-3));opacity:.6;
+}
+.student-card:hover{border-color:var(--green);transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,255,136,.15)}
+.student-card.pending{border-color:rgba(255,176,32,.5);background:linear-gradient(160deg,rgba(40,30,0,.95),rgba(2,18,8,.85))}
+.student-card.pending::before{background:linear-gradient(90deg,#ffb020,#ff9500)}
 
-.duration-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));
-  gap:8px;margin-bottom:12px;
+.st-header{
+  display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;
 }
-.duration-btn{
-  padding:12px 8px;border-radius:12px;
-  background:rgba(2,18,8,.6);border:1px solid var(--border);
-  color:var(--muted);font-weight:800;font-size:12px;
-  transition:.2s;text-align:center;font-family:inherit;cursor:pointer;
-}
-.duration-btn:hover{border-color:var(--green);color:var(--green)}
-.duration-btn.active{
+.st-av{
+  width:52px;height:52px;border-radius:50%;
   background:linear-gradient(135deg,var(--green),var(--green-2));
-  color:#021208;border-color:transparent;
-  box-shadow:0 6px 18px rgba(0,255,136,.3);
-}
-.duration-btn .ic{display:block;font-size:18px;margin-bottom:3px}
-
-#customDateBox{display:none;margin-top:10px}
-#customDateBox.show{display:block;animation:fade .3s}
-
-.poll-item{
-  background:rgba(2,18,8,.4);border:1px solid var(--border);
-  border-radius:14px;padding:16px;margin-bottom:12px;transition:.25s;
-}
-.poll-item:hover{border-color:var(--green)}
-.poll-item .question{
-  font-size:15px;font-weight:900;color:var(--txt);margin-bottom:12px;
-  display:flex;align-items:start;gap:8px;
-}
-.poll-item .question .icon{color:var(--green);flex-shrink:0}
-.poll-meta{
-  display:flex;gap:12px;flex-wrap:wrap;font-size:11px;
-  color:var(--muted);font-weight:700;margin-bottom:12px;
-}
-.poll-meta span{display:flex;align-items:center;gap:4px}
-.poll-meta .timer{color:var(--green);font-weight:900}
-.poll-results{display:flex;flex-direction:column;gap:8px;margin-top:12px}
-.poll-result-row{
-  background:rgba(0,255,136,.06);border-radius:10px;padding:10px 12px;
-  position:relative;overflow:hidden;
-}
-.poll-result-bar{
-  position:absolute;top:0;right:0;bottom:0;
-  background:linear-gradient(90deg,var(--green),var(--green-3));
-  opacity:.25;transition:width .6s;
-}
-.poll-result-txt{
-  position:relative;z-index:1;
-  display:flex;justify-content:space-between;align-items:center;
-  font-size:13px;font-weight:700;
-}
-.poll-result-txt .txt{color:var(--txt)}
-.poll-result-txt .pct{color:var(--green);font-weight:900}
-
-.video-item{
-  display:flex;gap:12px;padding:12px;border-radius:12px;
-  background:rgba(2,18,8,.4);border:1px solid var(--border);
-  margin-bottom:10px;align-items:center;transition:.2s;flex-wrap:wrap;
-}
-.video-item:hover{border-color:var(--green)}
-.video-thumb{
-  width:80px;height:60px;border-radius:10px;object-fit:cover;
-  background:var(--bg-3);flex-shrink:0;
-}
-.video-info{flex:1;min-width:150px}
-.video-info h4{font-size:14px;font-weight:800;margin-bottom:4px}
-.video-info small{font-size:11px;color:var(--muted)}
-.video-status{
-  padding:3px 10px;border-radius:10px;font-size:10px;font-weight:800;
-}
-.video-status.approved{background:rgba(40,209,124,.15);color:var(--ok);border:1px solid rgba(40,209,124,.3)}
-.video-status.pending{background:rgba(255,176,32,.15);color:var(--warn);border:1px solid rgba(255,176,32,.3)}
-.video-status.rejected{background:rgba(255,77,109,.15);color:var(--danger);border:1px solid rgba(255,77,109,.3)}
-.video-actions{display:flex;gap:6px;flex-shrink:0}
-
-/* STUDENT ITEM */
-.student-item{
-  display:flex;gap:12px;padding:14px;border-radius:12px;
-  background:rgba(2,18,8,.4);border:1px solid var(--border);
-  margin-bottom:10px;align-items:center;transition:.2s;flex-wrap:wrap;
-}
-.student-item:hover{border-color:var(--green)}
-.student-item.pending{
-  border-color:rgba(255,176,32,.5);
-  background:linear-gradient(135deg,rgba(255,176,32,.08),rgba(2,18,8,.4));
-}
-.student-item.active{
-  border-color:rgba(40,209,124,.4);
-  background:linear-gradient(135deg,rgba(40,209,124,.06),rgba(2,18,8,.4));
-}
-.student-av{
-  width:48px;height:48px;border-radius:50%;
-  background:linear-gradient(135deg,var(--green),var(--green-2));
-  color:#021208;font-weight:900;font-size:20px;
+  color:#021208;font-weight:900;font-size:22px;
   display:grid;place-items:center;flex-shrink:0;
+  box-shadow:0 0 20px rgba(0,255,136,.4);
 }
-.student-item.pending .student-av{
+.student-card.pending .st-av{
   background:linear-gradient(135deg,#ffb020,#ff9500);
-  color:#fff;
+  color:#fff;box-shadow:0 0 20px rgba(255,176,32,.4);
 }
-.student-info{flex:1;min-width:150px}
-.student-info b{font-size:15px;display:block}
-.student-info small{font-size:11px;color:var(--muted);display:block;margin-top:2px}
-.student-actions{display:flex;gap:6px;flex-wrap:wrap}
-.status-badge{
-  padding:4px 12px;border-radius:10px;font-size:11px;font-weight:800;
+.st-info{flex:1;min-width:150px}
+.st-info h4{font-size:16px;font-weight:900;margin-bottom:4px}
+.st-info .badge{
+  display:inline-block;padding:2px 10px;border-radius:10px;
+  font-size:10px;font-weight:800;margin-left:6px;
 }
-.status-badge.active{background:rgba(40,209,124,.2);color:var(--ok);border:1px solid rgba(40,209,124,.4)}
-.status-badge.pending{background:rgba(255,176,32,.2);color:var(--warn);border:1px solid rgba(255,176,32,.4)}
+.st-info .badge.active{background:rgba(40,209,124,.2);color:var(--ok);border:1px solid rgba(40,209,124,.4)}
+.st-info .badge.pending{background:rgba(255,176,32,.2);color:var(--warn);border:1px solid rgba(255,176,32,.4)}
 
+.st-stats{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));
+  gap:8px;margin-bottom:14px;
+}
+.st-stat{
+  background:rgba(0,255,136,.06);border:1px solid var(--border-soft);
+  border-radius:10px;padding:10px 8px;text-align:center;
+}
+.st-stat .ic{font-size:18px;display:block;margin-bottom:4px}
+.st-stat .n{font-size:16px;font-weight:900;color:var(--green)}
+.st-stat .l{font-size:10px;color:var(--muted);font-weight:700;margin-top:2px}
+
+.st-progress-wrap{margin-bottom:14px}
+.st-progress-head{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:12px;font-weight:800;margin-bottom:6px;
+}
+.st-progress-head .lbl{color:var(--muted)}
+.st-progress-head .pct{color:var(--green);font-weight:900}
+.st-progress-bar{
+  height:10px;background:rgba(2,18,8,.6);border-radius:10px;
+  overflow:hidden;border:1px solid var(--border-soft);
+}
+.st-progress-fill{
+  height:100%;border-radius:10px;
+  background:linear-gradient(90deg,var(--green),var(--green-3));
+  transition:width .8s cubic-bezier(.2,.9,.3,1);
+}
+
+.st-actions{
+  display:flex;gap:8px;flex-wrap:wrap;
+}
+.st-actions .btn{flex:1;min-width:fit-content;padding:10px 14px;font-size:13px}
+
+.st-extra{
+  display:flex;gap:12px;flex-wrap:wrap;
+  font-size:11px;color:var(--muted);font-weight:700;
+  margin-bottom:14px;
+}
+.st-extra span{display:flex;align-items:center;gap:4px}
+
+/* PENDING ALERT */
 .pending-alert{
   background:linear-gradient(135deg,rgba(255,176,32,.15),rgba(255,149,0,.08));
   border:1px solid rgba(255,176,32,.4);
-  border-radius:12px;padding:12px 14px;margin-bottom:14px;
-  display:flex;align-items:center;gap:10px;
-  font-weight:800;font-size:13px;color:#ffb020;
+  border-radius:12px;padding:14px 16px;margin-bottom:18px;
+  display:flex;align-items:center;gap:12px;
+  font-weight:800;font-size:14px;color:#ffb020;
+  animation:pulse-warn 2.5s ease-in-out infinite;
 }
-.pending-alert .icon{font-size:22px}
+@keyframes pulse-warn{
+  0%,100%{box-shadow:0 0 0 0 rgba(255,176,32,0)}
+  50%{box-shadow:0 0 0 6px rgba(255,176,32,.08)}
+}
+.pending-alert .icon{font-size:24px;flex-shrink:0}
 
+/* MODAL */
+.modal{
+  position:fixed;inset:0;z-index:600;
+  background:rgba(0,0,0,.85);backdrop-filter:blur(8px);
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+.modal.open{display:flex;animation:fade .25s}
+.modal-box{
+  background:linear-gradient(160deg,rgba(4,26,12,.98),rgba(2,18,8,.98));
+  border:1px solid var(--border);border-radius:20px;
+  width:100%;max-width:560px;max-height:88vh;
+  display:flex;flex-direction:column;box-shadow:var(--shadow);
+}
+.modal-head{
+  padding:18px 20px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-shrink:0;
+}
+.modal-head h3{margin:0;font-size:16px;color:var(--green);font-weight:900}
+.modal-head .close-btn{
+  width:34px;height:34px;border-radius:9px;
+  border:1px solid var(--border);background:transparent;
+  color:var(--green);font-size:18px;
+  display:grid;place-items:center;cursor:pointer;transition:.2s;
+}
+.modal-head .close-btn:hover{background:var(--green);color:#021208}
+.modal-body{flex:1;overflow-y:auto;padding:16px 20px}
+
+/* EMPTY */
 .empty{text-align:center;padding:40px 20px;color:var(--muted)}
 .empty .e{font-size:52px;margin-bottom:10px;opacity:.6}
 .empty p{font-size:14px;line-height:1.6}
 
+/* SKELETON */
 .skel{
   background:linear-gradient(90deg,var(--bg-3) 25%,rgba(0,255,136,.06) 50%,var(--bg-3) 75%);
-  background-size:200% 100%;animation:shimmer 1.3s infinite;border-radius:12px;
-  height:70px;margin-bottom:10px;
+  background-size:200% 100%;animation:shimmer 1.3s infinite;
+  border-radius:12px;height:120px;margin-bottom:12px;
 }
 @keyframes shimmer{to{background-position:-200% 0}}
 
+/* TOASTS */
 #toasts{
   position:fixed;top:20px;left:50%;transform:translateX(-50%);
   z-index:10000;display:flex;flex-direction:column;gap:10px;
@@ -412,6 +407,7 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 .toast .ic{font-size:20px;flex-shrink:0}
 @keyframes toastIn{from{opacity:0;transform:translateY(-20px) scale(.95)}to{opacity:1;transform:none}}
 
+/* RESPONSIVE */
 @media(max-width:640px){
   .main{padding:14px 12px}
   .welcome-card{padding:16px}
@@ -421,10 +417,9 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
   .tab{padding:10px 12px;font-size:12px}
   .stats-grid{grid-template-columns:repeat(2,1fr)}
   .stat-card .n{font-size:20px}
-  .video-item{padding:10px}
-  .video-thumb{width:60px;height:45px}
-  .duration-grid{grid-template-columns:repeat(3,1fr)}
   .gate-box{padding:28px 20px}
+  .student-card{padding:14px}
+  .st-av{width:44px;height:44px;font-size:18px}
 }
 </style>
 </head> 
@@ -433,7 +428,7 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 <!-- GATE -->
 <div class="gate" id="gate">
   <div class="gate-box">
-    <img src="./logo.png" alt="logo" onerror="this.style.display='none'">
+    <img src="./logogg.png" alt="logo" onerror="this.style.display='none'">
     <h2>🎬 بوابة المدرب</h2>
     <p>أدخل كلمة المرور للدخول على لوحة المدرب</p>
     <input type="password" id="gatePass" placeholder="كلمة المرور" autocomplete="current-password" />
@@ -448,7 +443,7 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 
   <header class="header">
     <div class="hd-left">
-      <img src="./logo.png" alt="logo" onerror="this.style.display='none'">
+      <img src="./logogg.png" alt="logo" onerror="this.style.display='none'">
       <div class="hd-title">لوحة <span>المدرب</span><small>CYBER FORCE</small></div>
     </div>
     <div class="hd-right">
@@ -464,7 +459,7 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
       <div class="welcome-av" id="welcomeAv">?</div>
       <div class="welcome-info">
         <h1>أهلاً <span id="welcomeName">—</span> 🎬</h1>
-        <p>لوحة تحكم المدرب — إدارة الفيديوهات والاستطلاعات</p>
+        <p>لوحة تحكم المدرب — إدارة الطلاب والفيديوهات</p>
         <span class="welcome-badge" id="welcomeSpecialty">🎯 مدرب</span>
       </div>
     </div>
@@ -472,8 +467,8 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
     <div class="stats-grid">
       <div class="stat-card"><span class="ic">🎬</span><div class="n" id="statVideos">0</div><div class="l">فيديوهات</div></div>
       <div class="stat-card"><span class="ic">👥</span><div class="n" id="statStudents">0</div><div class="l">طلاب مشتركين</div></div>
-      <div class="stat-card"><span class="ic">🗳️</span><div class="n" id="statPolls">0</div><div class="l">استطلاعات نشطة</div></div>
       <div class="stat-card"><span class="ic">⏳</span><div class="n" id="statPending">0</div><div class="l">طلبات معلقة</div></div>
+      <div class="stat-card"><span class="ic">🗳️</span><div class="n" id="statPolls">0</div><div class="l">استطلاعات</div></div>
     </div>
 
     <div class="tabs">
@@ -525,9 +520,6 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 
           <div id="customDateBox">
             <input type="datetime-local" id="pollCustomDate" />
-            <small style="font-size:11px;color:var(--muted);display:block;margin-top:6px">
-              اختر التاريخ والوقت اللي ينتهي فيه الاستطلاع
-            </small>
           </div>
 
           <small style="font-size:11px;color:var(--muted);display:block;margin-top:8px;padding:8px 12px;background:rgba(0,255,136,.08);border-radius:8px;border:1px solid rgba(0,255,136,.2)">
@@ -630,6 +622,19 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
   </main>
 </div>
 
+<!-- MODAL: تفاصيل الطالب -->
+<div class="modal" id="studentModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3 id="smTitle">👤 تفاصيل الطالب</h3>
+      <button class="close-btn" id="smClose">✕</button>
+    </div>
+    <div class="modal-body" id="smBody">
+      <div class="skel"></div>
+    </div>
+  </div>
+</div>
+
 <div id="toasts"></div>
 
 <script>
@@ -647,6 +652,8 @@ const safeInt = (n, d=0) => { const v = parseInt(n, 10); return Number.isFinite(
 let USER = null;
 let POLL_OPTIONS = ['', ''];
 let SELECTED_HOURS = 72;
+let ALL_STUDENTS = [];
+let ALL_VIDEOS = [];
 
 /* SESSION */
 function getSession(){
@@ -837,7 +844,8 @@ async function init(){
     $('profileUsername').value = USER.username;
 
     renderPollOptions();
-    await Promise.all([loadStudents(), loadPolls(), loadVideos(), loadStats()]);
+    await loadVideos();
+    await Promise.all([loadStudents(), loadPolls(), loadStats()]);
 
   }catch(e){
     console.error(e);
@@ -874,47 +882,139 @@ async function loadStats(){
   }catch(e){ console.warn('stats error:', e); }
 }
 
-/* STUDENTS — القسم المهم */
-async function loadStudents(){
-  $('studentsList').innerHTML = '<div class="skel"></div><div class="skel"></div>';
-  
+/* VIDEOS (نحتاجها لحساب عدد الفيديوهات الكلي) */
+async function loadVideos(){
   try{
-    console.log('🔍 USER.id:', USER.id, '| type:', typeof USER.id);
-    
-    // ✅ حاول بـ USER.id كـ number الأول
-    let result = await sb.from('instructor_subscriptions')
+    const { data } = await sb.from('videos')
       .select('*')
       .eq('instructor_id', USER.id)
       .order('created_at', { ascending: false });
     
-    // ✅ لو مش لاقي حاجة، جرب بـ parseInt
-    if(!result.data || result.data.length === 0){
-      console.log('🔄 محاولة بـ parseInt...');
-      result = await sb.from('instructor_subscriptions')
-        .select('*')
-        .eq('instructor_id', parseInt(USER.id, 10))
-        .order('created_at', { ascending: false });
-    }
+    ALL_VIDEOS = data || [];
+    renderVideos();
+  }catch(e){
+    console.error('loadVideos error:', e);
+    ALL_VIDEOS = [];
+    renderVideos();
+  }
+}
+
+function renderVideos(){
+  if(!ALL_VIDEOS.length){
+    $('videosList').innerHTML = `<div class="empty"><div class="e">🎬</div><p>لا توجد فيديوهات بعد</p></div>`;
+    return;
+  }
+
+  $('videosList').innerHTML = ALL_VIDEOS.map(v => {
+    const statusClass = v.status === 'approved' ? 'approved' : v.status === 'rejected' ? 'rejected' : 'pending';
+    const statusTxt = v.status === 'approved' ? '✅ معتمد' : v.status === 'rejected' ? '❌ مرفوض' : '⏳ مراجعة';
+    const thumb = v.thumbnail || (v.youtube_id ? `https://i.ytimg.com/vi/${v.youtube_id}/mqdefault.jpg` : './sayed.png');
     
-    // ✅ لو لسه مش لاقي، جرب بـ String
-    if(!result.data || result.data.length === 0){
-      console.log('🔄 محاولة بـ String...');
-      result = await sb.from('instructor_subscriptions')
-        .select('*')
-        .eq('instructor_id', String(USER.id))
-        .order('created_at', { ascending: false });
-    }
-    
-    const { data, error } = result;
-    
-    console.log('📊 Students data:', data);
-    console.log('❌ Error:', error);
-    
+    return `
+      <div style="display:flex;gap:12px;padding:12px;border-radius:12px;
+        background:rgba(2,18,8,.4);border:1px solid var(--border);
+        margin-bottom:10px;align-items:center;flex-wrap:wrap">
+        <img src="${esc(thumb)}" onerror="this.src='./sayed.png'" alt=""
+          style="width:80px;height:60px;border-radius:10px;object-fit:cover;flex-shrink:0">
+        <div style="flex:1;min-width:150px">
+          <h4 style="font-size:14px;font-weight:800;margin-bottom:4px">${esc(v.title)}</h4>
+          <small style="font-size:11px;color:var(--muted)">👁️ ${safeInt(v.views)} · ${esc(v.category||'عام')}</small>
+        </div>
+        <span class="video-status ${statusClass}">${statusTxt}</span>
+        <button class="btn danger sm" data-del-vid="${v.id}">🗑️</button>
+      </div>
+    `;
+  }).join('');
+
+  $('videosList').querySelectorAll('[data-del-vid]').forEach(b => {
+    b.onclick = () => deleteMyVideo(b.dataset.delVid);
+  });
+}
+
+async function deleteMyVideo(videoId){
+  if(!confirm('⚠️ حذف هذا الفيديو نهائياً؟')) return;
+  try{
+    const { error } = await sb.from('videos')
+      .delete()
+      .eq('id', parseInt(videoId, 10))
+      .eq('instructor_id', USER.id);
+
     if(error) throw error;
-    
-    const subs = data || [];
-    
-    if(!subs.length){
+
+    toast('🗑️ تم حذف الفيديو', 'ok');
+    await loadVideos();
+    await loadStats();
+  }catch(e){
+    console.error('deleteMyVideo error:', e);
+    toast('فشل الحذف: ' + (e.message || ''), 'err');
+  }
+}
+
+$('addVideoBtn').onclick = async () => {
+  const title = clean($('vidTitle').value);
+  const desc = clean($('vidDesc').value);
+  const url = clean($('vidUrl').value);
+  const thumbInput = clean($('vidThumb').value);
+  const cat = clean($('vidCat').value) || 'عام';
+
+  if(!title || title.length < 3) return toast('اكتب عنوان الفيديو', 'err');
+  if(!url) return toast('الصق رابط الفيديو', 'err');
+
+  const ytMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|v\/)|youtu\.be\/)([\w-]{11})/);
+  if(!ytMatch) return toast('رابط يوتيوب غير صالح', 'err');
+  const youtubeId = ytMatch[1];
+
+  const finalThumb = thumbInput || './sayed.png';
+
+  const btn = $('addVideoBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>';
+
+  try{
+    const { error } = await sb.from('videos').insert({
+      title,
+      description: desc,
+      youtube_url: url,
+      youtube_id: youtubeId,
+      category: cat,
+      thumbnail: finalThumb,
+      instructor_id: USER.id,
+      created_by: USER.username,
+      status: 'pending',
+      published: false,
+      views: 0
+    });
+
+    if(error) throw error;
+    toast('✅ تم إرسال الفيديو للأدمن', 'ok');
+    ['vidTitle','vidDesc','vidUrl','vidThumb','vidCat'].forEach(i => $(i).value = '');
+    await loadVideos();
+    await loadStats();
+  }catch(e){
+    console.error('add video error:', e);
+    toast('خطأ: ' + (e.message || ''), 'err');
+  }finally{
+    btn.disabled = false;
+    btn.textContent = '🎬 إضافة الفيديو';
+  }
+};
+
+/* ============================================
+   STUDENTS — القسم الرئيسي
+   ============================================ */
+async function loadStudents(){
+  $('studentsList').innerHTML = '<div class="skel"></div><div class="skel"></div>';
+  
+  try{
+    const { data, error } = await sb.from('instructor_subscriptions')
+      .select('*')
+      .eq('instructor_id', USER.id)
+      .order('created_at', { ascending: false });
+
+    if(error) throw error;
+    ALL_STUDENTS = data || [];
+
+    if(!ALL_STUDENTS.length){
       $('studentsList').innerHTML = `
         <div class="empty">
           <div class="e">👥</div>
@@ -926,11 +1026,19 @@ async function loadStudents(){
       return;
     }
 
-    // ✅ الطلبات المعلقة
-    const pending = subs.filter(s => s.status === 'pending');
-    const active = subs.filter(s => s.status === 'active');
+    // جلب بيانات كل الطلاب (XP، إلخ)
+    const usernames = ALL_STUDENTS.map(s => s.student_username);
+    const { data: usersData } = await sb.from('users')
+      .select('username, xp, videos_watched, streak, badges, last_visit, video_progress, unlocked_videos')
+      .in('username', usernames);
 
-    // ✅ عرض تنبيه للطلبات المعلقة
+    const usersMap = {};
+    (usersData || []).forEach(u => { usersMap[u.username] = u; });
+
+    // الطلبات المعلقة
+    const pending = ALL_STUDENTS.filter(s => s.status === 'pending');
+    
+    // تنبيه
     if(pending.length > 0){
       $('pendingAlertBox').innerHTML = `
         <div class="pending-alert">
@@ -942,39 +1050,15 @@ async function loadStudents(){
       $('pendingAlertBox').innerHTML = '';
     }
 
-    // ✅ ترتيب: pending الأول، بعدها active
-    const sorted = [...pending, ...active];
-    
-    $('studentsList').innerHTML = sorted.map(s => {
-      const statusClass = s.status === 'active' ? 'active' : 'pending';
-      const statusTxt = s.status === 'active' ? '✅ مشترك' : '⏳ في الانتظار';
-      const initial = (s.student_username || '?')[0].toUpperCase();
-      const isPending = s.status === 'pending';
-      
-      return `
-        <div class="student-item ${statusClass}">
-          <div class="student-av">${esc(initial)}</div>
-          <div class="student-info">
-            <b>${esc(s.student_username)}</b>
-            <small>📅 ${new Date(s.created_at).toLocaleDateString('ar-EG')}</small>
-          </div>
-          <span class="status-badge ${statusClass}">${statusTxt}</span>
-          ${isPending ? `
-            <div class="student-actions">
-              <button class="btn ok sm" data-approve="${s.id}">✅ موافقة</button>
-              <button class="btn danger sm" data-reject="${s.id}">❌ رفض</button>
-            </div>
-          ` : ''}
-        </div>
-      `;
-    }).join('');
+    // ترتيب: pending الأول، بعدها active
+    const sorted = [...pending, ...ALL_STUDENTS.filter(s => s.status !== 'pending')];
 
-    // ✅ ربط أزرار الموافقة والرفض
-    $('studentsList').querySelectorAll('[data-approve]').forEach(b => {
-      b.onclick = () => approveStudent(b.dataset.approve);
-    });
-    $('studentsList').querySelectorAll('[data-reject]').forEach(b => {
-      b.onclick = () => rejectStudent(b.dataset.reject);
+    // عرض كل طالب
+    $('studentsList').innerHTML = sorted.map(s => renderStudentCard(s, usersMap[s.student_username])).join('');
+
+    // ربط الأزرار
+    document.querySelectorAll('[data-action]').forEach(btn => {
+      btn.onclick = () => handleStudentAction(btn.dataset.action, btn.dataset.user);
     });
 
   }catch(e){
@@ -983,80 +1067,179 @@ async function loadStudents(){
   }
 }
 
-async function approveStudent(subId){
+function renderStudentCard(sub, user){
+  const isPending = sub.status === 'pending';
+  const isActive = sub.status === 'active';
+  
+  const xp = safeInt(user?.xp);
+  const watched = safeInt(user?.videos_watched);
+  const streak = safeInt(user?.streak);
+  const badges = Array.isArray(user?.badges) ? user.badges.length : 0;
+  
+  let unlockedCount = 0;
+  try{
+    const uv = user?.unlocked_videos;
+    if(Array.isArray(uv)) unlockedCount = uv.length;
+    else if(typeof uv === 'string'){ const p = JSON.parse(uv); if(Array.isArray(p)) unlockedCount = p.length; }
+  }catch(e){}
+
+  const totalVideos = ALL_VIDEOS.filter(v => v.status === 'approved').length;
+  const progressPct = totalVideos > 0 ? Math.round((unlockedCount / totalVideos) * 100) : 0;
+  
+  // آخر زيارة
+  let lastVisit = '—';
+  if(user?.last_visit){
+    try{
+      const d = new Date(user.last_visit);
+      const diff = Math.floor((Date.now() - d) / 1000);
+      if(diff < 60) lastVisit = 'الآن';
+      else if(diff < 3600) lastVisit = `منذ ${Math.floor(diff/60)} دقيقة`;
+      else if(diff < 86400) lastVisit = `منذ ${Math.floor(diff/3600)} ساعة`;
+      else lastVisit = `منذ ${Math.floor(diff/86400)} يوم`;
+    }catch(e){}
+  }
+
+  const initial = (sub.student_username || '?')[0].toUpperCase();
+
+  return `
+    <div class="student-card ${isPending ? 'pending' : ''}">
+      <div class="st-header">
+        <div class="st-av">${esc(initial)}</div>
+        <div class="st-info">
+          <h4>
+            ${esc(sub.student_username)}
+            <span class="badge ${isActive ? 'active' : 'pending'}">
+              ${isActive ? '✅ مشترك' : '⏳ في الانتظار'}
+            </span>
+          </h4>
+          <div class="st-extra">
+            <span>📅 ${lastVisit}</span>
+          </div>
+        </div>
+      </div>
+
+      ${isActive ? `
+        <div class="st-stats">
+          <div class="st-stat">
+            <span class="ic">⭐</span>
+            <div class="n">${xp}</div>
+            <div class="l">XP</div>
+          </div>
+          <div class="st-stat">
+            <span class="ic">🎬</span>
+            <div class="n">${watched}</div>
+            <div class="l">مُشاهد</div>
+          </div>
+          <div class="st-stat">
+            <span class="ic">🏅</span>
+            <div class="n">${badges}</div>
+            <div class="l">شارات</div>
+          </div>
+          <div class="st-stat">
+            <span class="ic">🔥</span>
+            <div class="n">${streak}</div>
+            <div class="l">Streak</div>
+          </div>
+        </div>
+
+        <div class="st-progress-wrap">
+          <div class="st-progress-head">
+            <span class="lbl">📊 التقدم: ${unlockedCount} / ${totalVideos} فيديو</span>
+            <span class="pct">${progressPct}%</span>
+          </div>
+          <div class="st-progress-bar">
+            <div class="st-progress-fill" style="width:${progressPct}%"></div>
+          </div>
+        </div>
+      ` : ''}
+
+      <div class="st-actions">
+        ${isPending ? `
+          <button class="btn ok sm" data-action="approve" data-user="${esc(sub.student_username)}">
+            ✅ موافقة
+          </button>
+          <button class="btn danger sm" data-action="reject" data-user="${esc(sub.student_username)}">
+            ❌ رفض
+          </button>
+        ` : `
+          <button class="btn ok sm" data-action="unlock" data-user="${esc(sub.student_username)}">
+            🔓 فتح الفيديوهات
+          </button>
+          <button class="btn danger sm" data-action="lock" data-user="${esc(sub.student_username)}">
+            🔒 قفل
+          </button>
+          <button class="btn ghost sm" data-action="details" data-user="${esc(sub.student_username)}">
+            👁 تفاصيل
+          </button>
+        `}
+      </div>
+    </div>
+  `;
+}
+
+/* ACTIONS */
+async function handleStudentAction(action, username){
+  switch(action){
+    case 'approve':
+      return approveStudent(username);
+    case 'reject':
+      return rejectStudent(username);
+    case 'unlock':
+      return unlockFirstVideo(username);
+    case 'lock':
+      return lockStudentVideos(username);
+    case 'details':
+      return showStudentDetails(username);
+  }
+}
+
+async function approveStudent(username){
+  if(!confirm(`✅ موافقة على "${username}"؟`)) return;
   try{
     const { error } = await sb.from('instructor_subscriptions')
       .update({ 
         status: 'active',
         approved_at: new Date().toISOString()
       })
-      .eq('id', parseInt(subId, 10));
-    
+      .eq('instructor_id', USER.id)
+      .eq('student_username', username);
+
     if(error) throw error;
-    
     toast('✅ تم قبول الطالب', 'ok');
     await loadStudents();
     await loadStats();
-    
   }catch(e){
     console.error('approve error:', e);
     toast('فشل: ' + (e.message || ''), 'err');
   }
 }
 
-async function rejectStudent(subId){
-  if(!confirm('رفض هذا الطالب؟')) return;
-  
+async function rejectStudent(username){
+  if(!confirm(`❌ رفض "${username}"؟ سيتم حذف الطلب نهائياً`)) return;
   try{
     const { error } = await sb.from('instructor_subscriptions')
       .delete()
-      .eq('id', parseInt(subId, 10));
-    
+      .eq('instructor_id', USER.id)
+      .eq('student_username', username);
+
     if(error) throw error;
-    
     toast('🗑️ تم رفض الطالب', 'ok');
     await loadStudents();
     await loadStats();
-    
   }catch(e){
     console.error('reject error:', e);
     toast('فشل: ' + (e.message || ''), 'err');
   }
 }
 
-/* CREATE POLL */
-$('createPollBtn').onclick = async () => {
-  const question = clean($('pollQuestion').value);
-  if(!question || question.length < 3){ return toast('اكتب سؤال (3 أحرف على الأقل)', 'err'); }
-  
-  const validOptions = POLL_OPTIONS.map(o => clean(o)).filter(o => o.length > 0);
-  if(validOptions.length < 2){ return toast('محتاج خيارين على الأقل', 'err'); }
-
-  const options = validOptions.map((text, i) => ({ id: i, text }));
-
-  let hours = 0;
-  if(SELECTED_HOURS === 'custom'){
-    const customDate = $('pollCustomDate').value;
-    if(!customDate) return toast('اختر التاريخ والوقت', 'err');
-    const diffMs = new Date(customDate).getTime() - Date.now();
-    if(diffMs < 60*1000) return toast('الوقت المحدد لازم يكون في المستقبل', 'err');
-    hours = Math.ceil(diffMs / (1000*60*60));
-  } else {
-    hours = SELECTED_HOURS;
-  }
-
-  if(hours < 1) return toast('المدة يجب أن تكون ساعة على الأقل', 'err');
-
-  const btn = $('createPollBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>';
+/* 🔓 فتح أول فيديو */
+async function unlockFirstVideo(username){
+  if(!confirm(`🔓 فتح أول فيديو لـ "${username}"؟\n\nبعدها الفيديوهات هتفتح تلقائي بعد 50% من كل فيديو.`)) return;
 
   try{
-    const { data, error } = await sb.rpc('create_poll', {
+    const { data, error } = await sb.rpc('instructor_unlock_first_video', {
       p_instructor_username: USER.username,
-      p_question: question,
-      p_options: options,
-      p_hours: hours
+      p_student_username: username
     });
 
     if(error) throw error;
@@ -1064,33 +1247,163 @@ $('createPollBtn').onclick = async () => {
 
     if(!res || !res.ok){
       const code = res && res.error;
-      if(code === 'question_short') toast('السؤال قصير جداً', 'err');
-      else if(code === 'need_options') toast('محتاج خيارين على الأقل', 'err');
-      else if(code === 'not_instructor') toast('مش مسموح', 'err');
-      else toast('تعذّر إنشاء الاستطلاع', 'err');
+      if(code === 'no_videos') toast('❌ مفيش فيديوهات معتمدة ليك', 'err');
+      else if(code === 'not_instructor') toast('❌ مش مسموح', 'err');
+      else toast('تعذّر فتح الفيديو', 'err');
       return;
     }
 
-    const endsAt = new Date(res.ends_at);
-    const hoursLeft = Math.round((endsAt - Date.now()) / (1000*60*60));
-    toast(`✅ تم النشر — ينتهي بعد ${hoursLeft} ساعة`, 'ok', 5000);
-    
-    $('pollQuestion').value = '';
-    POLL_OPTIONS = ['', ''];
-    renderPollOptions();
-    await loadPolls();
-    await loadStats();
+    toast(`✅ تم فتح الفيديو الأول (ID: ${res.video_id})`, 'ok', 4000);
+    await loadStudents();
+  }catch(e){
+    console.error('unlock error:', e);
+    toast('فشل: ' + (e.message || ''), 'err');
+  }
+}
+
+/* 🔒 قفل كل الفيديوهات */
+async function lockStudentVideos(username){
+  if(!confirm(`🔒 قفل كل الفيديوهات عن "${username}"؟\n\nالطالب مش هيشوف أي فيديو لحد ما تفتحه تاني.`)) return;
+
+  try{
+    const { data, error } = await sb.rpc('instructor_lock_videos', {
+      p_instructor_username: USER.username,
+      p_student_username: username
+    });
+
+    if(error) throw error;
+    const res = Array.isArray(data) ? data[0] : data;
+
+    if(!res || !res.ok){
+      toast('تعذّر القفل', 'err');
+      return;
+    }
+
+    toast('🔒 تم قفل كل الفيديوهات', 'ok');
+    await loadStudents();
+  }catch(e){
+    console.error('lock error:', e);
+    toast('فشل: ' + (e.message || ''), 'err');
+  }
+}
+
+/* 👁 تفاصيل الطالب */
+async function showStudentDetails(username){
+  const modal = $('studentModal');
+  $('smTitle').textContent = '👤 ' + username;
+  $('smBody').innerHTML = '<div class="skel"></div><div class="skel"></div>';
+  modal.classList.add('open');
+
+  try{
+    const { data, error } = await sb.rpc('instructor_get_student_details', {
+      p_instructor_username: USER.username,
+      p_student_username: username
+    });
+
+    if(error) throw error;
+    const res = Array.isArray(data) ? data[0] : data;
+
+    if(!res || !res.ok){
+      $('smBody').innerHTML = '<div class="empty"><div class="e">⚠️</div><p>تعذّر التحميل</p></div>';
+      return;
+    }
+
+    const badges = Array.isArray(res.badges) ? res.badges : [];
+    const unlocked = Array.isArray(res.unlocked_videos) ? res.unlocked_videos : [];
+    const progress = res.progress || {};
+
+    // آخر زيارة
+    let lastVisit = '—';
+    if(res.last_visit){
+      try{
+        lastVisit = new Date(res.last_visit).toLocaleString('ar-EG', {
+          year:'numeric', month:'2-digit', day:'2-digit',
+          hour:'2-digit', minute:'2-digit'
+        });
+      }catch(e){}
+    }
+
+    // قائمة الفيديوهات المفتوحة مع التقدم
+    const videosProgress = ALL_VIDEOS.filter(v => v.status === 'approved').map(v => {
+      const p = progress[v.id] || progress[String(v.id)] || {};
+      const pct = p.done ? 100 : safeInt(p.p, 0);
+      const isUnlocked = unlocked.includes(v.id) || unlocked.includes(String(v.id));
+      return { ...v, pct, isUnlocked };
+    });
+
+    $('smBody').innerHTML = `
+      <div style="display:grid;gap:12px">
+        
+        <!-- معلومات أساسية -->
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+          <div class="st-stat">
+            <span class="ic">⭐</span>
+            <div class="n">${safeInt(res.xp)}</div>
+            <div class="l">XP</div>
+          </div>
+          <div class="st-stat">
+            <span class="ic">🎬</span>
+            <div class="n">${safeInt(res.videos_watched)}</div>
+            <div class="l">مُشاهد</div>
+          </div>
+          <div class="st-stat">
+            <span class="ic">🔥</span>
+            <div class="n">${safeInt(res.streak)}</div>
+            <div class="l">Streak</div>
+          </div>
+          <div class="st-stat">
+            <span class="ic">🏅</span>
+            <div class="n">${badges.length}</div>
+            <div class="l">شارات</div>
+          </div>
+        </div>
+
+        <!-- آخر زيارة -->
+        <div style="background:rgba(0,255,136,.06);border:1px solid var(--border-soft);
+          border-radius:12px;padding:12px;font-size:13px;font-weight:700">
+          📅 <b>آخر زيارة:</b> ${esc(lastVisit)}
+        </div>
+
+        <!-- قائمة الفيديوهات -->
+        <div>
+          <h4 style="color:var(--green);font-size:14px;margin-bottom:10px">
+            📹 الفيديوهات (${videosProgress.length})
+          </h4>
+          ${videosProgress.length ? videosProgress.map(v => `
+            <div style="padding:10px 12px;border-radius:10px;
+              background:rgba(0,255,136,.04);border:1px solid var(--border-soft);
+              margin-bottom:8px">
+              <div style="display:flex;justify-content:space-between;align-items:center;
+                font-size:12px;font-weight:800;margin-bottom:6px">
+                <span>${v.isUnlocked ? '🔓' : '🔒'} ${esc(v.title)}</span>
+                <span style="color:var(--green)">${v.pct}%</span>
+              </div>
+              <div style="height:6px;background:rgba(2,18,8,.6);border-radius:6px;
+                overflow:hidden;border:1px solid var(--border-soft)">
+                <div style="height:100%;width:${v.pct}%;border-radius:6px;
+                  background:linear-gradient(90deg,var(--green),var(--green-3));
+                  transition:width .6s"></div>
+              </div>
+            </div>
+          `).join('') : '<p style="color:var(--muted);font-size:12px">لا فيديوهات</p>'}
+        </div>
+
+      </div>
+    `;
 
   }catch(e){
-    console.error('create poll error:', e);
-    toast('خطأ: ' + (e.message || ''), 'err');
-  }finally{
-    btn.disabled = false;
-    btn.textContent = '🗳️ نشر الاستطلاع';
+    console.error('showStudentDetails error:', e);
+    $('smBody').innerHTML = '<div class="empty"><div class="e">⚠️</div><p>تعذّر التحميل</p></div>';
   }
+}
+
+/* MODAL CLOSE */
+$('smClose').onclick = () => $('studentModal').classList.remove('open');
+$('studentModal').onclick = (e) => {
+  if(e.target === $('studentModal')) $('studentModal').classList.remove('open');
 };
 
-/* LOAD POLLS */
+/* POLLS */
 async function loadPolls(){
   $('pollsList').innerHTML = '<div class="skel"></div><div class="skel"></div>';
 
@@ -1141,26 +1454,34 @@ function renderPollItem(p){
   }
 
   return `
-    <div class="poll-item">
-      <div class="question">
-        <span class="icon">❓</span>
+    <div class="poll-item" style="background:rgba(2,18,8,.4);border:1px solid var(--border);
+      border-radius:14px;padding:16px;margin-bottom:12px">
+      <div style="font-size:15px;font-weight:900;margin-bottom:12px;
+        display:flex;align-items:start;gap:8px">
+        <span style="color:var(--green)">❓</span>
         <span>${esc(p.question)}</span>
       </div>
-      <div class="poll-meta">
+      <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:11px;
+        color:var(--muted);font-weight:700;margin-bottom:12px">
         <span>👥 ${total} صوت</span>
-        <span class="timer">⏱️ ${timeLeft} متبقي</span>
+        <span style="color:var(--green)">⏱️ ${timeLeft} متبقي</span>
         <span>📅 ${new Date(p.created_at).toLocaleDateString('ar-EG')}</span>
       </div>
-      <div class="poll-results">
+      <div style="display:flex;flex-direction:column;gap:8px">
         ${options.map(opt => {
           const cnt = safeInt(votes[opt.id]);
           const pct = total > 0 ? Math.round((cnt / total) * 100) : 0;
           return `
-            <div class="poll-result-row">
-              <div class="poll-result-bar" style="width:${pct}%"></div>
-              <div class="poll-result-txt">
-                <span class="txt">${esc(opt.text)}</span>
-                <span class="pct">${pct}% (${cnt})</span>
+            <div style="background:rgba(0,255,136,.06);border-radius:10px;
+              padding:10px 12px;position:relative;overflow:hidden">
+              <div style="position:absolute;top:0;right:0;bottom:0;width:${pct}%;
+                background:linear-gradient(90deg,var(--green),var(--green-3));
+                opacity:.25;transition:width .6s"></div>
+              <div style="position:relative;z-index:1;display:flex;
+                justify-content:space-between;align-items:center;
+                font-size:13px;font-weight:700">
+                <span>${esc(opt.text)}</span>
+                <span style="color:var(--green);font-weight:900">${pct}% (${cnt})</span>
               </div>
             </div>
           `;
@@ -1195,133 +1516,63 @@ async function deletePoll(pollId){
   }
 }
 
-/* VIDEOS */
-async function loadVideos(){
-  $('videosList').innerHTML = '<div class="skel"></div><div class="skel"></div>';
-
-  try{
-    const { data, error } = await sb.from('videos')
-      .select('*')
-      .eq('instructor_id', USER.id)
-      .order('created_at', { ascending: false });
-
-    if(error) throw error;
-    const vids = data || [];
-
-    if(!vids.length){
-      $('videosList').innerHTML = `<div class="empty"><div class="e">🎬</div><p>لا توجد فيديوهات بعد</p></div>`;
-      return;
-    }
-
-    $('videosList').innerHTML = vids.map(v => {
-      const statusClass = v.status === 'approved' ? 'approved' : v.status === 'rejected' ? 'rejected' : 'pending';
-      const statusTxt = v.status === 'approved' ? '✅ معتمد' : v.status === 'rejected' ? '❌ مرفوض' : '⏳ مراجعة';
-      const thumb = v.thumbnail || (v.youtube_id ? `https://i.ytimg.com/vi/${v.youtube_id}/mqdefault.jpg` : './sayed.png');
-      
-      return `
-        <div class="video-item">
-          <img class="video-thumb" src="${esc(thumb)}" onerror="this.src='./sayed.png'" alt="" />
-          <div class="video-info">
-            <h4>${esc(v.title)}</h4>
-            <small>👁️ ${safeInt(v.views)} · ${esc(v.category||'عام')}</small>
-          </div>
-          <span class="video-status ${statusClass}">${statusTxt}</span>
-          <div class="video-actions">
-            <button class="btn danger sm" data-del-vid="${v.id}" title="حذف">🗑️</button>
-          </div>
-        </div>
-      `;
-    }).join('');
-
-    $('videosList').querySelectorAll('[data-del-vid]').forEach(b => {
-      b.onclick = () => deleteMyVideo(b.dataset.delVid);
-    });
-
-  }catch(e){
-    console.error('loadVideos error:', e);
-    $('videosList').innerHTML = '<div class="empty"><div class="e">⚠️</div><p>تعذّر التحميل</p></div>';
-  }
-}
-
-async function deleteMyVideo(videoId){
-  if(!confirm('⚠️ حذف هذا الفيديو نهائياً؟\n\nلا يمكن التراجع!')) return;
+$('createPollBtn').onclick = async () => {
+  const question = clean($('pollQuestion').value);
+  if(!question || question.length < 3){ return toast('اكتب سؤال (3 أحرف على الأقل)', 'err'); }
   
-  try{
-    const { error } = await sb.from('videos')
-      .delete()
-      .eq('id', parseInt(videoId, 10))
-      .eq('instructor_id', USER.id);
+  const validOptions = POLL_OPTIONS.map(o => clean(o)).filter(o => o.length > 0);
+  if(validOptions.length < 2){ return toast('محتاج خيارين على الأقل', 'err'); }
 
-    if(error) throw error;
+  const options = validOptions.map((text, i) => ({ id: i, text }));
 
-    toast('🗑️ تم حذف الفيديو', 'ok');
-    
-    try{
-      await sb.rpc('client_log_activity', {
-        p_username: USER.username,
-        p_activity_type: 'instructor_action',
-        p_details: JSON.stringify({action:'delete_video', video_id: videoId}),
-        p_user_agent: navigator.userAgent.slice(0,200)
-      });
-    }catch(e){}
-    
-    await loadVideos();
-    await loadStats();
-
-  }catch(e){
-    console.error('deleteMyVideo error:', e);
-    toast('فشل الحذف: ' + (e.message || ''), 'err');
+  let hours = 0;
+  if(SELECTED_HOURS === 'custom'){
+    const customDate = $('pollCustomDate').value;
+    if(!customDate) return toast('اختر التاريخ والوقت', 'err');
+    const diffMs = new Date(customDate).getTime() - Date.now();
+    if(diffMs < 60*1000) return toast('الوقت المحدد لازم يكون في المستقبل', 'err');
+    hours = Math.ceil(diffMs / (1000*60*60));
+  } else {
+    hours = SELECTED_HOURS;
   }
-}
 
-/* ADD VIDEO */
-$('addVideoBtn').onclick = async () => {
-  const title = clean($('vidTitle').value);
-  const desc = clean($('vidDesc').value);
-  const url = clean($('vidUrl').value);
-  const thumbInput = clean($('vidThumb').value);
-  const cat = clean($('vidCat').value) || 'عام';
+  if(hours < 1) return toast('المدة يجب أن تكون ساعة على الأقل', 'err');
 
-  if(!title || title.length < 3) return toast('اكتب عنوان الفيديو', 'err');
-  if(!url) return toast('الصق رابط الفيديو', 'err');
-
-  const ytMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|v\/)|youtu\.be\/)([\w-]{11})/);
-  if(!ytMatch) return toast('رابط يوتيوب غير صالح', 'err');
-  const youtubeId = ytMatch[1];
-
-  const finalThumb = thumbInput || './sayed.png';
-
-  const btn = $('addVideoBtn');
+  const btn = $('createPollBtn');
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>';
 
   try{
-    const { error } = await sb.from('videos').insert({
-      title,
-      description: desc,
-      youtube_url: url,
-      youtube_id: youtubeId,
-      category: cat,
-      thumbnail: finalThumb,
-      instructor_id: USER.id,
-      created_by: USER.username,
-      status: 'pending',
-      published: false,
-      views: 0
+    const { data, error } = await sb.rpc('create_poll', {
+      p_instructor_username: USER.username,
+      p_question: question,
+      p_options: options,
+      p_hours: hours
     });
 
     if(error) throw error;
-    toast('✅ تم إرسال الفيديو للأدمن', 'ok');
-    ['vidTitle','vidDesc','vidUrl','vidThumb','vidCat'].forEach(i => $(i).value = '');
-    await loadVideos();
-    await loadStats();
+    const res = Array.isArray(data) ? data[0] : data;
 
+    if(!res || !res.ok){
+      const code = res && res.error;
+      if(code === 'question_short') toast('السؤال قصير جداً', 'err');
+      else if(code === 'need_options') toast('محتاج خيارين على الأقل', 'err');
+      else toast('تعذّر إنشاء الاستطلاع', 'err');
+      return;
+    }
+
+    toast(`✅ تم النشر`, 'ok', 4000);
+    $('pollQuestion').value = '';
+    POLL_OPTIONS = ['', ''];
+    renderPollOptions();
+    await loadPolls();
+    await loadStats();
   }catch(e){
-    console.error('add video error:', e);
+    console.error('create poll error:', e);
     toast('خطأ: ' + (e.message || ''), 'err');
   }finally{
     btn.disabled = false;
-    btn.textContent = '🎬 إضافة الفيديو';
+    btn.textContent = '🗳️ نشر الاستطلاع';
   }
 };
 
