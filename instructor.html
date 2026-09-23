@@ -191,6 +191,36 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
   white-space:nowrap;background:transparent;border:none;
 }
 .tab:hover{color:var(--green)}
+/* TAB BADGE */
+.tab{
+  position:relative;
+}
+.tab-badge{
+  position:absolute;
+  top:4px;
+  left:8px;
+  min-width:18px;
+  height:18px;
+  padding:0 5px;
+  border-radius:10px;
+  background:linear-gradient(135deg,#ff4d6d,#c62348);
+  color:#fff;
+  font-size:10px;
+  font-weight:900;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 0 10px rgba(255,77,109,.6);
+  animation:badgePulse 2s ease-in-out infinite;
+  z-index:2;
+}
+.tab-badge.show{
+  display:flex;
+}
+@keyframes badgePulse{
+  0%,100%{transform:scale(1);box-shadow:0 0 10px rgba(255,77,109,.6)}
+  50%{transform:scale(1.1);box-shadow:0 0 16px rgba(255,77,109,.9)}
+}
 .tab.active{
   background:linear-gradient(135deg,var(--green),var(--green-2));
   color:#021208;box-shadow:0 6px 18px rgba(0,255,136,.3);
@@ -690,7 +720,10 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 
     <div class="tabs">
       <button class="tab active" data-tab="students">👥 الطلاب</button>
-      <button class="tab" data-tab="polls">🗳️ الاستطلاعات</button>
+      <button class="tab" data-tab="polls">
+  🗳️ الاستطلاعات
+  <span class="tab-badge" id="pollsTabBadge">0</span>
+</button>
       <button class="tab" data-tab="videos">🎬 الفيديوهات</button>
       <button class="tab" data-tab="profile">👤 ملفي</button>
     </div>
@@ -1244,7 +1277,30 @@ async function init(){
     toast('خطأ في التحميل', 'err');
   }
 }
+/* ============ TAB BADGE ============ */
+async function updatePollsBadge(){
+  try{
+    const { count, error } = await sb.from('polls')
+      .select('*', { count: 'exact', head: true })
+      .eq('instructor_username', USER.username)
+      .eq('is_active', true);
 
+    if(error) throw error;
+
+    const badge = $('pollsTabBadge');
+    if(!badge) return;
+
+    const num = safeInt(count, 0);
+    if(num > 0){
+      badge.textContent = num > 9 ? '9+' : num;
+      badge.classList.add('show');
+    } else {
+      badge.classList.remove('show');
+    }
+  }catch(e){
+    console.warn('updatePollsBadge error:', e);
+  }
+}
 /* STATS */
 async function loadStats(){
   try{
@@ -1270,6 +1326,9 @@ async function loadStats(){
       .eq('instructor_username', USER.username)
       .eq('is_active', true);
     $('statPolls').textContent = pollCount || 0;
+
+    // ✅ نحدّث الـ Badge
+    await updatePollsBadge();
 
   }catch(e){ console.warn('stats error:', e); }
 }
@@ -1943,10 +2002,11 @@ async function deletePoll(pollId){
     if(error) throw error;
     const res = Array.isArray(data) ? data[0] : data;
     if(res && res.ok){
-      toast('🗑️ تم الحذف', 'ok');
-      await loadPolls();
-      await loadStats();
-    } else {
+  toast('🗑️ تم الحذف', 'ok');
+  await loadPolls();
+  await loadStats();
+  await updatePollsBadge();
+} else {
       toast('تعذّر الحذف', 'err');
     }
   }catch(e){
@@ -1998,11 +2058,12 @@ if(SELECTED_HOURS === 'custom'){
     }
 
     toast(`✅ تم النشر`, 'ok', 4000);
-    $('pollQuestion').value = '';
-    POLL_OPTIONS = ['', ''];
-    renderPollOptions();
-    await loadPolls();
-    await loadStats();
+$('pollQuestion').value = '';
+POLL_OPTIONS = ['', ''];
+renderPollOptions();
+await loadPolls();
+await loadStats();
+await updatePollsBadge();
   }catch(e){
     console.error('create poll error:', e);
     toast('خطأ: ' + (e.message || ''), 'err');
