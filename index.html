@@ -1945,14 +1945,37 @@ async function openVideo(v){
       videoId: ytId,
       playerVars:{ rel:0, modestbranding:1, playsinline:1, origin:location.origin, controls:0, disablekb:1, fs:0, iv_load_policy:3, showinfo:0 },
       events:{
-        onReady:e=>{
-          ytPlayerReady=true;
-          try{ e.target.setVolume(ytCurrentVolume); }catch(err){}
-          startYtTimer();
-          setTimeout(()=>{ try{ e.target.playVideo(); }catch(err){} }, 400);
-        },
-        onStateChange:onYtState
-      }
+  onReady:e=>{
+    ytPlayerReady=true;
+    try{ e.target.setVolume(ytCurrentVolume); }catch(err){}
+    startYtTimer();
+    setTimeout(()=>{ try{ e.target.playVideo(); }catch(err){} }, 400);
+  },
+  onError:e=>{
+    console.error('YouTube error:', e.data);
+    const msgs = {
+      2: 'رابط الفيديو غير صالح',
+      5: 'الفيديو مش متاح للتشغيل هنا',
+      100: 'الفيديو محذوف أو خاص',
+      101: 'صاحب الفيديو مانع التشغيل على مواقع تانية',
+      150: 'صاحب الفيديو مانع التشغيل على مواقع تانية'
+    };
+    const msg = msgs[e.data] || 'خطأ في تشغيل الفيديو';
+    // نعرض رسالة للمستخدم
+    if($('ytBigPlay')){
+      $('ytBigPlay').innerHTML = `
+        <div style="text-align:center;padding:20px;color:#fff;max-width:300px">
+          <div style="font-size:50px;margin-bottom:10px">⚠️</div>
+          <div style="font-weight:900;font-size:14px;margin-bottom:8px">${msg}</div>
+          <div style="font-size:12px;opacity:.8">تواصل مع المدرب أو الدعم</div>
+        </div>
+      `;
+      $('ytBigPlay').classList.remove('hidden');
+    }
+    toast('⚠️ ' + msg, 'err');
+  },
+  onStateChange:onYtState
+}
     });
   };
   if(ytApiReady && window.YT && window.YT.Player){ mk(); }
@@ -2057,23 +2080,38 @@ async function saveProgressSilently(v, pct){
     }
 
     const key = 'unlock_'+videoId;
-    if(newPct >= 50 && !_autoUnlockedVideos.has(key)){
-      try{
-        const {data: unlockData, error: unlockErr} = await sb.rpc('try_auto_unlock_next_video', {
-          p_student_username: USER.username,
-          p_current_video_id: parseInt(videoId)
-        });
-        if(unlockErr){ console.error('unlock error:', unlockErr); return; }
-        const res = Array.isArray(unlockData) ? unlockData[0] : unlockData;
-        if(res && res.ok && res.unlocked_video_id){
-          _autoUnlockedVideos.add(key);
-          toast('🎬 تم فتح الفيديو التالي!','ok','🔓');
-          await loadInstructorVideos();
-        } else if(res && res.error === 'no_next_video'){
-          _autoUnlockedVideos.add(key);
-        }
-      }catch(e){ console.error('unlock catch:', e); }
+if(newPct >= 50 && !_autoUnlockedVideos.has(key)){
+  try{
+    const {data: unlockData, error: unlockErr} = await sb.rpc('try_auto_unlock_next_video', {
+      p_student_username: USER.username,
+      p_current_video_id: parseInt(videoId)
+    });
+    if(unlockErr){ console.error('unlock error:', unlockErr); return; }
+    const res = Array.isArray(unlockData) ? unlockData[0] : unlockData;
+    if(res && res.ok && res.unlocked_video_id){
+      _autoUnlockedVideos.add(key);
+      toast('🎬 تم فتح الفيديو التالي!','ok','🔓');
+      // ✅ نعمل refresh للقايمة عشان الفيديو الجديد يظهر
+      await loadInstructorVideos();
+      // ✅ كمان نعمل refresh لبيانات المستخدم عشان الاشتراك يتحدث
+      const {data: subData} = await sb.from('instructor_subscriptions')
+        .select('unlocked_videos, status')
+        .eq('student_username', USER.username)
+        .eq('instructor_id', CURRENT_INSTRUCTOR?.instructor_id)
+        .limit(1);
+      if(subData && subData[0]){
+        USER.unlocked_videos = subData[0].unlocked_videos;
+      }
+      // ✅ إعادة رسم الفيديوهات تاني
+      renderInstructorVideos();
+    } else if(res && res.error === 'no_next_video'){
+      _autoUnlockedVideos.add(key);
+    } else if(res && res.error === 'not_enough_progress'){
+      // مش وصل 50% لسه، مش نضيف المفتاح عشان نحاول تاني
+      console.log('⏳ لسه مش وصل 50%:', res.pct);
     }
+  }catch(e){ console.error('unlock catch:', e); }
+}
   }catch(e){ console.error('save progress error:', e); }
 }
 /* ============ COMMENTS ============ */
