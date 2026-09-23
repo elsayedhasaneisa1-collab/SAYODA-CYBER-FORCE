@@ -1910,6 +1910,10 @@ function onYtState(e){
   if(e.data === S.ENDED){
     ytIsPlaying=false;
     $('ytPlayPause').textContent='▶';
+    // ✅ نحفظ 100% ونفتح الفيديو التالي
+    if(CURRENT_VIDEO){
+      saveProgressSilently(CURRENT_VIDEO, 100);
+    }
     awardVideoXp();
   } else if(e.data === S.PLAYING){
     ytIsPlaying=true;
@@ -1935,6 +1939,10 @@ function startYtTimer(){
       $('ytProgressFill').style.width=pct+'%';
       $('ytTime').textContent=fmtSec(t)+' / '+fmtSec(d);
       if(pct>=10) saveProgressSilently(CURRENT_VIDEO,pct);
+// ✅ ننادي الفتح لو وصلنا 50% (حتى لو لسه بنتفرج)
+if(pct>=50 && !_autoUnlockedVideos.has('unlock_'+CURRENT_VIDEO.video_id)){
+  saveProgressSilently(CURRENT_VIDEO, pct);
+}
     }catch(e){}
   },1000);
 }
@@ -1972,35 +1980,40 @@ async function saveProgressSilently(v, pct){
   try{
     if(!USER.video_progress) USER.video_progress = {};
     const prev = USER.video_progress[videoId] || {p:0,done:false};
+    const newPct = Math.max(safeInt(prev.p,0), Math.round(pct));
     USER.video_progress[videoId] = {
-      p: Math.max(safeInt(prev.p,0), Math.round(pct)),
-      done: prev.done || false
+      p: newPct,
+      done: prev.done || newPct >= 50
     };
     await sb.from('users').update({video_progress: USER.video_progress}).eq('username', USER.username);
 
     const viewKey = 'view_'+videoId;
-    if(pct >= 50 && !_autoUnlockedVideos.has(viewKey)){
+    if(newPct >= 50 && !_autoUnlockedVideos.has(viewKey)){
       _autoUnlockedVideos.add(viewKey);
       try{
         await sb.rpc('increment_video_view', { p_username: USER.username, p_video_id: parseInt(videoId) });
       }catch(e){}
     }
 
-    const key = String(videoId);
-    if(pct >= 50 && !_autoUnlockedVideos.has(key)){
-      _autoUnlockedVideos.add(key);
+    const key = 'unlock_'+videoId;
+    if(newPct >= 50 && !_autoUnlockedVideos.has(key)){
       try{
-        const {data: unlockData} = await sb.rpc('try_auto_unlock_next_video', {
+        const {data: unlockData, error: unlockErr} = await sb.rpc('try_auto_unlock_next_video', {
           p_student_username: USER.username,
           p_current_video_id: parseInt(videoId)
         });
+        if(unlockErr){ console.error('unlock error:', unlockErr); return; }
         const res = Array.isArray(unlockData) ? unlockData[0] : unlockData;
         if(res && res.ok && res.unlocked_video_id){
+          _autoUnlockedVideos.add(key);
           toast('🎬 تم فتح الفيديو التالي!','ok','🔓');
+          await loadInstructorVideos();
+        } else if(res && res.error === 'no_next_video'){
+          _autoUnlockedVideos.add(key);
         }
-      }catch(e){}
+      }catch(e){ console.error('unlock catch:', e); }
     }
-  }catch(e){}
+  }catch(e){ console.error('save progress error:', e); }
 }
 
 function closeVideo(){
