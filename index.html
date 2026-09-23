@@ -1903,6 +1903,7 @@ async function openVideo(v){
   }catch(e){}
 
   renderStars(v);
+  await loadComments(parseInt(v.video_id));
 }
 
 function onYtState(e){
@@ -2015,6 +2016,107 @@ async function saveProgressSilently(v, pct){
     }
   }catch(e){ console.error('save progress error:', e); }
 }
+/* ============ COMMENTS ============ */
+async function loadComments(videoId){
+  const list = $('cmList');
+  if(!list) return;
+  list.innerHTML = '<div style="text-align:center;padding:10px;color:var(--muted);font-size:12px">جاري التحميل...</div>';
+  try{
+    const {data, error} = await sb
+      .from('comments')
+      .select('*')
+      .eq('video_id', videoId)
+      .order('created_at', {ascending: false})
+      .limit(50);
+    if(error) throw error;
+    if(!data || !data.length){
+      list.innerHTML = '<div style="text-align:center;padding:12px;color:var(--muted);font-size:12px">لا توجد تعليقات بعد — كن أول من يعلّق 💬</div>';
+      return;
+    }
+    list.innerHTML = data.map(c => `
+      <div class="cm">
+        <b>${esc(c.username || 'مستخدم')}</b>
+        <small>${new Date(c.created_at).toLocaleDateString('ar-EG')}</small>
+        <p>${esc(c.text || c.comment || '')}</p>
+      </div>
+    `).join('');
+  }catch(e){
+    console.error('loadComments error:', e);
+    list.innerHTML = '<div style="text-align:center;padding:12px;color:var(--danger);font-size:12px">تعذّر تحميل التعليقات</div>';
+  }
+}
+
+/* ============ COMMENTS ============ */
+async function loadComments(videoId){
+  const list = $('cmList');
+  if(!list) return;
+  list.innerHTML = '<div style="text-align:center;padding:10px;color:var(--muted);font-size:12px">جاري التحميل...</div>';
+  try{
+    const {data, error} = await sb
+      .from('comments')
+      .select('*')
+      .eq('video_id', String(videoId))
+      .order('time', {ascending: false})
+      .limit(50);
+    if(error) throw error;
+    if(!data || !data.length){
+      list.innerHTML = '<div style="text-align:center;padding:12px;color:var(--muted);font-size:12px">لا توجد تعليقات بعد — كن أول من يعلّق 💬</div>';
+      return;
+    }
+    list.innerHTML = data.map(c => `
+      <div class="cm">
+        <b>${esc(c.username || 'مستخدم')}</b>
+        <small>${c.time ? new Date(c.time).toLocaleDateString('ar-EG') : ''}</small>
+        <p>${esc(c.text || '')}</p>
+      </div>
+    `).join('');
+  }catch(e){
+    console.error('loadComments error:', e);
+    list.innerHTML = '<div style="text-align:center;padding:12px;color:var(--danger);font-size:12px">تعذّر تحميل التعليقات</div>';
+  }
+}
+
+async function sendComment(){
+  const input = $('cmInput');
+  const btn = $('cmSend');
+  if(!input || !CURRENT_VIDEO) return;
+  const text = (input.value || '').trim();
+  if(!text){
+    toast('اكتب تعليق أولاً','err');
+    return;
+  }
+  if(text.length > 300){
+    toast('التعليق طويل جداً','err');
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = '...';
+  try{
+    const {error} = await sb.from('comments').insert({
+      video_id: String(CURRENT_VIDEO.video_id),
+      username: USER.username,
+      text: text,
+      time: new Date().toISOString()
+    });
+    if(error) throw error;
+    input.value = '';
+    toast('تم إضافة تعليقك ✅','ok');
+    await loadComments(CURRENT_VIDEO.video_id);
+  }catch(e){
+    console.error('sendComment error:', e);
+    toast('تعذّر إرسال التعليق: ' + (e.message || ''),'err');
+  }finally{
+    btn.disabled = false;
+    btn.textContent = 'إرسال';
+  }
+}
+
+// ربط زر الإرسال + Enter
+if($('cmSend')) $('cmSend').onclick = sendComment;
+if($('cmInput')) $('cmInput').onkeydown = (e) => {
+  if(e.key === 'Enter'){ e.preventDefault(); sendComment(); }
+};
+
 
 function closeVideo(){
   $('vidModal').classList.remove('open');
