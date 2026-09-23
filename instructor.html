@@ -6,8 +6,8 @@
 <meta name="theme-color" content="#021208" />
 <title>لوحة المدرب | CYBER FORCE</title>
 <link rel="manifest" href="./manifest.json" />
-<link rel="icon" href="./logogg.png" />
-<link rel="apple-touch-icon" href="./logogg.png" />
+<link rel="icon" href="./logo.png" />
+<link rel="apple-touch-icon" href="./logo.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
@@ -240,6 +240,7 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 .btn.full{width:100%}
 .btn.danger{background:linear-gradient(135deg,var(--danger),#c62348);color:#fff;box-shadow:0 8px 24px rgba(255,77,109,.3)}
 .btn.danger:hover{box-shadow:0 12px 32px rgba(255,77,109,.5)}
+.btn.ok{background:linear-gradient(135deg,#28d17c,#1fa562);color:#fff;box-shadow:0 8px 24px rgba(40,209,124,.3)}
 .btn.ghost{background:transparent;border:1px solid var(--border);color:var(--green);box-shadow:none}
 .btn.ghost:hover{background:var(--green-soft)}
 .btn.sm{padding:8px 14px;font-size:12px;border-radius:9px}
@@ -337,26 +338,49 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 .video-status.rejected{background:rgba(255,77,109,.15);color:var(--danger);border:1px solid rgba(255,77,109,.3)}
 .video-actions{display:flex;gap:6px;flex-shrink:0}
 
+/* STUDENT ITEM */
 .student-item{
-  display:flex;gap:12px;padding:12px;border-radius:12px;
+  display:flex;gap:12px;padding:14px;border-radius:12px;
   background:rgba(2,18,8,.4);border:1px solid var(--border);
   margin-bottom:10px;align-items:center;transition:.2s;flex-wrap:wrap;
 }
 .student-item:hover{border-color:var(--green)}
+.student-item.pending{
+  border-color:rgba(255,176,32,.5);
+  background:linear-gradient(135deg,rgba(255,176,32,.08),rgba(2,18,8,.4));
+}
+.student-item.active{
+  border-color:rgba(40,209,124,.4);
+  background:linear-gradient(135deg,rgba(40,209,124,.06),rgba(2,18,8,.4));
+}
 .student-av{
-  width:44px;height:44px;border-radius:50%;
+  width:48px;height:48px;border-radius:50%;
   background:linear-gradient(135deg,var(--green),var(--green-2));
-  color:#021208;font-weight:900;font-size:18px;
+  color:#021208;font-weight:900;font-size:20px;
   display:grid;place-items:center;flex-shrink:0;
 }
-.student-info{flex:1;min-width:150px}
-.student-info b{font-size:14px;display:block}
-.student-info small{font-size:11px;color:var(--muted)}
-.status-badge{
-  padding:4px 10px;border-radius:10px;font-size:10px;font-weight:800;
+.student-item.pending .student-av{
+  background:linear-gradient(135deg,#ffb020,#ff9500);
+  color:#fff;
 }
-.status-badge.active{background:rgba(40,209,124,.15);color:var(--ok);border:1px solid rgba(40,209,124,.3)}
-.status-badge.pending{background:rgba(255,176,32,.15);color:var(--warn);border:1px solid rgba(255,176,32,.3)}
+.student-info{flex:1;min-width:150px}
+.student-info b{font-size:15px;display:block}
+.student-info small{font-size:11px;color:var(--muted);display:block;margin-top:2px}
+.student-actions{display:flex;gap:6px;flex-wrap:wrap}
+.status-badge{
+  padding:4px 12px;border-radius:10px;font-size:11px;font-weight:800;
+}
+.status-badge.active{background:rgba(40,209,124,.2);color:var(--ok);border:1px solid rgba(40,209,124,.4)}
+.status-badge.pending{background:rgba(255,176,32,.2);color:var(--warn);border:1px solid rgba(255,176,32,.4)}
+
+.pending-alert{
+  background:linear-gradient(135deg,rgba(255,176,32,.15),rgba(255,149,0,.08));
+  border:1px solid rgba(255,176,32,.4);
+  border-radius:12px;padding:12px 14px;margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
+  font-weight:800;font-size:13px;color:#ffb020;
+}
+.pending-alert .icon{font-size:22px}
 
 .empty{text-align:center;padding:40px 20px;color:var(--muted)}
 .empty .e{font-size:52px;margin-bottom:10px;opacity:.6}
@@ -403,13 +427,13 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
   .gate-box{padding:28px 20px}
 }
 </style>
-</head>
+</head> 
 <body>
 
 <!-- GATE -->
 <div class="gate" id="gate">
   <div class="gate-box">
-    <img src="./logogg.png" alt="logo" onerror="this.style.display='none'">
+    <img src="./logo.png" alt="logo" onerror="this.style.display='none'">
     <h2>🎬 بوابة المدرب</h2>
     <p>أدخل كلمة المرور للدخول على لوحة المدرب</p>
     <input type="password" id="gatePass" placeholder="كلمة المرور" autocomplete="current-password" />
@@ -424,7 +448,7 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
 
   <header class="header">
     <div class="hd-left">
-      <img src="./logogg.png" alt="logo" onerror="this.style.display='none'">
+      <img src="./logo.png" alt="logo" onerror="this.style.display='none'">
       <div class="hd-title">لوحة <span>المدرب</span><small>CYBER FORCE</small></div>
     </div>
     <div class="hd-right">
@@ -449,18 +473,30 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
       <div class="stat-card"><span class="ic">🎬</span><div class="n" id="statVideos">0</div><div class="l">فيديوهات</div></div>
       <div class="stat-card"><span class="ic">👥</span><div class="n" id="statStudents">0</div><div class="l">طلاب مشتركين</div></div>
       <div class="stat-card"><span class="ic">🗳️</span><div class="n" id="statPolls">0</div><div class="l">استطلاعات نشطة</div></div>
-      <div class="stat-card"><span class="ic">👁️</span><div class="n" id="statViews">0</div><div class="l">مشاهدات</div></div>
+      <div class="stat-card"><span class="ic">⏳</span><div class="n" id="statPending">0</div><div class="l">طلبات معلقة</div></div>
     </div>
 
     <div class="tabs">
-      <button class="tab active" data-tab="polls">🗳️ الاستطلاعات</button>
+      <button class="tab active" data-tab="students">👥 الطلاب</button>
+      <button class="tab" data-tab="polls">🗳️ الاستطلاعات</button>
       <button class="tab" data-tab="videos">🎬 الفيديوهات</button>
-      <button class="tab" data-tab="students">👥 الطلاب</button>
       <button class="tab" data-tab="profile">👤 ملفي</button>
     </div>
 
+    <!-- TAB: STUDENTS -->
+    <div class="tab-content active" id="tab-students">
+      <div class="card">
+        <h3>👥 الطلاب والطلبات</h3>
+        <div id="pendingAlertBox"></div>
+        <div id="studentsList">
+          <div class="skel"></div>
+          <div class="skel"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- TAB: POLLS -->
-    <div class="tab-content active" id="tab-polls">
+    <div class="tab-content" id="tab-polls">
       <div class="card">
         <h3>➕ إنشاء استطلاع جديد</h3>
         
@@ -553,17 +589,6 @@ input,textarea,select{font-family:inherit;-webkit-user-select:text;user-select:t
       <div class="card">
         <h3>📼 فيديوهاتي</h3>
         <div id="videosList">
-          <div class="skel"></div>
-          <div class="skel"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB: STUDENTS -->
-    <div class="tab-content" id="tab-students">
-      <div class="card">
-        <h3>👥 الطلاب المشتركين</h3>
-        <div id="studentsList">
           <div class="skel"></div>
           <div class="skel"></div>
         </div>
@@ -797,6 +822,8 @@ async function init(){
     if(!data || !data[0]){ toast('تعذّر تحميل البيانات', 'err'); return; }
 
     USER = data[0];
+    console.log('👤 USER:', USER);
+    
     const isIns = USER.role === 'instructor' || (USER.role === 'admin' && USER.is_instructor === true);
     if(!isIns){
       toast('هذه الصفحة للمدربين فقط', 'err');
@@ -810,7 +837,7 @@ async function init(){
     $('profileUsername').value = USER.username;
 
     renderPollOptions();
-    await Promise.all([loadPolls(), loadVideos(), loadStudents(), loadStats()]);
+    await Promise.all([loadStudents(), loadPolls(), loadVideos(), loadStats()]);
 
   }catch(e){
     console.error(e);
@@ -832,19 +859,169 @@ async function loadStats(){
       .eq('status', 'active');
     $('statStudents').textContent = stuCount || 0;
 
+    const { count: pendingCount } = await sb.from('instructor_subscriptions')
+      .select('*', { count: 'exact', head: true })
+      .eq('instructor_id', USER.id)
+      .eq('status', 'pending');
+    $('statPending').textContent = pendingCount || 0;
+
     const { count: pollCount } = await sb.from('polls')
       .select('*', { count: 'exact', head: true })
       .eq('instructor_username', USER.username)
       .eq('is_active', true);
     $('statPolls').textContent = pollCount || 0;
 
-    const { data: vidData } = await sb.from('videos')
-      .select('views')
-      .eq('instructor_id', USER.id);
-    const totalViews = (vidData||[]).reduce((sum, v) => sum + safeInt(v.views), 0);
-    $('statViews').textContent = totalViews;
-
   }catch(e){ console.warn('stats error:', e); }
+}
+
+/* STUDENTS — القسم المهم */
+async function loadStudents(){
+  $('studentsList').innerHTML = '<div class="skel"></div><div class="skel"></div>';
+  
+  try{
+    console.log('🔍 USER.id:', USER.id, '| type:', typeof USER.id);
+    
+    // ✅ حاول بـ USER.id كـ number الأول
+    let result = await sb.from('instructor_subscriptions')
+      .select('*')
+      .eq('instructor_id', USER.id)
+      .order('created_at', { ascending: false });
+    
+    // ✅ لو مش لاقي حاجة، جرب بـ parseInt
+    if(!result.data || result.data.length === 0){
+      console.log('🔄 محاولة بـ parseInt...');
+      result = await sb.from('instructor_subscriptions')
+        .select('*')
+        .eq('instructor_id', parseInt(USER.id, 10))
+        .order('created_at', { ascending: false });
+    }
+    
+    // ✅ لو لسه مش لاقي، جرب بـ String
+    if(!result.data || result.data.length === 0){
+      console.log('🔄 محاولة بـ String...');
+      result = await sb.from('instructor_subscriptions')
+        .select('*')
+        .eq('instructor_id', String(USER.id))
+        .order('created_at', { ascending: false });
+    }
+    
+    const { data, error } = result;
+    
+    console.log('📊 Students data:', data);
+    console.log('❌ Error:', error);
+    
+    if(error) throw error;
+    
+    const subs = data || [];
+    
+    if(!subs.length){
+      $('studentsList').innerHTML = `
+        <div class="empty">
+          <div class="e">👥</div>
+          <p>لا يوجد طلاب أو طلبات بعد</p>
+          <p style="font-size:12px;margin-top:6px">لما طالب يطلب منك، هيظهر هنا</p>
+        </div>
+      `;
+      $('pendingAlertBox').innerHTML = '';
+      return;
+    }
+
+    // ✅ الطلبات المعلقة
+    const pending = subs.filter(s => s.status === 'pending');
+    const active = subs.filter(s => s.status === 'active');
+
+    // ✅ عرض تنبيه للطلبات المعلقة
+    if(pending.length > 0){
+      $('pendingAlertBox').innerHTML = `
+        <div class="pending-alert">
+          <span class="icon">⏳</span>
+          <span>عندك <b>${pending.length}</b> طلب${pending.length > 1 ? 'ات' : ''} في انتظار الموافقة</span>
+        </div>
+      `;
+    } else {
+      $('pendingAlertBox').innerHTML = '';
+    }
+
+    // ✅ ترتيب: pending الأول، بعدها active
+    const sorted = [...pending, ...active];
+    
+    $('studentsList').innerHTML = sorted.map(s => {
+      const statusClass = s.status === 'active' ? 'active' : 'pending';
+      const statusTxt = s.status === 'active' ? '✅ مشترك' : '⏳ في الانتظار';
+      const initial = (s.student_username || '?')[0].toUpperCase();
+      const isPending = s.status === 'pending';
+      
+      return `
+        <div class="student-item ${statusClass}">
+          <div class="student-av">${esc(initial)}</div>
+          <div class="student-info">
+            <b>${esc(s.student_username)}</b>
+            <small>📅 ${new Date(s.created_at).toLocaleDateString('ar-EG')}</small>
+          </div>
+          <span class="status-badge ${statusClass}">${statusTxt}</span>
+          ${isPending ? `
+            <div class="student-actions">
+              <button class="btn ok sm" data-approve="${s.id}">✅ موافقة</button>
+              <button class="btn danger sm" data-reject="${s.id}">❌ رفض</button>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }).join('');
+
+    // ✅ ربط أزرار الموافقة والرفض
+    $('studentsList').querySelectorAll('[data-approve]').forEach(b => {
+      b.onclick = () => approveStudent(b.dataset.approve);
+    });
+    $('studentsList').querySelectorAll('[data-reject]').forEach(b => {
+      b.onclick = () => rejectStudent(b.dataset.reject);
+    });
+
+  }catch(e){
+    console.error('loadStudents error:', e);
+    $('studentsList').innerHTML = '<div class="empty"><div class="e">⚠️</div><p>تعذّر التحميل</p></div>';
+  }
+}
+
+async function approveStudent(subId){
+  try{
+    const { error } = await sb.from('instructor_subscriptions')
+      .update({ 
+        status: 'active',
+        approved_at: new Date().toISOString()
+      })
+      .eq('id', parseInt(subId, 10));
+    
+    if(error) throw error;
+    
+    toast('✅ تم قبول الطالب', 'ok');
+    await loadStudents();
+    await loadStats();
+    
+  }catch(e){
+    console.error('approve error:', e);
+    toast('فشل: ' + (e.message || ''), 'err');
+  }
+}
+
+async function rejectStudent(subId){
+  if(!confirm('رفض هذا الطالب؟')) return;
+  
+  try{
+    const { error } = await sb.from('instructor_subscriptions')
+      .delete()
+      .eq('id', parseInt(subId, 10));
+    
+    if(error) throw error;
+    
+    toast('🗑️ تم رفض الطالب', 'ok');
+    await loadStudents();
+    await loadStats();
+    
+  }catch(e){
+    console.error('reject error:', e);
+    toast('فشل: ' + (e.message || ''), 'err');
+  }
 }
 
 /* CREATE POLL */
@@ -1056,7 +1233,6 @@ async function loadVideos(){
       `;
     }).join('');
 
-    // ربط أزرار الحذف
     $('videosList').querySelectorAll('[data-del-vid]').forEach(b => {
       b.onclick = () => deleteMyVideo(b.dataset.delVid);
     });
@@ -1073,7 +1249,7 @@ async function deleteMyVideo(videoId){
   try{
     const { error } = await sb.from('videos')
       .delete()
-      .eq('id', parseInt(videoId))
+      .eq('id', parseInt(videoId, 10))
       .eq('instructor_id', USER.id);
 
     if(error) throw error;
@@ -1113,7 +1289,6 @@ $('addVideoBtn').onclick = async () => {
   if(!ytMatch) return toast('رابط يوتيوب غير صالح', 'err');
   const youtubeId = ytMatch[1];
 
-  // ✅ لو المستخدم مدخلش غلاف → نستخدم sayed.png بدون ما نقوله
   const finalThumb = thumbInput || './sayed.png';
 
   const btn = $('addVideoBtn');
@@ -1127,7 +1302,7 @@ $('addVideoBtn').onclick = async () => {
       youtube_url: url,
       youtube_id: youtubeId,
       category: cat,
-      thumbnail: finalThumb,  // ← الغلاف
+      thumbnail: finalThumb,
       instructor_id: USER.id,
       created_by: USER.username,
       status: 'pending',
@@ -1149,47 +1324,6 @@ $('addVideoBtn').onclick = async () => {
     btn.textContent = '🎬 إضافة الفيديو';
   }
 };
-
-/* STUDENTS */
-async function loadStudents(){
-  $('studentsList').innerHTML = '<div class="skel"></div><div class="skel"></div>';
-
-  try{
-    const { data, error } = await sb.from('instructor_subscriptions')
-      .select('*')
-      .eq('instructor_id', USER.id)
-      .order('created_at', { ascending: false });
-
-    if(error) throw error;
-    const subs = data || [];
-
-    if(!subs.length){
-      $('studentsList').innerHTML = `<div class="empty"><div class="e">👥</div><p>لا يوجد طلاب مشتركين بعد</p></div>`;
-      return;
-    }
-
-    $('studentsList').innerHTML = subs.map(s => {
-      const statusClass = s.status === 'active' ? 'active' : 'pending';
-      const statusTxt = s.status === 'active' ? '✅ مشترك' : '⏳ في الانتظار';
-      const initial = (s.student_username || '?')[0].toUpperCase();
-      
-      return `
-        <div class="student-item">
-          <div class="student-av">${esc(initial)}</div>
-          <div class="student-info">
-            <b>${esc(s.student_username)}</b>
-            <small>📅 ${new Date(s.created_at).toLocaleDateString('ar-EG')}</small>
-          </div>
-          <span class="status-badge ${statusClass}">${statusTxt}</span>
-        </div>
-      `;
-    }).join('');
-
-  }catch(e){
-    console.error('loadStudents error:', e);
-    $('studentsList').innerHTML = '<div class="empty"><div class="e">⚠️</div><p>تعذّر التحميل</p></div>';
-  }
-}
 
 /* PROFILE */
 function loadProfile(){
