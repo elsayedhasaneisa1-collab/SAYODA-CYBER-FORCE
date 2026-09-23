@@ -1580,8 +1580,8 @@ function renderInstructorVideos(){
   }
   $('ivGrid').innerHTML = list.map((v, idx) => {
     const realIdx = INSTRUCTOR_VIDEOS.indexOf(v);
-    const isUnlocked = v.is_unlocked === true;
-    const ytUrl = cfDecrypt(v.encrypted_url);
+    const isUnlocked = v.is_unlocked === true || v.is_unlocked === 'true';
+    const ytUrl = v.encrypted_url || '';
     const thumb = v.thumbnail || (() => {
       const m = (ytUrl||'').match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
       return m ? `https://i.ytimg.com/vi/${m[1]}/hqdefault.jpg` : './sayed.png';
